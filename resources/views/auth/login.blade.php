@@ -11,6 +11,7 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
+                        {{$errors}}
                         <div class="form-group row">
                             <label for="login" class="col-sm-4 col-form-label text-md-right">
                                 {{ __('Username or Email') }}
