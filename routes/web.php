@@ -35,3 +35,6 @@ Route::get('/slicks', function () {
 
 Route::resource('rptpersediaan', 'rptpersediaanController');	
 Route::resource('coba', 'rptpersediaanController');	
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
