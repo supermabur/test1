@@ -7,5 +7,5 @@ use Illuminate\Support\Facades\DB;
 
 class stmemenu extends Model
 {
-    protected $table = 'stmemenu';
+    protected $table = 'vwstmemenu';
 }

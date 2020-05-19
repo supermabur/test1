@@ -1,4 +1,5 @@
 <?php
+use App\stmemenu;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,8 +34,14 @@ Route::get('/slicks', function () {
     return view('slick/index');
 });
 
-Route::resource('rptpersediaan', 'rptpersediaanController');	
-Route::resource('coba', 'rptpersediaanController');	
+
+$stmemenu = stmemenu::get();
+foreach($stmemenu as $menu){
+    Route::resource($menu->links, $menu->controllername);	
+}
+
+// Route::resource('rptpersediaan', 'rptpersediaanController');	
+// Route::resource('coba', 'rptpersediaanController');	
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
