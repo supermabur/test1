@@ -35,13 +35,12 @@ Route::get('/slicks', function () {
 });
 
 
-$stmemenu = stmemenu::get();
+$stmemenu = stmemenu::where('links','<>','')->get();
+
 foreach($stmemenu as $menu){
     Route::resource($menu->links, $menu->controllername);	
 }
 
-// Route::resource('rptpersediaan', 'rptpersediaanController');	
-// Route::resource('coba', 'rptpersediaanController');	
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

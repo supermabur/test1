@@ -96,8 +96,6 @@ $(document).ready(function(){
             padding: 5px 5px;
         }
 
-
-
         .loading {
             width: 100%;
             height: 100%;
@@ -173,24 +171,16 @@ $(document).ready(function(){
             <div class="box" style="border-top: 0px solid #d2d6de;">
             <!-- <div class="container"> -->
 
-                <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
-                    <label for="filter_gudang" class="col-sm-1 col-form-label">Outlet</label>
-                    <div class="col-sm-4">
-                        <select name="filter_gudang" id="filter_gudang" class="form-control " required>
-                            <option value=""></option>
-                            @foreach($gudang as $dt)
-                                <option value="{{ $dt->kdgudang }}">{{ $dt->namagudang }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
+                {{-- <h1>{{ $title }}</h1> --}}
 
                 <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
-                    <label for="show0" class="col-sm-1 col-form-label">Saldo 0</label>
-                    <div class="col-sm-3">
-                        <select name="show0" id="show0" class="form-control " required>
-                            <option value="TIDAK">Tidak Ditampilkan</option>
-                            <option value="YA">Ditampilkan</option>
+                    <label for="filter_gudang" class="col-sm-1 col-form-label">Tahun Bulan</label>
+                    <div class="col-sm-2">
+                        <select name="filter_tahunbulan" id="filter_tahunbulan" class="form-control " required>
+                            <option value=""></option>
+                            @foreach($tahunbulan as $dt)
+                                <option value="{{ $dt->tahunbulan1 }}">{{ $dt->tahunbulan2 }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -198,7 +188,7 @@ $(document).ready(function(){
                 <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
                     <label for="filter" class="col-sm-1 col-form-label"> </label>
                     <div class="col-sm-3">
-                        <button type="button" name="filter" id="filter" class="btn btn-info">Refresh Data</button>
+                        <button type="button" name="filter" id="filter" class="btn btn-info">Ambil Data</button>
                     </div>
                 </div>
 
@@ -213,7 +203,7 @@ $(document).ready(function(){
                     <form role="form" style="font-size: 0.8rem;">
                         <div class="card-body">
                             <div class="table-responsive" id="tablex" width=100% style="margin-top: 10px;">
-                                <table class="table display cell-border" id="user_table" width=100%>
+                                <table class="table display row-border" id="user_table" width=100% >
                                     {{-- <thead>
                                         <tr>
                                             <th width="10%">Kode</th>
@@ -236,11 +226,51 @@ $(document).ready(function(){
 
 
 
+                <div class="card card-primary" style="box-shadow: none;margin-top: 0.8rem;">
+                    <form role="form" style="font-size: 0.8rem;">
+                        <div class="card-body">
+                            <div class="table-responsive" id="tablexdetail" width=100% style="margin-top: 10px;">
+                                <table class="table display row-border" id="table_detail" width=100% style="font-size: 0.9rem;line-height: 1;">
+            
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
             </div>
         </div>
+        <button type="button" data-toggle="modal" data-target="#modaldetail">Launch modal</button>
     </div>
 
+
+    <!-- Modal -->
+    <div id="modaldetail" class="modaldetail modal fade" role="dialog" >
+        <div class="modal-dialog modal-lg">
+    
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                
+                <div class="modal-body">
+                    <h5 class="text-center">Data Detail</h5>
+                    datatatatatatata
+                    {{-- <div class="table-responsive" id="tablexdetail" width=100% style="margin-top: 10px;">
+                        <table class="table display row-border" id="table_detail" width=100% style="font-size: 0.9rem;line-height: 1;">
+
+                        </table>
+                    </div> --}}
+
+                    <div class="modal-footer">
+                    
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    </div>
 
 @endsection
 
@@ -255,21 +285,23 @@ $(document).ready(function(){
 
         fill_datatable();
 
-        function fill_datatable(filter_gudang = '', show0 = 'TIDAK')
+        function fill_datatable(filter_tahunbulan = 'xxx', show0 = 0)
         {
             var numFormat = $.fn.dataTable.render.number('.',',',0,'');
             var Xcolumns=
                 [
-                    {title: 'Kode', data: 'kode', name: 'kode'},
-                    {title: 'Nama Barang', data: 'namabarang', name: 'namabarang'},
-                    {title: 'Saldo', data: 'saldo', name: 'saldo', render: numFormat, className: 'text-right'},
-                    {title: 'Qty di pesan', data: 'qtydipesan', name: 'qtydipesan', render: numFormat, className: 'text-right'},
-                    {title: 'Sisa Saldo', data: 'sisasaldo', name: 'sisasaldo', render: numFormat, className: 'text-right'}
+                    {title: 'Tahun Bulan', data: 'tahunbulan', name: 'tahunbulan'},
+                    {title: 'Faktur Pending', data: 'fakturpending', name: 'fakturpending', className: 'text-right'},
+                    {title: 'Total Pending', data: 'totalpending', name: 'totalpending', className: 'text-right'},
+                    {title: 'Faktur Pending Pros', data: 'fakturpendingpros', name: 'fakturpendingpros', className: 'text-right'},
+                    {title: 'Total Pending Pros', data: 'totalpendingpros', name: 'totalpendingpros', className: 'text-right'},
+                    {title: 'Action', data: 'action', name: 'action', orderable: false, searchable: false, className: "text-right"}
                 ];
 
 
             var dataTable = $('#user_table').DataTable({
                 dom: 'lBfrtip',
+                order: [],
                 lengthMenu: [[50, 100, 250, -1], [50, 100, 250, 'ALL']],
                 buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
                 processing: true,
@@ -277,8 +309,8 @@ $(document).ready(function(){
                 // language: {processing: '<div class="loading" delay-hide="50000"></div> '},
                 serverSide: true,
                 ajax:{  
-                        url: "{{ route('rptpersediaan.index') }}",
-                        data:{filter_gudang:filter_gudang, show0:show0},
+                        url: "{{ route('rptpesanrekap.index') }}",
+                        data:{filter_tahunbulan:filter_tahunbulan},
                         dataType:"json",
                         dataFilter: function(response){
                                 // this to see what exactly is being sent back
@@ -308,22 +340,23 @@ $(document).ready(function(){
    
 
         $('#filter').click(function(){
-            var filter_gudang = $('#filter_gudang').val();
-            var show0 = $('#show0').val();
+            var filter_tahunbulan = $('#filter_tahunbulan').val();
+            // var show0 = $('#show0').val();
+            
 
-            if(filter_gudang != '' )
+            if(filter_tahunbulan != '' )
             {
                 $('#user_table').DataTable().destroy();
-                fill_datatable(filter_gudang, show0);
-                $('#judulbiru').val("Data XX" + filter_gudang); 
+                fill_datatable(filter_tahunbulan, 0);
+                $('#judulbiru').val("Data XX" + filter_tahunbulan); 
             }
             else
             {
-                alert('Outlet belum dipilih');
+                alert('Tahun Bulan belum dipilih');
             }
         });
 
-        $("#filter_gudang").change(function(){
+        $("#filter_tahunbulan").change(function(){
             // fill_datatable('nxcjasd','TIDAK');
             $('#tablex').hide(300);
 
@@ -364,37 +397,104 @@ $(document).ready(function(){
         //     });
 
 
-        // $(document).on('click', '.edit', function(){
-        //     var id = $(this).attr('id');
-        //     $('#form_result').html('');
-        //     $.ajax({
-        //         url:"/rptpersediaan/"+id+"/edit",
-        //         dataType:"json",
-        //         success:function(data)
-        //             {
-        //                 // alert(data.detail_color);
-        //                 $('#name').val(data.name);
-        //                 $('#detail').val(data.detail);
-        //                 $('#urut').val(data.urut);
-        //                 $('#detail_color').val(data.detail_color);
-        //                 $('#colorx').html('<i style="background-color: ' + data.detail_color + ';"></i>');
-        //                 $('#link').val(data.link);
-        //                 $('#aktif').prop('checked', data.aktif);
-        //                 $('#image_preview_container').attr('src', "{{ URL::to('/') }}/images/Slide/big/" + data.image); 
-        //                 $('.modal-title').text("Edit Record");
-        //                 $('#action_button').val("Edit");
-        //                 $('#hidden_id').val(data.id);
-        //                 $('#actionx').val("edit");
-        //                 $('#imageold').val(data.image);
-        //                 // $('#formModal').modal('show');
-        //                 $('#formModal').modal({
-        //                                         backdrop: 'static',
-        //                                         keyboard: false
-        //                                         });
-        //             }
-        //     })
-        // });
-        
+        $(document).on('click', '.detail', function(){
+            var id = $(this).attr('id');
+            alert(id);
+            fill_detail(id);
+            // $('#modaldetail').modal(show);
+
+
+            // $('#form_result').html('');
+            // $.ajax({
+            //     url:"/rptpesanrekap_detail",
+            //     // dataType:"json",
+            //     data:{'id':id},
+            //     type:"GET",
+            //     success:function(data)
+            //         {
+            //             alert(data);
+                        // $('#name').val(data.name);
+                        // $('#detail').val(data.detail);
+                        // $('#urut').val(data.urut);
+                        // $('#detail_color').val(data.detail_color);
+                        // $('#colorx').html('<i style="background-color: ' + data.detail_color + ';"></i>');
+                        // $('#link').val(data.link);
+                        // $('#aktif').prop('checked', data.aktif);
+                        // $('#image_preview_container').attr('src', "{{ URL::to('/') }}/images/Slide/big/" + data.image); 
+                        // $('.modal-title').text("Edit Record");
+                        // $('#action_button').val("Edit");
+                        // $('#hidden_id').val(data.id);
+                        // $('#actionx').val("edit");
+                        // $('#imageold').val(data.image);
+                        // // $('#formModal').modal('show');
+                        // $('#formModal').modal({
+                        //                         backdrop: 'static',
+                        //                         keyboard: false
+                        //                         });
+            //         }
+            // })
+        });
+
+
+        function fill_detail(pid = 'xxx')
+        {
+            var numFormat = $.fn.dataTable.render.number('.',',',0,'');
+            var Xcolumns=
+                [
+                    {title: 'Status', data: 'status', name: 'status'},
+                    {title: 'Tanggal', data: 'tanggal', name: 'tanggal'},
+                    {title: 'Faktur', data: 'faktur', name: 'faktur'},
+                    {title: 'Nama Cust', data: 'namacustomer', name: 'namacustomer'},
+                    {title: 'Total', data: 'total', name: 'total', className: 'text-right'},
+                    {title: 'Est Kirim', data: 'estkirim', name: 'estkirim'},
+                    {title: 'Keterangan', data: 'keterangan', name: 'keterangan'},
+                    {title: 'Memo', data: 'memo', name: 'memo'},
+                    {title: 'Nama Leasing', data: 'namaleasing', name: 'namaleasing'},
+                    {title: 'LS ACC', data: 'isacc', name: 'isacc'},
+                    {title: 'LS FakturPO', data: 'ls_fakturpo', name: 'ls_fakturpo'},
+                    {title: 'Gudang', data: 'namagudang', name: 'namagudang'}
+                ];
+
+
+            var dataTable = $('#table_detail').DataTable({
+                dom: 'lBfrtip',
+                order: [],
+                lengthMenu: [[50, 100, 250, -1], [50, 100, 250, 'ALL']],
+                buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                processing: true,
+                // language: {processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '},
+                // language: {processing: '<div class="loading" delay-hide="50000"></div> '},
+                serverSide: true,
+                ajax:{  
+                        url: '{{ url("rptpesanrekap_detail")}}',
+                        data:{'id':pid},
+                        type:"GET",
+                        dataType:"json",
+                        dataFilter: function(response){
+                                // this to see what exactly is being sent back
+                                console.log(response);
+                                // var json = jQuery.parseJSON( response );
+                                // document.getElementById('judulbiru').innerHTML = 'Last update Data : ' + json.lastupdate; 
+                                // $('#tablex').show(200);
+                                return response;
+                            },
+                        success:function(data)
+                            {
+                                console.log('---------------------------------');
+                                console.log(data);
+                                alert('sip');
+                                $('#formmodal').modal({
+                                                        backdrop: 'static',
+                                                        keyboard: false
+                                                        });
+                            },
+                        },
+                columns:Xcolumns
+
+            });
+        }
+
+
 
         // $(document).on('click', '.delete', function(){
         //     user_id = $(this).attr('id');

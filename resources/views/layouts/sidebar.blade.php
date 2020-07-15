@@ -25,16 +25,42 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <li class="nav-header">LAPORAN</li>
+
+            {{-- <li class="nav-header">LAPORAN</li>
             <li class="nav-item">
               <a href="/rptpersediaan" class="nav-link">
                 <i class="nav-icon fas fa-file"></i>
                 <p>Persediaan</p>
               </a>
-            </li>
+            </li> --}}
 
-            
-            <li class="nav-item has-treeview">
+            @foreach ($composer_stmemenu_h as $h)
+              <li class="nav-item has-treeview menu-open">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>
+                    {{$h->name}}
+                    <i class="fas fa-angle-left right"></i>
+                    {{-- <span class="badge badge-info right">6</span> --}}
+                  </p>
+                </a>
+
+                <ul class="nav nav-treeview" style="padding-left: 20px;font-weight: 200;line-height: 1;">
+                  @foreach ($composer_stmemenu_d as $d)
+                    @if ($h->id == $d->parentid)
+                      <li class="nav-item">
+                        <a href="/{{$d->links}}" class="nav-link">
+                          <i class="nav-icon far fa-circle" style="font-size: 1rem;"></i>
+                          <p>{{$d->name}}</p>
+                        </a>
+                      </li>                
+                    @endif
+                  @endforeach
+                </ul>
+              </li>
+            @endforeach
+
+            {{-- <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>
@@ -594,7 +620,7 @@
                 <i class="nav-icon far fa-circle text-info"></i>
                 <p>Informational</p>
               </a>
-            </li>
+            </li> --}}
 
 
           </ul>
