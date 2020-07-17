@@ -226,7 +226,7 @@ $(document).ready(function(){
 
 
 
-                <div class="card card-primary" style="box-shadow: none;margin-top: 0.8rem;">
+                {{-- <div class="card card-primary" style="box-shadow: none;margin-top: 0.8rem;">
                     <form role="form" style="font-size: 0.8rem;">
                         <div class="card-body">
                             <div class="table-responsive" id="tablexdetail" width=100% style="margin-top: 10px;">
@@ -236,7 +236,7 @@ $(document).ready(function(){
                             </div>
                         </div>
                     </form>
-                </div>
+                </div> --}}
 
             </div>
         </div>
@@ -246,22 +246,25 @@ $(document).ready(function(){
 
     <!-- Modal -->
     <div id="modaldetail" class="modaldetail modal fade" role="dialog" >
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
     
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
+                    <h5 class="text-center">Data Detail</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 
                 <div class="modal-body">
-                    <h5 class="text-center">Data Detail</h5>
-                    datatatatatatata
-                    {{-- <div class="table-responsive" id="tablexdetail" width=100% style="margin-top: 10px;">
-                        <table class="table display row-border" id="table_detail" width=100% style="font-size: 0.9rem;line-height: 1;">
-
-                        </table>
-                    </div> --}}
+                    <form role="form" style="font-size: 0.8rem;">
+                        <div class="card-body">
+                            <div class="table-responsive" id="tablexdetail" width=100% style="margin-top: 10px;">
+                                <table class="table display row-border" id="table_detail" width=100% style="font-size: 0.9rem;line-height: 1;">
+            
+                                </table>
+                            </div>
+                        </div>
+                    </form>
 
                     <div class="modal-footer">
                     
@@ -311,6 +314,86 @@ $(document).ready(function(){
                 ajax:{  
                         url: "{{ route('rptpesanrekap.index') }}",
                         data:{filter_tahunbulan:filter_tahunbulan},
+                        dataType:"json",
+                        dataFilter: function(response){
+                                // this to see what exactly is being sent back
+                                console.log(response);
+                                var json = jQuery.parseJSON( response );
+                                // json.recordsTotal = json.total;
+                                // json.recordsFiltered = json.total;
+                                // json.data = json.list;
+                                // alert(json.posts);
+                                document.getElementById('judulbiru').innerHTML = 'Last update Data : ' + json.lastupdate; 
+                                $('#tablex').show(200);
+                                return response;
+                            },
+                        // success:function(data)
+                        //     {
+                        //         console.log('---------------------------------');
+                        //         console.log(data);
+                        //         alert(data.posts);
+                        //         // $('#name').val(data.name);
+                        //         return data;
+                        //     },
+                        },
+                columns:Xcolumns
+
+            });
+        }
+
+
+        function fill_detail(pid = 'xxx')
+        {
+            var numFormat = $.fn.dataTable.render.number('.',',',0,'');
+
+            var n = pid.indexOf("NON LEASING");
+            var Xcolumns=
+                [
+                    {title: 'Status', data: 'status', name: 'status'},
+                    {title: 'Tanggal', data: 'tanggal', name: 'tanggal'},
+                    {title: 'Faktur', data: 'faktur', name: 'faktur'},
+                    {title: 'Nama Cust', data: 'namacustomer', name: 'namacustomer'},
+                    {title: 'Total', data: 'total', name: 'total', render: numFormat, className: 'text-right'},
+                    {title: 'Est Kirim', data: 'estkirim', name: 'estkirim'},
+                    {title: 'Keterangan', data: 'keterangan', name: 'keterangan'},
+                    {title: 'Memo', data: 'memo', name: 'memo'},
+                    {title: 'Nama Leasing', data: 'namaleasing', name: 'namaleasing'},
+                    {title: 'LS ACC', data: 'isacc', name: 'isacc'},
+                    {title: 'LS FakturPO', data: 'ls_fakturpo', name: 'ls_fakturpo'},
+                    {title: 'Gudang', data: 'namagudang', name: 'namagudang'}
+                ];
+
+            // if (n >= 0)
+            // {
+            //     Xcolumns=
+            //     [
+            //         {title: 'Status', data: 'status', name: 'status'},
+            //         {title: 'Tanggal', data: 'tanggal', name: 'tanggal'},
+            //         {title: 'Faktur', data: 'faktur', name: 'faktur'},
+            //         {title: 'Nama Cust', data: 'namacustomer', name: 'namacustomer'},
+            //         {title: 'Total', data: 'total', name: 'total', render: numFormat, className: 'text-right'},
+            //         {title: 'Est Kirim', data: 'estkirim', name: 'estkirim'},
+            //         {title: 'Keterangan', data: 'keterangan', name: 'keterangan'},
+            //         {title: 'Memo', data: 'memo', name: 'memo'},
+            //         {title: 'Gudang', data: 'namagudang', name: 'namagudang'}
+            //     ];
+            // }
+
+            // alert(n);
+
+            var dataTable = $('#table_detail').DataTable({
+                dom: 'lBfrtip',
+                destroy: true,
+                order: [],
+                lengthMenu: [[50, 100, 250, -1], [50, 100, 250, 'ALL']],
+                buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                processing: true,
+                // language: {processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '},
+                // language: {processing: '<div class="loading" delay-hide="50000"></div> '},
+                serverSide: true,
+                ajax:{  
+                        url: '{{ url("rptpesanrekap_detail")}}',
+                        data:{'id':pid},
                         dataType:"json",
                         dataFilter: function(response){
                                 // this to see what exactly is being sent back
@@ -399,7 +482,6 @@ $(document).ready(function(){
 
         $(document).on('click', '.detail', function(){
             var id = $(this).attr('id');
-            alert(id);
             fill_detail(id);
             // $('#modaldetail').modal(show);
 
@@ -434,65 +516,6 @@ $(document).ready(function(){
             //         }
             // })
         });
-
-
-        function fill_detail(pid = 'xxx')
-        {
-            var numFormat = $.fn.dataTable.render.number('.',',',0,'');
-            var Xcolumns=
-                [
-                    {title: 'Status', data: 'status', name: 'status'},
-                    {title: 'Tanggal', data: 'tanggal', name: 'tanggal'},
-                    {title: 'Faktur', data: 'faktur', name: 'faktur'},
-                    {title: 'Nama Cust', data: 'namacustomer', name: 'namacustomer'},
-                    {title: 'Total', data: 'total', name: 'total', className: 'text-right'},
-                    {title: 'Est Kirim', data: 'estkirim', name: 'estkirim'},
-                    {title: 'Keterangan', data: 'keterangan', name: 'keterangan'},
-                    {title: 'Memo', data: 'memo', name: 'memo'},
-                    {title: 'Nama Leasing', data: 'namaleasing', name: 'namaleasing'},
-                    {title: 'LS ACC', data: 'isacc', name: 'isacc'},
-                    {title: 'LS FakturPO', data: 'ls_fakturpo', name: 'ls_fakturpo'},
-                    {title: 'Gudang', data: 'namagudang', name: 'namagudang'}
-                ];
-
-
-            var dataTable = $('#table_detail').DataTable({
-                dom: 'lBfrtip',
-                order: [],
-                lengthMenu: [[50, 100, 250, -1], [50, 100, 250, 'ALL']],
-                buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-                processing: true,
-                // language: {processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '},
-                // language: {processing: '<div class="loading" delay-hide="50000"></div> '},
-                serverSide: true,
-                ajax:{  
-                        url: '{{ url("rptpesanrekap_detail")}}',
-                        data:{'id':pid},
-                        type:"GET",
-                        dataType:"json",
-                        dataFilter: function(response){
-                                // this to see what exactly is being sent back
-                                console.log(response);
-                                // var json = jQuery.parseJSON( response );
-                                // document.getElementById('judulbiru').innerHTML = 'Last update Data : ' + json.lastupdate; 
-                                // $('#tablex').show(200);
-                                return response;
-                            },
-                        success:function(data)
-                            {
-                                console.log('---------------------------------');
-                                console.log(data);
-                                alert('sip');
-                                $('#formmodal').modal({
-                                                        backdrop: 'static',
-                                                        keyboard: false
-                                                        });
-                            },
-                        },
-                columns:Xcolumns
-
-            });
-        }
 
 
 

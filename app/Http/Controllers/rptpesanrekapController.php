@@ -43,7 +43,8 @@ class rptpesanrekapController extends Controller
                                     }
                                     else
                                     {
-                                        $btn = '<button type="button" name="detail" id="'.$row->id.'" class="detail btn btn-primary btn-sm" style="padding-bottom: 0rem; padding-top: 0rem;">Detail</button>';
+                                        // $btn = '<button type="button" name="detail" id="'.$row->id.'" class="detail btn btn-primary btn-sm" style="padding-bottom: 0rem; padding-top: 0rem;">Detail</button>';
+                                        $btn = '<button type="button" name="detail" id="'.$row->id.'" data-toggle="modal" data-target="#modaldetail" class="detail btn btn-primary btn-sm" style="padding-bottom: 0rem; padding-top: 0rem;">Detail</button>';
                                     }
                                     return $btn;
                                 })
@@ -67,8 +68,8 @@ class rptpesanrekapController extends Controller
 
         $que = "select `status`, a.tanggal, a.faktur, namacustomer, total, estkirim, keterangan, memo, namaleasing, ls_acc as isacc, ls_fakturpo, namagudang ";
         $que .= "FROM rkppesanheadx a ";
-        // $que .= "WHERE `a`.`status` IN ( 'Pending', 'Pending Proses' ) and DATE_FORMAT(tanggal,'%Y%m') = '$thnbln' and $ls ";
-        // $que .= "order by `status`, tanggal, faktur";
+        $que .= "WHERE `a`.`status` IN ( 'Pending', 'Pending Proses' ) and DATE_FORMAT(tanggal,'%Y%m') = '$thnbln' and $ls ";
+        $que .= "order by `status`, tanggal, faktur";
 
         // return $que;
 
