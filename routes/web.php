@@ -44,6 +44,6 @@ foreach($stmemenu as $menu){
 Route::get('rptpesanrekap_detail', 'rptpesanrekapController@getdetailpesan');
 
 
-Auth::routes();
+// Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
