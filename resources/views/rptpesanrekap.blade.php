@@ -174,8 +174,8 @@ $(document).ready(function(){
                 {{-- <h1>{{ $title }}</h1> --}}
 
                 <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
-                    <label for="filter_gudang" class="col-sm-1 col-form-label">Tahun Bulan</label>
-                    <div class="col-sm-2">
+                    <label for="filter_gudang" class="col-md-1 col-form-label">Thn Bulan</label>
+                    <div class="col-md-2">
                         <select name="filter_tahunbulan" id="filter_tahunbulan" class="form-control " required>
                             <option value=""></option>
                             @foreach($tahunbulan as $dt)
@@ -183,14 +183,17 @@ $(document).ready(function(){
                             @endforeach
                         </select>
                     </div>
-                </div>
-
-                <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
-                    <label for="filter" class="col-sm-1 col-form-label"> </label>
-                    <div class="col-sm-3">
+                    <div class="col-md-3">
                         <button type="button" name="filter" id="filter" class="btn btn-info">Ambil Data</button>
                     </div>
                 </div>
+
+                {{-- <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
+                    <label for="filter" class="col-sm-2 col-form-label"> </label>
+                    <div class="col-sm-3">
+                        <button type="button" name="filter" id="filter" class="btn btn-info">Ambil Data</button>
+                    </div>
+                </div> --}}
 
 
 
@@ -249,25 +252,25 @@ $(document).ready(function(){
     
             <!-- Modal content-->
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="text-center">Data Detail</h5>
+                <div class="modal-header" style="background-color: khaki;">
+                    <h5 class="card-title judulbiru" id="juduldetail">Data Detail</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 
-                <div class="modal-body">
+                <div class="modal-body" style="padding: 0rem;">
                     <form role="form" style="font-size: 0.8rem;">
-                        <div class="card-body">
+                        <div class="card-body" >
                             <div class="table-responsive" id="tablexdetail" width=100% style="margin-top: 10px;">
-                                <table class="table display row-border" id="table_detail" width=100% style="font-size: 0.9rem;line-height: 1;">
+                                <table class="table display row-border" id="table_detail" width=100%> 
+                                    {{-- style="font-size: 0.9rem;line-height: 1;"> --}}
             
                                 </table>
                             </div>
                         </div>
                     </form>
 
-                    <div class="modal-footer">
-                    
-                    </div>
+                    {{-- <div class="modal-footer">
+                    </div> --}}
                 </div>
             </div>
     
@@ -341,7 +344,7 @@ $(document).ready(function(){
         }
 
 
-        function fill_detail(pid = 'xxx')
+        function fill_detail(pid = 'Data Detail')
         {
             var numFormat = $.fn.dataTable.render.number('.',',',0,'');
 
@@ -383,6 +386,8 @@ $(document).ready(function(){
             var dataTable = $('#table_detail').DataTable({
                 dom: 'lBfrtip',
                 destroy: true,
+                scrollY: "50vh",
+                scrollCollapse: true,
                 order: [],
                 lengthMenu: [[50, 100, 250, -1], [50, 100, 250, 'ALL']],
                 buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
@@ -394,6 +399,9 @@ $(document).ready(function(){
                         url: '{{ url("rptpesanrekap_detail")}}',
                         data:{'id':pid},
                         dataType:"json",
+                        beforeSend: function() {
+                            document.getElementById('juduldetail').innerHTML = 'Sedang mengambil data detail ...'; 
+                        },
                         dataFilter: function(response){
                                 // this to see what exactly is being sent back
                                 console.log(response);
@@ -402,8 +410,8 @@ $(document).ready(function(){
                                 // json.recordsFiltered = json.total;
                                 // json.data = json.list;
                                 // alert(json.posts);
-                                document.getElementById('judulbiru').innerHTML = 'Last update Data : ' + json.lastupdate; 
-                                $('#tablex').show(200);
+                                document.getElementById('juduldetail').innerHTML = 'DATA DETAIL ' + pid.replace("|", " "); 
+                                $('#tablexdetail').show(200);
                                 return response;
                             },
                         // success:function(data)
@@ -481,6 +489,7 @@ $(document).ready(function(){
 
         $(document).on('click', '.detail', function(){
             var id = $(this).attr('id');
+            $('#tablexdetail').hide(300);
             fill_detail(id);
             // $('#modaldetail').modal(show);
 
