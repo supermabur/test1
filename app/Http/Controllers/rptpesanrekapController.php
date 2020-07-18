@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DataTables;
 use Validator;
+use App\stmemenu;
 
 
 class rptpesanrekapController extends Controller
@@ -18,7 +19,10 @@ class rptpesanrekapController extends Controller
      */
     public function index(Request $request)
     {
-        $title = 'Laporan Rekap Surat Pesan';
+        $menu = stmemenu::where('links', $request->path())->first();
+        $title = $menu->parentname.' '.$menu->name;
+        $title = strtoupper($title);
+
         $lastupdate = db::table('rkppesanheadx')->select('dateukehosting')->orderBy('dateukehosting', 'desc')->first();
         $tahunbulan = db::table('vwtahunbulan')->get();
 

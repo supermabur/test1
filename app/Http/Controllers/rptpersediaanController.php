@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DataTables;
 use Validator;
+use App\stmemenu;
 
 
 class rptpersediaanController extends Controller
@@ -19,7 +20,10 @@ class rptpersediaanController extends Controller
      */
     public function index(Request $request)
     {
-        $title = 'Laporan Persediaan';
+        $menu = stmemenu::where('links', $request->path())->first();
+        $title = $menu->parentname.' '.$menu->name;
+        $title = strtoupper($title);
+        
         $gudang = rptpersediaan::select('kdgudang','namagudang')->groupBy('kdgudang', 'namagudang')->get();
         $lastupdate = rptpersediaan::select('dateu')->orderBy('dateu', 'desc')->first();
 

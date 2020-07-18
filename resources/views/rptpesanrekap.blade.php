@@ -240,7 +240,6 @@ $(document).ready(function(){
 
             </div>
         </div>
-        <button type="button" data-toggle="modal" data-target="#modaldetail">Launch modal</button>
     </div>
 
 
