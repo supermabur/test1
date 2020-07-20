@@ -204,7 +204,7 @@ $(document).ready(function(){
                     <!-- /.card-header -->
                     <!-- form start -->
                     <form role="form" style="font-size: 0.8rem;">
-                        <div class="card-body">
+                        <div class="card-body" >
                             <div class="table-responsive" id="tablex" width=100% style="margin-top: 10px;">
                                 <table class="table display row-border" id="user_table" width=100% >
                                     {{-- <thead>
@@ -252,14 +252,14 @@ $(document).ready(function(){
     
             <!-- Modal content-->
             <div class="modal-content">
-                <div class="modal-header" style="background-color: khaki;">
+                <div class="modal-header" style="background-color: #baff76;">
                     <h5 class="card-title judulbiru" id="juduldetail">Data Detail</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 
                 <div class="modal-body" style="padding: 0rem;">
                     <form role="form" style="font-size: 0.8rem;">
-                        <div class="card-body" >
+                        <div class="card-body" id="bodydetail">
                             <div class="table-responsive" id="tablexdetail" width=100% style="margin-top: 10px;">
                                 <table class="table display row-border" id="table_detail" width=100%> 
                                     {{-- style="font-size: 0.9rem;line-height: 1;"> --}}
@@ -352,6 +352,9 @@ $(document).ready(function(){
 
         function fill_detail(pid = 'Data Detail')
         {
+            document.getElementById("bodydetail").innerHTML = "<div class='table-responsive' id='tablexdetail' width=100% style='margin-top: 10px;'><table class='table display row-border' id='table_detail' width=100%> </table></div>";
+
+
             var numFormat = $.fn.dataTable.render.number('.',',',0,'');
 
             var n = pid.indexOf("NON LEASING");
@@ -406,6 +409,7 @@ $(document).ready(function(){
                         data:{'id':pid},
                         dataType:"json",
                         beforeSend: function() {
+                            // $('#table_detail').innerHTML="";
                             document.getElementById('juduldetail').innerHTML = 'Sedang mengambil data detail ...'; 
                         },
                         dataFilter: function(response){
@@ -417,6 +421,7 @@ $(document).ready(function(){
                                 // json.data = json.list;
                                 // alert(json.posts);
                                 document.getElementById('juduldetail').innerHTML = 'DATA DETAIL ' + pid.replace("|", " "); 
+
                                 $('#tablexdetail').show(200);
                                 return response;
                             },
@@ -432,6 +437,13 @@ $(document).ready(function(){
                 columns:Xcolumns
 
             });
+
+            // dataTable.clear().draw();
+            if (n >= 0)
+            {
+                dataTable.columns( [ 8,9,10 ] ).visible( false, false );
+                dataTable.columns.adjust().draw( false );
+            } 
         }
    
 
