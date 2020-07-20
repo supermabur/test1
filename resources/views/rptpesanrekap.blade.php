@@ -313,6 +313,12 @@ $(document).ready(function(){
                 // language: {processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '},
                 // language: {processing: '<div class="loading" delay-hide="50000"></div> '},
                 serverSide: true,
+                rowCallback: function(row, data, index){
+                    if(data[1]> 5)
+                    {
+                        $(row).find('td:eq(1)').css('color', 'red');
+                    }
+                },
                 ajax:{  
                         url: "{{ route('rptpesanrekap.index') }}",
                         data:{filter_tahunbulan:filter_tahunbulan},
