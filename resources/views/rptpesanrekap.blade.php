@@ -392,7 +392,7 @@ $(document).ready(function(){
                 lengthMenu: [[50, 100, 250, -1], [50, 100, 250, 'ALL']],
                 buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
                 processing: true,
-                // language: {processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '},
+                language: {processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '},
                 // language: {processing: '<div class="loading" delay-hide="50000"></div> '},
                 serverSide: true,
                 ajax:{  
@@ -489,7 +489,7 @@ $(document).ready(function(){
 
         $(document).on('click', '.detail', function(){
             var id = $(this).attr('id');
-            $('#tablexdetail').hide(300);
+            // $('#tablexdetail').hide(300);
             fill_detail(id);
             // $('#modaldetail').modal(show);
 
