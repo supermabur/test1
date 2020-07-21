@@ -134,6 +134,10 @@ $(document).ready(function(){
             margin: auto;
         }
 
+        .red {
+            background-color: red !important;
+        }
+
         @keyframes loading {
             0% {
                 transform: rotate(0);
@@ -434,7 +438,15 @@ $(document).ready(function(){
                         //         return data;
                         //     },
                         },
-                columns:Xcolumns
+                columns:Xcolumns,
+                "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                    // alert(aData['Status'] + ' ' + aData['status'] );
+                    switch(aData['status']){
+                        case 'Pending':
+                            $('td', nRow).css('background-color', '#dacfcf')
+                            break;
+                    }
+                }
 
             });
 
