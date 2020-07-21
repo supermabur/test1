@@ -70,7 +70,7 @@ class rptpesanrekapController extends Controller
 
         $thnbln = str_replace('-','',$par[1]);
 
-        $que = "select `status`, a.tanggal, a.faktur, namacustomer, total, estkirim, keterangan, memo, namaleasing, ls_acc as isacc, ls_fakturpo, namagudang, if(ifnull(memo,'')='', if(DATEDIFF(now(), a.tanggal)>3,'kuning',''), '') as 3harinomemo ";
+        $que = "select `status`, a.tanggal, a.faktur, namacustomer, total, estkirim, keterangan, memo, namaleasing, ls_acc as isacc, ls_fakturpo, namagudang, if(ifnull(namaleasing,'') <> '', if(ifnull(memo,'')='', if(DATEDIFF(now(), a.tanggal)>3,'kuning',''), ''), '') as 3harinomemo ";
         $que .= "FROM rkppesanheadx a ";
         $que .= "WHERE `a`.`status` IN ( 'Pending', 'Pending Proses' ) and DATE_FORMAT(tanggal,'%Y%m') = '$thnbln' and $ls ";
         $que .= "order by `status`, tanggal, faktur";

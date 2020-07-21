@@ -273,8 +273,12 @@ $(document).ready(function(){
                         </div>
                     </form>
 
-                    {{-- <div class="modal-footer">
-                    </div> --}}
+                    <div class="modal-footer" style="font-size: 0.8rem;justify-content: initial;">
+                        <div>
+                            <div>Keterangan Warna</div>
+                            <div style="background-color: #ffff75">  Leasing Belum ada follow up lebih dari 3 hari  </div>
+                        </div>
+                    </div>
                 </div>
             </div>
     
@@ -375,26 +379,9 @@ $(document).ready(function(){
                     {title: 'Nama Leasing', data: 'namaleasing', name: 'namaleasing'},
                     {title: 'LS ACC', data: 'isacc', name: 'isacc'},
                     {title: 'LS FakturPO', data: 'ls_fakturpo', name: 'ls_fakturpo'},
-                    {title: 'Gudang', data: 'namagudang', name: 'namagudang'}
+                    {title: 'Gudang', data: 'namagudang', name: 'namagudang'},
+                    {title: '3', data: '3harinomemo', name: '3harinomemo', visible: false}
                 ];
-
-            // if (n >= 0)
-            // {
-            //     Xcolumns=
-            //     [
-            //         {title: 'Status', data: 'status', name: 'status'},
-            //         {title: 'Tanggal', data: 'tanggal', name: 'tanggal'},
-            //         {title: 'Faktur', data: 'faktur', name: 'faktur'},
-            //         {title: 'Nama Cust', data: 'namacustomer', name: 'namacustomer'},
-            //         {title: 'Total', data: 'total', name: 'total', render: numFormat, className: 'text-right'},
-            //         {title: 'Est Kirim', data: 'estkirim', name: 'estkirim'},
-            //         {title: 'Keterangan', data: 'keterangan', name: 'keterangan'},
-            //         {title: 'Memo', data: 'memo', name: 'memo'},
-            //         {title: 'Gudang', data: 'namagudang', name: 'namagudang'}
-            //     ];
-            // }
-
-            // alert(n);
 
             var dataTable = $('#table_detail').DataTable({
                 dom: 'lBfrtip',
@@ -441,9 +428,9 @@ $(document).ready(function(){
                 columns:Xcolumns,
                 "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
                     // alert(aData['Status'] + ' ' + aData['status'] );
-                    switch(aData['status']){
-                        case 'Pending':
-                            $('td', nRow).css('background-color', '#dacfcf')
+                    switch(aData['3harinomemo']){
+                        case 'kuning':
+                            $('td', nRow).css('background-color', '#ffff75')
                             break;
                     }
                 }
