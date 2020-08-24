@@ -134,8 +134,18 @@ $(document).ready(function(){
             margin: auto;
         }
 
-        .red {
-            background-color: red !important;
+        .modal{
+            padding: 0 !important;
+        }
+        .modal-dialog {
+            max-width: 90% !important;
+            height: 90%;
+            /* padding: 0;
+            margin: 0; */
+        }
+
+        .modal-content {
+            height: 100%;
         }
 
         @keyframes loading {
@@ -252,7 +262,7 @@ $(document).ready(function(){
 
     <!-- Modal -->
     <div id="modaldetail" class="modaldetail modal fade" role="dialog" >
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog  modal-lg">
     
             <!-- Modal content-->
             <div class="modal-content">

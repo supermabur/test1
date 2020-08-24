@@ -179,7 +179,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-
+        Dingo\Api\Provider\LaravelServiceProvider::class,
     ],
 
     /*

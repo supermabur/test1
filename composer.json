@@ -17,7 +17,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "yajra/laravel-datatables": "^1.5",
-        "yajra/laravel-datatables-oracle": "^9.8"
+        "yajra/laravel-datatables-oracle": "^9.8",
+        "dingo/api": "^3.0.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
