@@ -148,6 +148,19 @@ $(document).ready(function(){
             height: 100%;
         }
 
+        .custom-btn {
+            margin-right: 0em !important;
+            font-size: 1.5em !important;
+            line-height: 1em !important;
+            padding: 0.3em 0.5em !important;
+        }
+
+        .custom-btn.copy {color: deeppink !important;}
+        .custom-btn.pdf {color: red !important;}
+        .custom-btn.excel {color: seagreen !important;}
+        .custom-btn.csv {color: tomato !important;}
+        .custom-btn.print {color: blue !important;}
+
         @keyframes loading {
             0% {
                 transform: rotate(0);
@@ -156,7 +169,6 @@ $(document).ready(function(){
                 transform: rotate(360deg);
             }
         }
-
      
                 
         @media screen and (max-width: 751px) {
@@ -305,6 +317,39 @@ $(document).ready(function(){
 
 <script>
     $(document).ready(function(){
+        var Buttonsx=
+                [  
+                    {
+                        titleAttr: 'Copy all data on Datatable',
+                        extend: 'copy',
+                        className: 'custom-btn copy fa fa-copy',
+                        text: ''
+                    },
+                    {
+                        titleAttr: 'Download as PDF',
+                        extend: 'pdfHtml5',
+                        className: 'custom-btn pdf fa fa-file-pdf',
+                        text: ''
+                    },
+                    {
+                        titleAttr: 'Download as Excel',     
+                        extend: 'excelHtml5',
+                        className: 'custom-btn excel fa fa-file-excel',
+                        text: ''
+                    },
+                    {
+                        titleAttr: 'Download as CSV',     
+                        extend: 'csvHtml5',
+                        className: 'custom-btn csv fa fa-file-csv',
+                        text: ''
+                    },
+                    {
+                        titleAttr: 'Print',     
+                        extend: 'print',
+                        className: 'custom-btn print fa fa-print',
+                        text: ''
+                    }
+                ];
 
         fill_datatable();
 
@@ -326,7 +371,7 @@ $(document).ready(function(){
                 dom: 'lBfrtip',
                 order: [],
                 lengthMenu: [[50, 100, 250, -1], [50, 100, 250, 'ALL']],
-                buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                buttons: Buttonsx,
                 processing: true,
                 // language: {processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '},
                 // language: {processing: '<div class="loading" delay-hide="50000"></div> '},
@@ -400,7 +445,7 @@ $(document).ready(function(){
                 scrollCollapse: true,
                 order: [],
                 lengthMenu: [[50, 100, 250, -1], [50, 100, 250, 'ALL']],
-                buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                buttons: Buttonsx,
                 processing: true,
                 language: {processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '},
                 // language: {processing: '<div class="loading" delay-hide="50000"></div> '},
