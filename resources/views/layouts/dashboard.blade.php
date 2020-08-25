@@ -43,6 +43,9 @@
 
 
 
+  <!-- eki -->
+  <link rel="stylesheet" href="css/eki.css">
+  
   @yield('style')
 
 </head>

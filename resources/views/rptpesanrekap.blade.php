@@ -83,110 +83,7 @@ $(document).ready(function(){
     
 @extends('layouts.dashboard')
 
-@section('style')
-    <style>
-        div.dt-buttons {
-            position: relative;
-            float: right;
-            margin-left: 10px;
-        }
 
-
-        table.dataTable tbody th, table.dataTable tbody td {
-            padding: 5px 5px;
-        }
-
-        .loading {
-            width: 100%;
-            height: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background: white;
-            z-index: 99;
-        }
-        .loading:after {
-            content: "";
-            width: 50px;
-            height: 50px;
-            position: absolute;
-            top: -30px;
-            right: 0;
-            left: 0;
-            bottom: 0;
-            margin: auto;
-            border: 0px solid #292929;
-            border-top: 2px dotted #5a5a5a;
-            border-bottom: 2px dotted #404040;
-            border-radius: 50%;
-            animation: loading 2s infinite;
-        }
-        .loading:before {
-            font-size: 20px;
-            letter-spacing: 1px;
-            color: #000000;
-            content: "Loading...";
-            position: absolute;
-            top: 57%;
-            text-align: center;
-            right: 0;
-            left: 0;
-            margin: auto;
-        }
-
-        .modal{
-            padding: 0 !important;
-        }
-        .modal-dialog {
-            max-width: 90% !important;
-            height: 90%;
-            /* padding: 0;
-            margin: 0; */
-        }
-
-        .modal-content {
-            height: 100%;
-        }
-
-        .custom-btn {
-            margin-right: 0em !important;
-            font-size: 1.5em !important;
-            line-height: 1em !important;
-            padding: 0.3em 0.5em !important;
-        }
-
-        .custom-btn.copy {color: deeppink !important;}
-        .custom-btn.pdf {color: red !important;}
-        .custom-btn.excel {color: seagreen !important;}
-        .custom-btn.csv {color: tomato !important;}
-        .custom-btn.print {color: blue !important;}
-
-        @keyframes loading {
-            0% {
-                transform: rotate(0);
-            }
-            50% {
-                transform: rotate(360deg);
-            }
-        }
-     
-                
-        @media screen and (max-width: 751px) {
-            .table, .dataTables_filter, .dt-buttons{
-                font-size: 0.8rem;
-                font-weight: 400;
-                line-height: 0.8;
-            }   
-        }
-
-        @media screen and (max-width: 500px) {
-            .card-body {
-                padding: 0rem;
-            }
-
-        }
-    </style>
-@endsection
 
 
 
@@ -317,39 +214,7 @@ $(document).ready(function(){
 
 <script>
     $(document).ready(function(){
-        var Buttonsx=
-                [  
-                    {
-                        titleAttr: 'Copy all data on Datatable',
-                        extend: 'copy',
-                        className: 'custom-btn copy fa fa-copy',
-                        text: ''
-                    },
-                    {
-                        titleAttr: 'Download as PDF',
-                        extend: 'pdfHtml5',
-                        className: 'custom-btn pdf fa fa-file-pdf',
-                        text: ''
-                    },
-                    {
-                        titleAttr: 'Download as Excel',     
-                        extend: 'excelHtml5',
-                        className: 'custom-btn excel fa fa-file-excel',
-                        text: ''
-                    },
-                    {
-                        titleAttr: 'Download as CSV',     
-                        extend: 'csvHtml5',
-                        className: 'custom-btn csv fa fa-file-csv',
-                        text: ''
-                    },
-                    {
-                        titleAttr: 'Print',     
-                        extend: 'print',
-                        className: 'custom-btn print fa fa-print',
-                        text: ''
-                    }
-                ];
+        var Buttonsx= {!! json_encode(config('global.dt_button')) !!} ;
 
         fill_datatable();
 

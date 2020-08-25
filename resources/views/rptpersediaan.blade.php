@@ -1,168 +1,10 @@
-
-    
-{{-- @extends('layouts.dashboard')
-
-
-@section('content')
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box me_boxshadow" style="padding:20px; border-top: 0px solid #d2d6de;">
-
-            <h1>{{ $title }}</h1>
-            <button type="button" name="create_record" id="create_record" class="btn btn-success btn-sm" style="margin-top:0px;margin-bottom:15px">Create Record</button>
-
-            <div class="table-responsive">
-                <table class="table display cell-border" id="user_table" width=100%>
-                    <thead>
-                        <tr>
-                            <th width="10%">kdgudang</th>
-                            <th width="30%">NamaGudang</th>
-                            <th width="10%">Kode</th>
-                            <th width="30%">NamaBarang</th>
-                            <th width="5%">Saldo</th>
-                            <th width="5%">Qtydipesan</th>
-                            <th width="5%">SisaSaldo</th>
-                            <th width="5%">Action</th>
-                
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-            </div>
-        </div>
-    </div>
-    
-
-@endsection
-
-
-
-@section('scripts')
-<script>
-$(document).ready(function(){
-    
-   $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    
-    $('#user_table').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax:{url: "{{ route('rptpersediaan.index') }}",},
-        columns:
-        [
-            {data: 'kdgudang', name: 'kdgudang'},
-            {data: 'namagudang', name: 'namagudang'},
-            {data: 'kode', name: 'kode'},
-            {data: 'namabarang', name: 'namabarang'},
-            {data: 'saldo', name: 'saldo'},
-            {data: 'qtydipesan', name: 'qtydipesan'},
-            {data: 'sisasaldo', name: 'sisasaldo'},
-            {data: 'action', name: 'action', orderable: false, searchable: false, className: "text-center"}
-        ]
-    });
-</script>
-
-
-
-
-@endsection --}}
-
-
-
-
-
-
-
-
-
-
     
 @extends('layouts.dashboard')
 
-@section('style')
+{{-- @section('style')
     <style>
-        div.dt-buttons {
-            position: relative;
-            float: right;
-            margin-left: 10px;
-        }
-
-
-        table.dataTable tbody th, table.dataTable tbody td {
-            padding: 5px 5px;
-        }
-
-
-
-        .loading {
-            width: 100%;
-            height: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background: white;
-            z-index: 99;
-        }
-        .loading:after {
-            content: "";
-            width: 50px;
-            height: 50px;
-            position: absolute;
-            top: -30px;
-            right: 0;
-            left: 0;
-            bottom: 0;
-            margin: auto;
-            border: 0px solid #292929;
-            border-top: 2px dotted #5a5a5a;
-            border-bottom: 2px dotted #404040;
-            border-radius: 50%;
-            animation: loading 2s infinite;
-        }
-        .loading:before {
-            font-size: 20px;
-            letter-spacing: 1px;
-            color: #000000;
-            content: "Loading...";
-            position: absolute;
-            top: 57%;
-            text-align: center;
-            right: 0;
-            left: 0;
-            margin: auto;
-        }
-
-        @keyframes loading {
-            0% {
-                transform: rotate(0);
-            }
-            50% {
-                transform: rotate(360deg);
-            }
-        }
-
-     
-                
-        @media screen and (max-width: 751px) {
-            .table, .dataTables_filter, .dt-buttons{
-                font-size: 0.8rem;
-                font-weight: 400;
-                line-height: 0.8;
-            }   
-        }
-
-        @media screen and (max-width: 500px) {
-            .card-body {
-                padding: 0rem;
-            }
-
-        }
     </style>
-@endsection
+@endsection --}}
 
 
 
@@ -271,7 +113,7 @@ $(document).ready(function(){
             var dataTable = $('#user_table').DataTable({
                 dom: 'lBfrtip',
                 lengthMenu: [[50, 100, 250, -1], [50, 100, 250, 'ALL']],
-                buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                buttons: {!! json_encode(config('global.dt_button')) !!},
                 processing: true,
                 // language: {processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '},
                 // language: {processing: '<div class="loading" delay-hide="50000"></div> '},
