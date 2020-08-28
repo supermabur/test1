@@ -1,21 +1,21 @@
     
-@extends('layouts.dashboard')
+{{-- @extends('layouts.dashboard')
 
 
-@section('content')
+@section('content') --}}
 
 
-    asdasdas    
+    editview lho ini
 
-    @foreach($columns as $dt)
+    @foreach($columnheader as $dt)
         {{ $dt }}
     @endforeach
 
-@endsection
+{{-- @endsection
 
 
 
 @section('scripts')
 
 
-@endsection
+@endsection --}}
