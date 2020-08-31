@@ -15,9 +15,34 @@ class globreportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        // $menu = stmemenu::where('id', $request->menuid)->first();
+        
+        if ($request->ajax()) {
+            // $lastupdate = rptpersediaan::select('dateu', 'kdgudang', 'namagudang')->where('kdgudang', $request->filter_gudang)->orderBy('dateu', 'desc')->first();
 
+            // $data = Mstbarang::latest()->get();
+            // $data = rptpersediaan::get_rptpersediaan_all();
+            // if($request->show0 =='YA')
+            // {
+            //     $data = rptpersediaan::where('kdgudang', $request->filter_gudang)->where('saldo','>=','0');
+            // }
+            // else
+            // {
+            //     $data = rptpersediaan::where('kdgudang', $request->filter_gudang)->where('saldo','>','0');
+            // }
+            $data = DB::Select('SELECT * FROM strole ');
+
+            return Datatables::of($data)
+                                // ->with('lastupdate', $lastupdate->dateu)
+                                // ->with('columnheader', $columnsheader)
+                                // ->with('outlet','nama gudang')
+                                // ->with('outlet',$data[0]['namagudang'] . ' (' . $data[0]['kdgudang'] . ')')
+                                ->toJson(); 
+        }
+      
+        // return view('rptpersediaan',compact('title', 'gudang'));
     }
 
     /**
@@ -47,14 +72,17 @@ class globreportController extends Controller
      * @param  \App\model\strole  $strole
      * @return \Illuminate\Http\Response
      */
-    public function show($strole)
+    public function show($menuid, Request $request)
     {
-        $menu = stmemenu::where('id', $strole)->first();
+        $menu = stmemenu::where('id', $menuid)->first();
         $title = $menu->parentname.' '.$menu->name;
         $title = strtoupper($title);
 
+        $asd = $request->asd;
+
         // $editview = $menu->editview;
-        $editview = 'strole';
+        $editview = $menu->editview;
+
         
 
         $db = DB::connection()->getPdo();
@@ -63,9 +91,10 @@ class globreportController extends Controller
                 $col = $rs->getColumnMeta($i);
                 $columnheader[] = $col['name'];
                 // $columns[] = $col['native_type'];
+                $dtcolumns[] = ['title' => $col['name'], 'data' => $col['name'], 'name' => $col['name']];
         }
         
-        return view('globalreport',compact('title', 'columnheader', 'editview'));
+        return view('globalreports.globalreport',compact('title', 'menuid', 'columnheader', 'editview', 'dtcolumns'));
     }
 
     /**

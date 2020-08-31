@@ -7,9 +7,11 @@
 
     editview lho ini
 
-    @foreach($columnheader as $dt)
+    uhui
+
+    {{-- @foreach($columnheader as $dt)
         {{ $dt }}
-    @endforeach
+    @endforeach --}}
 
 {{-- @endsection
 
