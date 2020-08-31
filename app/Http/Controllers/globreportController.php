@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use DataTables;
 use Validator;
@@ -17,32 +18,6 @@ class globreportController extends Controller
      */
     public function index(Request $request)
     {
-        // $menu = stmemenu::where('id', $request->menuid)->first();
-        
-        if ($request->ajax()) {
-            // $lastupdate = rptpersediaan::select('dateu', 'kdgudang', 'namagudang')->where('kdgudang', $request->filter_gudang)->orderBy('dateu', 'desc')->first();
-
-            // $data = Mstbarang::latest()->get();
-            // $data = rptpersediaan::get_rptpersediaan_all();
-            // if($request->show0 =='YA')
-            // {
-            //     $data = rptpersediaan::where('kdgudang', $request->filter_gudang)->where('saldo','>=','0');
-            // }
-            // else
-            // {
-            //     $data = rptpersediaan::where('kdgudang', $request->filter_gudang)->where('saldo','>','0');
-            // }
-            $data = DB::Select('SELECT * FROM strole ');
-
-            return Datatables::of($data)
-                                // ->with('lastupdate', $lastupdate->dateu)
-                                // ->with('columnheader', $columnsheader)
-                                // ->with('outlet','nama gudang')
-                                // ->with('outlet',$data[0]['namagudang'] . ' (' . $data[0]['kdgudang'] . ')')
-                                ->toJson(); 
-        }
-      
-        // return view('rptpersediaan',compact('title', 'gudang'));
     }
 
     /**
@@ -78,23 +53,40 @@ class globreportController extends Controller
         $title = $menu->parentname.' '.$menu->name;
         $title = strtoupper($title);
 
-        $asd = $request->asd;
+        $que = $menu->query1;
+
+        $fdate1 = Str::contains($que, '@date1');
+        $fdate2 = Str::contains($que, '@date2');
+        $fgudang = Str::contains($que, '@gudang');
+
+        if ($request->ajax()) {
+            $data = DB::Select($que);
+
+            return Datatables::of($data)
+                                // ->with('lastupdate', $lastupdate->dateu)
+                                // ->with('columnheader', $columnsheader)
+                                // ->with('outlet','nama gudang')
+                                // ->with('outlet',$data[0]['namagudang'] . ' (' . $data[0]['kdgudang'] . ')')
+                                ->toJson(); 
+        }
 
         // $editview = $menu->editview;
         $editview = $menu->editview;
 
-        
 
+        
         $db = DB::connection()->getPdo();
-        $rs = $db->query('SELECT * FROM strole ');
+        $rs = $db->query($que . ' limit 0');
         for ($i = 0; $i < $rs->columnCount(); $i++) {
                 $col = $rs->getColumnMeta($i);
                 $columnheader[] = $col['name'];
                 // $columns[] = $col['native_type'];
                 $dtcolumns[] = ['title' => $col['name'], 'data' => $col['name'], 'name' => $col['name']];
         }
-        
-        return view('globalreports.globalreport',compact('title', 'menuid', 'columnheader', 'editview', 'dtcolumns'));
+        return view('globalreports.globalreport',
+                    compact('title', 'menuid', 'columnheader', 'editview', 'dtcolumns', 
+                            'fdate1','fdate2', 'fgudang')
+                );
     }
 
     /**

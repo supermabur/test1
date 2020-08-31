@@ -8,19 +8,38 @@
     <div class="row">
         <div class="col-md-12 outerbox">
             <div class="box" style="border-top: 0px solid #d2d6de;">
-            <!-- <div class="container"> -->
 
-                {{-- <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
-                    <label for="filter_gudang" class="col-sm-1 col-form-label">Outlet</label>
-                    <div class="col-sm-4">
-                        <select name="filter_gudang" id="filter_gudang" class="form-control " required>
-                            <option value=""></option>
-                            @foreach($gudang as $dt)
-                                <option value="{{ $dt->kdgudang }}">{{ $dt->namagudang }}</option>
-                            @endforeach
-                        </select>
+            {{ $fdate1 }}
+            {{ $fdate2 }}
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4"/>
+                            <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
                     </div>
-                </div> --}}
+                </div>
+            </div>
+
+
+                @if ( $fgudang == 0 )
+                    <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
+                        <label for="filter_gudang" class="col-sm-1 col-form-label">Outlet</label>
+                        <div class="col-sm-4">
+                            <select name="filter_gudang" id="filter_gudang" class="form-control " required>
+                                <option value=""></option>
+                                @foreach($composer_mstgudang as $dt)
+                                    <option value="{{ $dt->kode }}">{{ $dt->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                @endif
+
 
                 {{-- <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
                     <label for="show0" class="col-sm-1 col-form-label">Saldo 0</label>
@@ -79,6 +98,8 @@
 @section('scripts')
 
     <script>
+
+
         $(document).ready(function(){
 
             // fill_datatable();
@@ -87,9 +108,9 @@
             {
                 var numFormat = $.fn.dataTable.render.number('.',',',0,'');
                 var xmenuid = {{ $menuid }};
-                var xUrl = "gr/" + xmenuid;
+                var xUrl = "{{ route('gr.show', $menuid) }}"   ;
                 var Xcolumns={!! json_encode($dtcolumns) !!};
-                alert('zxc');
+                alert(xUrl);
                     // [
                     //     {title: 'Kode', data: 'kode', name: 'kode'},
                     //     {title: 'Nama Barang', data: 'namabarang', name: 'namabarang'},
@@ -101,6 +122,7 @@
 
                 var dataTable = $('#user_table').DataTable({
                     dom: 'lBfrtip',
+                    destroy: true,
                     lengthMenu: [[50, 100, 250, -1], [50, 100, 250, 'ALL']],
                     buttons: {!! json_encode(config('global.dt_button')) !!},
                     processing: true,
@@ -113,7 +135,7 @@
                             dataType:"json",
                             dataFilter: function(response){
                                     // this to see what exactly is being sent back
-                                    console.log(response);
+                                    // console.log(response);
                                     // var json = jQuery.parseJSON( response );
                                     // json.recordsTotal = json.total;
                                     // json.recordsFiltered = json.total;
@@ -121,17 +143,26 @@
                                     // alert(json.posts);
                                     // document.getElementById('judulbiru').innerHTML = 'Last update Data : ' + json.lastupdate; 
                                     $('#tablex').show(200);
+                                    // alert('dataFilter');
                                     return response;
                                 },
-                            success:function(data)
-                                {
-                                    console.log('---------------------------------');
-                                    console.log(data);
-                                    // alert(data.posts);
-                                    // $('#name').val(data.name);
+                            // success:function(data)
+                            //     {
+                            //         alert('success');
+                            //         // console.log('---------------------------------');
+                            //         // console.log(data);
+                            //         // alert(data.posts);
+                            //         // $('#name').val(data.name);
                                     
-                                    return data;
-                                },
+                            //         return data;
+                            //     },
+                            // error : function(xhr, textStatus, errorThrown){
+                            //         alert('error');
+                            //         lh.ajaxUtils.handleAjaxError(xhr, textStatus, errorThrown);
+                            //         // console.log(xhr);
+                            //         console.log('STATUS :> ' + textStatus);
+                            //         console.log('errorThrown :> ' + errorThrown);
+                            //     },
                             },
                     columns:Xcolumns
 
@@ -165,6 +196,12 @@
 
         });
 
+        function setDatePicker(){
+            $(".datepicker").datetimepicker({
+                format: "YYYY-MM-DD",
+                useCurrent: true
+            })
+        }
 
     </script>
 
