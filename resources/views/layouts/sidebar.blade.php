@@ -63,7 +63,7 @@
                             </button>
                           </form> --}}
 
-                          <a href="gr/{{$d->id}}" class="nav-link">
+                          <a href="{{ route('gr.show', $d->id) }}" class="nav-link">
                             <i class="nav-icon far fa-circle" style="font-size: 1rem;"></i>
                             <p>{{$d->name}}</p>
                           </a>

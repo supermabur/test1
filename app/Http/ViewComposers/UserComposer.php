@@ -41,7 +41,7 @@ class UserComposer
         $view->with('composer_stmemenu_h', stmemenu::where('parentid','0')->orderBy('urut')->get());
         $view->with('composer_stmemenu_d', stmemenu::where('parentid','<>','0')->orderBy('urut')->get());
         
-        $view->with('composer_mstgudang', mstgudang::orderBy('nama')->get());
+        $view->with('composer_mstgudang', mstgudang::orderBy('nama')->where('kode','<>',"''")->get());
                                                 
     }
 

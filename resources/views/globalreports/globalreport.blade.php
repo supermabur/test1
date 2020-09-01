@@ -27,10 +27,10 @@
 
 
 
-                @if ( $fgudang == 0 )
+                @if ( $fgudang == 1 )
                     <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
                         <label for="fgudang" class="col-sm-1 col-form-label">Outlet</label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-5">
                             <select name="fgudang" id="fgudang" class="form-control " required>
                                 <option value=""></option>
                                 @foreach($composer_mstgudang as $dt)
@@ -122,9 +122,6 @@
                 var xfdate1 = $('#fdate1').val();
                 var xfdate2 = $('#fdate2').val();
                 var xfgudang = $('#gudang').val();
-
-                alert(xfdate1);
-                alert(xfdate2);
 
                 var dataTable = $('#user_table').DataTable({
                     dom: 'lBfrtip',

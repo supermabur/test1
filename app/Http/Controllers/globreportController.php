@@ -60,6 +60,10 @@ class globreportController extends Controller
         $fdate2 = Str::contains($que, '@date2');
         $fgudang = Str::contains($que, '@gudang');
 
+        $crud_i = Str::contains($menu->crud, 'i');
+        $crud_u = Str::contains($menu->crud, 'u');
+        $crud_d = Str::contains($menu->crud, 'd');
+
         if ($request->ajax()) {
             if (!empty($request->fdate1)){
                 $xx = Carbon::createFromFormat('d-m-Y', $request->fdate1)->format('Ymd');
@@ -78,23 +82,34 @@ class globreportController extends Controller
 
             $data = DB::Select($que);
 
-            return Datatables::of($data)
+            $dt = Datatables::of($data)
                                 ->with('xx', $que)
                                 ->with('fdate1',$request->fdate1)
                                 ->with('fdate2',$request->fdate2)
-                                ->with('gudang',$request->fgudang)
-                                // ->with('lastupdate', $lastupdate->dateu)
-                                // ->with('columnheader', $columnsheader)
-                                // ->with('outlet','nama gudang')
-                                // ->with('outlet',$data[0]['namagudang'] . ' (' . $data[0]['kdgudang'] . ')')
-                                ->toJson(); 
+                                ->with('gudang',$request->fgudang);
+            
+            if ($crud_u == 1) {
+                $dt = $dt->addColumn('upd', function($row){
+                    $btn = '<button type="button" name="update" id="'.$row->id.'" data-toggle="modal" data-target="#editview" class="detail btn btn-primary btn-sm" style="padding-bottom: 0rem; padding-top: 0rem;">Edit</button>';
+                    return $btn;
+                })
+                ->rawColumns(['upd']);    
+            }
+
+            if ($crud_d == 1) {
+                $dt = $dt->addColumn('del', function($row){
+                    $btn = '<button type="button" name="delete" id="'.$row->id.'" data-toggle="modal" class="detail btn btn-primary btn-sm" style="padding-bottom: 0rem; padding-top: 0rem;">Delete</button>';
+                    return $btn;
+                })
+                ->rawColumns(['del']);    
+            }
+                                 
+            return $dt->toJson();
         }
 
         // $editview = $menu->editview;
         $editview = $menu->editview;
 
-
-        
         $db = DB::connection()->getPdo();
         $rs = $db->query($que . ' limit 0');
         for ($i = 0; $i < $rs->columnCount(); $i++) {
@@ -103,9 +118,20 @@ class globreportController extends Controller
                 // $columns[] = $col['native_type'];
                 $dtcolumns[] = ['title' => $col['name'], 'data' => $col['name'], 'name' => $col['name']];
         }
+
+        if ($crud_u == 1 ){
+            $dtcolumns[] = ['title' => 'Upd', 'data' => 'upd', 'name' => 'upd', 'orderable' => 'false', 'searchable' => 'false', 'className' => 'text-right'];
+        }
+
+        if ($crud_d == 1 ){
+            $dtcolumns[] = ['title' => 'Del', 'data' => 'del', 'name' => 'del', 'orderable' => 'false', 'searchable' => 'false', 'className' => 'text-right'];
+        }
+
+
         return view('globalreports.globalreport',
                     compact('title', 'menuid', 'columnheader', 'editview', 'dtcolumns', 
-                            'fdate1','fdate2', 'fgudang')
+                            'fdate1','fdate2', 'fgudang', 
+                            'crud_i')
                 );
 
         // return view('strole');                
