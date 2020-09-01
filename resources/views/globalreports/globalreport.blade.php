@@ -8,29 +8,30 @@
     <div class="row">
         <div class="col-md-12 outerbox">
             <div class="box" style="border-top: 0px solid #d2d6de;">
-
-            {{ $fdate1 }}
-            {{ $fdate2 }}
-
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4"/>
-                            <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
-                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                            </div>
+            
+                <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
+                    @if ($fdate1 == 1)
+                        <label for="fdate1" class="col-sm-1 col-form-label">Tanggal</label>
+                        <div class="col-sm-2">
+                            <input type="text"  name="fdate1" id="fdate1" class="form-control datepicker"  required/>
                         </div>
-                    </div>
+                    @endif
+
+                    @if ($fdate2 == 1)
+                        <label for="fdate2" class="col-sm-1 col-form-label">s/d</label>
+                        <div class="col-sm-2">
+                            <input type="text"  name="fdate2"  id="fdate2" class="form-control datepicker"  required/>
+                        </div>
+                    @endif
                 </div>
-            </div>
+
 
 
                 @if ( $fgudang == 0 )
                     <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
-                        <label for="filter_gudang" class="col-sm-1 col-form-label">Outlet</label>
+                        <label for="fgudang" class="col-sm-1 col-form-label">Outlet</label>
                         <div class="col-sm-4">
-                            <select name="filter_gudang" id="filter_gudang" class="form-control " required>
+                            <select name="fgudang" id="fgudang" class="form-control " required>
                                 <option value=""></option>
                                 @foreach($composer_mstgudang as $dt)
                                     <option value="{{ $dt->kode }}">{{ $dt->nama }}</option>
@@ -98,6 +99,13 @@
 @section('scripts')
 
     <script>
+        $(function(){
+            $(".datepicker").datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                todayHighlight: true,
+            });
+        });
 
 
         $(document).ready(function(){
@@ -110,15 +118,13 @@
                 var xmenuid = {{ $menuid }};
                 var xUrl = "{{ route('gr.show', $menuid) }}"   ;
                 var Xcolumns={!! json_encode($dtcolumns) !!};
-                alert(xUrl);
-                    // [
-                    //     {title: 'Kode', data: 'kode', name: 'kode'},
-                    //     {title: 'Nama Barang', data: 'namabarang', name: 'namabarang'},
-                    //     {title: 'Saldo', data: 'saldo', name: 'saldo', render: numFormat, className: 'text-right'},
-                    //     {title: 'Qty di pesan', data: 'qtydipesan', name: 'qtydipesan', render: numFormat, className: 'text-right'},
-                    //     {title: 'Sisa Saldo', data: 'sisasaldo', name: 'sisasaldo', render: numFormat, className: 'text-right'}
-                    // ];
 
+                var xfdate1 = $('#fdate1').val();
+                var xfdate2 = $('#fdate2').val();
+                var xfgudang = $('#gudang').val();
+
+                alert(xfdate1);
+                alert(xfdate2);
 
                 var dataTable = $('#user_table').DataTable({
                     dom: 'lBfrtip',
@@ -131,11 +137,11 @@
                     serverSide: true,
                     ajax:{  
                             url: xUrl,
-                            data:{menuid:xmenuid, asd:'123qwe' },
+                            data:{menuid:xmenuid, fdate1:xfdate1, fdate2:xfdate2, fgudang:xfgudang },
                             dataType:"json",
                             dataFilter: function(response){
                                     // this to see what exactly is being sent back
-                                    // console.log(response);
+                                    console.log(response);
                                     // var json = jQuery.parseJSON( response );
                                     // json.recordsTotal = json.total;
                                     // json.recordsFiltered = json.total;
@@ -148,13 +154,13 @@
                                 },
                             // success:function(data)
                             //     {
+                            //         console.log(data);
                             //         alert('success');
                             //         // console.log('---------------------------------');
-                            //         // console.log(data);
                             //         // alert(data.posts);
                             //         // $('#name').val(data.name);
                                     
-                            //         return data;
+                            //         // return data;
                             //     },
                             // error : function(xhr, textStatus, errorThrown){
                             //         alert('error');
@@ -196,12 +202,6 @@
 
         });
 
-        function setDatePicker(){
-            $(".datepicker").datetimepicker({
-                format: "YYYY-MM-DD",
-                useCurrent: true
-            })
-        }
 
     </script>
 

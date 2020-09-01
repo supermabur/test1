@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use DataTables;
 use Validator;
@@ -60,9 +61,28 @@ class globreportController extends Controller
         $fgudang = Str::contains($que, '@gudang');
 
         if ($request->ajax()) {
+            if (!empty($request->fdate1)){
+                $xx = Carbon::createFromFormat('d-m-Y', $request->fdate1)->format('Ymd');
+                $que = Str::of($que)->replace('@date1', $xx);
+            }
+
+            if (!empty($request->fdate2)){
+                $xx = Carbon::createFromFormat('d-m-Y', $request->fdate2)->format('Ymd');
+                $que = Str::of($que)->replace('@date2', $xx);
+            }
+
+            if (!empty($request->fgudang)){
+                $que = Str::of($que)->replace('@gudang', $request->fgudang);
+            }
+
+
             $data = DB::Select($que);
 
             return Datatables::of($data)
+                                ->with('xx', $que)
+                                ->with('fdate1',$request->fdate1)
+                                ->with('fdate2',$request->fdate2)
+                                ->with('gudang',$request->fgudang)
                                 // ->with('lastupdate', $lastupdate->dateu)
                                 // ->with('columnheader', $columnsheader)
                                 // ->with('outlet','nama gudang')
@@ -87,6 +107,8 @@ class globreportController extends Controller
                     compact('title', 'menuid', 'columnheader', 'editview', 'dtcolumns', 
                             'fdate1','fdate2', 'fgudang')
                 );
+
+        // return view('strole');                
     }
 
     /**
