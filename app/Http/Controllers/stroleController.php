@@ -51,7 +51,66 @@ class stroleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return response()->json(['success' => 'Data Added successfully. ' . $request->image]);
+
+        // ----------------------------------VALIDATION
+        $rules = array(
+            'name'      => ['required', \Illuminate\Validation\Rule::unique('strole')->ignore($request->hidden_id)]
+        );
+
+        if ($request->actionx == 'edit')
+        {
+            $rules = array(
+                'name'      => ['required', \Illuminate\Validation\Rule::unique('mstjenis')->ignore($request->hidden_id)]
+            );
+        }
+
+        $errmsg = array(
+            'name.required' => 'Kotak Name belum diisi',
+            'name.unique' => 'Name sudah ada didatabase, silahkan pilih Name yang lain'
+        );
+
+        $error = Validator::make($request->all(), $rules, $errmsg);
+        if($error->fails())
+        {
+            return response()->json(['errors' => $error->errors()->all()]);
+        }
+        
+
+        
+
+        // ----------------------------------CRUD
+        $aktifx = 0;
+        if ($request->input('aktif') == true ){$aktifx=1;}
+
+        $form_data = array(
+            'name' => $request->name,
+            'aktif' => $aktifx,
+            'useru' => 'asda'
+        );
+
+        if ($request->actionx == 'edit')
+        {
+        
+        }
+
+        $tmp = strole::updateOrCreate(['id' => $request->hidden_id], $form_data);   
+
+
+        // // Catat Log trans
+        // $crud = $request->actionx == 'edit'?'u':'i';
+        // $user = auth()->user();
+        // DB::table('log_trans')->insert([
+        //     'table_name'=>'Mstjenis',
+        //     'faktur'=>$tmp->id,
+        //     'crud'=>$crud,
+        //     'info'=>'',
+        //     'ip_user'=>$request->ip(),
+        //     'user_id'=>$user->id,
+        // ]);
+        
+        return response()->json(['success' => $suksesmsg]);
+        $user = auth()->user();
     }
 
     /**
@@ -73,7 +132,8 @@ class stroleController extends Controller
      */
     public function edit(strole $strole)
     {
-        //
+        $data = strole::find($strole);
+        return response()->json($data);
     }
 
     /**

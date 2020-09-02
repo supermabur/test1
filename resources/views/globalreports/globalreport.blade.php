@@ -5,59 +5,10 @@
 @section('content')
 
 
-    <div class="row">
+    <div class="row" name="globrep" id="globrep">
         <div class="col-md-12 outerbox">
             <div class="box" style="border-top: 0px solid #d2d6de;">
-            
-                <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
-                    @if ($fdate1 == 1)
-                        <label for="fdate1" class="col-sm-1 col-form-label">Tanggal</label>
-                        <div class="col-sm-2">
-                            <input type="text"  name="fdate1" id="fdate1" class="form-control datepicker"  required/>
-                        </div>
-                    @endif
 
-                    @if ($fdate2 == 1)
-                        <label for="fdate2" class="col-sm-1 col-form-label">s/d</label>
-                        <div class="col-sm-2">
-                            <input type="text"  name="fdate2"  id="fdate2" class="form-control datepicker"  required/>
-                        </div>
-                    @endif
-                </div>
-
-
-
-                @if ( $fgudang == 1 )
-                    <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
-                        <label for="fgudang" class="col-sm-1 col-form-label">Outlet</label>
-                        <div class="col-sm-5">
-                            <select name="fgudang" id="fgudang" class="form-control " required>
-                                <option value=""></option>
-                                @foreach($composer_mstgudang as $dt)
-                                    <option value="{{ $dt->kode }}">{{ $dt->nama }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                @endif
-
-
-                {{-- <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
-                    <label for="show0" class="col-sm-1 col-form-label">Saldo 0</label>
-                    <div class="col-sm-3">
-                        <select name="show0" id="show0" class="form-control " required>
-                            <option value="TIDAK">Tidak Ditampilkan</option>
-                            <option value="YA">Ditampilkan</option>
-                        </select>
-                    </div>
-                </div> --}}
-
-                <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
-                    <label for="filter" class="col-sm-1 col-form-label"> </label>
-                    <div class="col-sm-3">
-                        <button type="button" name="filter" id="filter" class="btn btn-info">Refresh Data</button>
-                    </div>
-                </div>
 
 
 
@@ -66,6 +17,65 @@
                         <h3 class="card-title judulbiru" id="judulbiru">Data</h3>
                     </div>
                     <!-- /.card-header -->
+
+            
+                    <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
+                        @if ($fdate1 == 1)
+                            <label for="fdate1" class="col-sm-1 col-form-label">Tanggal</label>
+                            <div class="col-sm-2">
+                                <input type="text"  name="fdate1" id="fdate1" class="form-control datepicker"  required/>
+                            </div>
+                        @endif
+    
+                        @if ($fdate2 == 1)
+                            <label for="fdate2" class="col-sm-1 col-form-label">s/d</label>
+                            <div class="col-sm-2">
+                                <input type="text"  name="fdate2"  id="fdate2" class="form-control datepicker"  required/>
+                            </div>
+                        @endif
+                    </div>
+    
+    
+    
+                    @if ( $fgudang == 1 )
+                        <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
+                            <label for="fgudang" class="col-sm-1 col-form-label">Outlet</label>
+                            <div class="col-sm-5">
+                                <select name="fgudang" id="fgudang" class="form-control " required>
+                                    <option value=""></option>
+                                    @foreach($composer_mstgudang as $dt)
+                                        <option value="{{ $dt->kode }}">{{ $dt->nama }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    @endif
+    
+    
+                    {{-- <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
+                        <label for="show0" class="col-sm-1 col-form-label">Saldo 0</label>
+                        <div class="col-sm-3">
+                            <select name="show0" id="show0" class="form-control " required>
+                                <option value="TIDAK">Tidak Ditampilkan</option>
+                                <option value="YA">Ditampilkan</option>
+                            </select>
+                        </div>
+                    </div> --}}
+    
+                    <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
+                        <label for="filter" class="col-sm-1 col-form-label"> </label>
+                        <div class="col-sm-1">
+                            <button type="button" name="filter" id="filter" class="btn btn-primary btn-sm">Refresh Data</button>
+                        </div>
+                        @if ($crud_i == 1)
+                            <div class="col-sm-1">
+                                <button type="button" name="addnew" id="addnew" class="btn btn-info btn-sm">Add New</button>
+                            </div>
+                        @endif
+                    </div>
+
+
+
                     <!-- form start -->
                     <form role="form" style="font-size: 0.8rem;">
                         <div class="card-body">
@@ -90,7 +100,23 @@
         </div>
     </div>
 
-    @include($editview)
+    
+    <div class="row invisible" name="editview" id="editview">
+        <div class="col-md-12 outerbox">
+            <div class="box" style="border-top: 0px solid #d2d6de;">
+
+                <div class="card card-primary" style="box-shadow: none;margin-top: 0.8rem;">
+                    <div class="card-header">
+                      <h3 class="card-title">Quick Example</h3>
+                      <button type="button" name="btnback" id="btnback" class="btn btn-dark btn-sm">Back</button>
+                    </div>
+                    <!-- /.card-header -->
+                    @include($editview)
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 @endsection
 
@@ -99,6 +125,19 @@
 @section('scripts')
 
     <script>
+        $("#addnew, #btnback").click(function(){    
+            if($("#editview").is(":hidden")){
+                if (initEdit('new') == true) {
+                    $("#globrep").hide(200)
+                    $("#editview").show(200);
+                }      
+            } else{
+                $("#editview").hide(200);
+                $("#globrep").show(200)
+            }          
+        });
+
+
         $(function(){
             $(".datepicker").datepicker({
                 format: 'dd-mm-yyyy',
@@ -108,8 +147,14 @@
         });
 
 
-        $(document).ready(function(){
+        function hideeditview() {
+            var element = document.getElementById("editview");
+            element.classList.remove("invisible");
+            $("#editview").hide();
+        }
 
+        $(document).ready(function(){
+            hideeditview();
             // fill_datatable();
 
             function fill_datatable(filter_gudang = '', show0 = 'TIDAK')

@@ -10,4 +10,7 @@ class strole extends Model
     const CREATED_AT = 'datee';
     const UPDATED_AT = 'dateu';
 
+    protected $fillable = [
+        'name','active', 'usere','useru'
+    ];
 }

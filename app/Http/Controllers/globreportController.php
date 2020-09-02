@@ -87,14 +87,6 @@ class globreportController extends Controller
                                 ->with('fdate1',$request->fdate1)
                                 ->with('fdate2',$request->fdate2)
                                 ->with('gudang',$request->fgudang);
-            
-            if ($crud_u == 1) {
-                $dt = $dt->addColumn('upd', function($row){
-                    $btn = '<button type="button" name="update" id="'.$row->id.'" data-toggle="modal" data-target="#editview" class="detail btn btn-primary btn-sm" style="padding-bottom: 0rem; padding-top: 0rem;">Edit</button>';
-                    return $btn;
-                })
-                ->rawColumns(['upd']);    
-            }
 
             if ($crud_d == 1) {
                 $dt = $dt->addColumn('del', function($row){
@@ -102,6 +94,14 @@ class globreportController extends Controller
                     return $btn;
                 })
                 ->rawColumns(['del']);    
+            }
+            
+            if ($crud_u == 1) {
+                $dt = $dt->addColumn('upd', function($row){
+                    $btn = '<button type="button" name="update" id="'.$row->id.'" data-toggle="modal" data-target="#editview" class="detail btn btn-primary btn-sm" style="padding-bottom: 0rem; padding-top: 0rem;">Edit</button>';
+                    return $btn;
+                })
+                ->rawColumns(['upd']);    
             }
                                  
             return $dt->toJson();
