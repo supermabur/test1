@@ -10,7 +10,7 @@
             <div class="box" style="border-top: 0px solid #d2d6de;">
 
 
-
+{{ json_encode($columnnative) }}
 
                 <div class="card card-primary" style="box-shadow: none;margin-top: 0.8rem;">
                     <div class="card-header">

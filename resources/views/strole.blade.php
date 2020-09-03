@@ -94,7 +94,7 @@
                         $('#formx')[0].reset();
                         $('#user_table').DataTable().ajax.reload();
                         alert(data.success);
-                        $('#formModal').modal('hide');
+                        document.getElementById('btnback').click();
                     }
                     $('#saveBtn').html('Save changes');
                 }

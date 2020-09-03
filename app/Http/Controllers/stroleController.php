@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\stmemenu;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class stroleController extends Controller
 {
@@ -58,11 +59,15 @@ class stroleController extends Controller
             'name'      => ['required', \Illuminate\Validation\Rule::unique('strole')->ignore($request->hidden_id)]
         );
 
+        
+        $suksesmsg = 'Penambahan data berhasil';
+        
         if ($request->actionx == 'edit')
         {
             $rules = array(
                 'name'      => ['required', \Illuminate\Validation\Rule::unique('mstjenis')->ignore($request->hidden_id)]
             );
+            $suksesmsg = 'Edit data berhasil';
         }
 
         $errmsg = array(
@@ -86,12 +91,12 @@ class stroleController extends Controller
         $form_data = array(
             'name' => $request->name,
             'aktif' => $aktifx,
-            'useru' => 'asda'
+            'useru' => 1
         );
 
-        if ($request->actionx == 'edit')
+        if ($request->actionx == 'new')
         {
-        
+            $form_data[] = ['usere' => 1] ;
         }
 
         $tmp = strole::updateOrCreate(['id' => $request->hidden_id], $form_data);   

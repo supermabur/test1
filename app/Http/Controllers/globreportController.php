@@ -64,6 +64,35 @@ class globreportController extends Controller
         $crud_u = Str::contains($menu->crud, 'u');
         $crud_d = Str::contains($menu->crud, 'd');
 
+        $editview = $menu->editview;
+
+        $db = DB::connection()->getPdo();
+        $rs = $db->query($que . ' limit 0');
+        for ($i = 0; $i < $rs->columnCount(); $i++) {
+                $col = $rs->getColumnMeta($i);
+                $columnheader[] = $col['name'];
+                $columnnative[] = $col['native_type'];
+
+                switch ($col['native_type']){
+                    case 'BIT':
+                        $dtcolumns[] = ['title' => $col['name'], 'data' => $col['name'], 'name' => $col['name'], 'className' => 'text-center'];
+                        $colbit[] = $col['name'];
+                        break;
+                    default:
+                        $dtcolumns[] = ['title' => $col['name'], 'data' => $col['name'], 'name' => $col['name']];
+                }
+        }
+
+        if ($crud_u == 1 ){
+            $dtcolumns[] = ['title' => 'Upd', 'data' => 'upd', 'name' => 'upd', 'orderable' => 'false', 'searchable' => 'false', 'className' => 'text-right'];
+        }
+
+        if ($crud_d == 1 ){
+            $dtcolumns[] = ['title' => 'Del', 'data' => 'del', 'name' => 'del', 'orderable' => 'false', 'searchable' => 'false', 'className' => 'text-right'];
+        }
+
+
+
         if ($request->ajax()) {
             if (!empty($request->fdate1)){
                 $xx = Carbon::createFromFormat('d-m-Y', $request->fdate1)->format('Ymd');
@@ -92,44 +121,35 @@ class globreportController extends Controller
                 $dt = $dt->addColumn('del', function($row){
                     $btn = '<button type="button" name="delete" id="'.$row->id.'" data-toggle="modal" class="detail btn btn-primary btn-sm" style="padding-bottom: 0rem; padding-top: 0rem;">Delete</button>';
                     return $btn;
-                })
-                ->rawColumns(['del']);    
+                });
+                $rawcol[] = 'del';    
             }
             
             if ($crud_u == 1) {
                 $dt = $dt->addColumn('upd', function($row){
                     $btn = '<button type="button" name="update" id="'.$row->id.'" data-toggle="modal" data-target="#editview" class="detail btn btn-primary btn-sm" style="padding-bottom: 0rem; padding-top: 0rem;">Edit</button>';
                     return $btn;
-                })
-                ->rawColumns(['upd']);    
+                });
+                $rawcol[] = 'upd'; 
             }
-                                 
-            return $dt->toJson();
-        }
 
-        // $editview = $menu->editview;
-        $editview = $menu->editview;
+            if (!empty($colbit)) {
+                foreach ($colbit as $p) {
+                    $dt = $dt->addColumn($p, function($row){
+                        $button = '<input onclick="return false;" type="checkbox" id="'.$row->id.'" name="aktifx" class="me_switch aktifx" '. ($row->$p == 1 ? 'checked':'')  . '> ';
+                        return $button;
+                    });
+                    $rawcol[] = $p;  
+        
+                }
+            }
 
-        $db = DB::connection()->getPdo();
-        $rs = $db->query($que . ' limit 0');
-        for ($i = 0; $i < $rs->columnCount(); $i++) {
-                $col = $rs->getColumnMeta($i);
-                $columnheader[] = $col['name'];
-                // $columns[] = $col['native_type'];
-                $dtcolumns[] = ['title' => $col['name'], 'data' => $col['name'], 'name' => $col['name']];
-        }
-
-        if ($crud_u == 1 ){
-            $dtcolumns[] = ['title' => 'Upd', 'data' => 'upd', 'name' => 'upd', 'orderable' => 'false', 'searchable' => 'false', 'className' => 'text-right'];
-        }
-
-        if ($crud_d == 1 ){
-            $dtcolumns[] = ['title' => 'Del', 'data' => 'del', 'name' => 'del', 'orderable' => 'false', 'searchable' => 'false', 'className' => 'text-right'];
+            return $dt->rawColumns($rawcol)->toJson();
         }
 
 
         return view('globalreports.globalreport',
-                    compact('title', 'menuid', 'columnheader', 'editview', 'dtcolumns', 
+                    compact('title', 'menuid', 'columnheader', 'editview', 'dtcolumns', 'columnnative',
                             'fdate1','fdate2', 'fgudang', 
                             'crud_i')
                 );
