@@ -78,6 +78,12 @@ class globreportController extends Controller
                         $dtcolumns[] = ['title' => $col['name'], 'data' => $col['name'], 'name' => $col['name'], 'className' => 'text-center'];
                         $colbit[] = $col['name'];
                         break;
+                    case 'TIMESTAMP':
+                        $dtcolumns[] = ['title' => $col['name'], 'data' => $col['name'], 'name' => $col['name'], 'className' => 'text-center'];
+                        break;
+                    case 'LONGLONG':
+                        $dtcolumns[] = ['title' => $col['name'], 'data' => $col['name'], 'name' => $col['name'], 'className' => 'text-right'];
+                        break;
                     default:
                         $dtcolumns[] = ['title' => $col['name'], 'data' => $col['name'], 'name' => $col['name']];
                 }
@@ -119,7 +125,7 @@ class globreportController extends Controller
 
             if ($crud_d == 1) {
                 $dt = $dt->addColumn('del', function($row){
-                    $btn = '<button type="button" name="delete" id="'.$row->id.'" data-toggle="modal" class="detail btn btn-primary btn-sm" style="padding-bottom: 0rem; padding-top: 0rem;">Delete</button>';
+                    $btn = '<button type="button" name="btndelete" data-id="'.$row->id.'" data-toggle="modal" class="btndelete detail btn btn-primary btn-sm" style="padding-bottom: 0rem; padding-top: 0rem;">Delete</button>';
                     return $btn;
                 });
                 $rawcol[] = 'del';    
@@ -127,21 +133,23 @@ class globreportController extends Controller
             
             if ($crud_u == 1) {
                 $dt = $dt->addColumn('upd', function($row){
-                    $btn = '<button type="button" name="update" id="'.$row->id.'" data-toggle="modal" data-target="#editview" class="detail btn btn-primary btn-sm" style="padding-bottom: 0rem; padding-top: 0rem;">Edit</button>';
+                    $btn = '<button type="button" name="btnedit" data-id="'.$row->id.'" data-target="#editview" class="btnedit detail btn btn-primary btn-sm" style="padding-bottom: 0rem; padding-top: 0rem;">Edit</button>';
                     return $btn;
                 });
                 $rawcol[] = 'upd'; 
             }
 
             if (!empty($colbit)) {
-                foreach ($colbit as $p) {
-                    $dt = $dt->addColumn($p, function($row){
-                        $button = '<input onclick="return false;" type="checkbox" id="'.$row->id.'" name="aktifx" class="me_switch aktifx" '. ($row->$p == 1 ? 'checked':'')  . '> ';
+                // bit kolom active
+                if(in_array('active', $colbit))
+                {
+                    $dt = $dt->addColumn('active', function($row){
+                        $button = '<input onclick="return false;" type="checkbox" data-id="'.$row->id.'" name="active" class="me_switch active" '. ($row->active == 1 ? 'checked':'')  . '> ';
                         return $button;
                     });
-                    $rawcol[] = $p;  
-        
+                    $rawcol[] = 'active';              
                 }
+
             }
 
             return $dt->rawColumns($rawcol)->toJson();

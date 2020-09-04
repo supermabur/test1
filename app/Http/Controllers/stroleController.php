@@ -65,7 +65,7 @@ class stroleController extends Controller
         if ($request->actionx == 'edit')
         {
             $rules = array(
-                'name'      => ['required', \Illuminate\Validation\Rule::unique('mstjenis')->ignore($request->hidden_id)]
+                'name'      => ['required', \Illuminate\Validation\Rule::unique('strole')->ignore($request->hidden_id)]
             );
             $suksesmsg = 'Edit data berhasil';
         }
@@ -86,7 +86,7 @@ class stroleController extends Controller
 
         // ----------------------------------CRUD
         $aktifx = 0;
-        if ($request->input('aktif') == true ){$aktifx=1;}
+        if ($request->input('active') == true ){$aktifx=1;}
 
         $form_data = array(
             'name' => $request->name,
@@ -124,7 +124,7 @@ class stroleController extends Controller
      * @param  \App\model\strole  $strole
      * @return \Illuminate\Http\Response
      */
-    public function show(strole $strole)
+    public function show($id)
     {
         //
     }
@@ -135,9 +135,9 @@ class stroleController extends Controller
      * @param  \App\model\strole  $strole
      * @return \Illuminate\Http\Response
      */
-    public function edit(strole $strole)
+    public function edit($id)
     {
-        $data = strole::find($strole);
+        $data = strole::find($id);
         return response()->json($data);
     }
 

@@ -111,7 +111,10 @@
                       <button type="button" name="btnback" id="btnback" class="btn btn-dark btn-sm">Back</button>
                     </div>
                     <!-- /.card-header -->
-                    @include($editview)
+
+                    <div class="card-body">
+                        @include($editview)
+                    </div>
                 </div>
 
             </div>
@@ -127,16 +130,19 @@
     <script>
         $("#addnew, #btnback").click(function(){    
             if($("#editview").is(":hidden")){
-                if (initEdit('new') == true) {
-                    $("#globrep").hide(200)
-                    $("#editview").show(200);
-                }      
+                initEdit('new') 
             } else{
                 $("#editview").hide(200);
                 $("#globrep").show(200)
             }          
         });
 
+        $(document).on('click', '.btnedit', function(){
+            if($("#editview").is(":hidden")){
+                var id = $(this).attr('data-id');
+                initEdit('edit', id) 
+            }
+        });
 
         $(function(){
             $(".datepicker").datepicker({
@@ -154,8 +160,11 @@
         }
 
         $(document).ready(function(){
+
+
+
             hideeditview();
-            // fill_datatable();
+            fill_datatable();
 
             function fill_datatable(filter_gudang = '', show0 = 'TIDAK')
             {

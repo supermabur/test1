@@ -184,6 +184,14 @@ select   {
     padding: 0rem .75rem !important;
 }
 
+#form_result p {
+    margin-bottom: 0rem;
+}
+
+#form_result .alert {
+    padding: .2rem 1.25rem;
+}
+
 .medatepicker {
     padding: 0px;
     -webkit-border-radius: 4px;
