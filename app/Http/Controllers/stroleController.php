@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\model\strole;
+use App\model\vwstrolemenupra;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\stmemenu;
@@ -85,12 +86,12 @@ class stroleController extends Controller
         
 
         // ----------------------------------CRUD
-        $aktifx = 0;
-        if ($request->input('active') == true ){$aktifx=1;}
-
+        // return response()->json(['success' => $request->active]);
+        
         $form_data = array(
             'name' => $request->name,
-            'aktif' => $aktifx,
+            'active' => $request->active + 0,
+            // 'active' => 0,
             'useru' => 1
         );
 
@@ -137,7 +138,15 @@ class stroleController extends Controller
      */
     public function edit($id)
     {
-        $data = strole::find($id);
+        // $dtcolumns[] = ['title' => $col['name'], 'data' => $col['name'], 'name' => $col['name'], 'className' => 'text-center'];
+        $data1 = strole::find($id);
+
+        $menumaster = vwstrolemenupra::find($id)->where('menu_parentid',0)->get();
+        $menudetail = vwstrolemenupra::find($id)->where('menu_parentid', '>', 0)->get();
+
+
+
+        $data = ['data' => $data1, 'menu' => $menumaster ];
         return response()->json($data);
     }
 

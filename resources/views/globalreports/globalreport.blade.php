@@ -10,9 +10,9 @@
             <div class="box" style="border-top: 0px solid #d2d6de;">
 
 
-{{ json_encode($columnnative) }}
+{{-- {{ json_encode($columnnative) }} --}}
 
-                <div class="card card-primary" style="box-shadow: none;margin-top: 0.8rem;">
+                <div class="card card-secondary" style="box-shadow: none;margin-top: 0.8rem;">
                     <div class="card-header">
                         <h3 class="card-title judulbiru" id="judulbiru">Data</h3>
                     </div>
@@ -62,14 +62,14 @@
                         </div>
                     </div> --}}
     
-                    <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
-                        <label for="filter" class="col-sm-1 col-form-label"> </label>
-                        <div class="col-sm-1">
-                            <button type="button" name="filter" id="filter" class="btn btn-primary btn-sm">Refresh Data</button>
+                    <div class="form-group row" style="padding-left: 1.25rem; padding-right: 1.25rem;">
+                        {{-- <label for="filter" class="col-sm-1 col-form-label"> </label> --}}
+                        <div class="col-sm-2">
+                            <button type="button" name="filter" id="filter" class="btn btn-primary btn-sm" style="width: 100%">Refresh Data</button>
                         </div>
                         @if ($crud_i == 1)
-                            <div class="col-sm-1">
-                                <button type="button" name="addnew" id="addnew" class="btn btn-info btn-sm">Add New</button>
+                            <div class="col-sm-2">
+                                <button type="button" name="addnew" id="addnew" class="btn btn-info btn-sm" style="width: 100%">Add New</button>
                             </div>
                         @endif
                     </div>
@@ -107,7 +107,7 @@
 
                 <div class="card card-primary" style="box-shadow: none;margin-top: 0.8rem;">
                     <div class="card-header">
-                      <h3 class="card-title">Quick Example</h3>
+                      <h3 class="card-title" id="headeredit">Quick Example</h3>
                       <button type="button" name="btnback" id="btnback" class="btn btn-dark btn-sm">Back</button>
                     </div>
                     <!-- /.card-header -->
@@ -130,15 +130,17 @@
     <script>
         $("#addnew, #btnback").click(function(){    
             if($("#editview").is(":hidden")){
-                initEdit('new') 
+                $("#headeredit").text("Tambah Data Baru");
+                initEdit('new') ;
             } else{
                 $("#editview").hide(200);
-                $("#globrep").show(200)
+                $("#globrep").show(200);
             }          
         });
 
         $(document).on('click', '.btnedit', function(){
             if($("#editview").is(":hidden")){
+                $("#headeredit").text("Edit Data");
                 var id = $(this).attr('data-id');
                 initEdit('edit', id) 
             }
@@ -192,7 +194,7 @@
                             dataType:"json",
                             dataFilter: function(response){
                                     // this to see what exactly is being sent back
-                                    console.log(response);
+                                    // console.log(response);
                                     // var json = jQuery.parseJSON( response );
                                     // json.recordsTotal = json.total;
                                     // json.recordsFiltered = json.total;
