@@ -6,8 +6,8 @@
 <!-- form start -->
 
 {{-- <script src="//code.jquery.com/jquery-1.11.3.min.js"></script> --}}
-<script src="{{ url('js/highchecktree.js') }}"></script>
-<link rel="stylesheet" href="{{ url('css/highCheckTree.css') }}">
+{{-- <script src="{{ url('js/highchecktree.js') }}"></script>
+<link rel="stylesheet" href="{{ url('css/highCheckTree.css') }}"> --}}
 
 
 <form method="post" id="formx" class="form-horizontal" enctype="multipart/form-data" novalidate>
@@ -37,11 +37,17 @@
                 <div class="card-header">
                     <h3 class="card-title">Menu</h3>
                 </div>
+
                 
+
+
                 <form class="form-horizontal">
                     <div class="card-body">
                         <div id="tree-container">
                         </div>
+
+                        <div class="treeview"></div>
+
                     </div>
                 </form>
             </div>
@@ -66,12 +72,12 @@
 <script>
 
 
-var mockData = [];
+    var mockData = [];
         mockData.push({
         item:{
             id: 'id1',
             label: 'label1',
-            checked: false
+            checked: 'false'
         },
         children: [{
             item:{
@@ -83,13 +89,13 @@ var mockData = [];
             item:{
             id: 'id12',
             label: 'label12',
-            checked: false
+            checked: '1'
             } 
         },{
             item:{
             id: 'id13',
             label: 'label13',
-            checked: false
+            checked: ''
             } 
         }]
         });
@@ -153,15 +159,19 @@ var mockData = [];
             }
             }]
         }]
-        });
+    });
 
-
-
-
-
-    $('#tree-container').highCheckTree({
+    
+    function initializePlugins() {
+        $('#tree-container').highCheckTree({
             data: mockData
         });
+    };
+
+    // $('#tree-container').highCheckTree({
+    //     data: mockData
+    // });
+
 
     function initEdit(actio = 'new', id = ''){
         $('#formx')[0].reset();
@@ -183,8 +193,17 @@ var mockData = [];
                         $('#actionx').val("edit");
                         $("#globrep").hide(200)
                         $("#editview").show(200);
+
+
+                        var xxx= data.menu;
+                        console.log(mockData);
+
+                        $('#tree-container').highCheckTree({
+                            data: xxx
+                        });
+
                     }
-            })            
+            })       
         }
         else
         {
@@ -232,43 +251,6 @@ var mockData = [];
                 }
             })
         });
-
-
-
-        // // https://www.studentstutorial.com/laravel/laravel-ajax-insert
-
-        // $('#butsave').on('click', function() {
-        //   var name = $('#name').val();
-        //   var active = $('#active').val();
-        //   if(name!=""){
-        //     //   $("#butsave").attr("disabled", "disabled");
-        //       $.ajax({
-        //           url: "/strole",
-        //           type: "POST",
-        //           data: {
-        //               _token: $("#csrf").val(),
-        //               type: 1,
-        //               name: name,
-        //               active: active
-        //           },
-        //           cache: false,
-        //           success: function(dataResult){
-        //               console.log(dataResult);
-        //               var dataResult = JSON.parse(dataResult);
-        //               if(dataResult.statusCode==200){
-        //                 window.location = "/userData";				
-        //               }
-        //               else if(dataResult.statusCode==201){
-        //                  alert("Error occured !");
-        //               }
-                      
-        //           }
-        //       });
-        //   }
-        //   else{
-        //       alert('Please fill all the field !');
-        //   }
-        // });
 
 
     });

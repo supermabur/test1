@@ -29,6 +29,8 @@
   {{-- DatePicker --}}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"/>
 
+  <link rel="stylesheet" href="{{ url('css/highCheckTree.css') }}">
+
   <!-- summernote -->
   <link rel="stylesheet" href="{{ url('adminlte3/plugins/summernote/summernote-bs4.css') }}">
   <!-- Google Font: Source Sans Pro -->
@@ -154,6 +156,8 @@
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="{{ url('js/highchecktree.js') }}"></script>
+
 
 
 

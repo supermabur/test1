@@ -4,7 +4,6 @@
 
 @section('content')
 
-
     <div class="row" name="globrep" id="globrep">
         <div class="col-md-12 outerbox">
             <div class="box" style="border-top: 0px solid #d2d6de;">
@@ -146,13 +145,13 @@
             }
         });
 
-        $(function(){
-            $(".datepicker").datepicker({
-                format: 'dd-mm-yyyy',
-                autoclose: true,
-                todayHighlight: true,
-            });
-        });
+        // $(function(){
+        //     $(".datepicker").datepicker({
+        //         format: 'dd-mm-yyyy',
+        //         autoclose: true,
+        //         todayHighlight: true,
+        //     });
+        // });
 
 
         function hideeditview() {
@@ -162,8 +161,6 @@
         }
 
         $(document).ready(function(){
-
-
 
             hideeditview();
             fill_datatable();

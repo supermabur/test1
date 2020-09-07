@@ -141,12 +141,25 @@ class stroleController extends Controller
         // $dtcolumns[] = ['title' => $col['name'], 'data' => $col['name'], 'name' => $col['name'], 'className' => 'text-center'];
         $data1 = strole::find($id);
 
-        $menumaster = vwstrolemenupra::find($id)->where('menu_parentid',0)->get();
-        $menudetail = vwstrolemenupra::find($id)->where('menu_parentid', '>', 0)->get();
+        $menumaster = vwstrolemenupra::where('menu_parentid',0)->where('id', $id)->get();
+
+        foreach ($menumaster as $mm){
+            if($mm->menu_haschild > 0 ){
+                
+                $menudetail = vwstrolemenupra::where('menu_parentid', $mm->menu_id)->where('id', $id)->get();
+                $mmd = array();
+                foreach($menudetail as $md){                    
+                    $mmd[] = ['item' => ['id' => $md->id, 'label' => $md->menu_name, 'checked' => $md->checked ==1?'true':'' ] ];
+                }
+
+                $menu[] = [['children' => $mmd], 'item' => ['id' => $mm->id, 'label' => $mm->menu_name, 'checked' => $mm->checked ==1?'true':'' ] ];
+                // $menu[] = ['children' => $mmd];
+            }
+        }
 
 
 
-        $data = ['data' => $data1, 'menu' => $menumaster ];
+        $data = ['data' => $data1, 'menu' => $menu ];
         return response()->json($data);
     }
 
