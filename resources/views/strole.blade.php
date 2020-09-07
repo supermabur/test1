@@ -38,18 +38,10 @@
                     <h3 class="card-title">Menu</h3>
                 </div>
 
-                
-
-
-                <form class="form-horizontal">
-                    <div class="card-body">
-                        <div id="tree-container">
-                        </div>
-
-                        <div class="treeview"></div>
-
+                <div class="card-body">
+                    <div id="tree-container">
                     </div>
-                </form>
+                </div>
             </div>
         </div>        
     </div>
@@ -69,160 +61,68 @@
 
 </form>
 
+
+
+
+
 <script>
 
-
-    var mockData = [];
-        mockData.push({
-        item:{
-            id: 'id1',
-            label: 'label1',
-            checked: 'false'
-        },
-        children: [{
-            item:{
-            id: 'id11',
-            label: 'label11',
-            checked: false
-            } 
-        },{
-            item:{
-            id: 'id12',
-            label: 'label12',
-            checked: '1'
-            } 
-        },{
-            item:{
-            id: 'id13',
-            label: 'label13',
-            checked: ''
-            } 
-        }]
-        });
-
-        mockData.push({
-        item:{
-            id: 'id2',
-            label: 'label2',
-            checked: false
-        },
-        children: [{
-            item:{
-            id: 'id21',
-            label: 'label21',
-            checked: false
-            } 
-        },{
-            item:{
-            id: 'id22',
-            label: 'label22',
-            checked: true
-            } 
-        },{
-            item:{
-            id: 'id23',
-            label: 'label23',
-            checked: false
-            } 
-        }]
-        });
-
-        mockData.push({
-        item:{
-            id: 'id3',
-            label: 'label3',
-            checked: false
-        },
-        children: [{
-            item:{
-            id: 'id31',
-            label: 'label31',
-            checked: true
-            } 
-        },{
-            item:{
-            id: 'id32',
-            label: 'label32',
-            checked: false
-            },
-            children: [{
-            item:{
-                id: 'id321',
-                label: 'label321',
-                checked: false
-            }
-            },{
-            item:{
-                id: 'id322',
-                label: 'label322',
-                checked: false
-            }
-            }]
-        }]
-    });
-
-    
-    function initializePlugins() {
-        $('#tree-container').highCheckTree({
-            data: mockData
-        });
-    };
-
-    // $('#tree-container').highCheckTree({
-    //     data: mockData
-    // });
-
-
-    function initEdit(actio = 'new', id = ''){
+    function initEdit(actio = 'new', id = '1'){
         $('#formx')[0].reset();
         $('#form_result').html('');
         $('#actionx').val(actio);
+        $('#hidden_id').val('');
         
-        if (actio == 'edit') {
-            $.ajax({
-                url:"/strole/"+id+"/edit",
-                dataType:"json",
-                success:function(data)
-                    {
-                        console.log(data.menu);
-                        $('#name').val(data.data.name);
-                        $('#active').prop('checked', data.data.active);
-                        // $('.modal-title').text("Edit Record");
-                        $('#action_button').val("Edit");
+        $.ajax({
+            url:"/strole/"+id+"/edit",
+            dataType:"json",
+            success:function(data)
+                {
+                    $('#name').val(data.data.name);
+                    $('#active').prop('checked', data.data.active);
+                    if (actio = 'edit') {
                         $('#hidden_id').val(data.data.id);
-                        $('#actionx').val("edit");
-                        $("#globrep").hide(200)
-                        $("#editview").show(200);
-
-
-                        var xxx= data.menu;
-                        console.log(mockData);
-
-                        $('#tree-container').highCheckTree({
-                            data: xxx
-                        });
-
                     }
-            })       
-        }
-        else
-        {
-            $("#globrep").hide(200)
-            $("#editview").show(200);
-        }
+                    $("#globrep").hide(200);
+                    $("#editview").show(200);
 
+                    $('#tree-container').highCheckTree({
+                        data: data.menu
+                    });
+
+                }
+        })       
     }
 
 
     $(document).ready(function() {
 
+
+
+
         $('#formx').on('submit', function(event){
             event.preventDefault();
+
             $('#saveBtn').html('Saving...');
+
+            var lis = document.getElementById("tree-container").getElementsByTagName("li");
+            console.log($(lis[0]).attr('rel'));
+            console.log(lis[1].innerHTML.indexOf('checked'));
+            
+            var mnu = [];
+            for (var i = 0; i < lis.length; i++) {
+                if(lis[i].innerHTML.indexOf('checked') > -1){
+                    mnu.push($(lis[i]).attr('rel'));
+                } 
+            }
+
+            var fd =  new FormData(this);
+            fd.append('mnu', mnu);
+
             $.ajax({
                 url:"{{ route('strole.store') }}",
                 method:"POST",
-                data: new FormData(this),
+                data: fd,
                 contentType: false,
                 cache:false,
                 processData: false,
@@ -245,6 +145,7 @@
                         $('#formx')[0].reset();
                         $('#user_table').DataTable().ajax.reload();
                         alert(data.success);
+                        console.log(data.success);
                         document.getElementById('btnback').click();
                     }
                     $('#saveBtn').html('Save changes');

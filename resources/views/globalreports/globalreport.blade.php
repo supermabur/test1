@@ -141,7 +141,7 @@
             if($("#editview").is(":hidden")){
                 $("#headeredit").text("Edit Data");
                 var id = $(this).attr('data-id');
-                initEdit('edit', id) 
+                initEdit('edit', id);
             }
         });
 

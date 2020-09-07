@@ -53,7 +53,7 @@ class stroleController extends Controller
      */
     public function store(Request $request)
     {
-        // return response()->json(['success' => 'Data Added successfully. ' . $request->image]);
+        // return response()->json(['success' => $request->mnu]);
 
         // ----------------------------------VALIDATION
         $rules = array(
@@ -103,6 +103,17 @@ class stroleController extends Controller
         $tmp = strole::updateOrCreate(['id' => $request->hidden_id], $form_data);   
 
 
+        
+        // -------------------------------------CRUD strolemenu
+        DB::delete('delete from strolemenu where id_role = ?', [$request->hidden_id]);
+            // return response()->json(['success' => $request->mnu]);
+
+        $myA = explode(',', $request->mnu);
+        foreach($myA as $mnu){
+            DB::insert('INSERT INTO strolemenu(`id_role`, `id_menu`, `usere`, `useru`) VALUES (?,?,?,?)', [$request->hidden_id, $mnu, 1, 1]);
+        }
+
+
         // // Catat Log trans
         // $crud = $request->actionx == 'edit'?'u':'i';
         // $user = auth()->user();
@@ -149,10 +160,10 @@ class stroleController extends Controller
                 $menudetail = vwstrolemenupra::where('menu_parentid', $mm->menu_id)->where('id', $id)->get();
                 $mmd = array();
                 foreach($menudetail as $md){                    
-                    $mmd[] = ['item' => ['id' => $md->id, 'label' => $md->menu_name, 'checked' => $md->checked ==1?'true':'' ] ];
+                    $mmd[] = ['item' => ['id' => "$md->menu_id", 'label' => $md->menu_name, 'checked' => $md->checked ==1?true:false ] ];
                 }
 
-                $menu[] = [['children' => $mmd], 'item' => ['id' => $mm->id, 'label' => $mm->menu_name, 'checked' => $mm->checked ==1?'true':'' ] ];
+                $menu[] = [ 'item' => ['id' => "$mm->menu_id", 'label' => $mm->menu_name, 'checked' => $mm->checked ==1?true:false ], 'children' => $mmd ];
                 // $menu[] = ['children' => $mmd];
             }
         }
