@@ -5,26 +5,21 @@
 
 <!-- form start -->
 
-{{-- <script src="//code.jquery.com/jquery-1.11.3.min.js"></script> --}}
-{{-- <script src="{{ url('js/highchecktree.js') }}"></script>
-<link rel="stylesheet" href="{{ url('css/highCheckTree.css') }}"> --}}
-
-
-<form method="post" id="formx" class="form-horizontal" enctype="multipart/form-data" novalidate>
+<form method="post" id="formx" class="form-vertical" enctype="multipart/form-data" novalidate>
     @csrf
 
     <div class="row">
         <div class="col-sm-6">
             <div class="form-group row">
-                <label for="name" class="col-sm-1 col-form-label">Name</label>
-                <div class="col-sm-5">
+                <label for="name" class="col-sm-6 col-form-label">Name</label>
+                <div class="col-sm-6">
                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="" maxlength="32" required="" autofocus>
                 </div>
             </div>
         
             <div class="form-group row">
-                <label for="aktif" class="col-sm-1 col-form-label">Aktif</label>
-                <div class="col-sm-5">
+                <label for="aktif" class="col-sm-6 col-form-label">Aktif</label>
+                <div class="col-sm-6">
                     {{-- A checkbox input in not sent in the request when it's unchecked, in that case the hidden input will be sent with the value 0. When the Checkox is checked, it will overwrite the value to 1. --}}
                     <input type="hidden" name="active" value="0"/>
                     <input id="active" name="active" value="1" class="form-check" type="checkbox" value="true">
@@ -46,9 +41,6 @@
         </div>        
     </div>
 
-
-
-
     <span id="form_result"></span>
 
     <div class="card-footer">
@@ -66,7 +58,6 @@
 
 
 <script>
-
     function initEdit(actio = 'new', id = '1'){
         $('#formx')[0].reset();
         $('#form_result').html('');
@@ -89,26 +80,39 @@
                     $('#tree-container').highCheckTree({
                         data: data.menu
                     });
-
+                    
+                    clickmenu();
                 }
         })       
     }
 
+    function clickmenu(){
+        var divs = document.querySelectorAll('.collapsed'); 
+        if (divs.length > 0 ){
+            for (i = 0; i < divs.length ; ++i) {
+                try {
+                    divs[i].click();
+                }
+                catch(err) {
+                    console.log(err.message);
+                }                            
+            };
+            // recursive dong
+            clickmenu();
+        }
+    }
+
+
 
     $(document).ready(function() {
-
-
-
 
         $('#formx').on('submit', function(event){
             event.preventDefault();
 
             $('#saveBtn').html('Saving...');
 
+            // ambil menu yg tercentang----------
             var lis = document.getElementById("tree-container").getElementsByTagName("li");
-            console.log($(lis[0]).attr('rel'));
-            console.log(lis[1].innerHTML.indexOf('checked'));
-            
             var mnu = [];
             for (var i = 0; i < lis.length; i++) {
                 if(lis[i].innerHTML.indexOf('checked') > -1){
@@ -116,6 +120,7 @@
                 } 
             }
 
+            // ambil semua inputan di form dan di tambahi array menu----------
             var fd =  new FormData(this);
             fd.append('mnu', mnu);
 
@@ -145,7 +150,6 @@
                         $('#formx')[0].reset();
                         $('#user_table').DataTable().ajax.reload();
                         alert(data.success);
-                        console.log(data.success);
                         document.getElementById('btnback').click();
                     }
                     $('#saveBtn').html('Save changes');
