@@ -7,6 +7,7 @@ use Illuminate\View\View;
 use App\Repositories\UserRepository;
 use App\mstgudang;
 use App\stmemenu;
+use App\model\strole;
 
 
 class UserComposer
@@ -40,7 +41,9 @@ class UserComposer
         $view->with('composer_stmemenu', stmemenu::orderBy('name')->get());
         $view->with('composer_stmemenu_h', stmemenu::where('parentid','0')->orderBy('urut')->get());
         $view->with('composer_stmemenu_d', stmemenu::where('parentid','<>','0')->orderBy('urut')->get());
-        
+ 
+        $view->with('composer_strole', strole::select(['id', 'name as text'])->where('id', '>','1')->orderBy('name')->get());
+
         $view->with('composer_mstgudang', mstgudang::orderBy('nama')->where('kode','<>',"''")->get());
                                                 
     }

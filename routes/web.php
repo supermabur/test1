@@ -22,7 +22,7 @@ Route::get('/adminlte3_starter', function () {
 });
 
 
-Route::get('/adminlte3_index', function () {
+Route::get('/xxx', function () {
     return view('adminlte3/index');
 });
 
