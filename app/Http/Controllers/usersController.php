@@ -43,7 +43,7 @@ class usersController extends Controller
         // ----------------------------------VALIDATION
         $rules = array(
             'name'      => ['required', \Illuminate\Validation\Rule::unique('users')->ignore($request->hidden_id)],
-            'username' => 'required|string|max:255|unique:users',
+            'username' => 'required|string|max:255|unique:users,username,'.$request->hidden_id,
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$request->hidden_id],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         );
@@ -76,6 +76,7 @@ class usersController extends Controller
             'name' => $request->name,
             'active' => $request->active + 0,
             'username' => $request->username,
+            'role_id' => $request->role,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'useru' => 1

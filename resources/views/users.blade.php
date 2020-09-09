@@ -25,12 +25,12 @@
             </div>
 
             <div class="form-group row">
-                    <label for="role">Role</label>
-                    <select class="js-example-basic-single" id="role" name="role" required>
-                        @foreach ($composer_strole as $cp)
-                            <option value="{{ $cp->id }}">{{ $cp->text }}</option>                        
-                        @endforeach
-                    </select>
+                <label for="role">Role</label>
+                <select class="role form-control" id="role" name="role" required>
+                    @foreach ($composer_strole as $cp)
+                        <option value="{{ $cp->id }}">{{ $cp->text }}</option>                        
+                    @endforeach
+                </select>
             </div>
     
             <div class="form-group row">
@@ -50,7 +50,7 @@
             
             <div class="form-group row">
                 <label for="aktif" class="col-sm-6 col-form-label">Aktif</label>
-                <div class="col-sm-6">
+                <div class="col-sm-6" id="aktif" class="form-control">
                     {{-- A checkbox input in not sent in the request when it's unchecked, in that case the hidden input will be sent with the value 0. When the Checkox is checked, it will overwrite the value to 1. --}}
                     <input type="hidden" name="active" value="0"/>
                     <input id="active" name="active" value="1" class="form-check" type="checkbox" value="true">
@@ -84,8 +84,8 @@
         $('#actionx').val(actio);
         $('#hidden_id').val('');
         
-
-        $.ajax({
+        if (actio == 'edit'){
+            $.ajax({
             url:"/users/"+id+"/edit",
             dataType:"json",
             success:function(data)
@@ -93,24 +93,28 @@
                     $('#name').val(data.name);
                     $('#username').val(data.username);
                     $('#email').val(data.email);
+                    $('#role').val(''+ data.role_id);
                     $('#password').val('');
                     $('#password-confirm').val('');
                     $('#active').prop('checked', data.active);
-                    if (actio = 'edit') {
-                        $('#hidden_id').val(data.id);
-                    }
+                    $('#hidden_id').val(data.id);
                     $("#globrep").hide(200);
                     $("#editview").show(200);
-
+                    console.log(data.role_id);
                 }
-        })       
+            })       
+        }
+        else{
+            $("#globrep").hide(200);
+            $("#editview").show(200);
+        }
     }
 
 
 
     $(document).ready(function() {
 
-        $('.js-example-basic-single').select2();
+        $('.role').select2();
 
         $('#formx').on('submit', function(event){
             event.preventDefault();
