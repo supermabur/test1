@@ -104,10 +104,10 @@
         <div class="col-md-12 outerbox">
             <div class="box" style="border-top: 0px solid #d2d6de;">
 
-                <div class="card card-primary" style="box-shadow: none;margin-top: 0.8rem;">
+                <div class="card card-secondary" style="box-shadow: none;margin-top: 0.8rem;">
                     <div class="card-header">
                       <h3 class="card-title" id="headeredit">Quick Example</h3>
-                      <button type="button" name="btnback" id="btnback" class="btn btn-dark btn-sm">Back</button>
+                      <button type="button" name="btnback" id="btnback" class="btn-danger btn-sm">Back</button>
                     </div>
                     <!-- /.card-header -->
 
@@ -129,6 +129,7 @@
     <script>
         $("#addnew, #btnback").click(function(){    
             if($("#editview").is(":hidden")){
+                loading(1);
                 $("#headeredit").text("Tambah Data Baru");
                 initEdit('new') ;
             } else{
@@ -139,6 +140,7 @@
 
         $(document).on('click', '.btnedit', function(){
             if($("#editview").is(":hidden")){
+                loading(1);
                 $("#headeredit").text("Edit Data");
                 var id = $(this).attr('data-id');
                 initEdit('edit', id);
@@ -159,6 +161,39 @@
             element.classList.remove("invisible");
             $("#editview").hide();
         }
+
+
+        function loading(run = 1, xtext = 'Please wait ...'){
+            if (run > 0){
+                $('.box').waitMe({
+                    //none, rotateplane, stretch, orbit, roundBounce, win8, 
+                    //win8_linear, ios, facebook, rotation, timer, pulse, 
+                    //progressBar, bouncePulse or img
+                    effect: 'pulse',
+                    //place text under the effect (string).
+                    text: xtext,
+                    //background for container (string).
+                    bg: 'rgba(255,255,255,0.9)',
+                    //color for background animation and text (string).
+                    color: '#000',
+                    //max size
+                    maxSize: '',
+                    //wait time im ms to close
+                    waitTime: -1,
+                    //url to image
+                    source: '',
+                    //or 'horizontal'
+                    textPos: 'vertical',
+                    //font size
+                    fontSize: ''
+                });
+            }
+            else{
+                $('.box').waitMe("hide");
+            }
+
+        }
+
 
         $(document).ready(function(){
 

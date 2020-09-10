@@ -68,21 +68,23 @@
             url:"/strole/"+id+"/edit",
             dataType:"json",
             success:function(data)
-                {
-                    $('#name').val(data.data.name);
-                    $('#active').prop('checked', data.data.active);
-                    if (actio = 'edit') {
-                        $('#hidden_id').val(data.data.id);
-                    }
-                    $("#globrep").hide(200);
-                    $("#editview").show(200);
-
-                    $('#tree-container').highCheckTree({
-                        data: data.menu
-                    });
-                    
-                    clickmenu();
+            {
+                $('#name').val(data.data.name);
+                $('#active').prop('checked', data.data.active);
+                if (actio = 'edit') {
+                    $('#hidden_id').val(data.data.id);
                 }
+                $("#globrep").hide(200);
+                $("#editview").show(200);
+
+                $('#tree-container').highCheckTree({
+                    data: data.menu
+                });
+                
+                clickmenu();
+                loading(0);
+            }
+
         })       
     }
 
@@ -109,6 +111,7 @@
         $('#formx').on('submit', function(event){
             event.preventDefault();
 
+            loading(1, 'Saving Data ...');
             $('#saveBtn').html('Saving...');
 
             // ambil menu yg tercentang----------
@@ -149,10 +152,11 @@
                     {
                         $('#formx')[0].reset();
                         $('#user_table').DataTable().ajax.reload();
-                        alert(data.success);
+                        // alert(data.success);
                         document.getElementById('btnback').click();
                     }
                     $('#saveBtn').html('Save changes');
+                    loading(0);
                 }
             })
         });

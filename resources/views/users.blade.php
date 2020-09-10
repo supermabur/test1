@@ -48,13 +48,19 @@
                 <input type="password" class="form-control" id="password-confirm" placeholder="Enter password" name="password_confirmation" required autocomplete="new-password">
             </div>
             
-            <div class="form-group row">
-                <label for="aktif" class="col-sm-6 col-form-label">Aktif</label>
-                <div class="col-sm-6" id="aktif" class="form-control">
+            <div class="form-check">
+                <input type="hidden" name="active" value="0"/>
+                <input type="checkbox" class="form-check-input" id="active" name="active" value="1">
+                <label class="form-check-label" for="active">Aktif</label>
+            </div>
+
+            {{-- <div class="form-group row">
+                <label for="aktif">Aktif</label>
+                <div class="col-sm-6" id="aktif" class="form-control"> --}}
                     {{-- A checkbox input in not sent in the request when it's unchecked, in that case the hidden input will be sent with the value 0. When the Checkox is checked, it will overwrite the value to 1. --}}
-                    <input type="hidden" name="active" value="0"/>
+                    {{-- <input type="hidden" name="active" value="0"/>
                     <input id="active" name="active" value="1" class="form-check" type="checkbox" value="true">
-                </div>
+                </div> --}}
             </div>
         </div>
 
@@ -83,6 +89,7 @@
         $('#form_result').html('');
         $('#actionx').val(actio);
         $('#hidden_id').val('');
+        $('#role').val('').trigger('change');
         
         if (actio == 'edit'){
             $.ajax({
@@ -93,20 +100,21 @@
                     $('#name').val(data.name);
                     $('#username').val(data.username);
                     $('#email').val(data.email);
-                    $('#role').val(''+ data.role_id);
+                    $('#role').val(data.role_id).trigger('change');
                     $('#password').val('');
                     $('#password-confirm').val('');
                     $('#active').prop('checked', data.active);
                     $('#hidden_id').val(data.id);
                     $("#globrep").hide(200);
                     $("#editview").show(200);
-                    console.log(data.role_id);
+                    loading(0);
                 }
-            })       
+            })     
         }
         else{
             $("#globrep").hide(200);
             $("#editview").show(200);
+            loading(0);
         }
     }
 
@@ -118,6 +126,7 @@
 
         $('#formx').on('submit', function(event){
             event.preventDefault();
+            loading(1, 'Saving Data ...');
 
             $('#saveBtn').html('Saving...');
 
@@ -149,7 +158,8 @@
                     {
                         $('#formx')[0].reset();
                         $('#user_table').DataTable().ajax.reload();
-                        alert(data.success);
+                        loading(0);
+                        // alert(data.success);
                         document.getElementById('btnback').click();
                     }
                     $('#saveBtn').html('Save changes');
