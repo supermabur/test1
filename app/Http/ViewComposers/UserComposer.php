@@ -2,12 +2,13 @@
 
 namespace App\Http\ViewComposers;
 
-use App\Providers\Auth;
+use Auth;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\UserRepository;
 use App\mstgudang;
 use App\stmemenu;
+use App\model\users;
 use App\model\strole;
 
 
@@ -18,40 +19,33 @@ class UserComposer
         // $view->with('nama', 'nuge');
         $cur_user = \Auth::user();
         
-        
-    	// $view->with('submenu', stmemenu::select('master')->orderby('UrutM')->distinct()->get());
-        // $view->with('submenu',vw_roles_menu::select('master', 'roles_id')->orderby('urutm')->distinct()->get() );
-        // if (empty($cur_user)){
-        //     $view->with('submenu',vw_roles_menu::select('master', 'roles_id')->orderby('urutm')->distinct()->get() );            
-        //     $view->with('menu', vw_roles_menu::select('master','detail', 'routex', 'roles_id')->orderby('UrutM','UrutD')->get());
-        // }
-        // else {
-        //     $view->with('submenu',vw_roles_menu::select('master', 'roles_id')
-        //                 ->where('roles_id', $cur_user->role_id )->orderby('urutm')->distinct()->get());            
-        //     $view->with('menu', vw_roles_menu::select('master','detail', 'routex', 'roles_id')
-        //                 ->where('roles_id', $cur_user->role_id )->orderby('UrutM')->orderby('UrutD')->get());
-        // };
+        if (Auth::check())
+        {
+            $user = users::find(Auth::user()->id);
             
 
+            $view->with('composer_stmemenu', stmemenu::orderBy('name')->get());
 
 
-        // $view->with('composer_mstkota', Mstjenis::select('id', 'name')->orderby('id')->get());
-        // $view->with('composer_mstkota', cpMstKota::select('id','name')->orderBy('id')->get());
+            $queh = "SELECT a.* FROM vwstmemenu a
+                    INNER JOIN vwstrolemenupra b on a.id = b.menu_id and b.checked = 1 and b.id = $user->role_id 
+                    where a.parentid = '0'
+                    ";
+
+            $qued = "SELECT a.* FROM vwstmemenu a
+                    INNER JOIN vwstrolemenupra b on a.id = b.menu_id and b.checked = 1 and b.id = $user->role_id 
+                    where a.parentid > '0'
+                    ";
+
+            $view->with('composer_stmemenu_h', DB::Select($queh));
+            $view->with('composer_stmemenu_d', DB::Select($qued));
 
 
+            $view->with('composer_strole', strole::select(['id', 'name as text'])->orderBy('name')->get());
 
-        $view->with('composer_stmemenu', stmemenu::orderBy('name')->get());
-        $view->with('composer_stmemenu_h', stmemenu::where('parentid','0')->orderBy('urut')->get());
-        $view->with('composer_stmemenu_d', stmemenu::where('parentid','<>','0')->orderBy('urut')->get());
-
-
-        $que = "SELECT a.* FROM vwstmemenu a
-                INNER JOIN vwstrolemenupra b on a.id = b.menu_id and b.checked = 1 and b.id = 2";
- 
-        $view->with('composer_strole', strole::select(['id', 'name as text'])->orderBy('name')->get());
-
-        $view->with('composer_mstgudang', mstgudang::orderBy('nama')->where('kode','<>',"''")->get());
-                                                
+            $view->with('composer_mstgudang', mstgudang::orderBy('nama')->where('kode','<>',"''")->get());
+        }
+                                                        
     }
 
 }
