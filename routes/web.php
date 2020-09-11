@@ -12,10 +12,10 @@ use App\stmemenu;
 |
 */
 
-Route::get('/', function () {
-    $title = '';
-    return view('welcome', compact('title'));
-});
+// Route::get('/', function () {
+//     $title = '';
+//     return view('welcome', compact('title'));
+// });
 
 Route::get('/adminlte3_starter', function () {
     return view('adminlte3/welcome_adminlte3');
@@ -46,5 +46,5 @@ Route::get('rptpesanrekap_detail', 'rptpesanrekapController@getdetailpesan');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 Route::resource('gr', 'globreportController');

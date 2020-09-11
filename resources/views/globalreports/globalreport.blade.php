@@ -64,11 +64,17 @@
                     <div class="form-group row" style="padding-left: 1.25rem; padding-right: 1.25rem;">
                         {{-- <label for="filter" class="col-sm-1 col-form-label"> </label> --}}
                         <div class="col-sm-2">
-                            <button type="button" name="filter" id="filter" class="btn btn-primary btn-sm" style="width: 100%">Refresh Data</button>
+                            <button type="button" name="filter" id="filter" class="btn btn-primary btn-sm" style="width: 100%">
+                                <i class="fa fa-sync" style="margin-right: 4px;"></i>
+                                Refresh Data
+                            </button>
                         </div>
                         @if ($crud_i == 1)
                             <div class="col-sm-2">
-                                <button type="button" name="addnew" id="addnew" class="btn btn-info btn-sm" style="width: 100%">Add New</button>
+                                <button type="button" name="addnew" id="addnew" class="btn btn-info btn-sm" style="width: 100%">
+                                    <i class="fa fa-plus" style="margin-right: 4px;"></i>
+                                    Add New
+                                </button>
                             </div>
                         @endif
                     </div>
@@ -106,8 +112,11 @@
 
                 <div class="card card-secondary" style="box-shadow: none;margin-top: 0.8rem;">
                     <div class="card-header">
-                      <h3 class="card-title" id="headeredit">Quick Example</h3>
-                      <button type="button" name="btnback" id="btnback" class="btn-danger btn-sm">Back</button>
+                        <h3 class="card-title" id="headeredit">Quick Example</h3>
+                        <button type="button" name="btnback" id="btnback" class="btn-danger btn-sm">
+                            <i class="fa fa-arrow-alt-circle-left" style="margin-right: 4px;"></i>
+                            Back
+                        </button>
                     </div>
                     <!-- /.card-header -->
 

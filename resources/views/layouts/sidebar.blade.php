@@ -18,8 +18,18 @@
             <img src="{{ url('adminlte3/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block">Back Office</a>
+            <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST">
+              @csrf
+              <button type="submit" class="btn btn-danger btn-sm" id="saveBtn">
+                <i class="fa fa-sign-out-alt" style="margin-right: 4px;"></i>
+                Logout
+              </button>
+            </form>
           </div>
+
+        
         </div>
 
         <!-- Sidebar Menu -->

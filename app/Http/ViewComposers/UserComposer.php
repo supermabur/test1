@@ -4,6 +4,7 @@ namespace App\Http\ViewComposers;
 
 use App\Providers\Auth;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\DB;
 use App\Repositories\UserRepository;
 use App\mstgudang;
 use App\stmemenu;
@@ -16,6 +17,7 @@ class UserComposer
     {
         // $view->with('nama', 'nuge');
         $cur_user = \Auth::user();
+        
         
     	// $view->with('submenu', stmemenu::select('master')->orderby('UrutM')->distinct()->get());
         // $view->with('submenu',vw_roles_menu::select('master', 'roles_id')->orderby('urutm')->distinct()->get() );
@@ -41,6 +43,10 @@ class UserComposer
         $view->with('composer_stmemenu', stmemenu::orderBy('name')->get());
         $view->with('composer_stmemenu_h', stmemenu::where('parentid','0')->orderBy('urut')->get());
         $view->with('composer_stmemenu_d', stmemenu::where('parentid','<>','0')->orderBy('urut')->get());
+
+
+        $que = "SELECT a.* FROM vwstmemenu a
+                INNER JOIN vwstrolemenupra b on a.id = b.menu_id and b.checked = 1 and b.id = 2";
  
         $view->with('composer_strole', strole::select(['id', 'name as text'])->orderBy('name')->get());
 

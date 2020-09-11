@@ -14,38 +14,38 @@
         
 
         <div class="col-sm-6">
-            <div class="form-group row">
+            <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required>
+                <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="Enter name" required>
             </div>
     
-            <div class="form-group row">
+            <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username" required>
+                <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="Enter Username" required>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group">
                 <label for="role">Role</label>
-                <select class="role form-control" id="role" name="role" required>
+                <select class="role form-control form-control-sm" id="role" name="role" required>
                     @foreach ($composer_strole as $cp)
                         <option value="{{ $cp->id }}">{{ $cp->text }}</option>                        
                     @endforeach
                 </select>
             </div>
     
-            <div class="form-group row">
+            <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email">
+                <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder="Enter Email">
             </div>
     
-            <div class="form-group row">
+            <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Enter password" name="password" required autocomplete="new-password">
+                <input type="password" class="form-control form-control-sm" id="password" placeholder="Enter password" name="password" required autocomplete="new-password">
             </div>
     
-            <div class="form-group row">
+            <div class="form-group">
                 <label for="password-confirm">Password</label>
-                <input type="password" class="form-control" id="password-confirm" placeholder="Enter password" name="password_confirmation" required autocomplete="new-password">
+                <input type="password" class="form-control form-control-sm" id="password-confirm" placeholder="Enter password" name="password_confirmation" required autocomplete="new-password">
             </div>
             
             <div class="form-check">
@@ -72,7 +72,10 @@
         <input type="hidden" name="hidden_id" id="hidden_id" />
         <input type="hidden" name="actionx" id="actionx" />
         <input type="hidden" name="imageold" id="imageold" />
-        <button type="submit" class="btn btn-info  btn-sm" id="saveBtn" value="create">Save Changes</button>
+        <button type="submit" class="btn btn-info  btn-sm" id="saveBtn" value="create">
+            <i class="fa fa-save" style="margin-right: 4px;"></i>
+            Save Changes
+        </button>
     </div>
 
 
@@ -158,11 +161,11 @@
                     {
                         $('#formx')[0].reset();
                         $('#user_table').DataTable().ajax.reload();
-                        loading(0);
                         // alert(data.success);
                         document.getElementById('btnback').click();
                     }
                     $('#saveBtn').html('Save changes');
+                    loading(0);
                 }
             })
         });

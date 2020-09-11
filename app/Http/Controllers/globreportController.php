@@ -13,6 +13,17 @@ use App\stmemenu;
 class globreportController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -133,7 +144,9 @@ class globreportController extends Controller
             
             if ($crud_u == 1) {
                 $dt = $dt->addColumn('upd', function($row){
-                    $btn = '<button type="button" name="btnedit" data-id="'.$row->id.'" data-target="#editview" class="btnedit detail btn btn-primary btn-sm" style="padding-bottom: 0rem; padding-top: 0rem;">Edit</button>';
+                    $btn = '<button type="button" name="btnedit" data-id="'.$row->id.'" data-target="#editview" class="btnedit detail btn btn-primary btn-sm" style="padding-bottom: 0rem; padding-top: 0rem;">
+                                Edit
+                            </button>';
                     return $btn;
                 });
                 $rawcol[] = 'upd'; 
