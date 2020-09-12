@@ -46,5 +46,6 @@ Route::get('rptpesanrekap_detail', 'rptpesanrekapController@getdetailpesan');
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
+// Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index');
 Route::resource('gr', 'globreportController');

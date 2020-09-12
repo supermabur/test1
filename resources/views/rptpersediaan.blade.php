@@ -112,6 +112,7 @@
 
             var dataTable = $('#user_table').DataTable({
                 dom: 'lBfrtip',
+                keys: true,
                 lengthMenu: [[50, 100, 250, -1], [50, 100, 250, 'ALL']],
                 buttons: {!! json_encode(config('global.dt_button')) !!},
                 processing: true,
