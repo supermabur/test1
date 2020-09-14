@@ -49,3 +49,5 @@ Auth::routes();
 // Route::get('/', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@index');
 Route::resource('gr', 'globreportController');
+
+Route::get('coba', function(){return view('coba');});
