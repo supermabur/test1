@@ -203,7 +203,7 @@
                         dataType:"json",
                         dataFilter: function(response){
                                 // this to see what exactly is being sent back
-                                console.log(response);
+                                // console.log(response);
                                 var json = jQuery.parseJSON( response );
                                 // json.recordsTotal = json.total;
                                 // json.recordsFiltered = json.total;

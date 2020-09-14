@@ -28,8 +28,12 @@
 @section('scripts')
     <script>
         $(document).ready(function(){
+
             $('.btnui').changeBg({background: 'yellow'});
-            $('.mstbrg').mstbarang();
+            $('.mstbrg').mstbarang({
+                urlx:"{{ route('databrowser.store') }}",
+                tokenx:"{{ csrf_token() }}"
+            });
         });
     </script>
 @endsection
