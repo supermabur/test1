@@ -62,7 +62,7 @@
             htmlx += "  <div class='modal-dialog' role='document'>";
             htmlx += "    <div class='modal-content'>";
             htmlx += "      <div class='modal-header'>";
-            htmlx += "        <h5 class='modal-title' id='exampleModalLabel'>Modal title</h5>";
+            htmlx += "        <h5 class='modal-title' id='exampleModalLabel'>Modal title x</h5>";
             htmlx += "        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>";
             htmlx += "          <span aria-hidden='true'>&times;</span>";
             htmlx += "        </button>";
@@ -85,31 +85,35 @@
 
             $('.mstbarangbtnadd').click(function(){
                 $('#mstbarangmodal').modal('show'); 
+                console.log('datadata')
+                $('#mstbarangtable').Datatable();
+                // $('#mstbarangtable').Datatable({
+                //     dom: 'lBfrtip',
+                //     keys: true,
+                //     processing: true,
+                //     serverSide: true,
+                //     ajax:{  
+                //             url: "/databrowser",
+                //             data:{datamenu:1},
+                //             dataType:"json",
+                //             dataFilter: function(response){
+                //                     console.log(response);
+                //                     var json = jQuery.parseJSON( response );
+                //                     return response;
+                //                 },
+                //             success:function(data)
+                //                 {
+                //                     console.log(data);
+                //                     return data;
+                //                 },
+                //             },
+                //     // columns:Xcolumns
+                // });
             });
 
 
-            $('#mstbarangtable').Datatable({
-                dom: 'lBfrtip',
-                keys: true,
-                processing: true,
-                serverSide: true,
-                ajax:{  
-                        url: "/databrowser",
-                        data:{datamenu:1},
-                        dataType:"json",
-                        dataFilter: function(response){
-                                console.log(response);
-                                var json = jQuery.parseJSON( response );
-                                return response;
-                            },
-                        success:function(data)
-                            {
-                                console.log(data);
-                                return data;
-                            },
-                        },
-                // columns:Xcolumns
-            });
+
+
 
             var inp = document.getElementById('mstbaranginput');
             inp.addEventListener("keypress", function(e){
