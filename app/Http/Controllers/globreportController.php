@@ -80,7 +80,8 @@ class globreportController extends Controller
         $db = DB::connection()->getPdo();
         $rs = $db->query($que . ' limit 0');
         for ($i = 0; $i < $rs->columnCount(); $i++) {
-                $col = $rs->getColumnMeta($i);
+            $col = $rs->getColumnMeta($i);
+            if($col['name'] <> 'crud'){
                 $columnheader[] = $col['name'];
                 $columnnative[] = $col['native_type'];
 
@@ -98,6 +99,7 @@ class globreportController extends Controller
                     default:
                         $dtcolumns[] = ['title' => $col['name'], 'data' => $col['name'], 'name' => $col['name']];
                 }
+            }
         }
 
         if ($crud_u == 1 ){
@@ -126,10 +128,11 @@ class globreportController extends Controller
             }
 
 
-            $data = DB::Select($que);
+            $data = DB::select(DB::raw($que));
+
 
             $dt = Datatables::of($data)
-                                ->with('xx', $que)
+                                ->with('xx', $data)
                                 ->with('fdate1',$request->fdate1)
                                 ->with('fdate2',$request->fdate2)
                                 ->with('gudang',$request->fgudang);
@@ -144,7 +147,8 @@ class globreportController extends Controller
             
             if ($crud_u == 1) {
                 $dt = $dt->addColumn('upd', function($row){
-                    $btn = '<button type="button" name="btnedit" data-id="'.$row->id.'" data-target="#editview" class="btnedit detail btn btn-primary btn-sm" style="padding-bottom: 0rem; padding-top: 0rem;">
+                    $btn = ''.$row->crud.'
+                            <button type="button" name="btnedit" data-id="'.$row->id.'" data-target="#editview" class="btnedit detail btn btn-primary btn-xs" style="padding-bottom: 0rem; padding-top: 0rem;">
                                 Edit
                             </button>';
                     return $btn;
