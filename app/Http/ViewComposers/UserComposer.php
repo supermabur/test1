@@ -37,13 +37,13 @@ class UserComposer
                     where a.parentid > '0'
                     ";
 
-            $view->with('composer_stmemenu_h', DB::Select($queh));
-            $view->with('composer_stmemenu_d', DB::Select($qued));
+            $view->with('composer_stmemenu_h', DB::Select(DB::raw($queh)));
+            $view->with('composer_stmemenu_d', DB::Select(DB::raw($qued)));
 
 
             $view->with('composer_strole', strole::select(['id', 'name as text'])->orderBy('name')->get());
 
-            $view->with('composer_mstgudang', mstgudang::orderBy('nama')->where('kode','<>',"''")->get());
+            $view->with('composer_mstgudang', mstgudang::where('kode','<>',"''")->orderBy('nama')->get());
         }
                                                         
     }

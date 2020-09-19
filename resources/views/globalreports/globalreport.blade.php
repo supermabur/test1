@@ -18,27 +18,54 @@
                     <!-- /.card-header -->
 
             
-                    <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
-                        @if ($fdate1 == 1)
-                            <label for="fdate1" class="col-sm-1 col-form-label">Tanggal</label>
-                            <div class="col-sm-2">
-                                <input type="text"  name="fdate1" id="fdate1" class="form-control datepicker"  required/>
-                            </div>
-                        @endif
-    
-                        @if ($fdate2 == 1)
-                            <label for="fdate2" class="col-sm-1 col-form-label">s/d</label>
-                            <div class="col-sm-2">
-                                <input type="text"  name="fdate2"  id="fdate2" class="form-control datepicker"  required/>
-                            </div>
-                        @endif
+                    <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;padding-left: 1.25rem; padding-right: 1.25rem;">
+                            @if ($fdate1 == 1)
+                                <!-- Date range -->            
+                                <div class="col-sm-3">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                Tanggal
+                                            </span>
+                                        </div>
+                                        <input type="text" name="fdate1" id="fdate1" class="form-control float-right datepicker" id="reservation" required>
+                                    </div>
+                                </div>
+                            @endif
+        
+                            @if ($fdate2 == 1)
+                                <div class="col-sm-3">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                S/d
+                                            </span>
+                                        </div>
+                                        <input type="text" name="fdate2" id="fdate2" class="form-control float-right datepicker" id="reservation" required>
+                                    </div>
+                                </div>
+                            @endif
                     </div>
     
     
     
                     @if ( $fgudang == 1 )
-                        <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
-                            <label for="fgudang" class="col-sm-1 col-form-label">Outlet</label>
+                        <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;padding-left: 1.25rem; padding-right: 1.25rem;">
+                            <div class="col-sm-3">
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Gudang</span>
+                                    </div>
+                                    <select name="fgudang" id="fgudang" class="form-control " required>
+                                        <option value="ALL">SEMUA</option>
+                                        @foreach($composer_mstgudang as $dt)
+                                            <option value="{{ $dt->kode }}">{{ $dt->nama }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            {{-- <label for="fgudang" class="col-sm-1 col-form-label">Outlet</label>
                             <div class="col-sm-5">
                                 <select name="fgudang" id="fgudang" class="form-control " required>
                                     <option value=""></option>
@@ -46,7 +73,7 @@
                                         <option value="{{ $dt->kode }}">{{ $dt->nama }}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> --}}
                         </div>
                     @endif
     
@@ -61,7 +88,7 @@
                         </div>
                     </div> --}}
     
-                    <div class="form-group row" style="padding-left: 1.25rem; padding-right: 1.25rem;">
+                    <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;padding-left: 1.25rem; padding-right: 1.25rem;">
                         {{-- <label for="filter" class="col-sm-1 col-form-label"> </label> --}}
                         <div class="col-sm-2">
                             <button type="button" name="filter" id="filter" class="btn btn-primary btn-sm" style="width: 100%">
@@ -121,7 +148,9 @@
                     <!-- /.card-header -->
 
                     <div class="card-body">
-                        @include($editview)
+                        @if(!empty($editview))
+                            @include($editview)
+                        @endif
                     </div>
                 </div>
 
@@ -156,13 +185,13 @@
             }
         });
 
-        // $(function(){
-        //     $(".datepicker").datepicker({
-        //         format: 'dd-mm-yyyy',
-        //         autoclose: true,
-        //         todayHighlight: true,
-        //     });
-        // });
+        $(function(){
+            $(".datepicker").datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                todayHighlight: true,
+            }).datepicker("setDate",'now');;
+        });
 
 
         function hideeditview() {
@@ -218,7 +247,7 @@
 
                 var xfdate1 = $('#fdate1').val();
                 var xfdate2 = $('#fdate2').val();
-                var xfgudang = $('#gudang').val();
+                var xfgudang = $('#fgudang').val();
 
                 var dataTable = $('#user_table').DataTable({
                     dom: 'lBfrtip',
@@ -235,9 +264,9 @@
                             dataType:"json",
                             dataFilter: function(response){
                                     // this to see what exactly is being sent back
-                                    console.log(response);
+                                    // console.log(response);
                                     var json = jQuery.parseJSON( response );
-                                    console.log(json.xx);
+                                    console.log(json.gudang);
                                     // json.recordsTotal = json.total;
                                     // json.recordsFiltered = json.total;
                                     // json.data = json.list;

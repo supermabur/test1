@@ -71,9 +71,8 @@ class globreportController extends Controller
         $fdate2 = Str::contains($que, '@date2');
         $fgudang = Str::contains($que, '@gudang');
 
+        $crud = 0;
         $crud_i = Str::contains($menu->crud, 'i');
-        $crud_u = Str::contains($menu->crud, 'u');
-        $crud_d = Str::contains($menu->crud, 'd');
 
         $editview = $menu->editview;
 
@@ -81,7 +80,8 @@ class globreportController extends Controller
         $rs = $db->query($que . ' limit 0');
         for ($i = 0; $i < $rs->columnCount(); $i++) {
             $col = $rs->getColumnMeta($i);
-            if($col['name'] <> 'crud'){
+            if($col['name'] <> 'crud')
+            {
                 $columnheader[] = $col['name'];
                 $columnnative[] = $col['native_type'];
 
@@ -100,14 +100,14 @@ class globreportController extends Controller
                         $dtcolumns[] = ['title' => $col['name'], 'data' => $col['name'], 'name' => $col['name']];
                 }
             }
+            else
+            {
+                $crud = 1;
+            }
         }
 
-        if ($crud_u == 1 ){
-            $dtcolumns[] = ['title' => 'Upd', 'data' => 'upd', 'name' => 'upd', 'orderable' => 'false', 'searchable' => 'false', 'className' => 'text-right'];
-        }
-
-        if ($crud_d == 1 ){
-            $dtcolumns[] = ['title' => 'Del', 'data' => 'del', 'name' => 'del', 'orderable' => 'false', 'searchable' => 'false', 'className' => 'text-right'];
+        if ($crud == 1 ){
+            $dtcolumns[] = ['title' => 'action', 'data' => 'action', 'name' => 'action', 'orderable' => 'false', 'searchable' => 'false', 'className' => 'text-right'];
         }
 
 
@@ -124,7 +124,12 @@ class globreportController extends Controller
             }
 
             if (!empty($request->fgudang)){
-                $que = Str::of($que)->replace('@gudang', $request->fgudang);
+                if($request->fgudang == 'ALL'){
+                    $que = Str::of($que)->replace('@gudang', "kdgudang");
+                }
+                else{
+                    $que = Str::of($que)->replace('@gudang', "'$request->fgudang'");
+                }
             }
 
 
@@ -132,28 +137,32 @@ class globreportController extends Controller
 
 
             $dt = Datatables::of($data)
-                                ->with('xx', $data)
+                                ->with('xx', $que)
                                 ->with('fdate1',$request->fdate1)
                                 ->with('fdate2',$request->fdate2)
-                                ->with('gudang',$request->fgudang);
-
-            if ($crud_d == 1) {
-                $dt = $dt->addColumn('del', function($row){
-                    $btn = '<button type="button" name="btndelete" data-id="'.$row->id.'" data-toggle="modal" class="btndelete detail btn btn-primary btn-sm" style="padding-bottom: 0rem; padding-top: 0rem;">Delete</button>';
-                    return $btn;
-                });
-                $rawcol[] = 'del';    
-            }
+                                ->with('gudang',"'$request->fgudang'");
             
-            if ($crud_u == 1) {
-                $dt = $dt->addColumn('upd', function($row){
-                    $btn = ''.$row->crud.'
-                            <button type="button" name="btnedit" data-id="'.$row->id.'" data-target="#editview" class="btnedit detail btn btn-primary btn-xs" style="padding-bottom: 0rem; padding-top: 0rem;">
-                                Edit
-                            </button>';
+            if ($crud == 1) {
+                $dt = $dt->addColumn('action', function($row){
+                    $btn = '';
+                    if(Str::contains($row->crud,'u'))
+                    {
+                        $btn .= '<button type="button" name="btnedit" data-id="'.$row->id.'" data-target="#editview" class="btnedit detail btn btn-warning btn-xs" 
+                                    style="padding-bottom: 0rem; padding-top: 0rem;margin-left: 2px;margin-right: 2px;">
+                                    Edit
+                                </button>';
+                    }
+                    if (Str::contains($row->crud,'d'))
+                    {
+                        $btn .= '<button type="button" name="btndelete" data-id="'.$row->id.'" data-target="#editview" class="btndelete detail btn btn-danger btn-xs" 
+                                    style="padding-bottom: 0rem; padding-top: 0rem;margin-left: 2px;margin-right: 2px;">
+                                    Delete
+                                </button>';
+                    }
+
                     return $btn;
                 });
-                $rawcol[] = 'upd'; 
+                $rawcol[] = 'action'; 
             }
 
             if (!empty($colbit)) {
@@ -168,8 +177,12 @@ class globreportController extends Controller
                 }
 
             }
+            
+            if(!empty($rawcol)){
+                return $dt->rawColumns($rawcol)->toJson();
+            }
 
-            return $dt->rawColumns($rawcol)->toJson();
+            return $dt->toJson();
         }
 
 
