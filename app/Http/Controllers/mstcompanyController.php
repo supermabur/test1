@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\model\mstcompany;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use Image;
 use File;
@@ -25,9 +26,10 @@ class mstcompanyController extends Controller
        */
       public function index(Request $request)
       {
-        $id = auth()->user()->id;
-        $data = mstcompany::find($id);
-        return view('master\mstcompany', compact('data'));
+            $kota = DB::select(DB::raw("SELECT id, name2 FROM vwmstkota order by `name`"));
+            $id = auth()->user()->id;
+            $data = mstcompany::find($id);
+            return view('master\mstcompany', compact('data', 'kota'));
       }
 
 
@@ -39,27 +41,18 @@ class mstcompanyController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $id = auth()->user()->id;
         // return response()->json(['success' => 'Data Added successfully. ' . $request->image]);
 
         // ----------------------------------VALIDATION
         $rules = array(
-            'name'      => ['required', \Illuminate\Validation\Rule::unique('mstcompany')->ignore($request->hidden_id)],
+            'name'      => ['required', \Illuminate\Validation\Rule::unique('mstcompany')->ignore($id)],
+            'alamat'    => 'required', 
             'idkota'    => 'required',
             'notelp'    => 'required', 
             'email'     => 'required|email', 
-            'deskripsi' => 'required', 
-            'pathlogo'  => 'required|image'
+            'deskripsi' => 'required'
         );
-
-
-        if ($request->actionx == 'edit')
-        {
-            $rules = array(
-                'name'      => ['required', \Illuminate\Validation\Rule::unique('mstcompany')->ignore($request->hidden_id)],
-                'pathlogo'     =>  'image'
-            );
-        }
 
         $errmsg = array(
             'name.unique' => 'Name sudah ada didatabase, silahkan pilih Name yang lain'
@@ -71,32 +64,23 @@ class mstcompanyController extends Controller
             return response()->json(['errors' => $error->errors()->all()]);
         }
 
+        $suksesmsg = 'Edit data berhasil';
         
         // ----------------------------------IMAGE SAVING
         $destinationPathbig = public_path('images/company');
         $destinationPaththumb = public_path('images/company');  
         
-        
-        $new_name = $request->imageold;
-        $image = $request->file('image');
-        
-        if ($request->actionx == 'edit')
-            {
-                $suksesmsg = 'Edit data berhasil';
-            }
-        else
-            {
-                $suksesmsg = 'Penambahan data berhasil';
-            }
 
+        $new_name = $request->imageold;
+        $image = $request->file('pathlogo');
         if($image != '')
         {
             // $new_name = time() . '_' . rand() . '.' . $image->getClientOriginalExtension();
-            $new_name = $request->hidden_id . '.' . $image->getClientOriginalExtension();
+            $new_name = $id . '.' . $image->getClientOriginalExtension();
             // upload image thumbnail size
             $resize_image = Image::make($image->getRealPath());
 
-            $resize_image->resize(100, 100, function($constraint){
+            $resize_image->resize(150, 150, function($constraint){
             $constraint->aspectRatio();
             })->save($destinationPaththumb . '/' . $new_name);
 
@@ -118,19 +102,20 @@ class mstcompanyController extends Controller
 
         $form_data = array(
             'name' => $request->name,            
-            'idkota'    => $request->kota,
-            'notelp'    => $request->notlp, 
+            'idkota'    => $request->idkota,
+            'alamat'    => $request->alamat, 
+            'notelp'    => $request->notelp, 
             'email'     => $request->email, 
             'deskripsi' => $request->deskripsi, 
             'pathlogo'  => $new_name,
             'active'    => $request->active + 0,
-            'useru'     => auth()->user(),
+            'useru'     => $id,
         );
 
         if ($request->actionx == 'new')
-        {$form_data[] = ['usere' => auth()->user()] ;}
+        {$form_data[] = ['usere' => $id] ;}
         
-        $tmp = mstcompany::updateOrCreate(['id' => $request->hidden_id], $form_data);   
+        $tmp = mstcompany::updateOrCreate(['id' => $id], $form_data);   
 
 
         // // Catat Log trans
