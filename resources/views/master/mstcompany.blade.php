@@ -17,7 +17,7 @@
                     </div>
 
                     <div class="card-body">
-{{-- {{ $data }} asd  --}}
+
                         <div class="form-group row">
                             <label for="name" class="col-sm-3 col-form-label col-form-label-sm">Nama</label>
                             <div class="col-sm-9">
@@ -112,17 +112,22 @@
 
         </div>
 
-        <span id="form_result"></span>
+        <div class="row justify-content-md-center">
+            <div class="col-sm-9">
+                <span id="form_result"></span>
 
-        <div class="card-footer">
-            <input type="hidden" name="hidden_id" id="hidden_id"/>
-            <input type="hidden" name="actionx" id="actionx" />
-            <input type="hidden" name="imageold" id="imageold" value="{{  !empty($data->pathlogo) ? $data->pathlogo : 'noimage.png' }}"/>
-            <button type="submit" class="btn btn-info  btn-sm" id="saveBtn" value="create">
-                <i class="fa fa-save" style="margin-right: 4px;"></i>
-                Save Changes
-            </button>
+                <div class="card-footer">
+                    <input type="hidden" name="hidden_id" id="hidden_id"/>
+                    <input type="hidden" name="actionx" id="actionx" />
+                    <input type="hidden" name="imageold" id="imageold" value="{{  !empty($data->pathlogo) ? $data->pathlogo : 'noimage.png' }}"/>
+                    <button type="submit" class="btn btn-info  btn-sm" id="saveBtn" value="create">
+                        <i class="fa fa-save" style="margin-right: 4px;"></i>
+                        Save Changes
+                    </button>
+                </div>
+            </div>
         </div>
+
 
 
     </form>
