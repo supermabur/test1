@@ -62,31 +62,30 @@
                   @foreach ($composer_stmemenu_d as $d)
                     @if ($h->id == $d->parentid)
                       <li class="nav-item">
-                        @if ($d->useglobreport == 0)
+                        {{-- @if ($d->useglobreport == 0)
                           <a href="/{{$d->links}}" class="nav-link">
                             <i class="nav-icon far fa-circle" style="font-size: 1rem;"></i>
                             <p>{{$d->name}}</p>
                           </a>
                         @else
-                          {{-- <form method="POST" action="">
-                            <input type="hidden" name="product_id" value="{{ $d->id }}">
-                            {!! csrf_field() !!}
-                            <button type="submit" class="btn">
-                                <span class="glyphicon glyphicon-trash">{{$d->name}}</span>
-                            </button>
-                          </form> --}}
-
                           <a href="{{ route('gr.show', $d->id) }}" class="nav-link">
                             <i class="nav-icon far fa-circle" style="font-size: 1rem;"></i>
                             <p>{{$d->name}}</p>
                           </a>
-                        @endif
+                        @endif --}}
+
+                        <a href="#" onClick="GoMenu(this)" data-id="{{$d->id}}" class="nav-link">
+                          <i class="nav-icon far fa-circle" style="font-size: 1rem;"></i>
+                          <p>{{$d->name}}</p>
+                        </a>
                       </li>                
                     @endif
                   @endforeach
                 </ul>
               </li>
             @endforeach
+
+
 
             {{-- <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
