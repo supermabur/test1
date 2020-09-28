@@ -245,6 +245,8 @@
                 var xUrl = "{{ route('gr.show', $menuid) }}"   ;
                 var Xcolumns={!! json_encode($dtcolumns) !!};
 
+                console.log(Xcolumns);
+
                 var xfdate1 = $('#fdate1').val();
                 var xfdate2 = $('#fdate2').val();
                 var xfgudang = $('#fgudang').val();

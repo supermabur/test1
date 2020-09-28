@@ -57,7 +57,23 @@
   <!-- eki -->
   <link rel="stylesheet" href="{{ url('css/eki.css') }}">
   
+  <style>
+    a:hover {
+        cursor: pointer;
+    }
+  </style>
+
   @yield('style')
+
+
+  <script>
+    var gr_menuid;
+    var gr_columnheader;
+    var gr_dtcolumns;
+    var gr_columnnative;
+    var gr_data;
+    var gr_urlshowwithid;
+  </script>
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -177,6 +193,38 @@
 </body>
 </html>
 
+<script>
 
+  function GoMenu(d){
+    // loading(1);
+      var pid = d.getAttribute("data-id");
+      $(".contentxxx").html('');
+      $(".metitle").html('Loading ...');
+      $.ajax(
+        {
+          url:"{{ route('gr.index') }}",
+          data:{id:pid},
+          success: function(data){
+            // console.log(data);
+            $(".contentxxx").html(data.view);
+            $(".metitle").html(data.title);
+
+            if (data.usegr == 1) {
+              gr_menuid = data.menuid;
+              gr_columnheader = data.columnheader;
+              gr_dtcolumns = data.dtcolumns;
+              gr_columnnative = data.columnnative;
+              gr_data = data.data;
+              gr_urlshowwithid = data.urlshowwithid;
+            }
+            // loading(0);
+          }
+        }
+      );
+  }    
+
+
+
+</script>
 
 @yield('scripts')

@@ -74,7 +74,7 @@
                           </a>
                         @endif --}}
 
-                        <a href="#" onClick="GoMenu(this)" data-id="{{$d->id}}" class="nav-link">
+                        <a onClick="GoMenu(this)" data-id="{{$d->id}}" class="nav-link">
                           <i class="nav-icon far fa-circle" style="font-size: 1rem;"></i>
                           <p>{{$d->name}}</p>
                         </a>
@@ -85,26 +85,7 @@
               </li>
             @endforeach
 
-            <script>
-              function GoMenu(d){
-                // loading(1);
-                  var pid = d.getAttribute("data-id");
-                  $(".contentxxx").html('');
-                  $(".metitle").html('Loading ...');
-                  $.ajax(
-                    {
-                      url:"{{ route('gr.index') }}",
-                      data:{id:pid},
-                      success: function(data){
-                        // console.log(data);
-                        $(".contentxxx").html(data.view);
-                        $(".metitle").html(data.title);
-                        // loading(0);
-                      }
-                    }
-                  );
-              }    
-            </script>
+
 
             {{-- <li class="nav-item has-treeview">
               <a href="#" class="nav-link">

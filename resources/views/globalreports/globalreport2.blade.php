@@ -8,8 +8,6 @@
         <div class="col-md-12 outerbox">
             <div class="box" style="border-top: 0px solid #d2d6de;">
 
-                globreport 2
-
 {{-- {{ json_encode($columnnative) }} --}}
 
                 <div class="card card-secondary" style="box-shadow: none;margin-top: 0.8rem;">
@@ -130,9 +128,9 @@
 
                     <div class="card-body meinclude">
                         
-                        {{-- @if(!empty($editview))
-                            @include($editview)
-                        @endif --}}
+                        @if(!empty($editview))
+                            @includeif($editview)
+                        @endif
                     </div>
                 </div>
 
@@ -190,6 +188,11 @@
                 $("#globrep").show(200);
             }          
         });
+    
+
+        $('#filter').click(function(){
+            fill_datatable();
+        });
 
         $(document).on('click', '.btnedit', function(){
             if($("#editview").is(":hidden")){
@@ -216,30 +219,74 @@
         }
 
 
+        function fill_datatable(filter_gudang = '', show0 = 'TIDAK')
+        {
+            if (gr_dtcolumns){
+                var numFormat = $.fn.dataTable.render.number('.',',',0,'');
+                var xmenuid = gr_menuid;
+                var xUrl = gr_urlshowwithid ;
+                var Xcolumns=gr_dtcolumns;
+
+                var xfdate1 = $('#fdate1').val();
+                var xfdate2 = $('#fdate2').val();
+                var xfgudang = $('#fgudang').val();
+
+                var dataTable = $('#user_table').DataTable({
+                    dom: 'lBfrtip',
+                    destroy: true,
+                    lengthMenu: [[50, 100, 250, -1], [50, 100, 250, 'ALL']],
+                    buttons: {!! json_encode(config('global.dt_button')) !!},
+                    processing: true,
+                    // language: {processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '},
+                    // language: {processing: '<div class="loading" delay-hide="50000"></div> '},
+                    serverSide: true,
+                    ajax:{  
+                            url: xUrl,
+                            data:{menuid:xmenuid, fdate1:xfdate1, fdate2:xfdate2, fgudang:xfgudang },
+                            dataType:"json",
+                            dataFilter: function(response){
+                                    // this to see what exactly is being sent back
+                                    // console.log(response);
+                                    var json = jQuery.parseJSON( response );
+                                    // console.log(json.gudang);
+                                    // json.recordsTotal = json.total;
+                                    // json.recordsFiltered = json.total;
+                                    // json.data = json.list;
+                                    // alert(json.posts);
+                                    // document.getElementById('judulbiru').innerHTML = 'Last update Data : ' + json.lastupdate; 
+                                    $('#tablex').show(200);
+                                    // alert('dataFilter');
+                                    return response;
+                                },
+                            // success:function(data)
+                            //     {
+                            //         console.log(data);
+                            //         alert('success');
+                            //         // console.log('---------------------------------');
+                            //         // alert(data.posts);
+                            //         // $('#name').val(data.name);
+                                    
+                            //         // return data;
+                            //     },
+                            // error : function(xhr, textStatus, errorThrown){
+                            //         alert('error');
+                            //         lh.ajaxUtils.handleAjaxError(xhr, textStatus, errorThrown);
+                            //         // console.log(xhr);
+                            //         console.log('STATUS :> ' + textStatus);
+                            //         console.log('errorThrown :> ' + errorThrown);
+                            //     },
+                            },
+                    columns:Xcolumns
+
+                });
+            }
+        }
+
         $(document).ready(function(){
 
             hideeditview();
-            // fill_datatable();
+            fill_datatable();
 
- 
-    
-
-            $('#filter').click(function(){
-                alert('filter');
-                // var filter_gudang = $('#filter_gudang').val();
-                // var show0 = $('#show0').val();
-
-                // if(filter_gudang != '' )
-                // {
-                    // $('#user_table').DataTable().destroy();
-                    // fill_datatable();
-                    // $('#judulbiru').val("Data XX" + filter_gudang); 
-                // }
-                // else
-                // {
-                //     alert('Outlet belum dipilih');
-                // }
-            });
 
             $("#filter_gudang").change(function(){
                 // fill_datatable('nxcjasd','TIDAK');

@@ -127,6 +127,10 @@
 
         $('.role').select2();
 
+        // $('#saveBtn').click(function(){    
+        //     alert('asd');        
+        // });
+
         $('#formx').on('submit', function(event){
             event.preventDefault();
             loading(1, 'Saving Data ...');

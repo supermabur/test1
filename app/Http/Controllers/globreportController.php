@@ -83,24 +83,32 @@ class globreportController extends Controller
             }
 
             
-            $view = View::make('globalreports.globalreport2')->with(['title'=> $title, 
-                                                                    'menuid' => $menuid, 
-                                                                    'columnheader' => $columnheader, 
+            $view = View::make('globalreports.globalreport2')->with(['menuid' => $menuid, 
                                                                     'editview' => $editview, 
-                                                                    'dtcolumns' => $dtcolumns, 
-                                                                    'columnnative' => $columnnative, 
                                                                     'fdate1' => $fdate1, 
                                                                     'fdate2' => $fdate2, 
                                                                     'fgudang' => $fgudang, 
                                                                     'crud_i' => $crud_i]);
             $viewr = $view->render();
-            return response()->json(['success' => 'use global report ' . $request->id, 'view' => $viewr, 'title' => $title ]);
+            return response()->json(['success' => 'use global report ' . $request->id, 
+                                    'usegr' => '1',
+                                    'view' => $viewr, 
+                                    'title' => $title,
+                                    'dtcolumns' => $dtcolumns, 
+                                    'columnnative' => $columnnative, 
+                                    'columnheader' => $columnheader,
+                                    'menuid' => $menuid,
+                                    'urlshowwithid' => route('gr.show', $menuid)
+                                    ]);
         }
         else{
 
             $view = View::make($editview);
             $viewr = $view->render();
-            return response()->json(['success' => 'not globrep ' . $request->id, 'view' => $viewr, 'title' => $title ]);
+            return response()->json(['success' => 'not globrep ' . $request->id, 
+                                    'usegr' => '0',
+                                    'view' => $viewr, 
+                                    'title' => $title ]);
         }
 
 
