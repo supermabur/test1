@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 use DataTables;
 use Validator;
 use App\stmemenu;
@@ -30,6 +31,79 @@ class globreportController extends Controller
      */
     public function index(Request $request)
     {
+        $menuid = $request->id;
+        $menu = stmemenu::where('id', $menuid)->first();
+        $title = $menu->parentname.' '.$menu->name;
+        $title = strtoupper($title);
+
+        $useglobalreport = $menu->useglobreport;
+        $editview = $menu->editview;
+
+        if ($useglobalreport==1) {
+            $que = $menu->query1;
+            $fdate1 = Str::contains($que, '@date1');
+            $fdate2 = Str::contains($que, '@date2');
+            $fgudang = Str::contains($que, '@gudang');
+    
+            $crud = 0;
+            $crud_i = Str::contains($menu->crud, 'i');
+    
+            $db = DB::connection()->getPdo();
+            $rs = $db->query($que . ' limit 0');
+            for ($i = 0; $i < $rs->columnCount(); $i++) {
+                $col = $rs->getColumnMeta($i);
+                if($col['name'] <> 'crud')
+                {
+                    $columnheader[] = $col['name'];
+                    $columnnative[] = $col['native_type'];
+    
+                    switch ($col['native_type']){
+                        case 'BIT':
+                            $dtcolumns[] = ['title' => $col['name'], 'data' => $col['name'], 'name' => $col['name'], 'className' => 'text-center'];
+                            $colbit[] = $col['name'];
+                            break;
+                        case 'TIMESTAMP':
+                            $dtcolumns[] = ['title' => $col['name'], 'data' => $col['name'], 'name' => $col['name'], 'className' => 'text-center'];
+                            break;
+                        case 'LONGLONG':
+                            $dtcolumns[] = ['title' => $col['name'], 'data' => $col['name'], 'name' => $col['name'], 'className' => 'text-right'];
+                            break;
+                        default:
+                            $dtcolumns[] = ['title' => $col['name'], 'data' => $col['name'], 'name' => $col['name']];
+                    }
+                }
+                else
+                {
+                    $crud = 1;
+                }
+            }
+    
+            if ($crud == 1 ){
+                $dtcolumns[] = ['title' => 'action', 'data' => 'action', 'name' => 'action', 'orderable' => 'false', 'searchable' => 'false', 'className' => 'text-right'];
+            }
+
+            
+            $view = View::make('globalreports.globalreport2')->with(['title'=> $title, 
+                                                                    'menuid' => $menuid, 
+                                                                    'columnheader' => $columnheader, 
+                                                                    'editview' => $editview, 
+                                                                    'dtcolumns' => $dtcolumns, 
+                                                                    'columnnative' => $columnnative, 
+                                                                    'fdate1' => $fdate1, 
+                                                                    'fdate2' => $fdate2, 
+                                                                    'fgudang' => $fgudang, 
+                                                                    'crud_i' => $crud_i]);
+            $viewr = $view->render();
+            return response()->json(['success' => 'use global report ' . $request->id, 'view' => $viewr, 'title' => $title ]);
+        }
+        else{
+
+            $view = View::make($editview);
+            $viewr = $view->render();
+            return response()->json(['success' => 'not globrep ' . $request->id, 'view' => $viewr, 'title' => $title ]);
+        }
+
+
     }
 
     /**

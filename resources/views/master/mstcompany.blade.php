@@ -1,10 +1,10 @@
 
     
-@extends('layouts.dashboard')
+{{-- @extends('layouts.dashboard')
 
 
 
-@section('content')   
+@section('content')    --}}
 
     <form method="post" id="formx" class="form-vertical" enctype="multipart/form-data" novalidate>
         @csrf
@@ -38,7 +38,7 @@
                             <label for="idkota" class="col-sm-3 col-form-label col-form-label-sm">Kota</label>
                             <div class="col-sm-9">
                                 <select class="role form-control form-control-sm" id="idkota" name="idkota" required>
-                                    @foreach ($kota as $cp)
+                                    @foreach ($composer_kota as $cp)
                                         <option value="{{ $cp->id }}" @if($cp->id == $data->idkota) selected="selected" @endif>{{ $cp->name2 }}</option>                        
                                     @endforeach
                                 </select>
@@ -133,11 +133,11 @@
     </form>
 
 
-@endsection
+{{-- @endsection
 
 
 
-@section('scripts')
+@section('scripts') --}}
 
 
 <script>
@@ -200,4 +200,4 @@
     });
 </script>
 
-@endsection
+{{-- @endsection --}}

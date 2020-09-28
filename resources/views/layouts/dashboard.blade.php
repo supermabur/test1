@@ -89,7 +89,10 @@
     <!-- Main content -->
     <section class="content">
       
-      @yield('content')
+      {{-- @yield('content') --}}
+      <div class="contentxxx" id="box">
+
+      </div>
 
     </section>
     <!-- /.content -->

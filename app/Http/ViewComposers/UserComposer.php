@@ -42,8 +42,10 @@ class UserComposer
 
 
             $view->with('composer_strole', strole::select(['id', 'name as text'])->orderBy('name')->get());
-
+;
+            $view->with('composer_kota', DB::select(DB::raw("SELECT id, name2 FROM vwmstkota order by `name`")));
             $view->with('composer_mstgudang', mstgudang::where('kode','<>',"''")->orderBy('nama')->get());
+            $view->with('composer_tahunbulan', db::table('vwtahunbulan')->get());
         }
                                                         
     }

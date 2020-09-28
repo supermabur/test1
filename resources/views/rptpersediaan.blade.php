@@ -1,14 +1,8 @@
     
-@extends('layouts.dashboard')
-
-{{-- @section('style')
-    <style>
-    </style>
-@endsection --}}
+{{-- @extends('layouts.dashboard') --}}
 
 
-
-@section('content')
+{{-- @section('content') --}}
 
     <div class="row">
         <div class="col-md-12 outerbox">
@@ -20,8 +14,8 @@
                     <div class="col-sm-4">
                         <select name="filter_gudang" id="filter_gudang" class="form-control " required>
                             <option value=""></option>
-                            @foreach($gudang as $dt)
-                                <option value="{{ $dt->kdgudang }}">{{ $dt->namagudang }}</option>
+                            @foreach($composer_mstgudang as $dt)
+                                <option value="{{ $dt->kode }}">{{ $dt->nama }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -84,11 +78,11 @@
     </div>
 
 
-@endsection
+{{-- @endsection
 
 
 
-@section('scripts')
+@section('scripts') --}}
 
 
 
@@ -333,4 +327,4 @@
 
 
 
-@endsection
+{{-- @endsection --}}

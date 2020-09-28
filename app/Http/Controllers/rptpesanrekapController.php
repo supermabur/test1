@@ -35,7 +35,6 @@ class rptpesanrekapController extends Controller
         $title = strtoupper($title);
 
         $lastupdate = db::table('rkppesanheadx')->select('dateukehosting')->orderBy('dateukehosting', 'desc')->first();
-        $tahunbulan = db::table('vwtahunbulan')->get();
 
         if ($request->ajax()) {
             // $lastupdate = rptpersediaan::select('dateu', 'kdgudang', 'namagudang')->where('kdgudang', $request->filter_gudang)->orderBy('dateu', 'desc')->first();
@@ -69,7 +68,7 @@ class rptpesanrekapController extends Controller
                                 ->toJson(); 
         }
       
-        return view('rptpesanrekap',compact('title', 'tahunbulan'));
+        return view('rptpesanrekap',compact('title'));
     }
 
     

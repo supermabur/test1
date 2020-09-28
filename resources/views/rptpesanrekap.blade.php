@@ -2,92 +2,7 @@
     
 {{-- @extends('layouts.dashboard')
 
-
-@section('content')
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box me_boxshadow" style="padding:20px; border-top: 0px solid #d2d6de;">
-
-            <h1>{{ $title }}</h1>
-            <button type="button" name="create_record" id="create_record" class="btn btn-success btn-sm" style="margin-top:0px;margin-bottom:15px">Create Record</button>
-
-            <div class="table-responsive">
-                <table class="table display cell-border" id="user_table" width=100%>
-                    <thead>
-                        <tr>
-                            <th width="10%">kdgudang</th>
-                            <th width="30%">NamaGudang</th>
-                            <th width="10%">Kode</th>
-                            <th width="30%">NamaBarang</th>
-                            <th width="5%">Saldo</th>
-                            <th width="5%">Qtydipesan</th>
-                            <th width="5%">SisaSaldo</th>
-                            <th width="5%">Action</th>
-                
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-            </div>
-        </div>
-    </div>
-    
-
-@endsection
-
-
-
-@section('scripts')
-<script>
-$(document).ready(function(){
-    
-   $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    
-    $('#user_table').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax:{url: "{{ route('rptpersediaan.index') }}",},
-        columns:
-        [
-            {data: 'kdgudang', name: 'kdgudang'},
-            {data: 'namagudang', name: 'namagudang'},
-            {data: 'kode', name: 'kode'},
-            {data: 'namabarang', name: 'namabarang'},
-            {data: 'saldo', name: 'saldo'},
-            {data: 'qtydipesan', name: 'qtydipesan'},
-            {data: 'sisasaldo', name: 'sisasaldo'},
-            {data: 'action', name: 'action', orderable: false, searchable: false, className: "text-center"}
-        ]
-    });
-</script>
-
-
-
-
-@endsection --}}
-
-
-
-
-
-
-
-
-
-
-    
-@extends('layouts.dashboard')
-
-
-
-
-
-@section('content')
+@section('content') --}}
 
     <div class="row">
         <div class="col-md-12 outerbox">
@@ -101,7 +16,7 @@ $(document).ready(function(){
                     <div class="col-md-2">
                         <select name="filter_tahunbulan" id="filter_tahunbulan" class="form-control " required>
                             <option value=""></option>
-                            @foreach($tahunbulan as $dt)
+                            @foreach($composer_tahunbulan as $dt)
                                 <option value="{{ $dt->tahunbulan1 }}">{{ $dt->tahunbulan2 }}</option>
                             @endforeach
                         </select>
@@ -204,11 +119,11 @@ $(document).ready(function(){
         </div>
     </div>
 
-@endsection
+{{-- @endsection
 
 
 
-@section('scripts')
+@section('scripts') --}}
 
 
 
@@ -558,4 +473,4 @@ $(document).ready(function(){
 
 
 
-@endsection
+{{-- @endsection --}}

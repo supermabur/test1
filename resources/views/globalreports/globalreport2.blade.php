@@ -1,13 +1,14 @@
     
-@extends('layouts.dashboard')
+{{-- @extends('layouts.dashboard')
 
 
-@section('content')
+@section('content') --}}
 
     <div class="row" name="globrep" id="globrep">
         <div class="col-md-12 outerbox">
             <div class="box" style="border-top: 0px solid #d2d6de;">
 
+                globreport 2
 
 {{-- {{ json_encode($columnnative) }} --}}
 
@@ -139,13 +140,46 @@
         </div>
     </div>
 
-@endsection
+{{-- @endsection --}}
 
 
 
-@section('scripts')
+{{-- @section('scripts') --}}
 
     <script>
+
+        function loading(run = 1, xtext = 'Please wait ...'){
+            if (run > 0){
+                $('.box').waitMe({
+                    //none, rotateplane, stretch, orbit, roundBounce, win8, 
+                    //win8_linear, ios, facebook, rotation, timer, pulse, 
+                    //progressBar, bouncePulse or img
+                    effect: 'pulse',
+                    //place text under the effect (string).
+                    text: xtext,
+                    //background for container (string).
+                    bg: 'rgba(255,255,255,0.9)',
+                    //color for background animation and text (string).
+                    color: '#000',
+                    //max size
+                    maxSize: '',
+                    //wait time im ms to close
+                    waitTime: -1,
+                    //url to image
+                    source: '',
+                    //or 'horizontal'
+                    textPos: 'vertical',
+                    //font size
+                    fontSize: ''
+                });
+            }
+            else{
+                $('.box').waitMe("hide");
+            }
+
+        }
+
+        
         $("#addnew, #btnback").click(function(){    
             if($("#editview").is(":hidden")){
                 loading(1);
@@ -182,54 +216,23 @@
         }
 
 
-        function loading(run = 1, xtext = 'Please wait ...'){
-            if (run > 0){
-                $('.box').waitMe({
-                    //none, rotateplane, stretch, orbit, roundBounce, win8, 
-                    //win8_linear, ios, facebook, rotation, timer, pulse, 
-                    //progressBar, bouncePulse or img
-                    effect: 'pulse',
-                    //place text under the effect (string).
-                    text: xtext,
-                    //background for container (string).
-                    bg: 'rgba(255,255,255,0.9)',
-                    //color for background animation and text (string).
-                    color: '#000',
-                    //max size
-                    maxSize: '',
-                    //wait time im ms to close
-                    waitTime: -1,
-                    //url to image
-                    source: '',
-                    //or 'horizontal'
-                    textPos: 'vertical',
-                    //font size
-                    fontSize: ''
-                });
-            }
-            else{
-                $('.box').waitMe("hide");
-            }
-
-        }
-
-
         $(document).ready(function(){
 
             hideeditview();
             // fill_datatable();
 
-         
+ 
     
 
             $('#filter').click(function(){
+                alert('filter');
                 // var filter_gudang = $('#filter_gudang').val();
                 // var show0 = $('#show0').val();
 
                 // if(filter_gudang != '' )
                 // {
                     // $('#user_table').DataTable().destroy();
-                    fill_datatable();
+                    // fill_datatable();
                     // $('#judulbiru').val("Data XX" + filter_gudang); 
                 // }
                 // else
@@ -251,4 +254,4 @@
 
     </script>
 
-@endsection
+{{-- @endsection --}}

@@ -18,14 +18,3 @@
 @endsection
 
 
-
-@section('scripts')
-    <script>
-
-        function GoMenu(elem){
-            var dataId = $(elem).data('id');
-                alert(dataId);
-        }
-
-    </script>
-@endsection
