@@ -180,6 +180,8 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Dingo\Api\Provider\LaravelServiceProvider::class,
+
+        Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
     /*
@@ -233,6 +235,7 @@ return [
 
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];

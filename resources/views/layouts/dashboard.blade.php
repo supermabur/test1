@@ -66,14 +66,14 @@
   @yield('style')
 
 
-  <script>
+  {{-- <script>
     var gr_menuid;
     var gr_columnheader;
     var gr_dtcolumns;
     var gr_columnnative;
     var gr_data;
     var gr_urlshowwithid;
-  </script>
+  </script> --}}
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -105,10 +105,10 @@
     <!-- Main content -->
     <section class="content">
       
-      {{-- @yield('content') --}}
-      <div class="contentxxx" id="box">
+      @yield('content')
+      {{-- <div class="contentxxx" id="box">
 
-      </div>
+      </div> --}}
 
     </section>
     <!-- /.content -->
@@ -193,7 +193,7 @@
 </body>
 </html>
 
-<script>
+{{-- <script>
 
   function GoMenu(d){
     // loading(1);
@@ -225,6 +225,6 @@
 
 
 
-</script>
+</script> --}}
 
 @yield('scripts')

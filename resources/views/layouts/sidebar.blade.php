@@ -62,7 +62,7 @@
                   @foreach ($composer_stmemenu_d as $d)
                     @if ($h->id == $d->parentid)
                       <li class="nav-item">
-                        {{-- @if ($d->useglobreport == 0)
+                        @if ($d->useglobreport == 0)
                           <a href="/{{$d->links}}" class="nav-link">
                             <i class="nav-icon far fa-circle" style="font-size: 1rem;"></i>
                             <p>{{$d->name}}</p>
@@ -72,12 +72,12 @@
                             <i class="nav-icon far fa-circle" style="font-size: 1rem;"></i>
                             <p>{{$d->name}}</p>
                           </a>
-                        @endif --}}
+                        @endif
 
-                        <a onClick="GoMenu(this)" data-id="{{$d->id}}" class="nav-link">
+                        {{-- <a onClick="GoMenu(this)" data-id="{{$d->id}}" class="nav-link">
                           <i class="nav-icon far fa-circle" style="font-size: 1rem;"></i>
                           <p>{{$d->name}}</p>
-                        </a>
+                        </a> --}}
                       </li>                
                     @endif
                   @endforeach

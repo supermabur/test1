@@ -1,10 +1,10 @@
 
     
-{{-- @extends('layouts.dashboard')
+@extends('layouts.dashboard')
 
 
 
-@section('content')    --}}
+@section('content')   
 
     <form method="post" id="formx" class="form-vertical" enctype="multipart/form-data" novalidate>
         @csrf
@@ -133,11 +133,11 @@
     </form>
 
 
-{{-- @endsection
+@endsection
 
 
 
-@section('scripts') --}}
+@section('scripts')
 
 
 <script>
@@ -200,4 +200,4 @@
     });
 </script>
 
-{{-- @endsection --}}
+@endsection

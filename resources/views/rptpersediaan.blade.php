@@ -1,8 +1,8 @@
     
-{{-- @extends('layouts.dashboard') --}}
+@extends('layouts.dashboard')
 
 
-{{-- @section('content') --}}
+@section('content')
 
     <div class="row">
         <div class="col-md-12 outerbox">
@@ -78,11 +78,11 @@
     </div>
 
 
-{{-- @endsection
+@endsection
 
 
 
-@section('scripts') --}}
+@section('scripts')
 
 
 
@@ -327,4 +327,4 @@
 
 
 
-{{-- @endsection --}}
+@endsection

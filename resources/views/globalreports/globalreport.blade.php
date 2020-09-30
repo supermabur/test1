@@ -13,7 +13,7 @@
 
                 <div class="card card-secondary" style="box-shadow: none;margin-top: 0.8rem;">
                     <div class="card-header">
-                        <h3 class="card-title judulbiru" id="judulbiru">Data</h3>
+                        <h3 class="card-title judulbiru" id="judulbiru">Data List</h3>
                     </div>
                     <!-- /.card-header -->
 
@@ -142,7 +142,7 @@
                         <h3 class="card-title" id="headeredit">Quick Example</h3>
                         <button type="button" name="btnback" id="btnback" class="btn-danger btn-sm">
                             <i class="fa fa-arrow-alt-circle-left" style="margin-right: 4px;"></i>
-                            Back
+                            Back to Data List
                         </button>
                     </div>
                     <!-- /.card-header -->
