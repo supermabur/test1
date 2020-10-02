@@ -61,6 +61,10 @@
     a:hover {
         cursor: pointer;
     }
+
+    /* .card-footer{
+      background-color: lightgray;
+    } */
   </style>
 
   @yield('style')
@@ -82,7 +86,7 @@
   @include('layouts.sidebar')
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" >
+  <div class="content-wrapper" style="    background-color: aliceblue;">
   {{-- <div class="content-wrapper" style="margin-left: 0px;"> --}}
     <!-- Content Header (Page header) -->
     {{-- <div class="content-header">

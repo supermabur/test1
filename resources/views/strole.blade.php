@@ -8,26 +8,24 @@
 <form method="post" id="formx" class="form-vertical" enctype="multipart/form-data" novalidate>
     @csrf
 
-    <div class="row">
-        <div class="col-sm-6">
+    <div class="row justify-content-md-center">
+        <div class="col-sm-5">
             <div class="form-group row">
-                <label for="name" class="col-sm-6 col-form-label">Name</label>
-                <div class="col-sm-6">
+                <label for="name" class="col-sm-3 col-form-label">Name</label>
+                <div class="col-sm-9">
                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="" maxlength="32" required="" autofocus>
                 </div>
             </div>
         
             <div class="form-group row">
-                <label for="aktif" class="col-sm-6 col-form-label">Aktif</label>
-                <div class="col-sm-6">
+                <label for="aktif" class="col-sm-3 col-form-label">Aktif</label>
+                <div class="col-sm-9">
                     {{-- A checkbox input in not sent in the request when it's unchecked, in that case the hidden input will be sent with the value 0. When the Checkox is checked, it will overwrite the value to 1. --}}
                     <input type="hidden" name="active" value="0"/>
                     <input id="active" name="active" value="1" class="form-check" type="checkbox" value="true">
                 </div>
             </div>
-        </div>
 
-        <div class="col-sm-6">
             <div class="card card-info">
                 <div class="card-header">
                     <h3 class="card-title">Menu</h3>
@@ -38,19 +36,31 @@
                     </div>
                 </div>
             </div>
-        </div>        
+
+        </div>
+
     </div>
 
-    <span id="form_result"></span>
+    
+    <div class="row justify-content-md-center">
+        <div class="col-sm-5" style="text-align-last: justify;">
 
-    <div class="card-footer">
-        <input type="hidden" name="hidden_id" id="hidden_id" />
-        <input type="hidden" name="actionx" id="actionx" />
-        <input type="hidden" name="imageold" id="imageold" />
-        <button type="submit" class="btn btn-info  btn-sm" id="saveBtn" value="create">
-            <i class="fa fa-save" style="margin-right: 4px;"></i>
-            Save Changes
-        </button>
+            <div class="card-footer">
+                <span id="form_result"></span>
+                <input type="hidden" name="hidden_id" id="hidden_id" />
+                <input type="hidden" name="actionx" id="actionx" />
+                <input type="hidden" name="imageold" id="imageold" />
+                <button type="submit" class="btn btn-info  btn-sm" id="saveBtn" value="create">
+                    <i class="fa fa-save" style="margin-right: 4px;"></i>
+                    Save Changes
+                </button>
+
+                <button type="button" name="btnback" id="btnback" class="btn-danger btn-sm">
+                    <i class="fa fa-arrow-alt-circle-left" style="margin-right: 4px;"></i>
+                    Back 
+                </button>
+            </div>
+        </div>
     </div>
 
 

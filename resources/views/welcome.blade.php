@@ -14,7 +14,7 @@
 @section('content')
     <h1>Selamat datang di Backoffice Giripalma</h1>
 
-    @include('globalreports\globalreport2')
+    {{-- @include('globalreports\globalreport') --}}
 @endsection
 
 

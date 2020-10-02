@@ -137,22 +137,23 @@
         <div class="col-md-12 outerbox">
             <div class="box" style="border-top: 0px solid #d2d6de;">
 
-                <div class="card card-secondary" style="box-shadow: none;margin-top: 0.8rem;">
+                {{-- <div class="card card-secondary" style="box-shadow: none;margin-top: 0.8rem;">
                     <div class="card-header">
                         <h3 class="card-title" id="headeredit">Quick Example</h3>
                         <button type="button" name="btnback" id="btnback" class="btn-danger btn-sm">
                             <i class="fa fa-arrow-alt-circle-left" style="margin-right: 4px;"></i>
                             Back to Data List
                         </button>
-                    </div>
+                    </div> --}}
                     <!-- /.card-header -->
 
-                    <div class="card-body">
+                    {{-- <div class="card-body"> --}}
                         @if(!empty($editview))
+                            <br>
                             @include($editview)
                         @endif
-                    </div>
-                </div>
+                    {{-- </div> --}}
+                {{-- </div> --}}
 
             </div>
         </div>
@@ -298,39 +299,7 @@
                             //         console.log('errorThrown :> ' + errorThrown);
                             //     },
                             },
-                    columns:Xcolumns,
-                    footerCallback: function ( row, data, start, end, display ) {
-                            var api = this.api(), data;
-                
-                            // Remove the formatting to get integer data for summation
-                            var intVal = function ( i ) {
-                                return typeof i === 'string' ?
-                                    i.replace(/[\$,]/g, '')*1 :
-                                    typeof i === 'number' ?
-                                        i : 0;
-                            };
-                
-                            // Total over all pages
-                            total = api
-                                .column( 6 )
-                                .data()
-                                .reduce( function (a, b) {
-                                    return intVal(a) + intVal(b);
-                                }, 0 );
-                
-                            // Total over this page
-                            pageTotal = api
-                                .column( 6, { page: 'current'} )
-                                .data()
-                                .reduce( function (a, b) {
-                                    return intVal(a) + intVal(b);
-                                }, 0 );
-                
-                            // Update footer
-                            $( api.column( 6 ).footer() ).html(
-                                '$'+pageTotal +' ( $'+ total +' total)'
-                            );
-                        }
+                    columns:Xcolumns
 
                 });
             }

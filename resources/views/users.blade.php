@@ -4,55 +4,62 @@
 <form method="post" id="formx" class="form-vertical" enctype="multipart/form-data" novalidate>
     @csrf
 
-    <div class="row">
-        {{-- <div class="form-group row">
-            <label for="name" class="col-sm-6 col-form-label">Name</label>
-            <div class="col-sm-6">
-                <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="" maxlength="32" required="" autofocus>
-            </div>
-        </div> --}}
-        
+    <div class="row justify-content-md-center">
 
-        <div class="col-sm-6">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="Enter name" required>
-            </div>
-    
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="Enter Username" required>
-            </div>
+        <div class="col-sm-5">
 
-            <div class="form-group">
-                <label for="role">Role</label>
-                <select class="role form-control form-control-sm" id="role" name="role" required>
-                    @foreach ($composer_strole as $cp)
-                        <option value="{{ $cp->id }}">{{ $cp->text }}</option>                        
-                    @endforeach
-                </select>
-            </div>
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">Data User</h3>
+                </div>
     
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder="Enter Email">
-            </div>
-    
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control form-control-sm" id="password" placeholder="Enter password" name="password" required autocomplete="new-password">
-            </div>
-    
-            <div class="form-group">
-                <label for="password-confirm">Password</label>
-                <input type="password" class="form-control form-control-sm" id="password-confirm" placeholder="Enter password" name="password_confirmation" required autocomplete="new-password">
-            </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="Enter name" required>
+                    </div>
             
-            <div class="form-check">
-                <input type="hidden" name="active" value="0"/>
-                <input type="checkbox" class="form-check-input" id="active" name="active" value="1">
-                <label class="form-check-label" for="active">Aktif</label>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="Enter Username" required>
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="role">Role</label>
+                        <select class="role form-control form-control-sm" id="role" name="role" required>
+                            @foreach ($composer_strole as $cp)
+                                <option value="{{ $cp->id }}">{{ $cp->text }}</option>                        
+                            @endforeach
+                        </select>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder="Enter Email">
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control form-control-sm" id="password" placeholder="Enter password" name="password" required autocomplete="new-password">
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="password-confirm">Password</label>
+                        <input type="password" class="form-control form-control-sm" id="password-confirm" placeholder="Enter password" name="password_confirmation" required autocomplete="new-password">
+                    </div>
+                    
+                    <div class="form-check">
+                        <input type="hidden" name="active" value="0"/>
+                        <input type="checkbox" class="form-check-input" id="active" name="active" value="1">
+                        <label class="form-check-label" for="active">Aktif</label>
+                    </div>
+        
+    
+
+                </div>
             </div>
+
+
 
             {{-- <div class="form-group row">
                 <label for="aktif">Aktif</label>
@@ -60,24 +67,34 @@
                     {{-- A checkbox input in not sent in the request when it's unchecked, in that case the hidden input will be sent with the value 0. When the Checkox is checked, it will overwrite the value to 1. --}}
                     {{-- <input type="hidden" name="active" value="0"/>
                     <input id="active" name="active" value="1" class="form-check" type="checkbox" value="true">
-                </div> --}}
-            </div>
+                </div>
+            </div> --}}
+
         </div>
 
     </div>
+    
 
-    <span id="form_result"></span>
+    <div class="row justify-content-md-center">
+        <div class="col-sm-5" style="text-align-last: justify;">
+            <div class="card-footer">
+                <span id="form_result"></span>
 
-    <div class="card-footer">
-        <input type="hidden" name="hidden_id" id="hidden_id" />
-        <input type="hidden" name="actionx" id="actionx" />
-        <input type="hidden" name="imageold" id="imageold" />
-        <button type="submit" class="btn btn-info  btn-sm" id="saveBtn" value="create">
-            <i class="fa fa-save" style="margin-right: 4px;"></i>
-            Save Changes
-        </button>
+                <input type="hidden" name="hidden_id" id="hidden_id" />
+                <input type="hidden" name="actionx" id="actionx" />
+                <input type="hidden" name="imageold" id="imageold" />
+                <button type="submit" class="btn btn-info  btn-sm" id="saveBtn" value="create">
+                    <i class="fa fa-save" style="margin-right: 4px;"></i>
+                    Save Changes
+                </button>
+
+                <button type="button" name="btnback" id="btnback" class="btn-danger btn-sm">
+                    <i class="fa fa-arrow-alt-circle-left" style="margin-right: 4px;"></i>
+                    Back 
+                </button>
+            </div>    
+        </div>
     </div>
-
 
 </form>
 
