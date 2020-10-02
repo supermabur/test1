@@ -7,8 +7,8 @@
       </li>
 
       <li class="nav-item d-none d-sm-inline-block">
-        {{-- <h4 class="nav-link">{{ $title ?? '' }}</h4> --}}
-        <h4 class="nav-link metitle"></h4>
+        <h4 class="nav-link">{{ $title ?? '' }}</h4>
+        {{-- <h4 class="nav-link metitle"></h4> --}}
         {{-- <a class="nav-link"><h3>{{ $title }}</h3></a> --}}
       </li>
       

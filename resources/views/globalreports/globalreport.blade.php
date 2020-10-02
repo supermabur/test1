@@ -58,7 +58,7 @@
                                     </div>
                                     <select name="fgudang" id="fgudang" class="form-control " required>
                                         <option value="ALL">SEMUA</option>
-                                        @foreach($composer_mstgudang as $dt)
+                                        @foreach($mstgudang as $dt)
                                             <option value="{{ $dt->kode }}">{{ $dt->nama }}</option>
                                         @endforeach
                                     </select>
@@ -91,7 +91,7 @@
                     <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;padding-left: 1.25rem; padding-right: 1.25rem;">
                         {{-- <label for="filter" class="col-sm-1 col-form-label"> </label> --}}
                         <div class="col-sm-2">
-                            <button type="button" name="filter" id="filter" class="btn btn-primary btn-sm" style="width: 100%">
+                            <button type="button" name="filter" id="filter" class="btn btn-primary btn-sm" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing Order" style="width: 100%">
                                 <i class="fa fa-sync" style="margin-right: 4px;"></i>
                                 Refresh Data
                             </button>
@@ -110,7 +110,7 @@
 
                     <!-- form start -->
                     <form role="form" style="font-size: 0.8rem;">
-                        <div class="card-body">
+                        <div class="card-body" style="padding-top: 0rem">
                             <div class="table-responsive" id="tablex" width=100% style="margin-top: 10px;">
                                 <table class="table display cell-border" id="user_table" width=100%>
                                     
@@ -245,7 +245,7 @@
                 var xUrl = "{{ route('gr.show', $menuid) }}"   ;
                 var Xcolumns={!! json_encode($dtcolumns) !!};
 
-                console.log(Xcolumns);
+                // console.log(Xcolumns);
 
                 var xfdate1 = $('#fdate1').val();
                 var xfdate2 = $('#fdate2').val();
@@ -257,7 +257,7 @@
                     lengthMenu: [[50, 100, 250, -1], [50, 100, 250, 'ALL']],
                     buttons: {!! json_encode(config('global.dt_button')) !!},
                     processing: true,
-                    // language: {processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '},
+                    language: {processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '},
                     // language: {processing: '<div class="loading" delay-hide="50000"></div> '},
                     serverSide: true,
                     ajax:{  
@@ -267,21 +267,23 @@
                             dataFilter: function(response){
                                     // this to see what exactly is being sent back
                                     // console.log(response);
-                                    var json = jQuery.parseJSON( response );
-                                    console.log(json.gudang);
+                                    // var json = jQuery.parseJSON( response );
+                                    // console.log(json.gudang);
                                     // json.recordsTotal = json.total;
                                     // json.recordsFiltered = json.total;
                                     // json.data = json.list;
                                     // alert(json.posts);
                                     // document.getElementById('judulbiru').innerHTML = 'Last update Data : ' + json.lastupdate; 
                                     $('#tablex').show(200);
+                
+                                    // btnref.button('reset');
                                     // alert('dataFilter');
                                     return response;
                                 },
                             // success:function(data)
                             //     {
-                            //         console.log(data);
-                            //         alert('success');
+                            //         // console.log(data);
+                            //         // alert('success');
                             //         // console.log('---------------------------------');
                             //         // alert(data.posts);
                             //         // $('#name').val(data.name);
@@ -296,13 +298,47 @@
                             //         console.log('errorThrown :> ' + errorThrown);
                             //     },
                             },
-                    columns:Xcolumns
+                    columns:Xcolumns,
+                    footerCallback: function ( row, data, start, end, display ) {
+                            var api = this.api(), data;
+                
+                            // Remove the formatting to get integer data for summation
+                            var intVal = function ( i ) {
+                                return typeof i === 'string' ?
+                                    i.replace(/[\$,]/g, '')*1 :
+                                    typeof i === 'number' ?
+                                        i : 0;
+                            };
+                
+                            // Total over all pages
+                            total = api
+                                .column( 6 )
+                                .data()
+                                .reduce( function (a, b) {
+                                    return intVal(a) + intVal(b);
+                                }, 0 );
+                
+                            // Total over this page
+                            pageTotal = api
+                                .column( 6, { page: 'current'} )
+                                .data()
+                                .reduce( function (a, b) {
+                                    return intVal(a) + intVal(b);
+                                }, 0 );
+                
+                            // Update footer
+                            $( api.column( 6 ).footer() ).html(
+                                '$'+pageTotal +' ( $'+ total +' total)'
+                            );
+                        }
 
                 });
             }
     
 
             $('#filter').click(function(){
+                var btnref = $(this);
+                btnref.button('loading');
                 // var filter_gudang = $('#filter_gudang').val();
                 // var show0 = $('#show0').val();
 

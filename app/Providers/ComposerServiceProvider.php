@@ -4,6 +4,10 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\DB;
+
+use App\model\strole;
+use App\mstgudang;
 
 class ComposerServiceProvider extends ServiceProvider
 {
@@ -13,14 +17,36 @@ class ComposerServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {
-        // View::composer(['namaview1', 'namaview2'], 
-        //                 'App\Http\ViewComposers\UserComposer'
-        //                 );
-
-        
+    {   
         // view()->share('current_user', $user = \Auth::user());
-        View::composer('*', 'App\Http\ViewComposers\UserComposer');
+
+        View::composer(['layouts.sidebar'], 'App\Http\ViewComposers\globalreportComposer');
+
+        View::composer('users', 
+            function ($view) {
+                $view->with('composer_strole', strole::select(['id', 'name as text'])->orderBy('name')->get());
+            });
+
+
+        View::composer(['master\mstcompany'], 
+            function ($view) {
+                $view->with('composer_kota', DB::select(DB::raw("SELECT id, name2 FROM vwmstkota order by `name`")));
+            });
+
+
+        View::composer(['rptpesanrekap'], 
+            function ($view) {
+                $view->with('composer_tahunbulan', db::table('vwtahunbulan')->get());
+            });
+
+
+        View::composer(['rptpersediaan'], 
+            function ($view) {
+                $view->with('composer_mstgudang', mstgudang::where('kode','<>',"''")->orderBy('nama')->get());
+            });
+        
+            
+            
     }
 
     /**

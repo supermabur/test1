@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use DataTables;
 use Validator;
+
 use App\stmemenu;
+use App\mstgudang;
 
 class globreportController extends Controller
 {
@@ -267,11 +269,15 @@ class globreportController extends Controller
             return $dt->toJson();
         }
 
+        $mstgudang = [];
+        if ($fgudang == 1) {
+            $mstgudang = mstgudang::where('kode','<>',"''")->orderBy('nama')->get();
+        } 
 
         return view('globalreports.globalreport',
                     compact('title', 'menuid', 'columnheader', 'editview', 'dtcolumns', 'columnnative',
                             'fdate1','fdate2', 'fgudang', 
-                            'crud_i')
+                            'crud_i', 'mstgudang')
                 );
 
         // return view('strole');                

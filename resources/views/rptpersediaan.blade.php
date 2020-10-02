@@ -144,6 +144,8 @@
         }
    
 
+
+
         $('#filter').click(function(){
             var filter_gudang = $('#filter_gudang').val();
             var show0 = $('#show0').val();

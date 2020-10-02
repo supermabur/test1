@@ -15,7 +15,7 @@
             <div class="box" style="border-top: 0px solid #d2d6de;">
             <!-- <div class="container"> -->
 
-                <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
+                {{-- <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
                     <label for="filter_gudang" class="col-sm-1 col-form-label">Outlet</label>
                     <div class="col-sm-4">
                         <select name="filter_gudang" id="filter_gudang" class="form-control " required>
@@ -25,7 +25,7 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
                     <label for="show0" class="col-sm-1 col-form-label">Saldo 0</label>
@@ -99,7 +99,7 @@
 
 
 
-@section('scripts')
+{{-- @section('scripts')
 
 
 
@@ -196,4 +196,4 @@
 
 
 @endsection
-
+ --}}
