@@ -197,38 +197,56 @@
 </body>
 </html>
 
-{{-- <script>
+<script>
 
-  function GoMenu(d){
-    // loading(1);
-      var pid = d.getAttribute("data-id");
-      $(".contentxxx").html('');
-      $(".metitle").html('Loading ...');
-      $.ajax(
-        {
-          url:"{{ route('gr.index') }}",
-          data:{id:pid},
-          success: function(data){
-            // console.log(data);
-            $(".contentxxx").html(data.view);
-            $(".metitle").html(data.title);
-
-            if (data.usegr == 1) {
-              gr_menuid = data.menuid;
-              gr_columnheader = data.columnheader;
-              gr_dtcolumns = data.dtcolumns;
-              gr_columnnative = data.columnnative;
-              gr_data = data.data;
-              gr_urlshowwithid = data.urlshowwithid;
-            }
-            // loading(0);
-          }
+  function doesFileExist(urlToFile) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('HEAD', urlToFile, false);
+        xhr.send();
+        
+        if (xhr.status == "404") {
+            return false;
+        } else {
+            return true;
         }
-      );
-  }    
+    }
+
+  
+    $(document).ready(function() {
+      
+      // {{-- <img src="{{ url('images/users\\') . auth()->user()->id . '.jpg' }}" class="img-circle elevation-2" alt="User Image"> --}}
+    }
+
+  // function GoMenu(d){
+  //   // loading(1);
+  //     var pid = d.getAttribute("data-id");
+  //     $(".contentxxx").html('');
+  //     $(".metitle").html('Loading ...');
+  //     $.ajax(
+  //       {
+  //         url:"{{ route('gr.index') }}",
+  //         data:{id:pid},
+  //         success: function(data){
+  //           // console.log(data);
+  //           $(".contentxxx").html(data.view);
+  //           $(".metitle").html(data.title);
+
+  //           if (data.usegr == 1) {
+  //             gr_menuid = data.menuid;
+  //             gr_columnheader = data.columnheader;
+  //             gr_dtcolumns = data.dtcolumns;
+  //             gr_columnnative = data.columnnative;
+  //             gr_data = data.data;
+  //             gr_urlshowwithid = data.urlshowwithid;
+  //           }
+  //           // loading(0);
+  //         }
+  //       }
+  //     );
+  // }    
 
 
 
-</script> --}}
+</script> 
 
 @yield('scripts')

@@ -26,7 +26,7 @@
         
                     <div class="form-group">
                         <label for="role">Role</label>
-                        <select class="role form-control form-control-sm" id="role" name="role" required>
+                        <select class="role form-control form-control-sm" id="role" name="role" placeholder="Pilih role" required>
                             @foreach ($composer_strole as $cp)
                                 <option value="{{ $cp->id }}">{{ $cp->text }}</option>                        
                             @endforeach
@@ -36,6 +36,11 @@
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder="Enter Email">
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="hp">Handphone</label>
+                        <input type="tel" class="form-control form-control-sm" id="hp" name="hp" placeholder="Enter Handphone">
                     </div>
             
                     <div class="form-group">
@@ -72,11 +77,29 @@
 
         </div>
 
+        <div class="col-sm-3">
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">Profile picture</h3>
+                </div>
+
+                <div class="card-body">
+                    <label for="pathimage" class="btn btn-primary btn-sm" id="labelimage">Select Image</label>
+                    <input type="file" class="form-control-file form-control-sm" id="pathimage" name="pathimage" accept=".jpg" placeholder="Choose image" style="display: none;" >
+
+                    <div style="padding-top:10px">    
+                        <img id="image_preview_container" class="img-fluid img-thumbnail" alt="Responsive image" style="max-height: 150px;" 
+                            src="{{ url('/images/users/noimage.jpg') }}"  alt="preview image"/>
+                    </div>
+
+                </div>
+            </div>
+        </div>  
     </div>
     
 
     <div class="row justify-content-md-center">
-        <div class="col-sm-5" style="text-align-last: justify;">
+        <div class="col-sm-8" style="text-align-last: justify;">
             <div class="card-footer">
                 <span id="form_result"></span>
 
@@ -104,12 +127,22 @@
 
 <script>
 
+    $('#pathimage').change(function(){        
+            let reader = new FileReader();
+            reader.onload = (e) => { 
+                $('#image_preview_container').attr('src', e.target.result); 
+            }
+            reader.readAsDataURL(this.files[0]); 
+        
+        });
+
     function initEdit(actio = 'new', id = '1'){
         $('#formx')[0].reset();
         $('#form_result').html('');
         $('#actionx').val(actio);
         $('#hidden_id').val('');
         $('#role').val('').trigger('change');
+        $('#image_preview_container').attr('src', "{{ URL::to('/') }}/images/users/noimage.jpg");
         
         if (actio == 'edit'){
             $.ajax({
@@ -120,11 +153,19 @@
                     $('#name').val(data.name);
                     $('#username').val(data.username);
                     $('#email').val(data.email);
+                    $('#hp').val(data.hp);
                     $('#role').val(data.role_id).trigger('change');
                     $('#password').val('');
                     $('#password-confirm').val('');
                     $('#active').prop('checked', data.active);
                     $('#hidden_id').val(data.id);
+
+                    var pi = "{{ URL::to('/') }}/images/users/" + data.id + ".jpg";
+                    if(doesFileExist(pi)){
+                        $('#image_preview_container').attr('src', pi);
+                    }
+
+                    $('#imageold').val(data.id + '.jpg');
                     $("#globrep").hide(200);
                     $("#editview").show(200);
                     loading(0);
@@ -137,8 +178,6 @@
             loading(0);
         }
     }
-
-
 
     $(document).ready(function() {
 

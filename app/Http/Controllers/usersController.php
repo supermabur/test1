@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
+use Image;
+use File;
+
+
 class usersController extends Controller
 {
     /**
@@ -61,7 +65,6 @@ class usersController extends Controller
 
         
         $suksesmsg = 'Penambahan data berhasil';
-        
         if ($request->actionx == 'edit')
         {
             $suksesmsg = 'Edit data berhasil';
@@ -78,10 +81,8 @@ class usersController extends Controller
             return response()->json(['errors' => $error->errors()->all()]);
         }
         
-
-        
         // ----------------------------------CRUD
-        // return response()->json(['success' => $request->active]);
+        $cur_user = \Auth::user();
         
         $form_data = array(
             'name' => $request->name,
@@ -90,15 +91,34 @@ class usersController extends Controller
             'role_id' => $request->role,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'useru' => 1
+            'hp' => $request->hp,
+            'useru' => $cur_user->id
         );
 
         if ($request->actionx == 'new')
         {
-            $form_data[] = ['usere' => 1] ;
+            $form_data[] = ['usere' => $cur_user->id] ;
         }
 
         $tmp = users::updateOrCreate(['id' => $request->hidden_id], $form_data);   
+
+
+        
+        // ----------------------------------IMAGE SAVING
+        $destinationPaththumb = public_path('images/users');  
+        
+
+        $new_name = $request->imageold;
+        $image = $request->file('pathimage');
+        if($image != '')
+        {
+            $new_name = $tmp->id . '.jpg'; /*. $image->getClientOriginalExtension(); */
+            $resize_image = Image::make($image->getRealPath());
+
+            $resize_image->resize(150, 150, function($constraint){
+            $constraint->aspectRatio();
+            })->save($destinationPaththumb . '/' . $new_name);
+        }
 
 
         // // Catat Log trans

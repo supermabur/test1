@@ -28,6 +28,8 @@ class globalreportComposer
 
             $view->with('composer_stmemenu_h', DB::Select(DB::raw($queh)));
             $view->with('composer_stmemenu_d', DB::Select(DB::raw($qued)));
+
+            
         }
                                                         
     }
