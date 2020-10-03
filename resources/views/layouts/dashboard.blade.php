@@ -211,11 +211,21 @@
         }
     }
 
-  
-    $(document).ready(function() {
-      
-      // {{-- <img src="{{ url('images/users\\') . auth()->user()->id . '.jpg' }}" class="img-circle elevation-2" alt="User Image"> --}}
+  function pasangprofileimage(){
+    // alert('asd');
+    // alert({{ $composer_cur_user.id }});
+    var pi = "{{ URL::to('/') }}/images/users/" + $composer_cur_user.id + ".jpg";
+    if(doesFileExist(pi)){
+        $('.profileimg').attr('src', pi);
     }
+  }
+
+    $(document).ready(function() {
+      pasangprofileimage();
+
+
+      // {{-- <img src="{{ url('images/users\\') . auth()->user()->id . '.jpg' }}" class="img-circle elevation-2" alt="User Image"> --}}
+    });
 
   // function GoMenu(d){
   //   // loading(1);

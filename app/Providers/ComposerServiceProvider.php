@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Auth;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +22,12 @@ class ComposerServiceProvider extends ServiceProvider
         // view()->share('current_user', $user = \Auth::user());
 
         View::composer(['layouts.sidebar'], 'App\Http\ViewComposers\globalreportComposer');
+
+        View::composer('*', 
+            function ($view) {
+                $view->with('composer_cur_user', Auth::user() );
+            });
+
 
         View::composer('users', 
             function ($view) {
