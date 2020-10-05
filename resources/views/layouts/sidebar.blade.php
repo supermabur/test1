@@ -13,7 +13,7 @@
       <!-- Sidebar -->
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        {{-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
             <img src="{{ url('images/users/noimage.jpg') }}" class="img-circle elevation-2 profileimg" alt="User Image">
           </div>
@@ -31,9 +31,7 @@
               </div>
             </form>
           </div>
-
-        
-        </div>
+        </div> --}}
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">

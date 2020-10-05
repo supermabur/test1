@@ -35,31 +35,37 @@
 
 
 
-    {{-- <!-- Right navbar links -->
+    <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-comments"></i>
-          <span class="badge badge-danger navbar-badge">3</span>
+        <a class="nav-link" data-toggle="dropdown" href="#" style="    display: inline-flex;align-items: center;">
+          <div class="image-cropper mr-2" style="max-height: 35px; max-width: 35px;">
+            <img src="{{ url('images/users/noimage.jpg') }}" class="profileimg profile-pic">
+          </div> 
+          <span class="" style="font-style: normal;">{{ $composer_cur_user->name }}</span>
+          {{-- <i class="far fa-comments"></i>
+          <span class="badge badge-danger navbar-badge">3</span> --}}
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <a href="#" class="dropdown-item">
+          {{-- <a href="#" class="dropdown-item"> --}}
             <!-- Message Start -->
-            <div class="media">
-              <img src="adminlte3/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Brad Diesel
-                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">Call me whenever you can...</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
+            <form class="px-4 py-3" style="text-align-last: center;">
+              <div class="image-cropper" style="margin: auto;">
+                <img src="{{ url('images/users/noimage.jpg') }}" class="profileimg profile-pic">
+              </div> 
+              {{-- <img src="{{ url('adminlte3/dist/img/user1-128x128.jpg') }}" class="img-size-150 img-circle profileimg"> --}}
+            
+              <h3 class="dropdown-item">
+                {{ $composer_cur_user->name }}
+              </h3>
+              <p class="text-sm"><i class="far fa-envelope mr-1"></i>{{ $composer_cur_user->email }}</p>
+              <p class="text-sm">{{ $composer_cur_user->username }}</p>
+            </form>
+            
             <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
+          {{-- </a> --}}
+          {{-- <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
@@ -90,11 +96,20 @@
               </div>
             </div>
             <!-- Message End -->
-          </a>
+          </a> --}}
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST">
+            @csrf
+
+            <div class="dropdown-item dropdown-footer">
+              <button type="submit" class="btn btn-danger btn-sm" id="logoutBtn">
+                <i class="fa fa-sign-out-alt" style="margin-right: 4px;"></i>
+                Logout
+              </button>
+            </div>
+          </form>
         </div>
-      </li> --}}
+      </li>
 
 
 
@@ -129,8 +144,8 @@
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
           <i class="fas fa-th-large"></i>
         </a>
-      </li>
-    </ul> --}}
+      </li> --}}
+    </ul>
 
 
   </nav>

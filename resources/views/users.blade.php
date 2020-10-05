@@ -183,6 +183,26 @@
 
         $('.role').select2();
 
+        // https://www.jqueryscript.net/other/jQuery-Plugin-For-Selecting-Multiple-Areas-of-An-Image-Select-Areas.html
+        $('img#image_preview_container').selectAreas({
+            minSize: [10, 10],
+            onChanged: debugQtyAreas,
+            width: 500,
+            areas: [
+                {
+                    x: 10,
+                    y: 20,
+                    width: 60,
+                    height: 100,
+                }
+            ]
+        });
+
+        // Log the quantity of selections
+        function debugQtyAreas (event, id, areas) {
+            console.log(areas.length + " areas", arguments);
+        };
+
         // $('#saveBtn').click(function(){    
         //     alert('asd');        
         // });

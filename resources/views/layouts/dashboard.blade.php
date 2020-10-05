@@ -44,6 +44,9 @@
   {{-- Loading --}}
   <link type="text/css" rel="stylesheet" href="{{ url('css/waitMe.min.css') }}">
 
+  {{-- Image Select Area --}}
+  <link type="text/css" rel="stylesheet" href="{{ url('css/jquery.selectareas.css') }}">
+
   
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
@@ -62,6 +65,22 @@
         cursor: pointer;
     }
 
+    .image-cropper {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    text-align-last: center;
+    }
+
+    .profile-pic {
+      display: inline;
+      margin: 0 auto;
+      height: 100%;
+      width: auto;
+    }
+
     /* .card-footer{
       background-color: lightgray;
     } */
@@ -70,14 +89,16 @@
   @yield('style')
 
 
-  {{-- <script>
-    var gr_menuid;
-    var gr_columnheader;
-    var gr_dtcolumns;
-    var gr_columnnative;
-    var gr_data;
-    var gr_urlshowwithid;
-  </script> --}}
+  <script>
+    // var gr_menuid;
+    // var gr_columnheader;
+    // var gr_dtcolumns;
+    // var gr_columnnative;
+    // var gr_data;
+    // var gr_urlshowwithid;
+
+
+  </script>
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -191,6 +212,7 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 <script src="{{ url('js/waitMe.min.js') }}"></script> 
 <script src="{{ url('js/memst.js') }}"></script> 
+<script src="{{ url('js/jquery.selectareas.min.js') }}"></script>
 
 
 
@@ -199,33 +221,54 @@
 
 <script>
 
-  function doesFileExist(urlToFile) {
+
+    function pasangprofileimage(){
+      var sites = {!! json_encode($composer_cur_user->toArray()) !!};
+      var pi = "{{ URL::to('/') }}/images/users/" + sites.id + ".jpg";
+      if(doesFileExist(pi)){
+        $('.profileimg').attr('src', pi);
+      }
+    }
+
+    function doesFileExist(urlToFile) {
         var xhr = new XMLHttpRequest();
-        xhr.open('HEAD', urlToFile, false);
+        xhr.open('HEAD', urlToFile, true);
         xhr.send();
-        
-        if (xhr.status == "404") {
+        switch(xhr.status){
+            case "404", 404 :
             return false;
-        } else {
+            break;
+          default:
             return true;
+            break;
         }
     }
+    
+    pasangprofileimage();
 
-  function pasangprofileimage(){
-    // alert('asd');
-    // alert({{ $composer_cur_user.id }});
-    var pi = "{{ URL::to('/') }}/images/users/" + $composer_cur_user.id + ".jpg";
-    if(doesFileExist(pi)){
-        $('.profileimg').attr('src', pi);
-    }
-  }
+  // function doesFileExist(urlToFile) {
+  //       var xhr = new XMLHttpRequest();
+  //       xhr.open('HEAD', urlToFile, false);
+  //       xhr.send();
+        
+  //       if (xhr.status == "404") {
+  //           return false;
+  //       } else {
+  //           return true;
+  //       }
+  //   }
 
-    $(document).ready(function() {
-      pasangprofileimage();
+  // function pasangprofileimage(){
+  //   var sites = {!! json_encode($composer_cur_user->toArray()) !!};
+  //   var pi = "{{ URL::to('/') }}/images/users/" + sites.id + ".jpg";
+  //   if(doesFileExist(pi)){
+  //       $('.profileimg').attr('src', pi);
+  //   }
+  // }
 
-
-      // {{-- <img src="{{ url('images/users\\') . auth()->user()->id . '.jpg' }}" class="img-circle elevation-2" alt="User Image"> --}}
-    });
+    // $(document).ready(function() {
+    //   pasangprofileimage();
+    // });
 
   // function GoMenu(d){
   //   // loading(1);
