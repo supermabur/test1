@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <title>{{$title ?? ''}}</title>
+  <title>{{$title ?? '' ?? ''}}</title>
   @yield('csrf-token')
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -135,6 +135,65 @@
 
       </div> --}}
 
+
+      @if (!str_contains($title ?? '', 'USER'))  
+          <div id="modaleditprofile" class="modal fade" role="dialog" >
+            <div class="modal-dialog modal-xs">
+                <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Edit Profile</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                      @include('users')
+                    </div>
+                  </div>
+              </div>
+          </div>                  
+    
+          <script>
+            $(document).on('click', '.EditProfileBtn', function(){
+              var sites = {!! json_encode($composer_cur_user->toArray()) !!};
+              $('#formx')[0].reset();
+              $('#form_result').html('');
+              $('#hidden_id').val('');
+              $('#role').val('').trigger('change');
+              $('#image_preview_container').attr('src', "{{ URL::to('/') }}/images/users/noimage.jpg");
+              
+              $.ajax({
+                url:"/users/"+sites.id+"/edit",
+                dataType:"json",
+                success:function(data)
+                    {
+                        $('#name').val(data.name);
+                        $('#username').val(data.username);
+                        $('#email').val(data.email);
+                        $('#hp').val(data.hp);
+                        $('#role').val(data.role_id).trigger('change');
+                        $('#password').val('');
+                        $('#password-confirm').val('');
+                        $('#active').prop('checked', data.active);
+                        $('#hidden_id').val(data.id);
+    
+                        var pi = "{{ URL::to('/') }}/images/users/" + data.id + ".jpg";
+                        if(doesFileExist(pi)){
+                            $('#image_preview_container').attr('src', pi);
+                        }
+    
+                        $('#imageold').val(data.id + '.jpg');
+                        $("#modaleditprofile .hidexxx").hide();
+                        $('#modaleditprofile').modal({
+                                                backdrop: 'static',
+                                                keyboard: false
+                                                });
+                    }
+                })    
+            });
+          </script>
+    
+      @endif
+
+
     </section>
     <!-- /.content -->
   </div>
@@ -245,6 +304,37 @@
     }
     
     pasangprofileimage();
+
+    function loading(run = 1, xtext = 'Please wait ...'){
+            if (run > 0){
+                $('.box').waitMe({
+                    //none, rotateplane, stretch, orbit, roundBounce, win8, 
+                    //win8_linear, ios, facebook, rotation, timer, pulse, 
+                    //progressBar, bouncePulse or img
+                    effect: 'pulse',
+                    //place text under the effect (string).
+                    text: xtext,
+                    //background for container (string).
+                    bg: 'rgba(255,255,255,0.9)',
+                    //color for background animation and text (string).
+                    color: '#000',
+                    //max size
+                    maxSize: '',
+                    //wait time im ms to close
+                    waitTime: -1,
+                    //url to image
+                    source: '',
+                    //or 'horizontal'
+                    textPos: 'vertical',
+                    //font size
+                    fontSize: ''
+                });
+            }
+            else{
+                $('.box').waitMe("hide");
+            }
+
+        }
 
   // function doesFileExist(urlToFile) {
   //       var xhr = new XMLHttpRequest();

@@ -115,7 +115,7 @@ class usersController extends Controller
             $new_name = $tmp->id . '.jpg'; /*. $image->getClientOriginalExtension(); */
             $resize_image = Image::make($image->getRealPath());
 
-            $resize_image->resize(150, 150, function($constraint){
+            $resize_image->resize(200, 200, function($constraint){
             $constraint->aspectRatio();
             })->save($destinationPaththumb . '/' . $new_name);
         }

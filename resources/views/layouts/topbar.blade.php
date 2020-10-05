@@ -7,9 +7,9 @@
       </li>
 
       <li class="nav-item d-none d-sm-inline-block">
-        <h4 class="nav-link">{{ $title ?? '' }}</h4>
+        <h4 class="nav-link">{{ $title ?? '' ?? '' }}</h4>
         {{-- <h4 class="nav-link metitle"></h4> --}}
-        {{-- <a class="nav-link"><h3>{{ $title }}</h3></a> --}}
+        {{-- <a class="nav-link"><h3>{{ $title ?? '' }}</h3></a> --}}
       </li>
       
       {{-- <li class="nav-item d-none d-sm-inline-block">
@@ -40,14 +40,14 @@
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#" style="    display: inline-flex;align-items: center;">
-          <div class="image-cropper mr-2" style="max-height: 35px; max-width: 35px;">
+          <div class="image-cropper mr-2" style="max-height: 40px; max-width: 40px;">
             <img src="{{ url('images/users/noimage.jpg') }}" class="profileimg profile-pic">
           </div> 
           <span class="" style="font-style: normal;">{{ $composer_cur_user->name }}</span>
           {{-- <i class="far fa-comments"></i>
           <span class="badge badge-danger navbar-badge">3</span> --}}
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="max-width: 500px;">
           {{-- <a href="#" class="dropdown-item"> --}}
             <!-- Message Start -->
             <form class="px-4 py-3" style="text-align-last: center;">
@@ -98,19 +98,27 @@
             <!-- Message End -->
           </a> --}}
           <div class="dropdown-divider"></div>
+          
+
+          <div class="dropdown-item dropdown-footer">       
+            @if (!str_contains($title ?? '', 'USER'))       
+              <button class="btn btn-primary btn-sm EditProfileBtn" id="EditProfileBtn">
+                <i class="fa fa-user-edit" style="margin-right: 4px;"></i>
+                Edit Profile
+              </button>
+            @endif
+
+            <button type="submit" class="btn btn-danger btn-sm" id="logoutBtn" form="logout-form">
+              <i class="fa fa-sign-out-alt" style="margin-right: 4px;"></i>
+              Logout
+            </button>
+          </div>
+
           <form id="logout-form" action="{{ route('logout') }}" method="POST">
             @csrf
-
-            <div class="dropdown-item dropdown-footer">
-              <button type="submit" class="btn btn-danger btn-sm" id="logoutBtn">
-                <i class="fa fa-sign-out-alt" style="margin-right: 4px;"></i>
-                Logout
-              </button>
-            </div>
           </form>
         </div>
       </li>
-
 
 
       <!-- Notifications Dropdown Menu -->

@@ -1,7 +1,7 @@
     
 
 
-<form method="post" id="formx" class="form-vertical" enctype="multipart/form-data" novalidate>
+<form method="post" id="formuser" class="form-vertical" enctype="multipart/form-data" novalidate>
     @csrf
 
     <div class="row justify-content-md-center">
@@ -24,7 +24,7 @@
                         <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="Enter Username" required>
                     </div>
         
-                    <div class="form-group">
+                    <div class="form-group hidexxx">
                         <label for="role">Role</label>
                         <select class="role form-control form-control-sm" id="role" name="role" placeholder="Pilih role" required>
                             @foreach ($composer_strole as $cp)
@@ -53,7 +53,7 @@
                         <input type="password" class="form-control form-control-sm" id="password-confirm" placeholder="Enter password" name="password_confirmation" required autocomplete="new-password">
                     </div>
                     
-                    <div class="form-check">
+                    <div class="form-check hidexxx">
                         <input type="hidden" name="active" value="0"/>
                         <input type="checkbox" class="form-check-input" id="active" name="active" value="1">
                         <label class="form-check-label" for="active">Aktif</label>
@@ -111,7 +111,7 @@
                     Save Changes
                 </button>
 
-                <button type="button" name="btnback" id="btnback" class="btn-danger btn-sm">
+                <button type="button" name="btnback" id="btnback" class="btn-danger btn-sm hidexxx">
                     <i class="fa fa-arrow-alt-circle-left" style="margin-right: 4px;"></i>
                     Back 
                 </button>
@@ -136,8 +136,8 @@
         
         });
 
-    function initEdit(actio = 'new', id = '1'){
-        $('#formx')[0].reset();
+    function initEdit(actio = 'new', id = '1', mode = ''){
+        $('#formuser')[0].reset();
         $('#form_result').html('');
         $('#actionx').val(actio);
         $('#hidden_id').val('');
@@ -184,19 +184,21 @@
         $('.role').select2();
 
         // https://www.jqueryscript.net/other/jQuery-Plugin-For-Selecting-Multiple-Areas-of-An-Image-Select-Areas.html
-        $('img#image_preview_container').selectAreas({
-            minSize: [10, 10],
-            onChanged: debugQtyAreas,
-            width: 500,
-            areas: [
-                {
-                    x: 10,
-                    y: 20,
-                    width: 60,
-                    height: 100,
-                }
-            ]
-        });
+        // $('img#image_preview_container').selectAreas({
+        //     minSize: [10, 10],
+        //     aspectRatio: 1,
+        //     allowDelete:false,
+        //     onChanged: debugQtyAreas,
+        //     width: 500,
+        //     areas: [
+        //         {
+        //             x: 10,
+        //             y: 20,
+        //             width: 100,
+        //             height: 100,
+        //         }
+        //     ]
+        // });
 
         // Log the quantity of selections
         function debugQtyAreas (event, id, areas) {
@@ -207,7 +209,7 @@
         //     alert('asd');        
         // });
 
-        $('#formx').on('submit', function(event){
+        $('#formuser').on('submit', function(event){
             event.preventDefault();
             loading(1, 'Saving Data ...');
 
@@ -239,13 +241,14 @@
                     }
                     if(data.success)
                     {
-                        $('#formx')[0].reset();
+                        $('#formuser')[0].reset();
                         $('#user_table').DataTable().ajax.reload();
                         // alert(data.success);
                         document.getElementById('btnback').click();
                     }
                     $('#saveBtn').html('Save changes');
                     loading(0);
+                    $('#modaleditprofile').modal('hide');
                 }
             })
         });
