@@ -29,7 +29,7 @@ class ComposerServiceProvider extends ServiceProvider
             });
 
 
-        View::composer('users', 
+        View::composer(['users', 'userseditprofile'], 
             function ($view) {
                 $view->with('composer_strole', strole::select(['id', 'name as text'])->orderBy('name')->get());
             });

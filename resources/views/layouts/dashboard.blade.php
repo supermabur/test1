@@ -72,6 +72,9 @@
     overflow: hidden;
     border-radius: 50%;
     text-align-last: center;
+    border: solid;
+    border-width: thin;
+    border-color: lightgrey;
     }
 
     .profile-pic {
@@ -136,62 +139,21 @@
       </div> --}}
 
 
-      @if (!str_contains($title ?? '', 'USER'))  
+      {{-- @if (!str_contains($title ?? '', 'USER'))  
           <div id="modaleditprofile" class="modal fade" role="dialog" >
-            <div class="modal-dialog modal-xs">
+            <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
                       <h4 class="modal-title">Edit Profile</h4>
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
-                      @include('users')
+                      @include('userskecil')
                     </div>
                   </div>
               </div>
-          </div>                  
-    
-          <script>
-            $(document).on('click', '.EditProfileBtn', function(){
-              var sites = {!! json_encode($composer_cur_user->toArray()) !!};
-              $('#formx')[0].reset();
-              $('#form_result').html('');
-              $('#hidden_id').val('');
-              $('#role').val('').trigger('change');
-              $('#image_preview_container').attr('src', "{{ URL::to('/') }}/images/users/noimage.jpg");
-              
-              $.ajax({
-                url:"/users/"+sites.id+"/edit",
-                dataType:"json",
-                success:function(data)
-                    {
-                        $('#name').val(data.name);
-                        $('#username').val(data.username);
-                        $('#email').val(data.email);
-                        $('#hp').val(data.hp);
-                        $('#role').val(data.role_id).trigger('change');
-                        $('#password').val('');
-                        $('#password-confirm').val('');
-                        $('#active').prop('checked', data.active);
-                        $('#hidden_id').val(data.id);
-    
-                        var pi = "{{ URL::to('/') }}/images/users/" + data.id + ".jpg";
-                        if(doesFileExist(pi)){
-                            $('#image_preview_container').attr('src', pi);
-                        }
-    
-                        $('#imageold').val(data.id + '.jpg');
-                        $("#modaleditprofile .hidexxx").hide();
-                        $('#modaleditprofile').modal({
-                                                backdrop: 'static',
-                                                keyboard: false
-                                                });
-                    }
-                })    
-            });
-          </script>
-    
-      @endif
+          </div>                    
+      @endif --}}
 
 
     </section>
@@ -281,6 +243,11 @@
 <script>
 
 
+
+    $(document).on('click', '.EditProfileBtn', function(){
+      window.location.href = '/editprofile';
+    });
+
     function pasangprofileimage(){
       var sites = {!! json_encode($composer_cur_user->toArray()) !!};
       var pi = "{{ URL::to('/') }}/images/users/" + sites.id + ".jpg";
@@ -291,8 +258,9 @@
 
     function doesFileExist(urlToFile) {
         var xhr = new XMLHttpRequest();
-        xhr.open('HEAD', urlToFile, true);
+        xhr.open('HEAD', urlToFile, false);
         xhr.send();
+        // console.log(xhr.status);
         switch(xhr.status){
             case "404", 404 :
             return false;
@@ -367,7 +335,7 @@
   //     $(".metitle").html('Loading ...');
   //     $.ajax(
   //       {
-  //         url:"{{ route('gr.index') }}",
+  //         url:"{{ route('grctrl.index') }}",
   //         data:{id:pid},
   //         success: function(data){
   //           // console.log(data);

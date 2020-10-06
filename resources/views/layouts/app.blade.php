@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" style="background: linear-gradient(90deg, rgba(131,58,180,0.7651435574229692) 0%, rgba(253,29,29,0.5074404761904762) 50%, rgba(226,252,69,0.5382528011204482) 100%);">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" style="background: linear-gradient(113deg, rgba(255,231,240,1) 0%, rgba(216,253,255,1) 52%, rgba(214,255,210,1) 100%);">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">

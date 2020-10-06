@@ -11,10 +11,10 @@
 
 {{-- {{ json_encode($columnnative) }} --}}
 
-                <div class="card card-secondary" style="box-shadow: none;margin-top: 0.8rem;">
-                    <div class="card-header">
+                <div class="card card-secondary" style="box-shadow: none;margin-top: 0.8rem;padding-top: 15px;">
+                    {{-- <div class="card-header">
                         <h3 class="card-title judulbiru" id="judulbiru">Data List</h3>
-                    </div>
+                    </div> --}}
                     <!-- /.card-header -->
 
             
@@ -211,7 +211,7 @@
             {
                 var numFormat = $.fn.dataTable.render.number('.',',',0,'');
                 var xmenuid = {{ $menuid }};
-                var xUrl = "{{ route('gr.show', $menuid) }}"   ;
+                var xUrl = "{{ route('grctrl.show', $menuid) }}"   ;
                 var Xcolumns={!! json_encode($dtcolumns) !!};
 
                 // console.log(Xcolumns);

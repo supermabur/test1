@@ -248,7 +248,6 @@
                     }
                     $('#saveBtn').html('Save changes');
                     loading(0);
-                    $('#modaleditprofile').modal('hide');
                 }
             })
         });

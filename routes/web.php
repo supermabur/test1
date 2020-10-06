@@ -48,8 +48,9 @@ Auth::routes();
 
 // Route::get('/', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@index');
-Route::resource('gr', 'globreportController');
+Route::resource('grctrl', 'globreportController');
 
 Route::resource('databrowser', 'databrowserController');
 
 Route::get('coba', function(){return view('coba');});
+Route::resource('editprofile', 'userseditprofileController');

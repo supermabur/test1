@@ -12,7 +12,7 @@ use Image;
 use File;
 
 
-class usersController extends Controller
+class userseditprofileController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -22,7 +22,6 @@ class usersController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('cekmenuroles');
     }
 
     
@@ -31,9 +30,15 @@ class usersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $cur_user = \Auth::user();
+            $data = users::find($cur_user->id);
+            return response()->json($data);    
+        }
+        $title = 'EDIT USER PROFILE';
+        return view('userseditprofile',compact('title'));
     }
 
     /**
@@ -157,8 +162,6 @@ class usersController extends Controller
      */
     public function edit($id)
     {
-        $data = users::find($id);
-        return response()->json($data);
     }
 
     /**
