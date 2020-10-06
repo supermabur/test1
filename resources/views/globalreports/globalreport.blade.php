@@ -203,7 +203,6 @@
 
 
         $(document).ready(function(){
-
             hideeditview();
             fill_datatable();
 
@@ -213,8 +212,25 @@
                 var xmenuid = {{ $menuid }};
                 var xUrl = "{{ route('grctrl.show', $menuid) }}"   ;
                 var Xcolumns={!! json_encode($dtcolumns) !!};
+                var xNative={!! json_encode($columnnative) !!};
+                var xnum = {render: numFormat, className: 'text-right'};
 
-                // console.log(Xcolumns);
+                for (i=0; i < xNative.length ; i++){
+                    switch (xNative[i]){
+                        case 'NEWDECIMAL':
+                            Object.assign(Xcolumns[i], xnum);
+                        break;
+                    }
+                }
+
+                var appe = '<tfoot><tr>';
+                for (i=0; i < Xcolumns.length ; i++){
+                    appe = appe + '<th></th>';
+                }
+                appe = appe + '</tr></tfoot>';
+                $('tfoot').remove();
+                $('#user_table').append(appe);
+
 
                 var xfdate1 = $('#fdate1').val();
                 var xfdate2 = $('#fdate2').val();
@@ -267,11 +283,66 @@
                             //         console.log('errorThrown :> ' + errorThrown);
                             //     },
                             },
-                    columns:Xcolumns
+                    columns:Xcolumns,
 
+                    "footerCallback": function (row, data, start, end, display) {
+                            var api = this.api();
+            
+                            // Remove the formatting to get integer data for summation
+                            var intVal = function (i) {
+                                return typeof i === 'string' ?
+                                    i.replace(/[\$,]/g, '') * 1 :
+                                    typeof i === 'number' ?
+                                    i : 0;
+                            };
+            
+                            // // Total over all pages
+                            // total = api
+                            //     .column(6)
+                            //     .data()
+                            //     .reduce(function (a, b) {
+                            //         return intVal(a) + intVal(b);
+                            //     }, 0);
+            
+                            // Total over this page
+
+                            for (i=0; i < xNative.length ; i++){
+                                switch (xNative[i]){
+                                    case 'NEWDECIMAL':
+                                        pageTotal = api
+                                                    .column(i, {
+                                                        page: 'current'
+                                                    })
+                                                    .data()
+                                                    .reduce(function (a, b) {
+                                                        return intVal(a) + intVal(b);
+                                                    }, 0);
+                                
+                                        // Update footer
+                                        $(api.column(i).footer()).html(formatNumber(pageTotal));
+                                    break;
+                                }
+
+                            }
+
+                            // pageTotal = api
+                            //     .column(6, {
+                            //         page: 'current'
+                            //     })
+                            //     .data()
+                            //     .reduce(function (a, b) {
+                            //         return intVal(a) + intVal(b);
+                            //     }, 0);
+            
+                            // // Update footer
+                            // $(api.column(6).footer()).html(pageTotal);
+                        }                    
                 });
             }
     
+            function formatNumber(num) {
+                return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+            }
 
             $('#filter').click(function(){
                 var btnref = $(this);
