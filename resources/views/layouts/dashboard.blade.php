@@ -104,7 +104,7 @@
   </script>
 
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed text">
 <div class="wrapper">
 
   @include('layouts.sidebar')
