@@ -135,6 +135,7 @@ class globreportController extends Controller
         $fdate1 = Str::contains($que, '@date1');
         $fdate2 = Str::contains($que, '@date2');
         $fgudang = Str::contains($que, '@gudang');
+        $fidcompany = Str::contains($que, '@idcompany');
 
         $crud = 0;
         $crud_i = Str::contains($menu->crud, 'i');
@@ -178,6 +179,9 @@ class globreportController extends Controller
 
 
         if ($request->ajax()) {
+            $cur_user = \Auth::user();
+            $que = Str::of($que)->replace('@idcompany', $cur_user->idcompany);
+
             if (!empty($request->fdate1)){
                 $xx = Carbon::createFromFormat('d-m-Y', $request->fdate1)->format('Ymd');
                 $que = Str::of($que)->replace('@date1', $xx);

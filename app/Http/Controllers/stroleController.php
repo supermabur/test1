@@ -65,6 +65,8 @@ class stroleController extends Controller
      */
     public function store(Request $request)
     {
+        
+        $cur_user = \Auth::user();
         // return response()->json(['success' => $request->mnu]);
 
         // ----------------------------------VALIDATION
@@ -104,12 +106,13 @@ class stroleController extends Controller
             'name' => $request->name,
             'active' => $request->active + 0,
             // 'active' => 0,
-            'useru' => 1
+            'useru' => $cur_user->id,
+            'idcompany' => $cur_user->idcompany
         );
 
         if ($request->actionx == 'new')
         {
-            $form_data[] = ['usere' => 1] ;
+            $form_data[] = ['usere' => $cur_user->id] ;
         }
 
         $tmp = strole::updateOrCreate(['id' => $request->hidden_id], $form_data);   
@@ -122,7 +125,7 @@ class stroleController extends Controller
 
         $myA = explode(',', $request->mnu);
         foreach($myA as $mnu){
-            DB::insert('INSERT INTO strolemenu(`id_role`, `id_menu`, `usere`, `useru`) VALUES (?,?,?,?)', [$request->hidden_id, $mnu, 1, 1]);
+            DB::insert('INSERT INTO strolemenu(`id_role`, `id_menu`, `usere`, `useru`, idcompany) VALUES (?,?,?,?,?)', [$request->hidden_id, $mnu, $cur_user->id, $cur_user->id, $cur_user->idcompany]);
         }
 
 
