@@ -59,6 +59,7 @@ class userseditprofileController extends Controller
      */
     public function store(Request $request)
     {
+
         // return response()->json(['success' => $request->mnu]);
 
         // ----------------------------------VALIDATION
@@ -98,7 +99,8 @@ class userseditprofileController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'hp' => $request->hp,
-            'useru' => $cur_user->id
+            'useru' => $cur_user->id,
+            'idcompany' => $cur_user->idcompany
         );
 
         if ($request->actionx == 'new')

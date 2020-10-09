@@ -212,7 +212,7 @@
                 var fd =  new FormData(this);
 
                 $.ajax({
-                    url:"{{ route('users.store') }}",
+                    url:"{{ route('editprofile.store') }}",
                     method:"POST",
                     data: fd,
                     contentType: false,

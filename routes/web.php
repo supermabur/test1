@@ -35,13 +35,13 @@ Route::get('/slicks', function () {
 });
 
 
-$stmemenu = stmemenu::where('links','<>','')->get();
+Route::get('rptpesanrekap/detail', 'rptpesanrekapController@getdetailpesan');
 
+$stmemenu = stmemenu::where('links','<>','')->get();
 foreach($stmemenu as $menu){
     Route::resource($menu->links, $menu->controllername);	
 }
 
-Route::get('rptpesanrekap_detail', 'rptpesanrekapController@getdetailpesan');
 
 
 Auth::routes(['verify' => true]);

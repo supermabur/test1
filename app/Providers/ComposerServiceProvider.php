@@ -19,6 +19,7 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {   
+        $cur_user = \Auth::user();
         // view()->share('current_user', $user = \Auth::user());
 
         View::composer(['layouts.sidebar'], 'App\Http\ViewComposers\globalreportComposer');
@@ -31,7 +32,12 @@ class ComposerServiceProvider extends ServiceProvider
 
         View::composer(['users', 'userseditprofile'], 
             function ($view) {
-                $view->with('composer_strole', strole::select(['id', 'name as text'])->orderBy('name')->get());
+                if($cur_user->role_id >= 3){
+                    $view->with('composer_strole', strole::select(['id', 'name as text'])->where('id', '>','3')->orderBy('name')->get());
+                }
+                else{
+                    $view->with('composer_strole', strole::select(['id', 'name as text'])->orderBy('name')->get());
+                }
             });
 
 

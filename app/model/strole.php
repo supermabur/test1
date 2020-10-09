@@ -11,6 +11,6 @@ class strole extends Model
     const UPDATED_AT = 'dateu';
 
     protected $fillable = [
-        'name','active', 'usere','useru'
+        'name', 'idcompany','active', 'usere','useru'
     ];
 }

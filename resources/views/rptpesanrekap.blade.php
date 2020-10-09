@@ -168,7 +168,7 @@
                         dataType:"json",
                         dataFilter: function(response){
                                 // this to see what exactly is being sent back
-                                console.log(response);
+                                // console.log(response);
                                 var json = jQuery.parseJSON( response );
                                 // json.recordsTotal = json.total;
                                 // json.recordsFiltered = json.total;
@@ -231,7 +231,7 @@
                 // language: {processing: '<div class="loading" delay-hide="50000"></div> '},
                 serverSide: true,
                 ajax:{  
-                        url: '{{ url("rptpesanrekap_detail")}}',
+                        url: '{{ url("rptpesanrekap/detail")}}',
                         data:{'id':pid},
                         dataType:"json",
                         beforeSend: function() {
@@ -240,8 +240,8 @@
                         },
                         dataFilter: function(response){
                                 // this to see what exactly is being sent back
-                                console.log(response);
-                                var json = jQuery.parseJSON( response );
+                                // console.log(response);
+                                // var json = jQuery.parseJSON( response );
                                 // json.recordsTotal = json.total;
                                 // json.recordsFiltered = json.total;
                                 // json.data = json.list;

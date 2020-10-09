@@ -53,8 +53,9 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'username' => 'required|string|max:255|unique:users',
-            'companyname' => ['required', \Illuminate\Validation\Rule::unique('mstcompany')], 
+            'companyname' => ['required', \Illuminate\Validation\Rule::unique('mstcompany', 'name')], 
             // ->ignore($request->hidden_id)],
+            'notelp' => ['required', 'string'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -68,10 +69,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $form_data = array(
+            'name' => $data['companyname'],
+            'notelp' => $data['notelp'],
+            'email' => $data['email'],
+            'pathlogo' => 'noimage.png',
+            'idkota' => 1
+        );
+        $tmp = mstcompany::create($form_data);           
+
         return User::create([
             'name' => $data['name'],
             'username' => $data['username'],
             'email' => $data['email'],
+            'idcompany' => $tmp->id,
+            'owner' => 1,
+            'role_id' => 3,
             'password' => Hash::make($data['password']),
         ]);
     }

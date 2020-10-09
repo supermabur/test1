@@ -30,7 +30,6 @@ class Roles_menus
             }
             // echo $request->path() . ' pos ' . $pos . ' | subs : ' . substr($request->path(), 0, $pos);
 
-
             if($pos == 0){
                 $route = $request->path();
             }
@@ -54,6 +53,7 @@ class Roles_menus
 
             $jml = DB::select(DB::raw($qued));
             // echo 'jml : ' . $jml[0]->jml;
+
             if ($jml[0]->jml == 0){
                 return redirect('/');
             }
