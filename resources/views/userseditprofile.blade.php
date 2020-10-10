@@ -28,7 +28,7 @@
                             
                                     <div class="form-group">
                                         <label for="username">Username</label>
-                                        <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="Enter Username" required>
+                                        <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="Enter Username" required disabled>
                                     </div>
                         
                                     <div class="form-group" style="display: none;">

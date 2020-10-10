@@ -36,9 +36,9 @@
 
                     </ul>
                     @if (Route::has('register'))
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                        </li>
+                        </li> --}}
                     @endif
                     {{-- <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">

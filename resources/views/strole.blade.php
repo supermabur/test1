@@ -84,7 +84,7 @@
             {
                 $('#name').val(data.data.name);
                 $('#active').prop('checked', data.data.active);
-                if (actio = 'edit') {
+                if (actio == 'edit') {
                     $('#hidden_id').val(data.data.id);
                 }
                 $("#globrep").hide(200);

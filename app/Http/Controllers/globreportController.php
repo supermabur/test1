@@ -181,6 +181,7 @@ class globreportController extends Controller
         if ($request->ajax()) {
             $cur_user = \Auth::user();
             $que = Str::of($que)->replace('@idcompany', $cur_user->idcompany);
+            $que = Str::of($que)->replace('@username', $cur_user->username);
 
             if (!empty($request->fdate1)){
                 $xx = Carbon::createFromFormat('d-m-Y', $request->fdate1)->format('Ymd');
