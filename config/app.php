@@ -183,6 +183,7 @@ return [
         Dingo\Api\Provider\LaravelServiceProvider::class,
 
         Barryvdh\Debugbar\ServiceProvider::class,
+        Jenssegers\Agent\AgentServiceProvider::class,
     ],
 
     /*
@@ -237,6 +238,7 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
     ],
 
 ];

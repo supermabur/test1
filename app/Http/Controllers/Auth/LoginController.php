@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use \Illuminate\Http\Request;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Jenssegers\Agent\Agent;
 
 class LoginController extends Controller
 {
@@ -77,14 +77,22 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         // dd($user);
+        $agent = new Agent();
+        $browser = $agent->browser();
+        $browser .= ' ' . $agent->version($browser);
+
+        $platform = $agent->platform();
+        $device = $agent->device();
+        $version = $agent->version($platform);
+
         $user->update(
                 [
                     'lastlogin' => DB::raw('now()'),
                     'lastloginip' => $request->getClientIp(),
-                    // 'lastloginbrowser' => BrowserDetect::browserName(),
-                    // 'lastloginplatform' => BrowserDetect::platformName()
+                    'lastloginbrowser' => $browser,
+                    'lastloginplatform' => $platform . ' ' . $version . ' ' . $device
                 ]
-                );
+            );
 
     }
 
