@@ -28,7 +28,7 @@
                             
                                     <div class="form-group">
                                         <label for="username">Username</label>
-                                        <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="Enter Username" required disabled>
+                                        <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="Enter Username" required readonly>
                                     </div>
                         
                                     <div class="form-group" style="display: none;">
@@ -134,10 +134,10 @@
                     $('#image_preview_container').attr('src', e.target.result); 
                 }
                 reader.readAsDataURL(this.files[0]); 
-            
             });
 
         function getData(){
+            loading2(1, '.box');
             $('#formuser')[0].reset();
             $('#form_result').html('');
             $('#hidden_id').val('');
@@ -166,6 +166,7 @@
                     }
 
                     $('#imageold').val(data.id + '.jpg');
+                    loading2(0, '.box');
                 }
             })    
         }

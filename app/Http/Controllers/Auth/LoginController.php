@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use \Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -63,4 +66,26 @@ class LoginController extends Controller
     {
         return $this->username;
     }
+
+    /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        // dd($user);
+        $user->update(
+                [
+                    'lastlogin' => DB::raw('now()'),
+                    'lastloginip' => $request->getClientIp(),
+                    // 'lastloginbrowser' => BrowserDetect::browserName(),
+                    // 'lastloginplatform' => BrowserDetect::platformName()
+                ]
+                );
+
+    }
+
 }

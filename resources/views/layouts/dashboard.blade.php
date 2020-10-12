@@ -273,6 +273,37 @@
     
     pasangprofileimage();
 
+    function loading2(run = 1, xclass = '', xtext = 'Please wait ...'){
+        if (run > 0){
+            $(xclass).waitMe({
+                //none, rotateplane, stretch, orbit, roundBounce, win8, 
+                //win8_linear, ios, facebook, rotation, timer, pulse, 
+                //progressBar, bouncePulse or img
+                effect: 'pulse',
+                //place text under the effect (string).
+                text: xtext,
+                //background for container (string).
+                bg: 'rgba(255,255,255,0.9)',
+                //color for background animation and text (string).
+                color: '#000',
+                //max size
+                maxSize: '',
+                //wait time im ms to close
+                waitTime: -1,
+                //url to image
+                source: '',
+                //or 'horizontal'
+                textPos: 'vertical',
+                //font size
+                fontSize: ''
+            });
+        }
+        else{
+            $(xclass).waitMe("hide");
+        }
+
+    }
+
     function loading(run = 1, xtext = 'Please wait ...'){
             if (run > 0){
                 $('.box').waitMe({

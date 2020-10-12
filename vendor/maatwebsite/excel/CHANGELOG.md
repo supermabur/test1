@@ -3,6 +3,17 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [3.1.23] - 2020-09-29
+
+### Added
+- Added `ignore_empty` setting to `config/excel.php`
+- Added `strict_null_comparison` setting to `config/excel.php`
+
+## [3.1.22] - 2020-09-08
+
+- Laravel 8 support
+- Lumen improvements
+
 ## [3.1.21] - 2020-08-06
 
 ### Added
@@ -46,7 +57,9 @@ All notable changes to this project will be documented in this file.
 - Raw() method now also available on Exportable.
 - Fix for breaking changes in PhpSpreadsheet with empty enclosures.
 
-[Unreleased]: https://github.com/Maatwebsite/Laravel-Excel/compare/3.1.21...HEAD
+[Unreleased]: https://github.com/Maatwebsite/Laravel-Excel/compare/3.1.23...HEAD
+[3.1.23]: https://github.com/Maatwebsite/Laravel-Excel/compare/3.1.22...3.1.23
+[3.1.22]: https://github.com/Maatwebsite/Laravel-Excel/compare/3.1.21...3.1.22
 [3.1.21]: https://github.com/Maatwebsite/Laravel-Excel/compare/3.1.20...3.1.21
 [3.1.20]: https://github.com/Maatwebsite/Laravel-Excel/compare/3.1.19...3.1.20
 
