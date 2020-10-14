@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" style="background: linear-gradient(113deg, rgba(255,231,240,1) 0%, rgba(216,253,255,1) 52%, rgba(214,255,210,1) 100%);">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" 
+    style="background: linear-gradient(90deg, rgba(239,215,255,1) 0%, rgba(181,254,255,1) 50%, rgba(246,255,210,1) 100%);">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,26 +20,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    {!! htmlScriptTagJsApi([
-        'action' => 'homepage',
-        'callback_then' => 'callbackThen',
-        'callback_catch' => 'callbackCatch'
-    ]) !!}
 
-    <script type="text/javascript">
-        function callbackThen(response){
-            // read HTTP status
-            console.log(response.status);
-            
-            // read Promise object
-            response.json().then(function(data){
-                console.log(data);
-            });
-        }
-        function callbackCatch(error){
-            console.error('Error:', error)
-        }   
-    </script>    
+    {!! ReCaptcha::htmlScriptTagJsApi() !!}
 
 </head>
 <body style="    background-color: transparent;">

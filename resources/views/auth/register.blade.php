@@ -9,7 +9,7 @@
 
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card shadow">
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
@@ -112,6 +112,21 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="g-recaptcha-response" class="col-md-4 col-form-label text-md-right">Captcha</label>
+
+                            <div class="col-md-6">
+                                {!! htmlFormSnippet() !!}
+
+                                @error('g-recaptcha-response')
+                                    <span class="invalid-feedback" role="alert" style="display: block">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
@@ -120,6 +135,17 @@
                             </div>
                         </div>
                         
+                        {{-- @if ($errors->any())
+                            {{ $errors }}
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif --}}
+
                     </form>
                 </div>
             </div>

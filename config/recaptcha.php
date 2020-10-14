@@ -37,7 +37,7 @@ return [
      * get more info @ https://developers.google.com/recaptcha/docs/versions
      *
      */
-    'version'                      => 'v3',
+    'version'                      => 'v2',
 
     /**
      *
@@ -128,7 +128,7 @@ return [
          * The size of the widget.
          * Supported "normal", "compact"
          */
-        'size'             => 'normal',
+        'size'             => 'compact',
 
         /**
          * The tabindex of the widget and challenge.
