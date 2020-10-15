@@ -27,10 +27,9 @@ class mstcompanyController extends Controller
        */
       public function index(Request $request)
       {
-            $kota = DB::select(DB::raw("SELECT id, name2 FROM vwmstkota order by `name`"));
-            $id = auth()->user()->id;
-            $data = mstcompany::find($id);
-            return view('master\mstcompany', compact('data', 'kota'));
+            $idcompany = auth()->user()->idcompany;
+            $data = mstcompany::find($idcompany);
+            return view('master\mstcompany', compact('data'));
       }
 
 
@@ -43,11 +42,12 @@ class mstcompanyController extends Controller
     public function store(Request $request)
     {
         $id = auth()->user()->id;
+        $idcompany = auth()->user()->idcompany;
         // return response()->json(['success' => 'Data Added successfully. ' . $request->image]);
 
         // ----------------------------------VALIDATION
         $rules = array(
-            'name'      => ['required', \Illuminate\Validation\Rule::unique('mstcompany')->ignore($id)],
+            'name'      => ['required', \Illuminate\Validation\Rule::unique('mstcompany')->ignore($idcompany)],
             'alamat'    => 'required', 
             'idkota'    => 'required',
             'notelp'    => 'required', 
@@ -77,7 +77,7 @@ class mstcompanyController extends Controller
         if($image != '')
         {
             // $new_name = time() . '_' . rand() . '.' . $image->getClientOriginalExtension();
-            $new_name = $id . '.' . $image->getClientOriginalExtension();
+            $new_name = $idcompany . '.' . $image->getClientOriginalExtension();
             // upload image thumbnail size
             $resize_image = Image::make($image->getRealPath());
 
@@ -116,7 +116,7 @@ class mstcompanyController extends Controller
         if ($request->actionx == 'new')
         {$form_data[] = ['usere' => $id] ;}
         
-        $tmp = mstcompany::updateOrCreate(['id' => $id], $form_data);   
+        $tmp = mstcompany::updateOrCreate(['id' => $idcompany], $form_data);   
 
 
         // // Catat Log trans

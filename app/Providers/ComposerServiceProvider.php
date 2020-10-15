@@ -32,12 +32,14 @@ class ComposerServiceProvider extends ServiceProvider
         View::composer(['users', 'userseditprofile'], 
             function ($view) {
                 $cur_user = \Auth::user();
-                if($cur_user->role_id >= 3){
-                    $view->with('composer_strole', strole::select(['id', 'name as text'])->where('id', '>','3')->orderBy('name')->get());
+                $dbrole = strole::select(['id', 'name as text'])->where('idcompany', Auth::user()->idcompany )->orderBy('name');
+
+                if($cur_user->owner){
+                    $dbrole = strole::select(['id', 'name as text'])->where('id', '3')->union($dbrole);
                 }
                 else{
-                    $view->with('composer_strole', strole::select(['id', 'name as text'])->orderBy('name')->get());
                 }
+                $view->with('composer_strole', $dbrole->get());
             });
 
 

@@ -135,6 +135,7 @@
                     mnu.push($(lis[i]).attr('rel'));
                 } 
             }
+            console.log(mnu);
 
             // ambil semua inputan di form dan di tambahi array menu----------
             var fd =  new FormData(this);
@@ -165,7 +166,7 @@
                     {
                         $('#formx')[0].reset();
                         $('#user_table').DataTable().ajax.reload();
-                        // alert(data.success);
+                        alert(data.success);
                         document.getElementById('btnback').click();
                     }
                     $('#saveBtn').html('Save changes');

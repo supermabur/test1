@@ -67,7 +67,7 @@ class stroleController extends Controller
     {
         
         $cur_user = \Auth::user();
-        // return response()->json(['success' => $request->mnu]);
+        // return response()->json(['success' => $myA]);
 
         // ----------------------------------VALIDATION
         $rules = array(
@@ -120,12 +120,12 @@ class stroleController extends Controller
 
         
         // -------------------------------------CRUD strolemenu
-        DB::delete('delete from strolemenu where id_role = ?', [$request->hidden_id]);
+        DB::delete('delete from strolemenu where id_role = ?', [$tmp->id]);
             // return response()->json(['success' => $request->mnu]);
 
         $myA = explode(',', $request->mnu);
         foreach($myA as $mnu){
-            DB::insert('INSERT INTO strolemenu(`id_role`, `id_menu`, `usere`, `useru`, idcompany) VALUES (?,?,?,?,?)', [$request->hidden_id, $mnu, $cur_user->id, $cur_user->id, $cur_user->idcompany]);
+            DB::insert('INSERT INTO strolemenu(`id_role`, `id_menu`, `usere`, `useru`) VALUES (?,?,?,?)', [$tmp->id, $mnu, $cur_user->id, $cur_user->id]);
         }
 
 

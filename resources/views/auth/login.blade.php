@@ -19,14 +19,15 @@
                          
                             <div class="col-md-6">
                                 <input id="login" type="text"
-                                       class="form-control{{ $errors->has('username') || $errors->has('email') ? ' is-invalid' : '' }}"
+                                       {{-- class="form-control{{ $errors->has('username') || $errors->has('email') ? ' is-invalid' : '' }}" --}}
+                                       class="form-control"
                                        name="login" value="{{ old('username') ?: old('email') }}" required autofocus>
                          
-                                @if ($errors->has('username') || $errors->has('email'))
+                                {{-- @if ($errors->has('username') || $errors->has('email'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('username') ?: $errors->first('email') }}</strong>
                                     </span>
-                                @endif
+                                @endif --}}
                             </div>
                         </div>
 
@@ -36,11 +37,11 @@
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
-                                @error('password')
+                                {{-- @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                                @enderror
+                                @enderror --}}
                             </div>
                         </div>
 
@@ -56,6 +57,20 @@
                             </div>
                         </div>
 
+                        @if ($errors->any())
+                            {{-- {{ $errors }} --}}
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        @if($errors->has('username') || $errors->has('email') || $errors->has('password'))
+                                            <li>Kombinasi Username dan Password Salah</li>
+                                        @else
+                                            <li>{{ $error }}</li>
+                                        @endif
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
