@@ -87,6 +87,10 @@
     /* .card-footer{
       background-color: lightgray;
     } */
+
+    label {
+      font-weight: 400 !important;
+    }
   </style>
 
   @yield('style')
