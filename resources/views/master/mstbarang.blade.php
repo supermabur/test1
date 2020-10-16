@@ -260,7 +260,7 @@
             var fd =  new FormData(this);
 
             $.ajax({
-                url:"{{ route('users.store') }}",
+                url:"{{ route('mstbarang.store') }}",
                 method:"POST",
                 data: fd,
                 contentType: false,
@@ -273,10 +273,12 @@
                     if(data.errors)
                     {
                         console.log(data.errors);
+                        console.log(data.errors.length);
+                        console.log(data.errors['nama']);
                         html = '<div class="alert alert-danger">';
                         for(var count = 0; count < data.errors.length; count++)
                         {
-                        html += '<p>' + data.errors[count] + '</p>';
+                            html += '<p>' + data.errors[count] + '</p>';
                         }
                         html += '</div>';
                         $('#form_result').html(html);
@@ -290,6 +292,8 @@
                     }
                     $('#saveBtn').html('Save changes');
                     loading(0);
+                    
+                    console.log({{ $errors }}); 
                 }
             })
         });

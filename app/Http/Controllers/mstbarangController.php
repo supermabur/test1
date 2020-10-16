@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\model\mstbarang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class mstbarangController extends Controller
 {
@@ -25,7 +26,7 @@ class mstbarangController extends Controller
 
         // ----------------------------------VALIDATION
         $rules = array(            
-            'nama' => ['required', \Illuminate\Validation\Rule::unique('mstbarang', ['nama', 'idcompany'])->ignore($request->hidden_id)],
+            'nama' => ['required', \Illuminate\Validation\Rule::unique('mstbarang', 'nama')->ignore($request->hidden_id)],
             'idmerk' => 'required',
             'idjenis' => 'required'
         );
@@ -42,13 +43,13 @@ class mstbarangController extends Controller
         //     'name.unique' => 'Name sudah ada didatabase, silahkan pilih Name yang lain'
         // );
 
-        $error = Validator::make($request->all(), $rules, $errmsg);
-        dd($error);
+        // $error = Validator::make($request->all(), $rules, $errmsg);
+        $result = Validator::make($request->all(), $rules);
         
-        if($error->fails())
+        if($result->fails())
         {
             // return response()->json(['errors' => $error->errors()->all()]);
-            return response()->json(['errors' => $error]);
+            return response()->json(['errors' => ['keys' => $result->errors()->keys(), 'message' => $result->errors()->all() ]]);
         }
         
         // ----------------------------------CRUD
