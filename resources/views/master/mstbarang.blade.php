@@ -8,7 +8,7 @@
 
         <div class="col-sm-9">
 
-            <div class="card card-info">
+            <div class="card card-info shadow">
                 <div class="card-header">
                     <h3 class="card-title">Data Barang</h3>
                 </div>
@@ -16,86 +16,74 @@
                 <div class="card-body">
                     <div class="form-group row">
                         <label for="nama" class="col-md-2 col-form-label col-form-label-sm text-md-right">Nama</label>
-
                         <div class="col-md-8">
-                            <input type="text" id="nama" name="nama" class="form-control form-control-sm @error('nama') is-invalid @enderror" required>
-                            @error('nama') <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span> @enderror
+                            <input type="text" id="nama" name="nama" class="form-control form-control-sm" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="sku" class="col-md-2 col-form-label col-form-label-sm text-md-right">SKU</label>
-
                         <div class="col-md-8">
-                            <input type="text" id="sku" name="sku" class="form-control form-control-sm @error('sku') is-invalid @enderror" required>
-                            @error('sku') <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span> @enderror
+                            <input type="text" id="sku" name="sku" class="form-control form-control-sm" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="barcode" class="col-md-2 col-form-label col-form-label-sm text-md-right">Barcode</label>
-
                         <div class="col-md-8">
-                            <input type="text" id="barcode" name="barcode" class="form-control form-control-sm @error('barcode') is-invalid @enderror" required>
-                            @error('barcode') <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span> @enderror
+                            <input type="text" id="barcode" name="barcode" class="form-control form-control-sm" required>
                         </div>
                     </div>
 
-                    {{-- 'idmerk' => $request->idmerk,
-                    'idjenis' => $request->idjenis,
+                    <div class="form-group row">
+                        <label for="idmerk" class="col-md-2 col-form-label col-form-label-sm text-md-right">Merk</label>
+                        <div class="col-md-8">
+                            <input type="text" id="idmerk" name="idmerk" class="form-control form-control-sm" required>
+                        </div>
+                    </div>
+
+                    {{-- 'idjenis' => $request->idjenis,
                     'idsatuan' => $request->idsatuan, --}}
 
                     <div class="form-group row">
                         <label for="deskripsi" class="col-md-2 col-form-label col-form-label-sm text-md-right">Deskripsi</label>
-
                         <div class="col-md-8">
-                            <input type="text" id="deskripsi" name="deskripsi" class="form-control form-control-sm @error('deskripsi') is-invalid @enderror" required>
-                            @error('deskripsi') <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span> @enderror
+                            <input type="text" id="deskripsi" name="deskripsi" class="form-control form-control-sm" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="hpp" class="col-md-2 col-form-label col-form-label-sm text-md-right">HPP</label>
-
                         <div class="col-md-8">
-                            <input type="number" id="hpp" name="hpp" class="form-control form-control-sm @error('hpp') is-invalid @enderror" min="0" required>
-                            @error('hpp') <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span> @enderror
+                            <input type="number" id="hpp" name="hpp" class="form-control form-control-sm" min="0" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="harga" class="col-md-2 col-form-label col-form-label-sm text-md-right">Harga</label>
-
                         <div class="col-md-8">
-                            <input type="number" id="harga" name="harga" class="form-control form-control-sm @error('harga') is-invalid @enderror" min="0" required>
-                            @error('harga') <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span> @enderror
+                            <input type="number" id="harga" name="harga" class="form-control form-control-sm" min="0" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="disc" class="col-md-2 col-form-label col-form-label-sm text-md-right">Disc</label>
-
                         <div class="col-md-8">
-                            <input type="number" id="disc" name="disc" class="form-control form-control-sm @error('disc') is-invalid @enderror" min="0" max="100" required>
-                            @error('disc') <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span> @enderror
+                            <input type="number" id="disc" name="disc" class="form-control form-control-sm" min="0" max="100" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="saldomin" class="col-md-2 col-form-label col-form-label-sm text-md-right">Saldomin</label>
-
+                        <label for="saldomin" class="col-md-2 col-form-label col-form-label-sm text-md-right">Saldo Min</label>
                         <div class="col-md-8">
-                            <input type="number" id="saldomin" name="saldomin" class="form-control form-control-sm @error('saldomin') is-invalid @enderror" min="0" required>
-                            @error('saldomin') <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span> @enderror
+                            <input type="number" id="saldomin" name="saldomin" class="form-control form-control-sm" min="0" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="saldomax" class="col-md-2 col-form-label col-form-label-sm text-md-right">Saldomax</label>
-
+                        <label for="saldomax" class="col-md-2 col-form-label col-form-label-sm text-md-right">Saldo Max</label>
                         <div class="col-md-8">
-                            <input type="number" id="saldomax" name="saldomax" class="form-control form-control-sm @error('saldomax') is-invalid @enderror" min="0" required>
-                            @error('saldomax') <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span> @enderror
+                            <input type="number" id="saldomax" name="saldomax" class="form-control form-control-sm" min="0" required>
                         </div>
                     </div>
 
@@ -143,7 +131,7 @@
 
     <div class="row justify-content-md-center">
         <div class="col-sm-9" style="text-align-last: justify;">
-            <div class="card-footer">
+            <div class="card-footer shadow" style="background-color: white">
                 <span id="form_result"></span>
 
                 <input type="hidden" name="hidden_id" id="hidden_id" />
@@ -167,6 +155,13 @@
 
 
 <script>
+    function AddMerk() {
+    var inp = prompt("Masukkan Nama Merk Baru", "");
+    if (inp != null) {
+            alert(inp);
+        }
+    }
+
 
     $('#pathimage').change(function(){        
             let reader = new FileReader();
@@ -250,9 +245,15 @@
         //     alert('asd');        
         // });
 
+        function RemoveAlert(){
+            $("input").removeClass("is-invalid");
+            $("span").remove(".invalid-feedback");
+        }
+
         $('#formuser').on('submit', function(event){
             event.preventDefault();
             loading(1, 'Saving Data ...');
+            RemoveAlert();
 
             $('#saveBtn').html('Saving...');
 
@@ -272,22 +273,20 @@
                     var html = '';
                     if(data.errors)
                     {
-                        console.log(data.errors);
-                        console.log(data.errors.length);
-                        console.log(data.errors['nama']);
-                        html = '<div class="alert alert-danger">';
-                        for(var count = 0; count < data.errors.length; count++)
-                        {
-                            html += '<p>' + data.errors[count] + '</p>';
+                        for(var count = 0; count < data.errors.keys.length; count++)
+                        {  
+                            var v = document.getElementById(data.errors.keys[count]);
+                            v.classList.add('is-invalid');
+                            $("<span class='invalid-feedback' role='alert'>" + data.errors.message[count] + "</span>").insertAfter(v);
+                            // $("<span class='invalid-feedback' role='alert'> <strong>" + data.errors.message[count] + "</strong> </span>").insertAfter(v);
                         }
-                        html += '</div>';
-                        $('#form_result').html(html);
                     }
                     if(data.success)
                     {
                         $('#formuser')[0].reset();
                         $('#user_table').DataTable().ajax.reload();
-                        // alert(data.success);
+                        alert(data.success);
+                        console.log(data.success);
                         document.getElementById('btnback').click();
                     }
                     $('#saveBtn').html('Save changes');

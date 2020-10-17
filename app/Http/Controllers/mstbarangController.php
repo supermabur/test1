@@ -27,8 +27,9 @@ class mstbarangController extends Controller
         // ----------------------------------VALIDATION
         $rules = array(            
             'nama' => ['required', \Illuminate\Validation\Rule::unique('mstbarang', 'nama')->ignore($request->hidden_id)],
-            'idmerk' => 'required',
-            'idjenis' => 'required'
+            'deskripsi' => 'required',
+            // 'idmerk' => 'required',
+            // 'idjenis' => 'required'
         );
 
         
@@ -55,7 +56,7 @@ class mstbarangController extends Controller
         // ----------------------------------CRUD
         $cur_user = \Auth::user();
         
-        $form_data = array(
+        $form_data = [
             'nama' => $request->nama,
             'sku' => $request->sku,
             'barcode' => $request->barcode,
@@ -74,11 +75,11 @@ class mstbarangController extends Controller
             'idvarian3' => $request->idvarian3,
             'idcompany' => $cur_user->idcompany,
             'useru' => $cur_user->id
-        );
+        ];
 
         if ($request->actionx == 'new')
         {
-            $form_data[] = ['usere' => $cur_user->id] ;
+            $form_data['usere'] = $cur_user->id;
         }
 
         $tmp = mstbarang::updateOrCreate(['id' => $request->hidden_id], $form_data);   
