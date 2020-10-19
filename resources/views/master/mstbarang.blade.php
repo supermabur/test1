@@ -189,11 +189,12 @@
                     }
                     if(data.success)
                     {
-                        toastr('mantab');
-                        alert(data.success);
+                        //  append option
+                        $("#idmerk").append('<option value="' + data.success.id + '">' + data.success.nama + '</option>');
+                        $("#idmerk").val(data.success.id);
+                        $("#idmerk").trigger('change');
+                        $("#idmerk").select2("close");
                     }
-                    
-                    console.log({{ $errors }}); 
                 }
             })
         }
@@ -253,7 +254,7 @@
     }
 
     $(document).ready(function() {
-        $('.slct2').select2().on('select2:open', function () {
+        $('#idmerk').select2().on('select2:open', function () {
             var a = $(this).data('select2');
             if (!$('.select2-link').length) {
                 a.$results.parents('.select2-results')
@@ -265,23 +266,6 @@
             }
         });
     
-
-        // https://www.jqueryscript.net/other/jQuery-Plugin-For-Selecting-Multiple-Areas-of-An-Image-Select-Areas.html
-        // $('img#image_preview_container').selectAreas({
-        //     minSize: [10, 10],
-        //     aspectRatio: 1,
-        //     allowDelete:false,
-        //     onChanged: debugQtyAreas,
-        //     width: 500,
-        //     areas: [
-        //         {
-        //             x: 10,
-        //             y: 20,
-        //             width: 100,
-        //             height: 100,
-        //         }
-        //     ]
-        // });
 
         // Log the quantity of selections
         function debugQtyAreas (event, id, areas) {

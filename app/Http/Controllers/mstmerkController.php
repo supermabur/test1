@@ -40,7 +40,7 @@ class mstmerkController extends Controller
         
         if($result->fails())
         {
-            return response()->json(['errors' => ['keys' => $result->errors()->keys(), 'message' => $result->errors()->all() ]]);
+            return response()->json(['errors' => $result->errors()->all() ]);
         }
         
         // ----------------------------------CRUD
@@ -58,8 +58,8 @@ class mstmerkController extends Controller
         }
 
         $tmp = mstmerk::updateOrCreate(['id' => $request->hidden_id], $form_data);   
-
-        return response()->json(['success' => $suksesmsg]);
+        $hasil = ['id'=>$tmp->id, 'nama'=>$tmp->nama];
+        return response()->json(['success' => $hasil]);
     }
 
     /**
