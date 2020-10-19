@@ -23,9 +23,9 @@ class mstbarang extends Model
         'saldomin',
         'saldomax',
         'aktif',
-        'idvarian1',
-        'idvarian2',
-        'idvarian3',
+        // 'idvarian1',
+        // 'idvarian2',
+        // 'idvarian3',
         
         'idcompany',
         'usere',

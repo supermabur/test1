@@ -45,10 +45,29 @@
                             </select>
                         </div>
                     </div>
+
+                    <div class="form-group row">
+                        <label for="idjenis" class="col-md-2 col-form-label col-form-label-sm text-md-right">Jenis</label>
+                        <div class="col-md-8">
+                            <select class="slct2 form-control form-control-sm" id="idjenis" name="idjenis" placeholder="Pilih Jenis" required>
+                                @foreach ($composer_mstjenis as $cp)
+                                    <option value="{{ $cp->id }}">{{ $cp->nama }}</option>                        
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="idsatuan" class="col-md-2 col-form-label col-form-label-sm text-md-right">Satuan</label>
+                        <div class="col-md-8">
+                            <select class="slct2 form-control form-control-sm" id="idsatuan" name="idsatuan" placeholder="Pilih Satuan" required>
+                                @foreach ($composer_mstsatuan as $cp)
+                                    <option value="{{ $cp->id }}">{{ $cp->nama }}</option>                        
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                     
-                    
-                    {{-- 'idjenis' => $request->idjenis,
-                    'idsatuan' => $request->idsatuan, --}}
 
                     <div class="form-group row">
                         <label for="deskripsi" class="col-md-2 col-form-label col-form-label-sm text-md-right">Deskripsi</label>
@@ -185,7 +204,7 @@
                     var html = '';
                     if(data.errors)
                     {
-                        alert(data.errors);
+                        showToast(1, data.errors);
                     }
                     if(data.success)
                     {
@@ -194,6 +213,47 @@
                         $("#idmerk").val(data.success.id);
                         $("#idmerk").trigger('change');
                         $("#idmerk").select2("close");
+                        showToast(0, "Penyimpanan Merk Baru, Berhasil !!!");
+                    }
+                }
+            })
+        }
+    }
+
+    function AddJenis() {
+        var inp = prompt("Masukkan Nama Jenis Baru", "");
+        if (inp != null) {
+            var fd =  {'nama':inp};
+
+            var formData = new FormData();
+            formData.append("_token", "{{ csrf_token() }}");
+            formData.append("nama", inp);
+            formData.append("actionx", "new");
+            formData.append("active", 1);
+
+            $.ajax({
+                url:"{{ route('mstjenis.store') }}",
+                method:"POST",
+                data: formData,
+                contentType: false,
+                cache:false,
+                processData: false,
+                dataType:"json",
+                success:function(data)
+                {
+                    var html = '';
+                    if(data.errors)
+                    {
+                        showToast(1, data.errors);
+                    }
+                    if(data.success)
+                    {
+                        //  append option
+                        $("#idjenis").append('<option value="' + data.success.id + '">' + data.success.nama + '</option>');
+                        $("#idjenis").val(data.success.id);
+                        $("#idjenis").trigger('change');
+                        $("#idjenis").select2("close");
+                        showToast(0, "Penyimpanan Jenis Baru, Berhasil !!!");
                     }
                 }
             })
@@ -215,7 +275,9 @@
         $('#form_result').html('');
         $('#actionx').val(actio);
         $('#hidden_id').val('');
-        // $('#role').val('').trigger('change');
+        $('#idmerk').val('').trigger('change');
+        $('#idjenis').val('').trigger('change');
+        $('#idsatuan').val('').trigger('change');
         // $('#image_preview_container').attr('src', "{{ URL::to('/') }}/images/users/noimage.jpg");
         
         if (actio == 'edit'){
@@ -224,24 +286,33 @@
             dataType:"json",
             success:function(data)
                 {
-                    $('#name').val(data.name);
-                    $('#username').val(data.username);
-                    $('#email').val(data.email);
-                    $('#hp').val(data.hp);
-                    $('#role').val(data.role_id).trigger('change');
-                    $('#password').val('');
-                    $('#password-confirm').val('');
-                    $('#active').prop('checked', data.active);
+                    $('#nama').val(data.nama);
+                    $('#sku').val(data.sku);
+                    $('#barcode').val(data.barcode);
+                    $('#idmerk').val(data.idmerk).trigger('change');
+                    $('#idjenis').val(data.idjenis).trigger('change');
+                    $('#idsatuan').val(data.idsatuan).trigger('change');
+
+                    $('#deskripsi').val(data.deskripsi);
+                    $('#hpp').val(data.hpp);
+                    $('#harga').val(data.harga);
+                    $('#disc').val(data.disc);
+                    $('#saldomin').val(data.saldomin);
+                    $('#saldomax').val(data.saldomax);
+                    $('#aktif').prop('checked', data.aktif);
+
+                    
+
+                    // var pi = "{{ URL::to('/') }}/images/users/" + data.id + ".jpg";
+                    // if(doesFileExist(pi)){
+                    //     $('#image_preview_container').attr('src', pi);
+                    // }
+
+                    // $('#imageold').val(data.id + '.jpg');
                     $('#hidden_id').val(data.id);
-
-                    var pi = "{{ URL::to('/') }}/images/users/" + data.id + ".jpg";
-                    if(doesFileExist(pi)){
-                        $('#image_preview_container').attr('src', pi);
-                    }
-
-                    $('#imageold').val(data.id + '.jpg');
                     $("#globrep").hide(200);
                     $("#editview").show(200);
+
                     loading(0);
                 }
             })     
@@ -258,9 +329,21 @@
             var a = $(this).data('select2');
             if (!$('.select2-link').length) {
                 a.$results.parents('.select2-results')
-                        .append('<div class="select2-link" style="text-align-last: center;background-color: beige;"><button class="btn btn-sm"><i class="fa fa-plus" style="margin-right: 4px;"></i>Tambah Merk Baru</button></div>')
+                        .append('<div class="select2-link" style="text-align-last: center;"><button class="btnadduye btn btn-sm"><i class="fa fa-plus" style="margin-right: 4px;"></i>Tambah Merk Baru</button></div>')
                         .on('click', function (b) {
                             AddMerk();
+                            // add your code
+                        });
+            }
+        });
+
+        $('#idjenis').select2().on('select2:open', function () {
+            var a = $(this).data('select2');
+            if (!$('.select2-link').length) {
+                a.$results.parents('.select2-results')
+                        .append('<div class="select2-link" style="text-align-last: center;"><button class="btnadduye btn btn-sm"><i class="fa fa-plus" style="margin-right: 4px;"></i>Tambah Jenis Baru</button></div>')
+                        .on('click', function (b) {
+                            AddJenis();
                             // add your code
                         });
             }
@@ -304,12 +387,20 @@
                     var html = '';
                     if(data.errors)
                     {
+                        console.log(data.errors.keys);
                         for(var count = 0; count < data.errors.keys.length; count++)
                         {  
                             var v = document.getElementById(data.errors.keys[count]);
-                            v.classList.add('is-invalid');
-                            $("<span class='invalid-feedback' role='alert'>" + data.errors.message[count] + "</span>").insertAfter(v);
-                            // $("<span class='invalid-feedback' role='alert'> <strong>" + data.errors.message[count] + "</strong> </span>").insertAfter(v);
+                            if($(v).is("input")){
+                                v.classList.add('is-invalid');
+                                $("<span class='invalid-feedback' role='alert'>" + data.errors.message[count] + "</span>").insertAfter(v);
+                            }
+
+                            if($(v).is("select")){
+                                var w = v.nextSibling;
+                                w.classList.add('is-invalid');
+                                $("<span class='invalid-feedback' role='alert'>" + data.errors.message[count] + "</span>").insertAfter(w);
+                            }
                         }
                     }
                     if(data.success)
@@ -323,7 +414,6 @@
                     $('#saveBtn').html('Save changes');
                     loading(0);
                     
-                    console.log({{ $errors }}); 
                 }
             })
         });

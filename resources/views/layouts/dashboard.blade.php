@@ -47,6 +47,9 @@
   {{-- Image Select Area --}}
   <link type="text/css" rel="stylesheet" href="{{ url('css/jquery.selectareas.css') }}">
 
+  {{-- SweetAlert2 --}}
+  <link type="text/css" rel="stylesheet" href="{{ url('css/sweetalert2.css') }}">
+
   
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
@@ -63,6 +66,13 @@
   <style>
     a:hover {
         cursor: pointer;
+    }
+
+    .select2-link {
+      background-color:#ffffa7
+    }
+    .select2-link:hover {
+      background-color: #b8ff93;
     }
 
     .image-cropper {
@@ -242,6 +252,7 @@
 <script src="{{ url('js/waitMe.min.js') }}"></script> 
 <script src="{{ url('js/memst.js') }}"></script> 
 <script src="{{ url('js/jquery.selectareas.min.js') }}"></script>
+<script src="{{ url('js/sweetalert2.all.min.js') }}"></script>
 
 
 
@@ -342,6 +353,46 @@
             }
 
         }
+
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+
+    function showToast(tipe = 0, message = 'Sukses'){
+      // 0=success, 1=error, 2=warning, 3=info, 4=question
+      var p = "";
+      switch(tipe){
+        case 0:
+          p="success"
+          break;
+        case 1:
+          p="error"
+          break;
+        case 2:
+          p="warning"
+          break;
+        case 3:
+          p="info"
+          break;
+        case 4:
+          p="question"
+          break;
+      }
+
+      Toast.fire({
+        icon: p,
+        title: message
+      }) 
+
+    }
 
   // function doesFileExist(urlToFile) {
   //       var xhr = new XMLHttpRequest();

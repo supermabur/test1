@@ -245,6 +245,15 @@ class globreportController extends Controller
                     });
                     $rawcol[] = 'active';              
                 }
+                // bit kolom aktif
+                if(in_array('aktif', $colbit))
+                {
+                    $dt = $dt->addColumn('aktif', function($row){
+                        $button = '<input onclick="return false;" type="checkbox" data-id="'.$row->id.'" name="active" class="me_switch active" '. ($row->aktif == 1 ? 'checked':'')  . '> ';
+                        return $button;
+                    });
+                    $rawcol[] = 'aktif';              
+                }
 
             }
             

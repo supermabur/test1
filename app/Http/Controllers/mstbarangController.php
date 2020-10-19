@@ -27,9 +27,11 @@ class mstbarangController extends Controller
         // ----------------------------------VALIDATION
         $rules = array(            
             'nama' => ['required', \Illuminate\Validation\Rule::unique('mstbarang', 'nama')->ignore($request->hidden_id)],
-            'deskripsi' => 'required',
-            // 'idmerk' => 'required',
-            // 'idjenis' => 'required'
+            'sku' => 'required',
+            'barcode' => 'required',
+            'idmerk' => 'required',
+            'idjenis' => 'required',
+            'deskripsi' => 'required'
         );
 
         

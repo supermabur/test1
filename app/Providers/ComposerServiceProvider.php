@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 
 use App\model\strole;
 use App\model\mstmerk;
+use App\model\mstjenis;
+use App\model\mstsatuan;
 use App\mstgudang;
 
 class ComposerServiceProvider extends ServiceProvider
@@ -65,7 +67,9 @@ class ComposerServiceProvider extends ServiceProvider
         View::composer(['master\mstbarang'], 
             function ($view) {
                 $cur_user = \Auth::user();
-                $view->with('composer_mstmerk', mstmerk::where('id','<>',1)->where('idcompany', $cur_user->idcompany)->orderBy('nama')->get());
+                $view->with('composer_mstmerk', mstmerk::where('idcompany', $cur_user->idcompany)->orderBy('nama')->get());
+                $view->with('composer_mstjenis', mstjenis::where('idcompany', $cur_user->idcompany)->orderBy('nama')->get());
+                $view->with('composer_mstsatuan', mstsatuan::orderBy('nama')->get());
             });
         
             

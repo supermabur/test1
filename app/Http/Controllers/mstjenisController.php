@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\model\mstmerk;
+use App\model\mstjenis;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 
-class mstmerkController extends Controller
+class mstjenisController extends Controller
 {
     public function __construct()
     {
@@ -22,11 +22,11 @@ class mstmerkController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    { 
+    {
         $cur_user = \Auth::user();
         // ----------------------------------VALIDATION
         $rules = array(            
-            'nama' => 'required|unique:mstmerk,nama,null,id,idcompany,'.$cur_user->idcompany 
+            'nama' => 'required|unique:mstjenis,nama,null,id,idcompany,'.$cur_user->idcompany 
         );
 
         
@@ -37,8 +37,8 @@ class mstmerkController extends Controller
         }
 
         $errmsg = array(
-            'nama.required' => 'Nama merk belum diisi',
-            'nama.unique' => 'Nama Merk sudah ada, silahkan pilih Nama yang lain'
+            'nama.required' => 'Nama Jenis belum diisi',
+            'nama.unique' => 'Nama Jenis sudah ada, silahkan pilih Nama yang lain'
         );
 
         $result = Validator::make($request->all(), $rules, $errmsg);
@@ -62,7 +62,7 @@ class mstmerkController extends Controller
             $form_data['usere'] = $cur_user->id;
         }
 
-        $tmp = mstmerk::updateOrCreate(['id' => $request->hidden_id], $form_data);   
+        $tmp = mstjenis::updateOrCreate(['id' => $request->hidden_id], $form_data);   
         $hasil = ['id'=>$tmp->id, 'nama'=>$tmp->nama];
         return response()->json(['success' => $hasil]);
     }
@@ -70,10 +70,10 @@ class mstmerkController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\model\mstmerk  $mstmerk
+     * @param  \App\model\mstjenis  $mstjenis
      * @return \Illuminate\Http\Response
      */
-    public function show(mstmerk $mstmerk)
+    public function show(mstjenis $mstjenis)
     {
         //
     }
@@ -81,12 +81,12 @@ class mstmerkController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\model\mstmerk  $mstmerk
+     * @param  \App\model\mstjenis  $mstjenis
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $data = mstmerk::find($id);
+        $data = mstjenis::find($id);
         return response()->json($data);
     }
 
@@ -94,10 +94,10 @@ class mstmerkController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\model\mstmerk  $mstmerk
+     * @param  \App\model\mstjenis  $mstjenis
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, mstmerk $mstmerk)
+    public function update(Request $request, mstjenis $mstjenis)
     {
         //
     }
@@ -105,10 +105,10 @@ class mstmerkController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\model\mstmerk  $mstmerk
+     * @param  \App\model\mstjenis  $mstjenis
      * @return \Illuminate\Http\Response
      */
-    public function destroy(mstmerk $mstmerk)
+    public function destroy(mstjenis $mstjenis)
     {
         //
     }
