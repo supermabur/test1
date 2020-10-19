@@ -38,10 +38,15 @@
                     <div class="form-group row">
                         <label for="idmerk" class="col-md-2 col-form-label col-form-label-sm text-md-right">Merk</label>
                         <div class="col-md-8">
-                            <input type="text" id="idmerk" name="idmerk" class="form-control form-control-sm" required>
+                            <select class="slct2 form-control form-control-sm" id="idmerk" name="idmerk" placeholder="Pilih Merk" required>
+                                @foreach ($composer_mstmerk as $cp)
+                                    <option value="{{ $cp->id }}">{{ $cp->nama }}</option>                        
+                                @endforeach
+                            </select>
                         </div>
                     </div>
-
+                    
+                    
                     {{-- 'idjenis' => $request->idjenis,
                     'idsatuan' => $request->idsatuan, --}}
 
@@ -155,10 +160,42 @@
 
 
 <script>
+
     function AddMerk() {
-    var inp = prompt("Masukkan Nama Merk Baru", "");
-    if (inp != null) {
-            alert(inp);
+        var inp = prompt("Masukkan Nama Merk Baru", "");
+        if (inp != null) {
+            var fd =  {'nama':inp};
+
+            var formData = new FormData();
+            formData.append("_token", "{{ csrf_token() }}");
+            formData.append("nama", inp);
+            formData.append("actionx", "new");
+            formData.append("active", 1);
+
+            $.ajax({
+                url:"{{ route('mstmerk.store') }}",
+                method:"POST",
+                data: formData,
+                contentType: false,
+                cache:false,
+                processData: false,
+                dataType:"json",
+                success:function(data)
+                {
+                    var html = '';
+                    if(data.errors)
+                    {
+                        alert(data.errors);
+                    }
+                    if(data.success)
+                    {
+                        toastr('mantab');
+                        alert(data.success);
+                    }
+                    
+                    console.log({{ $errors }}); 
+                }
+            })
         }
     }
 
@@ -216,8 +253,18 @@
     }
 
     $(document).ready(function() {
-
-        $('.role').select2();
+        $('.slct2').select2().on('select2:open', function () {
+            var a = $(this).data('select2');
+            if (!$('.select2-link').length) {
+                a.$results.parents('.select2-results')
+                        .append('<div class="select2-link" style="text-align-last: center;background-color: beige;"><button class="btn btn-sm"><i class="fa fa-plus" style="margin-right: 4px;"></i>Tambah Merk Baru</button></div>')
+                        .on('click', function (b) {
+                            AddMerk();
+                            // add your code
+                        });
+            }
+        });
+    
 
         // https://www.jqueryscript.net/other/jQuery-Plugin-For-Selecting-Multiple-Areas-of-An-Image-Select-Areas.html
         // $('img#image_preview_container').selectAreas({

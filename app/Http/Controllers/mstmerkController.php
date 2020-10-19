@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\model\mstmerk;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 
 class mstmerkController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('cekmenuroles');
+        // $this->middleware('cekmenuroles');
     }
 
     /**

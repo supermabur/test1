@@ -54,3 +54,4 @@ Route::resource('databrowser', 'databrowserController');
 
 Route::get('coba', function(){return view('coba');});
 Route::resource('editprofile', 'userseditprofileController');
+Route::resource('mstmerk', 'mstmerkController');

@@ -91,6 +91,10 @@
     label {
       font-weight: 400 !important;
     }
+    
+    .select2-results__options{
+      font-size:0.9rem !important;
+    }
   </style>
 
   @yield('style')
