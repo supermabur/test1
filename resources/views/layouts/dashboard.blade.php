@@ -254,6 +254,7 @@
 <script src="{{ url('js/jquery.selectareas.min.js') }}"></script>
 <script src="{{ url('js/sweetalert2.all.min.js') }}"></script>
 
+@yield('filejs')
 
 
 </body>

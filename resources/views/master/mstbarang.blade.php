@@ -1,5 +1,7 @@
     
-
+@section('style')
+    <link type="text/css" rel="stylesheet" href="{{ url('css/image-uploader.min.css') }}">
+@endsection
 
 <form method="post" id="formuser" class="form-vertical" enctype="multipart/form-data" novalidate>
     @csrf
@@ -8,9 +10,9 @@
 
         <div class="col-sm-9">
 
-            <div class="card card-info shadow">
+            <div class="card card-light shadow">
                 <div class="card-header">
-                    <h3 class="card-title">Data Barang</h3>
+                    <h3 class="card-title"><i class="fas fa-cookie-bite mr-2"></i>Informasi Barang</h3>
                 </div>
     
                 <div class="card-body">
@@ -68,13 +70,35 @@
                         </div>
                     </div>
                     
-
                     <div class="form-group row">
                         <label for="deskripsi" class="col-md-2 col-form-label col-form-label-sm text-md-right">Deskripsi</label>
                         <div class="col-md-8">
                             <input type="text" id="deskripsi" name="deskripsi" class="form-control form-control-sm" required>
                         </div>
                     </div>
+
+                    <div class="form-group row">
+                        <label for="aktif" class="col-md-2 col-form-label col-form-label-sm text-md-right">Aktif</label>
+                        <div class="col-md-8" id="aktif" class="form-control" style="align-self: center;">
+                            {{-- A checkbox input in not sent in the request when it's unchecked, in that case the hidden input will be sent with the value 0. When the Checkox is checked, it will overwrite the value to 1. --}}
+                            <input type="hidden" name="active" value="0"/>
+                            <input id="active" name="active" value="1" class="form-check" type="checkbox" value="true">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-9">
+            
+            <div class="card card-light shadow">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-tag mr-2"></i>Harga</h3>
+                </div>
+    
+                <div class="card-body">
 
                     <div class="form-group row">
                         <label for="hpp" class="col-md-2 col-form-label col-form-label-sm text-md-right">HPP</label>
@@ -111,15 +135,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <label for="aktif" class="col-md-2 col-form-label col-form-label-sm text-md-right">Aktif</label>
-                        <div class="col-md-8" id="aktif" class="form-control" style="align-self: center;">
-                            {{-- A checkbox input in not sent in the request when it's unchecked, in that case the hidden input will be sent with the value 0. When the Checkox is checked, it will overwrite the value to 1. --}}
-                            <input type="hidden" name="active" value="0"/>
-                            <input id="active" name="active" value="1" class="form-check" type="checkbox" value="true">
-                        </div>
-                    </div>
-
 
                     {{-- 'idvarian1' => $request->idvarian1,
                     'idvarian2' => $request->idvarian2,
@@ -127,9 +142,29 @@
 
                 </div>
             </div>
+        </div>
 
 
 
+        <div class="col-sm-9">
+            
+            <div class="card card-light shadow">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-images mr-2"></i>Image</h3>
+                </div>
+    
+                <div class="card-body">
+
+                    <div class="form-group row">
+                        <label for="image" class="col-md-2 col-form-label col-form-label-sm text-md-right">Image</label>
+                        <div class="col-md-8">
+                            <div class="input-images"></div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
         </div>
 
         {{-- <div class="col-sm-3">
@@ -177,8 +212,25 @@
 </form>
 
 
+{{-- @section('filejs')
+    <script src="{{ url('js/image-uploader.min.js') }}"></script>
+@endsection
 
+
+@section('script')
+
+
+@endsection --}}
+
+<script src="{{ url('js/image-uploader.min.js') }}"></script>
 <script>
+    $('.input-images').imageUploader({
+        extensions: ['.jpg', '.jpeg', '.png', '.gif', '.svg'],
+        mimes: ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'],
+        maxSize: undefined,
+        maxFiles: undefined,
+    });
+
 
     function AddMerk() {
         var inp = prompt("Masukkan Nama Merk Baru", "");
@@ -277,7 +329,8 @@
         $('#hidden_id').val('');
         $('#idmerk').val('').trigger('change');
         $('#idjenis').val('').trigger('change');
-        $('#idsatuan').val('').trigger('change');
+        $('#idsatuan').val('1').trigger('change');
+        $('#active').prop('checked', 1);
         // $('#image_preview_container').attr('src', "{{ URL::to('/') }}/images/users/noimage.jpg");
         
         if (actio == 'edit'){
@@ -299,7 +352,7 @@
                     $('#disc').val(data.disc);
                     $('#saldomin').val(data.saldomin);
                     $('#saldomax').val(data.saldomax);
-                    $('#aktif').prop('checked', data.aktif);
+                    $('#active').prop('checked', data.aktif);
 
                     
 
@@ -366,8 +419,42 @@
 
         $('#formuser').on('submit', function(event){
             event.preventDefault();
+
+            // Get some vars
+            let $form = $(this);
+
+            // Get the input file
+            let $inputImages = $form.find('input[name^="images"]');
+            if (!$inputImages.length) {
+                $inputImages = $form.find('input[name^="photos"]')
+            }
+            console.log($inputImages);
+            console.log($inputImages[0].files);
+
+            // Get the new files names
+            var $fileNames = new Array();
+            for (let file of $inputImages.prop('files')) {
+                $fileNames.push(file.name);
+                // $('<li>', {text: file.name}).appendTo($fileNames);
+            }
+            console.log($fileNames);
+            console.log($fileNames[0].files);
+
+            // Get the preloaded inputs
+            let $inputPreloaded = $(this).find('input[name^="old"]');
+            if ($inputPreloaded.length) {
+                // Get the ids
+                let $preloadedIds = '';
+                for (let iP of $inputPreloaded) {
+                    $preloadedIds = $preloadedIds + ' ' + iP.value;
+                }
+                alert($preloadedIds);
+            }
+
             loading(1, 'Saving Data ...');
             RemoveAlert();
+
+
 
             $('#saveBtn').html('Saving...');
 
@@ -387,19 +474,19 @@
                     var html = '';
                     if(data.errors)
                     {
-                        console.log(data.errors.keys);
+                        // console.log(data.errors.keys);
                         for(var count = 0; count < data.errors.keys.length; count++)
                         {  
                             var v = document.getElementById(data.errors.keys[count]);
                             if($(v).is("input")){
-                                v.classList.add('is-invalid');
-                                $("<span class='invalid-feedback' role='alert'>" + data.errors.message[count] + "</span>").insertAfter(v);
+                                // v.classList.add('is-invalid');
+                                $("<span class='invalid-feedback' role='alert' style='display:block'>" + data.errors.message[count] + "</span>").insertAfter(v);
                             }
 
                             if($(v).is("select")){
                                 var w = v.nextSibling;
-                                w.classList.add('is-invalid');
-                                $("<span class='invalid-feedback' role='alert'>" + data.errors.message[count] + "</span>").insertAfter(w);
+                                // w.classList.add('is-invalid');
+                                $("<span class='invalid-feedback' role='alert' style='display:block'>" + data.errors.message[count] + "</span>").insertAfter(w);
                             }
                         }
                     }
@@ -408,7 +495,7 @@
                         $('#formuser')[0].reset();
                         $('#user_table').DataTable().ajax.reload();
                         alert(data.success);
-                        console.log(data.success);
+                        // console.log(data.success);
                         document.getElementById('btnback').click();
                     }
                     $('#saveBtn').html('Save changes');
