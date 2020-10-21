@@ -1,6 +1,8 @@
     
 @section('style')
-    <link type="text/css" rel="stylesheet" href="{{ url('css/image-uploader.min.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url('css/croppr.min.css') }}">
+    {{-- <link  href="/path/to/cropper.css" rel="stylesheet">
+    <script src="/path/to/cropper.js"></script> --}}
 @endsection
 
 <form method="post" id="formuser" class="form-vertical" enctype="multipart/form-data" novalidate>
@@ -156,9 +158,16 @@
                 <div class="card-body">
 
                     <div class="form-group row">
-                        <label for="image" class="col-md-2 col-form-label col-form-label-sm text-md-right">Image</label>
-                        <div class="col-md-8">
-                            <div class="input-images"></div>
+                        <label class="col-md-2 " ></label>
+    
+                        <div style="padding-top:10px" class="col-md-8">    
+                            <label for="pathimage" class="btn btn-secondary btn-sm" id="labelimage"><i class="fas fa-file-image mr-2"></i>Select Image</label>
+                            <input type="file" class="form-control-file form-control-sm" id="pathimage" name="pathimage" accept=".jpg" placeholder="Choose image" style="display: none;" >
+
+                            <div id="imgcroppr1">
+                                <img id="croppr" class="img-fluid img-thumbnail" alt="Responsive image" style="max-height: 150px;" 
+                                src="{{ url('/images/barang/noimage.jpg') }}"  alt="preview image"/>
+                            </div>
                         </div>
                     </div>
 
@@ -222,15 +231,22 @@
 
 @endsection --}}
 
-<script src="{{ url('js/image-uploader.min.js') }}"></script>
+<script src="{{ url('js/croppr.min.js') }}"></script>
 <script>
-    $('.input-images').imageUploader({
-        extensions: ['.jpg', '.jpeg', '.png', '.gif', '.svg'],
-        mimes: ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'],
-        maxSize: undefined,
-        maxFiles: undefined,
+
+    var croppr = new Croppr('#croppr', {
+        aspectRatio : 1,
+        startSize: [100, 100, '%']
     });
 
+    $('#pathimage').change(function(){        
+        let reader = new FileReader();
+        reader.onload = (e) => { 
+            $('#croppr').attr('src', e.target.result); 
+                croppr.setImage(e.target.result);
+        }
+        reader.readAsDataURL(this.files[0]); 
+    });
 
     function AddMerk() {
         var inp = prompt("Masukkan Nama Merk Baru", "");
@@ -312,15 +328,20 @@
         }
     }
 
+    function imageSetDefault(path = ''){
+        croppr.destroy();
+        var pathx = "{{ URL::to('/') }}/images/barang/noimage.jpg" ;
+        if (path != ''){
+            pathx = path;
+        }
+        $('#croppr').attr('src', pathx + '?' + Math.random());
 
-    $('#pathimage').change(function(){        
-            let reader = new FileReader();
-            reader.onload = (e) => { 
-                $('#image_preview_container').attr('src', e.target.result); 
-            }
-            reader.readAsDataURL(this.files[0]); 
-        
+        // croppr.setImage("{{ URL::to('/') }}/images/barang/noimage.jpg");
+        croppr = new Croppr('#croppr', {
+            aspectRatio : 1,
+            startSize: [100, 100, '%']
         });
+    }
 
     function initEdit(actio = 'new', id = '1', mode = ''){
         $('#formuser')[0].reset();
@@ -331,6 +352,8 @@
         $('#idjenis').val('').trigger('change');
         $('#idsatuan').val('1').trigger('change');
         $('#active').prop('checked', 1);
+        imageSetDefault();
+        
         // $('#image_preview_container').attr('src', "{{ URL::to('/') }}/images/users/noimage.jpg");
         
         if (actio == 'edit'){
@@ -356,12 +379,11 @@
 
                     
 
-                    // var pi = "{{ URL::to('/') }}/images/users/" + data.id + ".jpg";
-                    // if(doesFileExist(pi)){
-                    //     $('#image_preview_container').attr('src', pi);
-                    // }
+                    var pi = "{{ URL::to('/') }}/images/barang/" + data.id + ".jpg";
+                    // croppr.setImage(pi);
+                    imageSetDefault(pi);
+                    $('#imageold').val(data.id + '.jpg');
 
-                    // $('#imageold').val(data.id + '.jpg');
                     $('#hidden_id').val(data.id);
                     $("#globrep").hide(200);
                     $("#editview").show(200);
@@ -401,65 +423,28 @@
                         });
             }
         });
-    
 
-        // Log the quantity of selections
-        function debugQtyAreas (event, id, areas) {
-            console.log(areas.length + " areas", arguments);
-        };
-
-        // $('#saveBtn').click(function(){    
-        //     alert('asd');        
-        // });
 
         function RemoveAlert(){
             $("input").removeClass("is-invalid");
             $("span").remove(".invalid-feedback");
         }
 
+
         $('#formuser').on('submit', function(event){
             event.preventDefault();
-
-            // Get some vars
-            let $form = $(this);
-
-            // Get the input file
-            let $inputImages = $form.find('input[name^="images"]');
-            if (!$inputImages.length) {
-                $inputImages = $form.find('input[name^="photos"]')
-            }
-            console.log($inputImages);
-            console.log($inputImages[0].files);
-
-            // Get the new files names
-            var $fileNames = new Array();
-            for (let file of $inputImages.prop('files')) {
-                $fileNames.push(file.name);
-                // $('<li>', {text: file.name}).appendTo($fileNames);
-            }
-            console.log($fileNames);
-            console.log($fileNames[0].files);
-
-            // Get the preloaded inputs
-            let $inputPreloaded = $(this).find('input[name^="old"]');
-            if ($inputPreloaded.length) {
-                // Get the ids
-                let $preloadedIds = '';
-                for (let iP of $inputPreloaded) {
-                    $preloadedIds = $preloadedIds + ' ' + iP.value;
-                }
-                alert($preloadedIds);
-            }
-
             loading(1, 'Saving Data ...');
             RemoveAlert();
-
 
 
             $('#saveBtn').html('Saving...');
 
             // ambil semua inputan di form dan di tambahi array menu----------
             var fd =  new FormData(this);
+            fd.append('cropx', croppr.getValue()['x']);
+            fd.append('cropy', croppr.getValue()['y']);
+            fd.append('cropw', croppr.getValue()['width']);
+            fd.append('croph', croppr.getValue()['height']);
 
             $.ajax({
                 url:"{{ route('mstbarang.store') }}",

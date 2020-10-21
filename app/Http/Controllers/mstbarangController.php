@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\model\mstbarang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+
+use Image;
+use File;
 
 class mstbarangController extends Controller
 {
@@ -22,6 +26,10 @@ class mstbarangController extends Controller
      */
     public function store(Request $request)
     {
+        
+        $image = $request->file('pathimage');
+        dd($image);
+        return response()->json(['success' => $image]);
         // return response()->json(['success' => $request->mnu]);
 
         // ----------------------------------VALIDATION
@@ -86,23 +94,29 @@ class mstbarangController extends Controller
 
         $tmp = mstbarang::updateOrCreate(['id' => $request->hidden_id], $form_data);   
 
-
         
         // ----------------------------------IMAGE SAVING
-        // $destinationPaththumb = public_path('images/users');  
         
+        $new_name = $tmp->id . '.jpg'; 
+        $imagePath = public_path('images/barang'. '/' . $new_name);  
+        $noimagePath = public_path('images/barang/noimage.jpg');  
 
-        // $new_name = $request->imageold;
-        // $image = $request->file('pathimage');
-        // if($image != '')
-        // {
-        //     $new_name = $tmp->id . '.jpg'; /*. $image->getClientOriginalExtension(); */
-        //     $resize_image = Image::make($image->getRealPath());
+        $image = $request->file('pathimage');
+        return response()->json(['success' => $image]);
 
-        //     $resize_image->resize(200, 200, function($constraint){
-        //     $constraint->aspectRatio();
-        //     })->save($destinationPaththumb . '/' . $new_name);
-        // }
+        if($image != '')
+        {
+            $resize_image = Image::make($image->getRealPath());
+
+            $resize_image->resize(300, 300, function($constraint){
+            $constraint->aspectRatio();
+            })->save($imagePath);
+        }
+        else{
+            if(Storage::disk('imagebarang')->exists($new_name) == false){
+                $success = \File::copy($noimagePath,$imagePath);
+            }
+        }
 
 
         // // Catat Log trans
