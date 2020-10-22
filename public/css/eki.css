@@ -8,10 +8,11 @@
     font-size: 1.5em !important;
     line-height: 1em !important;
     padding: 0.3em 0.5em !important; */
-    margin-right: -0.1em !important;
-    width: 35px;
-    height: 35px;
-    background-size: 25px 25px;
+    
+    margin-right: 0.2em !important;
+    /* width: 35px;
+    height: 35px; */
+    background-size: 24px 24px;
     background-repeat: no-repeat;
     background-position: center;
     border-radius: 0px !important;
@@ -19,9 +20,34 @@
     background-color: #ffffff !important;
 }
 
-.custom-btn:hover{
-    border: 1px solid #c3c3c3 !important;
-    border-radius: 5px !important;
+.custom-btn>span {
+    color: transparent;
+}
+
+.custom-btn-refresh, .custom-btn-addnew {
+    margin-right: 0.2em !important;
+    border-radius: 3px !important;
+    border: 0px solid #bfbfbf7a !important;
+    background-image: none !important;
+}
+
+.custom-btn-refresh {
+    background-color: #165ca2 !important;
+}
+
+.custom-btn-addnew {
+    background-color: #16a013 !important;
+}
+
+.custom-btn-refresh>span, .custom-btn-addnew>span {
+    color: white;
+    font-size: 1.2em !important;
+}
+
+.custom-btn:hover, .custom-btn-refresh:hover, .custom-btn-addnew:hover{
+    /* border: 1px solid #c3c3c3 !important;
+    border-radius: 5px !important; */
+    background-color: #ca7d1e !important
 }
 
 .custom-btn.copy {background-image: url( '/images/export/copy.png' ) !important;}
@@ -30,12 +56,17 @@
 .custom-btn.csv {background-image: url( '/images/export/csv.png' ) !important;}
 .custom-btn.print {background-image: url( '/images/export/print.png' ) !important;}
 
-div.dt-buttons {
+/* div.dt-buttons {
     position: relative;
     float: right;
     margin-left: 10px;
     margin-right: 10px;
-}
+} */
+
+/* .dataTables_length{
+    margin-left: 20px;
+    margin-right: 20px;
+} */
 
 .dataTables_length, .dataTables_filter{
     margin-top: 5px;

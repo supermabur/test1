@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\model\strole;
+use App\model\users;
 use App\model\vwstrolemenupra;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -154,10 +155,19 @@ class stroleController extends Controller
      */
     public function edit($id)
     {
-        // $dtcolumns[] = ['title' => $col['name'], 'data' => $col['name'], 'name' => $col['name'], 'className' => 'text-center'];
+        $cur_user = \Auth::user();
+        $tmp = users::where('idcompany', $cur_user->idcompany)->where('owner', 1)->first();
+        $roletertinggi = $tmp->role_id;
+        
         $data1 = strole::find($id);
 
-        $menumaster = vwstrolemenupra::where('menu_parentid',0)->where('id', $id)->get();
+
+
+        $menumaster = vwstrolemenupra::where('menu_parentid',0)->where('id', $id);
+        
+        if ($cur_user->role_id > 2){
+            $menumaster = $menumaster->where()
+        }
 
         foreach ($menumaster as $mm){
             if($mm->menu_haschild > 0 ){

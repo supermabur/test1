@@ -27,9 +27,6 @@ class mstbarangController extends Controller
     public function store(Request $request)
     {
         
-        $image = $request->file('pathimage');
-        dd($image);
-        return response()->json(['success' => $image]);
         // return response()->json(['success' => $request->mnu]);
 
         // ----------------------------------VALIDATION
@@ -102,7 +99,6 @@ class mstbarangController extends Controller
         $noimagePath = public_path('images/barang/noimage.jpg');  
 
         $image = $request->file('pathimage');
-        return response()->json(['success' => $image]);
 
         if($image != '')
         {

@@ -12,31 +12,31 @@ return [
                 'titleAttr' => 'Copy all data on Datatable',
                 'extend' => 'copy',
                 'className' => 'custom-btn copy',
-                'text' => ''
+                'text' => '...'
             ],
             [
                 'titleAttr' => 'Download as PDF',
                 'extend' => 'pdfHtml5',
                 'className' => 'custom-btn pdf',
-                'text' => ''
+                'text' => '...'
             ],
             [
                 'titleAttr' => 'Download as Excel',     
                 'extend' => 'excelHtml5',
                 'className' => 'custom-btn excel',
-                'text' => ''
+                'text' => '...'
             ],
             [
                 'titleAttr' => 'Download as CSV',     
                 'extend' => 'csvHtml5',
                 'className' => 'custom-btn csv',
-                'text' => ''
+                'text' => '...'
             ],
             [
                 'titleAttr' => 'Print',     
                 'extend' => 'print',
                 'className' => 'custom-btn print',
-                'text' => ''
+                'text' => '...'
             ]
         ],
 

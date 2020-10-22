@@ -11,7 +11,7 @@
 
 {{-- {{ json_encode($columnnative) }} --}}
 
-                <div class="card card-secondary" style="box-shadow: none;margin-top: 0.8rem;padding-top: 15px;">
+                <div class="card card-secondary" style="box-shadow: none;margin-top: 0.8rem;padding-top: 0px;">
                     {{-- <div class="card-header">
                         <h3 class="card-title judulbiru" id="judulbiru">Data List</h3>
                     </div> --}}
@@ -88,8 +88,7 @@
                         </div>
                     </div> --}}
     
-                    <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;padding-left: 1.25rem; padding-right: 1.25rem;">
-                        {{-- <label for="filter" class="col-sm-1 col-form-label"> </label> --}}
+                    {{-- <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;padding-left: 1.25rem; padding-right: 1.25rem;">
                         <div class="col-sm-2">
                             <button type="button" name="filter" id="filter" class="btn btn-primary btn-sm" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing Order" style="width: 100%">
                                 <i class="fa fa-sync" style="margin-right: 4px;"></i>
@@ -104,7 +103,7 @@
                                 </button>
                             </div>
                         @endif
-                    </div>
+                    </div> --}}
 
 
 
@@ -167,6 +166,10 @@
 
     <script>
         $("#addnew, #btnback").click(function(){    
+            addneworback();
+        });
+
+        function addneworback(){
             if($("#editview").is(":hidden")){
                 loading(1);
                 $("#headeredit").text("Tambah Data Baru");
@@ -174,8 +177,8 @@
             } else{
                 $("#editview").hide(200);
                 $("#globrep").show(200);
-            }          
-        });
+            }    
+        }
 
         $(document).on('click', '.btnedit', function(){
             if($("#editview").is(":hidden")){
@@ -236,11 +239,39 @@
                 var xfdate2 = $('#fdate2').val();
                 var xfgudang = $('#fgudang').val();
 
+                var buttonx = {!! json_encode(config('global.dt_button')) !!};
+
+                var btnrefresh = {
+                                'titleAttr' : 'Refresh Data',
+                                'className' : 'custom-btn-refresh',
+                                'text' : '<i class="fa fa-sync" style="margin-right: 4px;"></i> Refresh Data',
+                                'action' : function ( e, dt, node, config ) {
+                                                fill_datatable();
+                                            }
+                            };
+                
+                var btnnew = {
+                                'titleAttr' : 'Add New',
+                                'className' : 'custom-btn-addnew',
+                                'text' : '<i class="fa fa-plus" style="margin-right: 4px;"></i> Add New',
+                                'action' : function ( e, dt, node, config ) {
+                                                addneworback();
+                                            }
+                            };
+                
+                var crudi = "{{ $crud_i }}";
+                if (typeof crudi !== "undefined" ){
+                    if(crudi=="1"){
+                        buttonx.unshift(btnnew);
+                    }
+                }
+                buttonx.unshift(btnrefresh);
+
                 var dataTable = $('#user_table').DataTable({
-                    dom: 'lBfrtip',
+                    dom: 'Bfrltip',
                     destroy: true,
                     lengthMenu: [[50, 100, 250, -1], [50, 100, 250, 'ALL']],
-                    buttons: {!! json_encode(config('global.dt_button')) !!},
+                    buttons: buttonx,
                     processing: true,
                     language: {processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '},
                     // language: {processing: '<div class="loading" delay-hide="50000"></div> '},

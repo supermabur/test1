@@ -1,6 +1,5 @@
     
 @section('style')
-    <link type="text/css" rel="stylesheet" href="{{ url('css/croppr.min.css') }}">
     {{-- <link  href="/path/to/cropper.css" rel="stylesheet">
     <script src="/path/to/cropper.js"></script> --}}
 @endsection
@@ -164,9 +163,9 @@
                             <label for="pathimage" class="btn btn-secondary btn-sm" id="labelimage"><i class="fas fa-file-image mr-2"></i>Select Image</label>
                             <input type="file" class="form-control-file form-control-sm" id="pathimage" name="pathimage" accept=".jpg" placeholder="Choose image" style="display: none;" >
 
-                            <div id="imgcroppr1">
-                                <img id="croppr" class="img-fluid img-thumbnail" alt="Responsive image" style="max-height: 150px;" 
-                                src="{{ url('/images/barang/noimage.jpg') }}"  alt="preview image"/>
+                            <div style="padding-top:10px">    
+                                <img id="image_preview_container" class="img-fluid img-thumbnail" alt="Responsive image" style="max-height: 200px;" 
+                                    src="{{ url('/images/barang/noimage.jpg') }}"  alt="preview image"/>
                             </div>
                         </div>
                     </div>
@@ -225,28 +224,21 @@
     <script src="{{ url('js/image-uploader.min.js') }}"></script>
 @endsection
 
-
 @section('script')
-
 
 @endsection --}}
 
-<script src="{{ url('js/croppr.min.js') }}"></script>
 <script>
 
-    var croppr = new Croppr('#croppr', {
-        aspectRatio : 1,
-        startSize: [100, 100, '%']
-    });
+
 
     $('#pathimage').change(function(){        
-        let reader = new FileReader();
-        reader.onload = (e) => { 
-            $('#croppr').attr('src', e.target.result); 
-                croppr.setImage(e.target.result);
-        }
-        reader.readAsDataURL(this.files[0]); 
-    });
+            let reader = new FileReader();
+            reader.onload = (e) => { 
+                $('#image_preview_container').attr('src', e.target.result); 
+            }
+            reader.readAsDataURL(this.files[0]); 
+        });
 
     function AddMerk() {
         var inp = prompt("Masukkan Nama Merk Baru", "");
@@ -328,20 +320,6 @@
         }
     }
 
-    function imageSetDefault(path = ''){
-        croppr.destroy();
-        var pathx = "{{ URL::to('/') }}/images/barang/noimage.jpg" ;
-        if (path != ''){
-            pathx = path;
-        }
-        $('#croppr').attr('src', pathx + '?' + Math.random());
-
-        // croppr.setImage("{{ URL::to('/') }}/images/barang/noimage.jpg");
-        croppr = new Croppr('#croppr', {
-            aspectRatio : 1,
-            startSize: [100, 100, '%']
-        });
-    }
 
     function initEdit(actio = 'new', id = '1', mode = ''){
         $('#formuser')[0].reset();
@@ -351,10 +329,8 @@
         $('#idmerk').val('').trigger('change');
         $('#idjenis').val('').trigger('change');
         $('#idsatuan').val('1').trigger('change');
-        $('#active').prop('checked', 1);
-        imageSetDefault();
-        
-        // $('#image_preview_container').attr('src', "{{ URL::to('/') }}/images/users/noimage.jpg");
+        $('#active').prop('checked', 1);        
+        $('#image_preview_container').attr('src', "{{ URL::to('/') }}/images/barang/noimage.jpg");
         
         if (actio == 'edit'){
             $.ajax({
@@ -380,8 +356,7 @@
                     
 
                     var pi = "{{ URL::to('/') }}/images/barang/" + data.id + ".jpg";
-                    // croppr.setImage(pi);
-                    imageSetDefault(pi);
+                    $('#image_preview_container').attr('src', pi);
                     $('#imageold').val(data.id + '.jpg');
 
                     $('#hidden_id').val(data.id);
@@ -441,10 +416,6 @@
 
             // ambil semua inputan di form dan di tambahi array menu----------
             var fd =  new FormData(this);
-            fd.append('cropx', croppr.getValue()['x']);
-            fd.append('cropy', croppr.getValue()['y']);
-            fd.append('cropw', croppr.getValue()['width']);
-            fd.append('croph', croppr.getValue()['height']);
 
             $.ajax({
                 url:"{{ route('mstbarang.store') }}",
@@ -479,7 +450,8 @@
                     {
                         $('#formuser')[0].reset();
                         $('#user_table').DataTable().ajax.reload();
-                        alert(data.success);
+                        // alert(data.success);
+                        showToast(0, data.success);
                         // console.log(data.success);
                         document.getElementById('btnback').click();
                     }
