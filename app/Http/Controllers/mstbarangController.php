@@ -6,6 +6,7 @@ use App\model\mstbarang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 use Image;
 use File;
@@ -26,12 +27,21 @@ class mstbarangController extends Controller
      */
     public function store(Request $request)
     {
+        $cur_user = \Auth::user();
         
-        // return response()->json(['success' => $request->mnu]);
-
         // ----------------------------------VALIDATION
+        // untuk kolom nama, unique nya pake nama dan idcompany.. makanya jadi kayak gitu rulesnya
         $rules = array(            
-            'nama' => ['required', \Illuminate\Validation\Rule::unique('mstbarang', 'nama')->ignore($request->hidden_id)],
+            'nama' => ['required', 
+                        Rule::unique('mstbarang', 'nama')
+                        ->ignore($request->hidden_id)
+                        ->where(function ($query) {
+                            $cur_user = \Auth::user();
+                            return $query->where('idcompany', $cur_user->idcompany);
+                        })
+                    ],
+            // 'nama' => ['required', \Illuminate\Validation\Rule::unique('mstbarang', 'nama')->ignore($request->hidden_id)],
+            // 'nama' => 'required|unique:mstbarang,nama,null,id,idcompany,'.$cur_user->idcompany ,
             'sku' => 'required',
             'barcode' => 'required',
             'idmerk' => 'required',
@@ -93,7 +103,6 @@ class mstbarangController extends Controller
 
         
         // ----------------------------------IMAGE SAVING
-        
         $new_name = $tmp->id . '.jpg'; 
         $imagePath = public_path('images/barang'. '/' . $new_name);  
         $noimagePath = public_path('images/barang/noimage.jpg');  
@@ -109,7 +118,7 @@ class mstbarangController extends Controller
             })->save($imagePath);
         }
         else{
-            if(Storage::disk('imagebarang')->exists($new_name) == false){
+            if(!(File::exists($imagePath))){
                 $success = \File::copy($noimagePath,$imagePath);
             }
         }

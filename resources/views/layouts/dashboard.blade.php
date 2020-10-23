@@ -122,7 +122,7 @@
   </script>
 
 </head>
-<body class="hold-transition sidebar-mini layout-fixed text">
+<body class="hold-transition sidebar-mini layout-fixed  sidebar-collapse text">
 <div class="wrapper">
 
   @include('layouts.sidebar')

@@ -129,6 +129,7 @@ class globreportController extends Controller
         $menu = stmemenu::where('id', $menuid)->first();
         $title = $menu->parentname.' '.$menu->name;
         $title = strtoupper($title);
+        $icon = $menu->icon;
 
         $que = $menu->query1;
 
@@ -272,7 +273,7 @@ class globreportController extends Controller
         return view('globalreports.globalreport',
                     compact('title', 'menuid', 'columnheader', 'editview', 'dtcolumns', 'columnnative',
                             'fdate1','fdate2', 'fgudang', 
-                            'crud_i', 'mstgudang')
+                            'crud_i', 'mstgudang', 'icon')
                 );
 
         // return view('strole');                

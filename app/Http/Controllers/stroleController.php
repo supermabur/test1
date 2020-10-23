@@ -155,24 +155,32 @@ class stroleController extends Controller
      */
     public function edit($id)
     {
-        $cur_user = \Auth::user();
-        $tmp = users::where('idcompany', $cur_user->idcompany)->where('owner', 1)->first();
-        $roletertinggi = $tmp->role_id;
-        
+        $cur_user = \Auth::user();        
         $data1 = strole::find($id);
 
+
+        $tmp = users::where('idcompany', $cur_user->idcompany)->where('owner', 1)->first();
+        $roleowner = $tmp->role_id;
+        $rolemenuowner = vwstrolemenupra::where('id', $roleowner)->where('checked', 1)->pluck('menu_id')->toArray();
 
 
         $menumaster = vwstrolemenupra::where('menu_parentid',0)->where('id', $id);
         
         if ($cur_user->role_id > 2){
-            $menumaster = $menumaster->where()
+            $menumaster = $menumaster->wherein('menu_id', $rolemenuowner);
         }
+        $menumaster = $menumaster->get();
 
         foreach ($menumaster as $mm){
             if($mm->menu_haschild > 0 ){
                 
-                $menudetail = vwstrolemenupra::where('menu_parentid', $mm->menu_id)->where('id', $id)->get();
+                $menudetail = vwstrolemenupra::where('menu_parentid', $mm->menu_id)->where('id', $id);
+                if ($cur_user->role_id > 2){
+                    $menudetail = $menudetail->wherein('menu_id', $rolemenuowner);
+                }
+                $menudetail = $menudetail->get();
+
+
                 $mmd = array();
                 foreach($menudetail as $md){                    
                     $mmd[] = ['item' => ['id' => "$md->menu_id", 'label' => $md->menu_name, 'checked' => $md->checked ==1?true:false ] ];

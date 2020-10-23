@@ -7,7 +7,7 @@
       </li>
 
       <li class="nav-item d-none d-sm-inline-block">
-        <h4 class="nav-link">{{ $title ?? '' ?? '' }}</h4>
+        <h4 class="nav-link text-dark"><i class="far {{ $icon ?? '' ?? '' }} mr-2"></i>{{ $title ?? '' ?? '' }}</h4>
         {{-- <h4 class="nav-link metitle"></h4> --}}
         {{-- <a class="nav-link"><h3>{{ $title ?? '' }}</h3></a> --}}
       </li>
@@ -43,7 +43,7 @@
           <div class="image-cropper mr-2" style="max-height: 40px; max-width: 40px;">
             <img src="{{ url('images/users/noimage.jpg') }}" class="profileimg profile-pic">
           </div> 
-          <span class="" style="font-style: normal;">{{ $composer_cur_user->name }}</span>
+          <span class="text-dark" style="font-style: normal;">{{ $composer_cur_user->name }}</span>
           {{-- <i class="far fa-comments"></i>
           <span class="badge badge-danger navbar-badge">3</span> --}}
         </a>

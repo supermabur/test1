@@ -35,7 +35,7 @@
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <ul class="nav nav-pills nav-sidebar flex-column text-sm" data-widget="treeview" role="menu" data-accordion="false">
 
             {{-- <li class="nav-header">LAPORAN</li>
             <li class="nav-item">
@@ -48,7 +48,7 @@
             @foreach ($composer_stmemenu_h as $h)
               <li class="nav-item has-treeview menu-open">
                 <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-copy"></i>
+                  <i class="nav-icon fas {{$h->icon}}"></i>
                   <p>
                     {{$h->name}}
                     <i class="fas fa-angle-left right"></i>
@@ -62,12 +62,12 @@
                       <li class="nav-item">
                         @if ($d->useglobreport == 0)
                           <a href="/{{$d->links}}" class="nav-link">
-                            <i class="nav-icon far fa-circle" style="font-size: 1rem;"></i>
+                            <i class="nav-icon far {{$d->icon}}" style="font-size: 1rem;"></i>
                             <p>{{$d->name}}</p>
                           </a>
                         @else
                           <a href="{{ route('grctrl.show', $d->id) }}" class="nav-link">
-                            <i class="nav-icon far fa-circle" style="font-size: 1rem;"></i>
+                            <i class="nav-icon far {{$d->icon}}" style="font-size: 1rem;"></i>
                             <p>{{$d->name}}</p>
                           </a>
                         @endif

@@ -353,9 +353,8 @@
                     $('#saldomax').val(data.saldomax);
                     $('#active').prop('checked', data.aktif);
 
-                    
-
                     var pi = "{{ URL::to('/') }}/images/barang/" + data.id + ".jpg";
+                    console.log(pi);
                     $('#image_preview_container').attr('src', pi);
                     $('#imageold').val(data.id + '.jpg');
 
@@ -448,11 +447,11 @@
                     }
                     if(data.success)
                     {
+                        console.log(data.success);
                         $('#formuser')[0].reset();
                         $('#user_table').DataTable().ajax.reload();
                         // alert(data.success);
                         showToast(0, data.success);
-                        // console.log(data.success);
                         document.getElementById('btnback').click();
                     }
                     $('#saveBtn').html('Save changes');
