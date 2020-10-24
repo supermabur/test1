@@ -104,19 +104,19 @@
                     <div class="form-group row">
                         <label for="hpp" class="col-md-2 col-form-label col-form-label-sm text-md-right">HPP</label>
                         <div class="col-md-8">
-                            <input type="number" id="hpp" name="hpp" class="form-control form-control-sm" min="0" required>
+                            <input type="number" id="hpp" name="hpp" class="form-control form-control-sm formatnumber" min="0" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="harga" class="col-md-2 col-form-label col-form-label-sm text-md-right">Harga</label>
                         <div class="col-md-8">
-                            <input type="number" id="harga" name="harga" class="form-control form-control-sm" min="0" required>
+                            <input type="number" id="harga" name="harga" class="form-control form-control-sm formatnumber" min="0" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="disc" class="col-md-2 col-form-label col-form-label-sm text-md-right">Disc</label>
+                        <label for="disc" class="col-md-2 col-form-label col-form-label-sm text-md-right">Disc (%)</label>
                         <div class="col-md-8">
                             <input type="number" id="disc" name="disc" class="form-control form-control-sm" min="0" max="100" required>
                         </div>
@@ -374,6 +374,7 @@
     }
 
     $(document).ready(function() {
+
         $('#idmerk').select2().on('select2:open', function () {
             var a = $(this).data('select2');
             if (!$('.select2-link').length) {

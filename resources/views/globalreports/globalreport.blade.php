@@ -211,7 +211,7 @@
 
             function fill_datatable(filter_gudang = '', show0 = 'TIDAK')
             {
-                var numFormat = $.fn.dataTable.render.number('.',',',0,'');
+                var numFormat = $.fn.dataTable.render.number('.',',',2,'');
                 var xmenuid = {{ $menuid }};
                 var xUrl = "{{ route('grctrl.show', $menuid) }}"   ;
                 var Xcolumns={!! json_encode($dtcolumns) !!};

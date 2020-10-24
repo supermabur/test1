@@ -46,7 +46,8 @@ class mstbarangController extends Controller
             'barcode' => 'required',
             'idmerk' => 'required',
             'idjenis' => 'required',
-            'deskripsi' => 'required'
+            'deskripsi' => 'required',
+            'disc' => ['numeric', 'min:1','max:100', 'regex:/^\d+(\.\d{1,2})?$/']
         );
 
         
