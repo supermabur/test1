@@ -174,7 +174,9 @@ class globreportController extends Controller
         }
 
         if ($crud == 1 ){
-            $dtcolumns[] = ['title' => 'action', 'data' => 'action', 'name' => 'action', 'orderable' => 'false', 'searchable' => 'false', 'className' => 'text-right'];
+            $dtcolumns[] = ['title' => 'action', 'data' => 'action', 'name' => 'action', 'className' => 'text-right'];
+            $columnnative[] = 'action';
+            $columnheader[] = 'action';
         }
 
 

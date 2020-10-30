@@ -4,19 +4,21 @@
 
 @section('content')
 
+
     <div class="row" name="globrep" id="globrep">
         <div class="col-md-12 outerbox">
             <div class="box" style="border-top: 0px solid #d2d6de;">
 
 
 {{-- {{ json_encode($columnnative) }} --}}
-
+ 
                 <div class="card card-secondary" style="box-shadow: none;margin-top: 0.8rem;padding-top: 0px;">
                     {{-- <div class="card-header">
                         <h3 class="card-title judulbiru" id="judulbiru">Data List</h3>
                     </div> --}}
                     <!-- /.card-header -->
-
+                    {{-- <button onclick="getlayar()"> uyeee </button>
+                    <span class="demo" id="demo">zxcasdqwe</span> --}}
             
                     <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;padding-left: 1.25rem; padding-right: 1.25rem;">
                             @if ($fdate1 == 1)
@@ -165,6 +167,12 @@
 @section('scripts')
 
     <script>
+        function getlayar() {
+            var w = window.innerWidth;
+            var h = window.innerHeight;
+            document.getElementById("demo").innerHTML = "Width: " + w + "<br>Height: " + h;
+        }
+
         $("#addnew, #btnback").click(function(){    
             addneworback();
         });
@@ -217,6 +225,10 @@
                 var Xcolumns={!! json_encode($dtcolumns) !!};
                 var xNative={!! json_encode($columnnative) !!};
                 var xnum = {render: numFormat, className: 'text-right'};
+                var xhide = {visible : false};
+                var xorderablefalse = {orderable : false, searchable:false};
+
+                console.log(Xcolumns);
 
                 for (i=0; i < xNative.length ; i++){
                     switch (xNative[i]){
@@ -224,7 +236,14 @@
                             Object.assign(Xcolumns[i], xnum);
                         break;
                     }
+
+                    console.log(Xcolumns[i].title);
+                    switch (Xcolumns[i].title){
+                        case 'id': Object.assign(Xcolumns[i], xhide); break;
+                        case 'action' : Object.assign(Xcolumns[i], xorderablefalse); break;
+                    }
                 }
+
 
                 var appe = '<tfoot><tr>';
                 for (i=0; i < Xcolumns.length ; i++){
@@ -270,6 +289,7 @@
                 var dataTable = $('#user_table').DataTable({
                     dom: 'Bfrltip',
                     destroy: true,
+                    fixedHeader: true,
                     lengthMenu: [[50, 100, 250, -1], [50, 100, 250, 'ALL']],
                     buttons: buttonx,
                     processing: true,
