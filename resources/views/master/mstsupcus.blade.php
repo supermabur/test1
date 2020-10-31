@@ -12,10 +12,22 @@
 
             <div class="card card-light shadow">
                 <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-cookie-bite mr-2"></i>Kontak</h3>
+                    <h3 class="card-title"><i class="fas fa-id-card mr-2"></i>Kontak</h3>
                 </div>
     
                 <div class="card-body">
+
+                    <div class="form-group row">
+                        <label for="jenis" class="col-md-2 col-form-label col-form-label-sm text-md-right">Jenis</label>
+                        <div class="col-md-8">
+                            <select class="slct2 form-control form-control-sm" id="jenis" name="jenis" placeholder="" required>
+                                <option value=0>Supplier + Customer</option>                        
+                                <option value=1>Supplier</option>                         
+                                <option value=1>Customer</option>                         
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="form-group row">
                         <label for="nama" class="col-md-2 col-form-label col-form-label-sm text-md-right">Nama</label>
                         <div class="col-md-8">
@@ -62,7 +74,7 @@
             
             <div class="card card-light shadow">
                 <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-tag mr-2"></i>Alamat</h3>
+                    <h3 class="card-title"><i class="fas fa-home mr-2"></i>Alamat</h3>
                 </div>
     
                 <div class="card-body">
@@ -92,7 +104,7 @@
             
             <div class="card card-light shadow">
                 <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-images mr-2"></i>Status Pajak</h3>
+                    <h3 class="card-title"><i class="fas fa-taxi mr-2"></i>Status Pajak</h3>
                 </div>
     
                 <div class="card-body">
@@ -125,7 +137,7 @@
             
             <div class="card card-light shadow">
                 <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-images mr-2"></i>Hutang Piutang</h3>
+                    <h3 class="card-title"><i class="fas fa-cash-register mr-2"></i>Hutang Piutang</h3>
                 </div>
     
                 <div class="card-body">
@@ -165,7 +177,7 @@
     
 
     <div class="row justify-content-md-center">
-        <div class="col-sm-9" style="text-align-last: justify;">
+        <div class="col-sm-9 mb-4" style="text-align-last: justify;">
             <div class="card-footer shadow" style="background-color: white">
                 <span id="form_result"></span>
 
@@ -202,6 +214,8 @@
         $('#formuser')[0].reset();
         $('#form_result').html('');
 
+        $('#jenis').val(0);
+        $('#email').val('');
         $('#terminbeli').val(0);
         $('#terminjual').val(0);
         $('#maxhutang').val(0);
@@ -218,6 +232,7 @@
             success:function(data)
                 {
                     $('#nama').val(data.nama);
+                    $('#jenis').val(data.jenis);
                     $('#email').val(data.email);
                     $('#notelp').val(data.notelp);
                     $('#nohp').val(data.nohp);

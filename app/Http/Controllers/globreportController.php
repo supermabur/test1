@@ -137,6 +137,7 @@ class globreportController extends Controller
         $fdate2 = Str::contains($que, '@date2');
         $fgudang = Str::contains($que, '@gudang');
         $fidcompany = Str::contains($que, '@idcompany');
+        $rendertext1 = explode(',', $menu->rendertext1);
 
         $crud = 0;
         $crud_i = Str::contains($menu->crud, 'i');
@@ -275,7 +276,8 @@ class globreportController extends Controller
         return view('globalreports.globalreport',
                     compact('title', 'menuid', 'columnheader', 'editview', 'dtcolumns', 'columnnative',
                             'fdate1','fdate2', 'fgudang', 
-                            'crud_i', 'mstgudang', 'icon')
+                            'crud_i', 'mstgudang', 'icon', 
+                            'rendertext1')
                 );
 
         // return view('strole');                

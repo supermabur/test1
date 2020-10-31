@@ -12,6 +12,7 @@ class mstsupcus extends Model
     protected $fillable = [
         'nama',
         'email',
+        'jenis',
         'notelp',
         'nohp',
         'alamat',

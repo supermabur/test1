@@ -79,7 +79,7 @@
     
 
     <div class="row justify-content-md-center">
-        <div class="col-sm-9" style="text-align-last: justify;">
+        <div class="col-sm-9 mb-4" style="text-align-last: justify;">
             <div class="card-footer shadow" style="background-color: white">
                 <span id="form_result"></span>
 

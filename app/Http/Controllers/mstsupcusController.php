@@ -37,6 +37,7 @@ class mstsupcusController extends Controller
                             return $query->where('idcompany', $cur_user->idcompany);
                         })
                     ],
+            'jenis' => 'required',
             'notelp' => 'required',
             'alamat' => 'required',
             'idkota' => 'required'
@@ -67,6 +68,7 @@ class mstsupcusController extends Controller
         $form_data = [
             'nama' => $request->nama,
             'email' => $request->email,
+            'jenis' => $request->jenis,
             'notelp' => $request->notelp,
             'nohp' => $request->nohp,
             'alamat' => $request->alamat,

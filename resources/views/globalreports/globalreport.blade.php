@@ -224,11 +224,13 @@
                 var xUrl = "{{ route('grctrl.show', $menuid) }}"   ;
                 var Xcolumns={!! json_encode($dtcolumns) !!};
                 var xNative={!! json_encode($columnnative) !!};
+                var xrendertext1={!! json_encode($rendertext1) !!};
                 var xnum = {render: numFormat, className: 'text-right'};
+                var xrentext = {targets : 2,render: $.fn.dataTable.render.text(), className: 'text-center'};
                 var xhide = {visible : false};
                 var xorderablefalse = {orderable : false, searchable:false};
 
-                console.log(Xcolumns);
+                console.log(xrendertext1);
 
                 for (i=0; i < xNative.length ; i++){
                     switch (xNative[i]){
@@ -237,12 +239,17 @@
                         break;
                     }
 
-                    console.log(Xcolumns[i].title);
+                    // console.log(Xcolumns[i].title);
                     switch (Xcolumns[i].title){
                         case 'id': Object.assign(Xcolumns[i], xhide); break;
                         case 'action' : Object.assign(Xcolumns[i], xorderablefalse); break;
                     }
+
+                    // if (xrendertext1.includes(Xcolumns[i].title)){
+                    //     Object.assign(Xcolumns[i], xrentext);
+                    // }
                 }
+                console.log(Xcolumns);
 
 
                 var appe = '<tfoot><tr>';
@@ -289,7 +296,6 @@
                 var dataTable = $('#user_table').DataTable({
                     dom: 'Bfrltip',
                     destroy: true,
-                    fixedHeader: true,
                     lengthMenu: [[50, 100, 250, -1], [50, 100, 250, 'ALL']],
                     buttons: buttonx,
                     processing: true,
