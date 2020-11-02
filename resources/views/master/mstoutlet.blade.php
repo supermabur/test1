@@ -130,6 +130,7 @@
         $('#form_result').html('');
 
         $('#email').val('');
+        $('#idkota').val(1).trigger('change');
 
         $('#actionx').val(actio);
         $('#hidden_id').val('');

@@ -98,26 +98,13 @@
                         <label for="password-confirm" class="col-md-2 col-form-label col-form-label-sm text-md-right"></label>
                         <div class="col-md-8 row">
                             {{-- <div class="row"> --}}
-                                <div class="form-check col-sm-4">
-                                    <input class="form-check-input" type="checkbox">
-                                    <label class="form-check-label text-sm">Checkbox</label>
-                                </div>
-                                <div class="form-check col-sm-4">
-                                    <input class="form-check-input" type="checkbox" checked="">
-                                    <label class="form-check-label text-sm">Checkbox checked</label>
-                                </div>
-                                <div class="form-check col-sm-4">
-                                    <input class="form-check-input" type="checkbox">
-                                    <label class="form-check-label text-sm">Checkbox disabled 1</label>
-                                </div>
-                                <div class="form-check col-sm-4">
-                                    <input class="form-check-input" type="checkbox">
-                                    <label class="form-check-label text-sm">Checkbox disabled 2</label>
-                                </div>
-                                <div class="form-check col-sm-4">
-                                    <input class="form-check-input" type="checkbox">
-                                    <label class="form-check-label text-sm">Checkbox disabled 3</label>
-                                </div>
+                                {{-- https://stackoverflow.com/questions/52447032/laravel-store-multiple-checkbox-form-values-in-database --}}
+                                @foreach ($composer_mstoutlet as $cp)
+                                    <div class="form-check col-sm-4">
+                                        <input class="form-check-input" type="checkbox" name="outlet[]" values="{{ $cp->id }}" id="outlet{{ $cp->id }}">
+                                        <label class="form-check-label text-sm" for="outlet{{ $cp->id }}" >{{ $cp->nama }}</label>
+                                    </div>    
+                                @endforeach
                             {{-- </div> --}}
                         </div>
                     </div>
