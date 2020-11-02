@@ -18,17 +18,6 @@
                 <div class="card-body">
 
                     <div class="form-group row">
-                        <label for="jenis" class="col-md-2 col-form-label col-form-label-sm text-md-right">Jenis</label>
-                        <div class="col-md-8">
-                            <select class="slct2 form-control form-control-sm" id="jenis" name="jenis" placeholder="" required>
-                                <option value=0>Supplier + Customer</option>                        
-                                <option value=1>Supplier</option>                         
-                                <option value=2>Customer</option>                         
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
                         <label for="nama" class="col-md-2 col-form-label col-form-label-sm text-md-right">Nama</label>
                         <div class="col-md-8">
                             <input type="text" id="nama" name="nama" class="form-control form-control-sm" required>
@@ -99,80 +88,6 @@
             </div>
         </div>
 
-
-        <div class="col-sm-9">
-            
-            <div class="card card-light shadow">
-                <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-taxi mr-2"></i>Status Pajak</h3>
-                </div>
-    
-                <div class="card-body">
-
-                    <div class="form-group row">
-                        <label for="ispkp" class="col-md-2 col-form-label col-form-label-sm text-md-right">PKP</label>
-                        <div class="col-md-8">
-                            <select class="slct2 form-control form-control-sm" id="ispkp" name="ispkp" placeholder="" required>
-                                <option value=0>TIDAK</option>                        
-                                <option value=1>YA</option>                        
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="npwp" class="col-md-2 col-form-label col-form-label-sm text-md-right">NPWP</label>
-                        <div class="col-md-8">
-                            <input type="text" id="npwp" name="npwp" class="form-control form-control-sm" required>
-                        </div>
-                    </div>
-            
-                </div>
-            </div>
-        </div>
-
-
-
-
-        <div class="col-sm-9">
-            
-            <div class="card card-light shadow">
-                <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-cash-register mr-2"></i>Hutang Piutang</h3>
-                </div>
-    
-                <div class="card-body">
-
-                    <div class="form-group row">
-                        <label for="terminbeli" class="col-md-2 col-form-label col-form-label-sm text-md-right">Termin Beli (hari)</label>
-                        <div class="col-md-8">
-                            <input type="number" id="terminbeli" name="terminbeli" class="form-control form-control-sm" min="0" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="terminjual" class="col-md-2 col-form-label col-form-label-sm text-md-right">Termin Jual (hari)</label>
-                        <div class="col-md-8">
-                            <input type="number" id="terminjual" name="terminjual" class="form-control form-control-sm" min="0" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="maxhutang" class="col-md-2 col-form-label col-form-label-sm text-md-right">Maksimal Hutang</label>
-                        <div class="col-md-8">
-                            <input type="number" id="maxhutang" name="maxhutang" class="form-control form-control-sm" min="0" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="maxpiutang" class="col-md-2 col-form-label col-form-label-sm text-md-right">Maksimal Piutang</label>
-                        <div class="col-md-8">
-                            <input type="number" id="maxpiutang" name="maxpiutang" class="form-control form-control-sm" min="0" required>
-                        </div>
-                    </div>
-            
-                </div>
-            </div>
-        </div>
     </div>
     
 
@@ -214,12 +129,7 @@
         $('#formuser')[0].reset();
         $('#form_result').html('');
 
-        $('#jenis').val(0);
         $('#email').val('');
-        $('#terminbeli').val(0);
-        $('#terminjual').val(0);
-        $('#maxhutang').val(0);
-        $('#maxpiutang').val(0);
 
         $('#actionx').val(actio);
         $('#hidden_id').val('');
@@ -227,24 +137,17 @@
         
         if (actio == 'edit'){
             $.ajax({
-            url:"/mstsupcus/"+id+"/edit",
+            url:"/mstoutlet/"+id+"/edit",
             dataType:"json",
             success:function(data)
                 {
                     $('#nama').val(data.nama);
-                    $('#jenis').val(data.jenis);
                     $('#email').val(data.email);
                     $('#notelp').val(data.notelp);
                     $('#nohp').val(data.nohp);
                     $('#alamat').val(data.alamat);
                     $('#idkota').val(data.idkota).trigger('change');
 
-                    $('#ispkp').val(data.ispkp);
-                    $('#npwp').val(data.npwp);
-                    $('#terminbeli').val(data.terminbeli);
-                    $('#terminjual').val(data.terminjual);
-                    $('#maxhutang').val(data.maxhutang);
-                    $('#maxpiutang').val(data.maxpiutang);
                     $('#active').prop('checked', data.aktif);
 
                     $('#hidden_id').val(data.id);
@@ -283,7 +186,7 @@
             var fd =  new FormData(this);
 
             $.ajax({
-                url:"{{ route('mstsupcus.store') }}",
+                url:"{{ route('mstoutlet.store') }}",
                 method:"POST",
                 data: fd,
                 contentType: false,
@@ -313,7 +216,6 @@
                     }
                     if(data.success)
                     {
-                        console.log(data.success);
                         $('#formuser')[0].reset();
                         $('#user_table').DataTable().ajax.reload();
                         // alert(data.success);

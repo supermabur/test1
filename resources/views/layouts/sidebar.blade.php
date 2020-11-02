@@ -48,7 +48,7 @@
             @foreach ($composer_stmemenu_h as $h)
               <li class="nav-item has-treeview menu-open">
                 <a href="#" class="nav-link">
-                  <i class="nav-icon fas {{$h->icon}}"></i>
+                  <i class="nav-icon {{$h->icon}}"></i>
                   <p>
                     {{$h->name}}
                     <i class="fas fa-angle-left right"></i>

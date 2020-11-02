@@ -6,101 +6,160 @@
 
     <div class="row justify-content-md-center">
 
-        <div class="col-sm-5">
+        <div class="col-sm-9">
 
-            <div class="card card-info">
+            <div class="card card-light shadow">
                 <div class="card-header">
-                    <h3 class="card-title">Data User</h3>
+                    <h3 class="card-title"><i class="fas fa-users mr-2"></i>Data User</h3>
                 </div>
     
                 <div class="card-body">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="Enter name" required>
-                    </div>
-            
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="Enter Username" required>
+                    <div class="form-group row">
+                        <label for="name" class="col-md-2 col-form-label col-form-label-sm text-md-right">Name</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="Enter name" required>
+                        </div>
+                    </div>                  
+
+                    <div class="form-group row">
+                        <label for="username" class="col-md-2 col-form-label col-form-label-sm text-md-right">Username</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="Enter Username" required>
+                        </div>
                     </div>
         
-                    <div class="form-group hidexxx">
-                        <label for="role">Role</label>
-                        <select class="role form-control form-control-sm" id="role" name="role" placeholder="Pilih role" required>
-                            @foreach ($composer_strole as $cp)
-                                <option value="{{ $cp->id }}">{{ $cp->text }}</option>                        
-                            @endforeach
-                        </select>
+                    <div class="form-group row hidexxx">
+                        <label for="role" class="col-md-2 col-form-label col-form-label-sm text-md-right">Role</label>
+                        <div class="col-md-8">
+                            <select class="role form-control form-control-sm" id="role" name="role" placeholder="Pilih role" required>
+                                @foreach ($composer_strole as $cp)
+                                    <option value="{{ $cp->id }}">{{ $cp->text }}</option>                        
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
             
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder="Enter Email">
+                    <div class="form-group row">
+                        <label for="email" class="col-md-2 col-form-label col-form-label-sm text-md-right">Email</label>
+                        <div class="col-md-8">
+                            <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder="Enter Email">
+                        </div>
                     </div>
             
-                    <div class="form-group">
-                        <label for="hp">Handphone</label>
-                        <input type="tel" class="form-control form-control-sm" id="hp" name="hp" placeholder="Enter Handphone">
+                    <div class="form-group row">
+                        <label for="hp" class="col-md-2 col-form-label col-form-label-sm text-md-right">Handphone</label>
+                        <div class="col-md-8">
+                            <input type="tel" class="form-control form-control-sm" id="hp" name="hp" placeholder="Enter Handphone">
+                        </div>
                     </div>
             
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control form-control-sm" id="password" placeholder="Enter password" name="password" required autocomplete="new-password">
+                    <div class="form-group row">
+                        <label for="password" class="col-md-2 col-form-label col-form-label-sm text-md-right">Password</label>
+                        <div class="col-md-8">
+                            <input type="password" class="form-control form-control-sm" id="password" placeholder="Enter password" name="password" required autocomplete="new-password">
+                        </div>
                     </div>
             
-                    <div class="form-group">
-                        <label for="password-confirm">Password</label>
-                        <input type="password" class="form-control form-control-sm" id="password-confirm" placeholder="Enter password" name="password_confirmation" required autocomplete="new-password">
+                    <div class="form-group row">
+                        <label for="password-confirm" class="col-md-2 col-form-label col-form-label-sm text-md-right">Password</label>
+                        <div class="col-md-8">
+                            <input type="password" class="form-control form-control-sm" id="password-confirm" placeholder="Enter password" name="password_confirmation" required autocomplete="new-password">
+                        </div>
                     </div>
-                    
-                    <div class="form-check hidexxx">
-                        <input type="hidden" name="active" value="0"/>
-                        <input type="checkbox" class="form-check-input" id="active" name="active" value="1">
-                        <label class="form-check-label" for="active">Aktif</label>
+
+                    <div class="form-group row hidexxx">
+                        <label for="aktif" class="col-md-2 col-form-label col-form-label-sm text-md-right">Aktif</label>
+                        <div class="col-md-8" id="aktif" class="form-control" style="align-self: center;">
+                            {{-- A checkbox input in not sent in the request when it's unchecked, in that case the hidden input will be sent with the value 0. When the Checkox is checked, it will overwrite the value to 1. --}}
+                            <input type="hidden" name="active" value="0"/>
+                            <input id="active" name="active" value="1" class="form-check" type="checkbox" value="true">
+                        </div>
                     </div>
         
     
 
                 </div>
             </div>
-
-
-
-            {{-- <div class="form-group row">
-                <label for="aktif">Aktif</label>
-                <div class="col-sm-6" id="aktif" class="form-control"> --}}
-                    {{-- A checkbox input in not sent in the request when it's unchecked, in that case the hidden input will be sent with the value 0. When the Checkox is checked, it will overwrite the value to 1. --}}
-                    {{-- <input type="hidden" name="active" value="0"/>
-                    <input id="active" name="active" value="1" class="form-check" type="checkbox" value="true">
-                </div>
-            </div> --}}
-
         </div>
+    </div>
 
-        <div class="col-sm-3">
-            <div class="card card-info">
+
+    <div class="row justify-content-md-center">
+        <div class="col-sm-9">
+            
+            <div class="card card-light shadow">
                 <div class="card-header">
-                    <h3 class="card-title">Profile picture</h3>
+                    <h3 class="card-title"><i class="fas fa-warehouse mr-2"></i>Akses Outlet</h3>
+                </div>
+    
+                <div class="card-body">
+
+                    <div class="form-group row">
+                        <label for="password-confirm" class="col-md-2 col-form-label col-form-label-sm text-md-right"></label>
+                        <div class="col-md-8 row">
+                            {{-- <div class="row"> --}}
+                                <div class="form-check col-sm-4">
+                                    <input class="form-check-input" type="checkbox">
+                                    <label class="form-check-label text-sm">Checkbox</label>
+                                </div>
+                                <div class="form-check col-sm-4">
+                                    <input class="form-check-input" type="checkbox" checked="">
+                                    <label class="form-check-label text-sm">Checkbox checked</label>
+                                </div>
+                                <div class="form-check col-sm-4">
+                                    <input class="form-check-input" type="checkbox">
+                                    <label class="form-check-label text-sm">Checkbox disabled 1</label>
+                                </div>
+                                <div class="form-check col-sm-4">
+                                    <input class="form-check-input" type="checkbox">
+                                    <label class="form-check-label text-sm">Checkbox disabled 2</label>
+                                </div>
+                                <div class="form-check col-sm-4">
+                                    <input class="form-check-input" type="checkbox">
+                                    <label class="form-check-label text-sm">Checkbox disabled 3</label>
+                                </div>
+                            {{-- </div> --}}
+                        </div>
+                    </div>
+            
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row justify-content-md-center">
+        <div class="col-sm-9">
+            <div class="card card-light shadow">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-images mr-2"></i>Profile picture</h3>
                 </div>
 
                 <div class="card-body">
-                    <label for="pathimage" class="btn btn-primary btn-sm" id="labelimage">Select Image</label>
-                    <input type="file" class="form-control-file form-control-sm" id="pathimage" name="pathimage" accept=".jpg" placeholder="Choose image" style="display: none;" >
-
-                    <div style="padding-top:10px">    
-                        <img id="image_preview_container" class="img-fluid img-thumbnail" alt="Responsive image" style="max-height: 150px;" 
-                            src="{{ url('/images/users/noimage.jpg') }}"  alt="preview image"/>
+                    <div class="form-group row">
+                        <label for="" class="col-md-2 col-form-label col-form-label-sm text-md-right"></label>
+                        <div class="col-md-8">
+                            <label for="pathimage" class="btn btn-primary btn-sm" id="labelimage">Select Image</label>
+                            <input type="file" class="form-control-file form-control-sm" id="pathimage" name="pathimage" accept=".jpg" placeholder="Choose image" style="display: none;" >
+        
+                            <div style="padding-top:10px">    
+                                <img id="image_preview_container" class="img-fluid img-thumbnail" alt="Responsive image" style="max-height: 150px;" 
+                                    src="{{ url('/images/users/noimage.jpg') }}"  alt="preview image"/>
+                            </div>
+                        </div>
                     </div>
+
+
 
                 </div>
             </div>
         </div>  
-    </div>
+    </div>  
     
 
     <div class="row justify-content-md-center">
-        <div class="col-sm-8" style="text-align-last: justify;">
-            <div class="card-footer">
+        <div class="col-sm-9 mb-4" style="text-align-last: justify;">
+            <div class="card-footer shadow">
                 <span id="form_result"></span>
 
                 <input type="hidden" name="hidden_id" id="hidden_id" />

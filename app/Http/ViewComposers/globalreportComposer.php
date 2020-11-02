@@ -18,12 +18,12 @@ class globalreportComposer
         {
             $queh = "SELECT a.* FROM vwstmemenu a
                     INNER JOIN vwstrolemenupra b on a.id = b.menu_id and b.checked = 1 and b.id = $cur_user->role_id 
-                    where a.parentid = '0'
+                    where a.parentid = '0' order by urut
                     ";
 
             $qued = "SELECT a.* FROM vwstmemenu a
                     INNER JOIN vwstrolemenupra b on a.id = b.menu_id and b.checked = 1 and b.id = $cur_user->role_id 
-                    where a.parentid > '0'
+                    where a.parentid > '0' order by urut
                     ";
 
             $view->with('composer_stmemenu_h', DB::Select(DB::raw($queh)));

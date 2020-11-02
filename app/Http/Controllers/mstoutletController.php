@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\model\mstsupcus;
+use App\model\mstoutlet;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
-class mstsupcusController extends Controller
+class mstoutletController extends Controller
 {
     public function __construct()
     {
@@ -30,14 +30,13 @@ class mstsupcusController extends Controller
         // untuk kolom nama, unique nya pake nama dan idcompany.. makanya jadi kayak gitu rulesnya
         $rules = array(            
             'nama' => ['required', 
-                        Rule::unique('mstsupcus', 'nama')
+                        Rule::unique('mstoutlet', 'nama')
                         ->ignore($request->hidden_id)
                         ->where(function ($query) {
                             $cur_user = \Auth::user();
                             return $query->where('idcompany', $cur_user->idcompany);
                         })
                     ],
-            'jenis' => 'required',
             'notelp' => 'required',
             'alamat' => 'required',
             'idkota' => 'required'
@@ -68,17 +67,10 @@ class mstsupcusController extends Controller
         $form_data = [
             'nama' => $request->nama,
             'email' => $request->email,
-            'jenis' => $request->jenis,
             'notelp' => $request->notelp,
             'nohp' => $request->nohp,
             'alamat' => $request->alamat,
             'idkota' => $request->idkota,
-            'ispkp' => $request->ispkp+0,
-            'npwp' => $request->npwp,
-            'terminbeli' => $request->terminbeli,
-            'terminjual' => $request->terminjual,
-            'maxhutang' => $request->maxhutang,
-            'maxpiutang' => $request->maxpiutang,
 
             'idcompany' => $cur_user->idcompany,
             'useru' => $cur_user->id
@@ -89,7 +81,7 @@ class mstsupcusController extends Controller
             $form_data['usere'] = $cur_user->id;
         }
 
-        $tmp = mstsupcus::updateOrCreate(['id' => $request->hidden_id], $form_data);   
+        $tmp = mstoutlet::updateOrCreate(['id' => $request->hidden_id], $form_data);   
 
         // // Catat Log trans
         // $crud = $request->actionx == 'edit'?'u':'i';
@@ -106,49 +98,9 @@ class mstsupcusController extends Controller
         return response()->json(['success' => $suksesmsg]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\model\mstsupcus  $mstsupcus
-     * @return \Illuminate\Http\Response
-     */
-    public function show(mstsupcus $mstsupcus)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\model\mstsupcus  $mstsupcus
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        $data = mstsupcus::find($id);
+        $data = mstoutlet::find($id);
         return response()->json($data);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\model\mstsupcus  $mstsupcus
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, mstsupcus $mstsupcus)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\model\mstsupcus  $mstsupcus
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(mstsupcus $mstsupcus)
-    {
-        //
     }
 }

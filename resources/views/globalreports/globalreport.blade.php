@@ -226,11 +226,15 @@
                 var xNative={!! json_encode($columnnative) !!};
                 var xrendertext1={!! json_encode($rendertext1) !!};
                 var xnum = {render: numFormat, className: 'text-right'};
-                var xrentext = {targets : 2,render: $.fn.dataTable.render.text(), className: 'text-center'};
+                var xrentext = {render: function(datum, type, row) {
+                                        return $("<div/>").html(datum).text(); 
+                                    },
+                                    className: 'text-center'
+                                };
                 var xhide = {visible : false};
                 var xorderablefalse = {orderable : false, searchable:false};
 
-                console.log(xrendertext1);
+                // console.log(xrendertext1);
 
                 for (i=0; i < xNative.length ; i++){
                     switch (xNative[i]){
@@ -245,11 +249,11 @@
                         case 'action' : Object.assign(Xcolumns[i], xorderablefalse); break;
                     }
 
-                    // if (xrendertext1.includes(Xcolumns[i].title)){
-                    //     Object.assign(Xcolumns[i], xrentext);
-                    // }
+                    if (xrendertext1.includes(Xcolumns[i].title)){
+                        Object.assign(Xcolumns[i], xrentext);
+                    }
                 }
-                console.log(Xcolumns);
+                // console.log(Xcolumns);
 
 
                 var appe = '<tfoot><tr>';
@@ -341,6 +345,10 @@
                             //     },
                             },
                     columns:Xcolumns,
+                    // columnDefs: [ {
+                    //                 targets: [ 1, 2 ],
+                    //                 render: $.fn.dataTable.render.text()
+                    //                 } ],
 
                     "footerCallback": function (row, data, start, end, display) {
                             var api = this.api();
