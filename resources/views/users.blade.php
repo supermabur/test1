@@ -100,9 +100,13 @@
                             {{-- <div class="row"> --}}
                                 {{-- https://stackoverflow.com/questions/52447032/laravel-store-multiple-checkbox-form-values-in-database --}}
                                 @foreach ($composer_mstoutlet as $cp)
-                                    <div class="form-check col-sm-4">
-                                        <input class="form-check-input" type="checkbox" name="outlet[]" values="{{ $cp->id }}" id="outlet{{ $cp->id }}">
-                                        <label class="form-check-label text-sm" for="outlet{{ $cp->id }}" >{{ $cp->nama }}</label>
+                                    <div class="form-check col-sm-4 mb-3">
+                                        <input class="form-check-input" type="checkbox" name="outlet[]" value="{{ $cp->id }}" id="outlet{{ $cp->id }}">
+                                        <div class="col">
+                                            <label class="form-check-label text-sm row" for="outlet{{ $cp->id }}" >{{ $cp->nama }}</label>
+                                            <label class="form-check-label text-sm text-secondary row" for="outlet{{ $cp->id }}" style="font-size: .70rem!important;">{{ $cp->alamat }}</label>
+                                            <label class="form-check-label text-sm text-secondary row" for="outlet{{ $cp->id }}" style="font-size: .70rem!important;">{{ $cp->kotaname2 }}</label>
+                                        </div>
                                     </div>    
                                 @endforeach
                             {{-- </div> --}}
@@ -194,22 +198,27 @@
             dataType:"json",
             success:function(data)
                 {
-                    $('#name').val(data.name);
-                    $('#username').val(data.username);
-                    $('#email').val(data.email);
-                    $('#hp').val(data.hp);
-                    $('#role').val(data.role_id).trigger('change');
+                    // console.log(data.outlet);
+                    data.outlet.forEach(function(element) {
+                        document.getElementById("outlet" + element.idoutlet).checked = true;
+                    });
+
+                    $('#name').val(data.data.name);
+                    $('#username').val(data.data.username);
+                    $('#email').val(data.data.email);
+                    $('#hp').val(data.data.hp);
+                    $('#role').val(data.data.role_id).trigger('change');
                     $('#password').val('');
                     $('#password-confirm').val('');
-                    $('#active').prop('checked', data.active);
-                    $('#hidden_id').val(data.id);
+                    $('#active').prop('checked', data.data.active);
+                    $('#hidden_id').val(data.data.id);
 
-                    var pi = "{{ URL::to('/') }}/images/users/" + data.id + ".jpg";
+                    var pi = "{{ URL::to('/') }}/images/users/" + data.data.id + ".jpg";
                     if(doesFileExist(pi)){
                         $('#image_preview_container').attr('src', pi);
                     }
 
-                    $('#imageold').val(data.id + '.jpg');
+                    $('#imageold').val(data.data.id + '.jpg');
                     $("#globrep").hide(200);
                     $("#editview").show(200);
                     loading(0);
@@ -253,9 +262,16 @@
         //     alert('asd');        
         // });
 
+
+        function RemoveAlert(){
+            $("input").removeClass("is-invalid");
+            $("span").remove(".invalid-feedback");
+        }
+
         $('#formuser').on('submit', function(event){
             event.preventDefault();
             loading(1, 'Saving Data ...');
+            RemoveAlert();
 
             $('#saveBtn').html('Saving...');
 
@@ -272,22 +288,40 @@
                 dataType:"json",
                 success:function(data)
                 {
-                    var html = '';
                     if(data.errors)
                     {
-                        html = '<div class="alert alert-danger">';
-                        for(var count = 0; count < data.errors.length; count++)
-                        {
-                        html += '<p>' + data.errors[count] + '</p>';
+                        // console.log(data.errors.keys);
+                        for(var count = 0; count < data.errors.keys.length; count++)
+                        {  
+                            var v = document.getElementById(data.errors.keys[count]);
+                            if($(v).is("input")){
+                                if (count == 0)
+                                {
+                                    $(v).focus();
+                                    v.scrollIntoView(false);
+                                }
+                                // v.classList.add('is-invalid');
+                                $("<span class='invalid-feedback' role='alert' style='display:block'>" + data.errors.message[count] + "</span>").insertAfter(v);
+                            }
+
+                            if($(v).is("select")){
+                                if (count == 0)
+                                {
+                                    $(v).focus();
+                                    v.scrollIntoView(true);
+                                }
+                                var w = v.nextSibling;
+                                // w.classList.add('is-invalid');
+                                $("<span class='invalid-feedback' role='alert' style='display:block'>" + data.errors.message[count] + "</span>").insertAfter(w);
+                            }
                         }
-                        html += '</div>';
-                        $('#form_result').html(html);
                     }
                     if(data.success)
                     {
                         $('#formuser')[0].reset();
                         $('#user_table').DataTable().ajax.reload();
-                        // alert(data.success);
+                        // console.log(data.success);
+                        showToast(0, data.success);
                         document.getElementById('btnback').click();
                     }
                     $('#saveBtn').html('Save changes');

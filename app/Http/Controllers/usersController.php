@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\model\users;
+use App\model\usersoutlet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -76,10 +77,11 @@ class usersController extends Controller
             'name.unique' => 'Name sudah ada didatabase, silahkan pilih Name yang lain'
         );
 
-        $error = Validator::make($request->all(), $rules, $errmsg);
-        if($error->fails())
+        $result = Validator::make($request->all(), $rules, $errmsg);
+        if($result->fails())
         {
-            return response()->json(['errors' => $error->errors()->all()]);
+            // return response()->json(['errors' => $error->errors()->all()]);
+            return response()->json(['errors' => ['keys' => $result->errors()->keys(), 'message' => $result->errors()->all() ]]);
         }
         
         // ----------------------------------CRUD
@@ -105,22 +107,38 @@ class usersController extends Controller
         $tmp = users::updateOrCreate(['id' => $request->hidden_id], $form_data);   
 
 
+        // -------------------------------------CRUD strolemenu
+        DB::delete('delete from usersoutlet where iduser = ?', [$tmp->id]);
+        $outlet = $request->input('outlet');
+        // return response()->json(['success' => $outlet]);
+
+        foreach($outlet as $dt){
+            DB::insert('INSERT INTO usersoutlet(`iduser`, `idoutlet`, `usere`, `useru`) VALUES (?,?,?,?)', [$tmp->id, $dt, $cur_user->id, $cur_user->id]);
+        }
+
         
         // ----------------------------------IMAGE SAVING
-        $destinationPaththumb = public_path('images/users');  
-        
+        $new_name = $tmp->id . '.jpg'; 
+        $imagePath = public_path('images/users'. '/' . $new_name);  
+        $noimagePath = public_path('images/users/noimage.jpg');  
 
-        $new_name = $request->imageold;
         $image = $request->file('pathimage');
+
         if($image != '')
         {
-            $new_name = $tmp->id . '.jpg'; /*. $image->getClientOriginalExtension(); */
             $resize_image = Image::make($image->getRealPath());
 
-            $resize_image->resize(200, 200, function($constraint){
+            $resize_image->resize(300, 300, function($constraint){
             $constraint->aspectRatio();
-            })->save($destinationPaththumb . '/' . $new_name);
+            })->save($imagePath);
         }
+        else{
+            if(!(File::exists($imagePath))){
+                $success = \File::copy($noimagePath,$imagePath);
+            }
+        }
+
+
 
 
         // // Catat Log trans
@@ -159,7 +177,8 @@ class usersController extends Controller
     public function edit($id)
     {
         $data = users::find($id);
-        return response()->json($data);
+        $outlet = usersoutlet::where('iduser', $id)->get();
+        return response()->json(['data' => $data, 'outlet' => $outlet]);
     }
 
     /**

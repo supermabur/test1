@@ -178,6 +178,9 @@
         });
 
         function addneworback(){
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+            
             if($("#editview").is(":hidden")){
                 loading(1);
                 $("#headeredit").text("Tambah Data Baru");

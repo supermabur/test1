@@ -11,7 +11,7 @@ use App\model\strole;
 use App\model\mstmerk;
 use App\model\mstjenis;
 use App\model\mstsatuan;
-use App\model\mstoutlet;
+use App\model\vwmstoutlet;
 use App\mstgudang;
 
 class ComposerServiceProvider extends ServiceProvider
@@ -55,7 +55,7 @@ class ComposerServiceProvider extends ServiceProvider
         View::composer(['users'], 
             function ($view) {
                 $cur_user = \Auth::user();
-                $view->with('composer_mstoutlet', mstoutlet::where('idcompany', $cur_user->idcompany)->where('id','>',1)->orderBy('nama')->get());
+                $view->with('composer_mstoutlet', vwmstoutlet::where('idcompany', $cur_user->idcompany)->where('id','>',1)->orderBy('nama')->get());
             });
 
 
