@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Rules\Uppercase;
 
 class mstoutletController extends Controller
 {
@@ -37,6 +38,14 @@ class mstoutletController extends Controller
                             return $query->where('idcompany', $cur_user->idcompany);
                         })
                     ],
+            'kode' => ['required', 'string', new Uppercase, 'min:3', 'max:3',
+                        Rule::unique('mstoutlet', 'kode')
+                        ->ignore($request->hidden_id)
+                        ->where(function ($query) {
+                            $cur_user = \Auth::user();
+                            return $query->where('idcompany', $cur_user->idcompany);
+                        })
+                    ],
             'notelp' => 'required',
             'alamat' => 'required',
             'idkota' => 'required'
@@ -51,7 +60,9 @@ class mstoutletController extends Controller
 
         $errmsg = array(
             'nama.required' => 'Kotak Nama belum diisi',
-            'nama.unique' => 'Nama sudah ada didatabase, silahkan pilih Nama yang lain'
+            'nama.unique' => 'Nama sudah ada didatabase, silahkan pilih Nama yang lain',
+            'kode.required' => 'Kode belum diisi',
+            'kode.unique' => 'Kode sudah ada didatabase, silahkan pilih Kode yang lain'
         );
 
         $result = Validator::make($request->all(), $rules, $errmsg);
@@ -71,6 +82,7 @@ class mstoutletController extends Controller
             'nohp' => $request->nohp,
             'alamat' => $request->alamat,
             'idkota' => $request->idkota,
+            'kode' => $request->kode,
 
             'idcompany' => $cur_user->idcompany,
             'useru' => $cur_user->id

@@ -11,7 +11,7 @@ class users extends Model
 
     protected $fillable = [
         'name', 'role_id', 'email', 'username', 'password', 
-        'hp', 
+        'hp', 'imagepath',
         'active', 'usere','useru', 'idcompany'
     ];
 }

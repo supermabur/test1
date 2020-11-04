@@ -61,7 +61,7 @@
   <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
-  
+  @yield('filecss')      
 
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 
@@ -128,7 +128,7 @@
   </script>
 
 </head>
-<body class="hold-transition sidebar-mini layout-fixed  sidebar-collapse text">
+<body class="hold-transition sidebar-mini layout-fixed  text">
 <div class="wrapper">
 
   @include('layouts.sidebar')
@@ -252,6 +252,8 @@
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
 
+<!-- JavaScript -->
+<script src="https://unpkg.com/smartwizard@5/dist/js/jquery.smartWizard.min.js" type="text/javascript"></script>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
@@ -275,32 +277,7 @@
     $(document).on('click', '.EditProfileBtn', function(){
       window.location.href = '/editprofile';
     });
-
-    function pasangprofileimage(){
-      var sites = {!! json_encode($composer_cur_user->toArray()) !!};
-      var pi = "{{ URL::to('/') }}/images/users/" + sites.id + ".jpg";
-      if(doesFileExist(pi)){
-        $('.profileimg').attr('src', pi);
-      }
-    }
-
-    function doesFileExist(urlToFile) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('HEAD', urlToFile, false);
-        xhr.send();
-        // console.log(xhr.status);
-        switch(xhr.status){
-            case "404", 404 :
-            return false;
-            break;
-          default:
-            return true;
-            break;
-        }
-    }
     
-    pasangprofileimage();
-
     function loading2(run = 1, xclass = '', xtext = 'Please wait ...'){
         if (run > 0){
             $(xclass).waitMe({

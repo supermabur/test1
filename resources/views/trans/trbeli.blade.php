@@ -1,4 +1,17 @@
-    
+
+
+{{-- https://github.com/techlab/jquery-smartwizard --}}
+
+@section('filecss')
+    <!-- CSS -->
+    <link href="https://unpkg.com/smartwizard@5/dist/css/smart_wizard_all.min.css" rel="stylesheet" type="text/css" />
+@endsection
+
+
+@section('filejs')
+    <!-- JavaScript -->
+    <script src="https://unpkg.com/smartwizard@5/dist/js/jquery.smartWizard.min.js" type="text/javascript"></script>
+@endsection
 
 
 <form method="post" id="formuser" class="form-vertical" enctype="multipart/form-data" novalidate>
@@ -25,17 +38,6 @@
                         <label for="username" class="col-md-2 col-form-label col-form-label-sm text-md-right">Username</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="Enter Username" required>
-                        </div>
-                    </div>
-        
-                    <div class="form-group row hidexxx">
-                        <label for="role" class="col-md-2 col-form-label col-form-label-sm text-md-right">Role</label>
-                        <div class="col-md-8">
-                            <select class="role form-control form-control-sm" id="role" name="role" placeholder="Pilih role" required>
-                                @foreach ($composer_strole as $cp)
-                                    <option value="{{ $cp->id }}">{{ $cp->text }}</option>                        
-                                @endforeach
-                            </select>
                         </div>
                     </div>
             
@@ -84,66 +86,50 @@
     </div>
 
 
-    <div class="row justify-content-md-center">
-        <div class="col-sm-9">
-            
-            <div class="card card-light shadow">
-                <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-warehouse mr-2"></i>Akses Outlet</h3>
-                </div>
-    
-                <div class="card-body">
-
-                    <div class="form-group row">
-                        <label for="password-confirm" class="col-md-2 col-form-label col-form-label-sm text-md-right"></label>
-                        <div class="col-md-8 row">
-                            {{-- <div class="row"> --}}
-                                {{-- https://stackoverflow.com/questions/52447032/laravel-store-multiple-checkbox-form-values-in-database --}}
-                                @foreach ($composer_mstoutlet as $cp)
-                                    <div class="form-check col-sm-4 mb-3">
-                                        <input class="form-check-input" type="checkbox" name="outlet[]" value="{{ $cp->id }}" id="outlet{{ $cp->id }}">
-                                        <div class="col">
-                                            <label class="form-check-label text-sm row" for="outlet{{ $cp->id }}" >{{ $cp->nama }}</label>
-                                            <label class="form-check-label text-sm text-secondary row" for="outlet{{ $cp->id }}" style="font-size: .70rem!important;">{{ $cp->alamat }}</label>
-                                            <label class="form-check-label text-sm text-secondary row" for="outlet{{ $cp->id }}" style="font-size: .70rem!important;">{{ $cp->kotaname2 }}</label>
-                                        </div>
-                                    </div>    
-                                @endforeach
-                            {{-- </div> --}}
-                        </div>
-                    </div>
-            
-                </div>
-            </div>
-        </div>
-    </div>
-
 
     <div class="row justify-content-md-center">
         <div class="col-sm-9">
-            <div class="card card-light shadow">
-                <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-images mr-2"></i>Profile picture</h3>
-                </div>
+            <div id="smartwizard">
 
-                <div class="card-body">
-                    <div class="form-group row">
-                        <label for="" class="col-md-2 col-form-label col-form-label-sm text-md-right"></label>
-                        <div class="col-md-8">
-                            <label for="pathimage" class="btn btn-primary btn-sm" id="labelimage">Select Image</label>
-                            <input type="file" class="form-control-file form-control-sm" id="pathimage" name="pathimage" accept=".jpg" placeholder="Choose image" style="display: none;" >
-        
-                            <div style="padding-top:10px">    
-                                <img id="image_preview_container" class="img-fluid img-thumbnail" alt="Responsive image" style="max-height: 150px;" 
-                                    src="{{ url('/images/users/noimage.jpg') }}"  alt="preview image"/>
-                            </div>
-                        </div>
+                <ul class="nav">
+                    <li class="nav-item">
+                      <a class="nav-link" href="#step-1">
+                        Step 1
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#step-2">
+                        Step 2
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#step-3">
+                        Step 3
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#step-4">
+                        Step 4
+                      </a>
+                    </li>
+                </ul>
+            
+                <div class="tab-content">
+                    <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
+                        Step 1 Content
                     </div>
-
-
-
+                    <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2">
+                        Step 2 Content
+                    </div>
+                    <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
+                        Step 3 Content
+                    </div>
+                    <div id="step-4" class="tab-pane" role="tabpanel" aria-labelledby="step-4">
+                        Step 4 Content
+                    </div>
                 </div>
             </div>
+
         </div>  
     </div>  
     
@@ -175,14 +161,6 @@
 
 <script>
 
-    $('#pathimage').change(function(){        
-            let reader = new FileReader();
-            reader.onload = (e) => { 
-                $('#image_preview_container').attr('src', e.target.result); 
-            }
-            reader.readAsDataURL(this.files[0]); 
-        
-        });
 
     function initEdit(actio = 'new', id = '1', mode = ''){
         $('#formuser')[0].reset();
@@ -191,6 +169,7 @@
         $('#hidden_id').val('');
         $('#role').val('').trigger('change');
         $('#image_preview_container').attr('src', "{{ URL::to('/') }}/images/users/noimage.jpg");
+        $('#smartwizard').smartWizard("reset");
         
         if (actio == 'edit'){
             $.ajax({
@@ -231,6 +210,50 @@
     }
 
     $(document).ready(function() {
+
+        $('#smartwizard').smartWizard({
+            selected: 0, // Initial selected step, 0 = first step
+            theme: 'dots', // theme for the wizard, related css need to include for other than default theme
+            justified: true, // Nav menu justification. true/false
+            darkMode:false, // Enable/disable Dark Mode if the theme supports. true/false
+            autoAdjustHeight: true, // Automatically adjust content height
+            cycleSteps: false, // Allows to cycle the navigation of steps
+            backButtonSupport: true, // Enable the back button support
+            enableURLhash: true, // Enable selection of the step based on url hash
+            transition: {
+                animation: 'slide-horizontal', // Effect on navigation, none/fade/slide-horizontal/slide-vertical/slide-swing
+                speed: '400', // Transion animation speed
+                easing:'' // Transition animation easing. Not supported without a jQuery easing plugin
+            },
+            toolbarSettings: {
+                toolbarPosition: 'bottom', // none, top, bottom, both
+                toolbarButtonPosition: 'center', // left, right, center
+                showNextButton: true, // show/hide a Next button
+                showPreviousButton: true, // show/hide a Previous button
+                toolbarExtraButtons: [] // Extra buttons to show on toolbar, array of jQuery input/buttons elements
+            },
+            anchorSettings: {
+                anchorClickable: true, // Enable/Disable anchor navigation
+                enableAllAnchors: false, // Activates all anchors clickable all times
+                markDoneStep: true, // Add done state on navigation
+                markAllPreviousStepsAsDone: true, // When a step selected by url hash, all previous steps are marked done
+                removeDoneStepOnNavigateBack: false, // While navigate back done step after active step will be cleared
+                enableAnchorOnDoneStep: true // Enable/Disable the done steps navigation
+            },
+            keyboardSettings: {
+                keyNavigation: true, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
+                keyLeft: [37], // Left key code
+                keyRight: [39] // Right key code
+            },
+            lang: { // Language variables for button
+                next: 'Selanjutnya',
+                previous: 'Sebelumnya'
+            },
+            disabledSteps: [], // Array Steps disabled
+            errorSteps: [], // Highlight step with errors
+            hiddenSteps: [] // Hidden steps
+            });
+
 
         $('.role').select2();
 

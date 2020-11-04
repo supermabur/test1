@@ -113,20 +113,28 @@ class userseditprofileController extends Controller
 
         
         // ----------------------------------IMAGE SAVING
-        $destinationPaththumb = public_path('images/users');  
-        
+        $new_name = $tmp->id . '.jpg'; 
+        $imagePath = public_path('images/users'. '/' . $new_name);  
+        $noimagePath = public_path('images/users/noimage.jpg');  
 
-        $new_name = $request->imageold;
         $image = $request->file('pathimage');
+
         if($image != '')
         {
-            $new_name = $tmp->id . '.jpg'; /*. $image->getClientOriginalExtension(); */
             $resize_image = Image::make($image->getRealPath());
 
-            $resize_image->resize(200, 200, function($constraint){
+            $resize_image->resize(300, 300, function($constraint){
             $constraint->aspectRatio();
-            })->save($destinationPaththumb . '/' . $new_name);
+            })->save($imagePath);
         }
+        else{
+            if(!(File::exists($imagePath))){
+                $success = \File::copy($noimagePath,$imagePath);
+            }
+        }
+
+        $tmp->imagepath = $new_name;
+        $tmp->save();
 
 
         // // Catat Log trans

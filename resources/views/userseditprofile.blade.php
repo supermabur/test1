@@ -160,12 +160,10 @@
                     $('#active').prop('checked', data.active);
                     $('#hidden_id').val(data.id);
 
-                    var pi = "{{ URL::to('/') }}/images/users/" + data.id + ".jpg";
-                    if(doesFileExist(pi)){
-                        $('#image_preview_container').attr('src', pi);
-                    }
+                    var pi = "{{ URL::to('/') }}/images/users/" + data.imagepath;
+                    $('#image_preview_container').attr('src', pi);
 
-                    $('#imageold').val(data.id + '.jpg');
+                    $('#imageold').val(data.imagepath);
                     loading2(0, '.box');
                 }
             })    

@@ -12,6 +12,7 @@ class mstoutlet extends Model
     protected $fillable = [
         'nama',
         'email',
+        'kode',
         'notelp',
         'nohp',
         'alamat',

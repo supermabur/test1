@@ -41,7 +41,7 @@
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#" style="    display: inline-flex;align-items: center;">
           <div class="image-cropper mr-2" style="max-height: 40px; max-width: 40px;">
-            <img src="{{ url('images/users/noimage.jpg') }}" class="profileimg profile-pic">
+            <img src="{{ url('images/users\\') . $composer_cur_user->imagepath }}" class="profileimg profile-pic">
           </div> 
           <span class="text-dark" style="font-style: normal;">{{ $composer_cur_user->name }}</span>
           {{-- <i class="far fa-comments"></i>
@@ -52,7 +52,7 @@
             <!-- Message Start -->
             <form class="px-4 py-3" style="text-align-last: center;">
               <div class="image-cropper" style="margin: auto;">
-                <img src="{{ url('images/users/noimage.jpg') }}" class="profileimg profile-pic">
+                <img src="{{ url('images/users\\') . $composer_cur_user->imagepath }}" class="profileimg profile-pic">
               </div> 
               {{-- <img src="{{ url('adminlte3/dist/img/user1-128x128.jpg') }}" class="img-size-150 img-circle profileimg"> --}}
             

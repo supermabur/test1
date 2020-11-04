@@ -138,6 +138,8 @@ class usersController extends Controller
             }
         }
 
+        $tmp->imagepath = $new_name;
+        $tmp->save();
 
 
 

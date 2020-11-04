@@ -25,7 +25,17 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="sku" class="col-md-2 col-form-label col-form-label-sm text-md-right">email</label>
+                        <label for="kode" class="col-md-2 col-form-label col-form-label-sm text-md-right">Kode</label>
+                        <div class="col-md-8">
+                            <input type="text" id="kode" name="kode" class="form-control form-control-sm" required maxlength="3">
+                            <small class="text-muted">- Kode ini sebagai salah satu komponen dalam pembuatan faktur beli, jual, dll
+                                                    <br>- Wajib diisi 3 Huruf, bisa dikombinasikan dengan angka
+                                                    <br>- Jika data sudah tersimpan, tidak bisa di rubah lagi kodenya</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="sku" class="col-md-2 col-form-label col-form-label-sm text-md-right">Email</label>
                         <div class="col-md-8">
                             <input type="email" id="email" name="email" class="form-control form-control-sm" required>
                         </div>
@@ -125,9 +135,16 @@
 
 <script>
 
+    function RemoveAlert(){
+            $("input").removeClass("is-invalid");
+            $("span").remove(".invalid-feedback");
+        }
+
+
     function initEdit(actio = 'new', id = '1', mode = ''){
         $('#formuser')[0].reset();
         $('#form_result').html('');
+        RemoveAlert();
 
         $('#email').val('');
         $('#idkota').val(1).trigger('change');
@@ -143,6 +160,7 @@
             success:function(data)
                 {
                     $('#nama').val(data.nama);
+                    $('#kode').val(data.kode);
                     $('#email').val(data.email);
                     $('#notelp').val(data.notelp);
                     $('#nohp').val(data.nohp);
@@ -168,11 +186,6 @@
 
     $(document).ready(function() {
         $('.role').select2();
-
-        function RemoveAlert(){
-            $("input").removeClass("is-invalid");
-            $("span").remove(".invalid-feedback");
-        }
 
 
         $('#formuser').on('submit', function(event){
