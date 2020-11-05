@@ -21,7 +21,7 @@
 
         <div class="col-sm-9">
 
-            <div class="card card-light shadow">
+            {{-- <div class="card card-light shadow">
                 <div class="card-header">
                     <h3 class="card-title"><i class="fas fa-users mr-2"></i>Data User</h3>
                 </div>
@@ -72,7 +72,6 @@
                     <div class="form-group row hidexxx">
                         <label for="aktif" class="col-md-2 col-form-label col-form-label-sm text-md-right">Aktif</label>
                         <div class="col-md-8" id="aktif" class="form-control" style="align-self: center;">
-                            {{-- A checkbox input in not sent in the request when it's unchecked, in that case the hidden input will be sent with the value 0. When the Checkox is checked, it will overwrite the value to 1. --}}
                             <input type="hidden" name="active" value="0"/>
                             <input id="active" name="active" value="1" class="form-check" type="checkbox" value="true">
                         </div>
@@ -81,7 +80,7 @@
     
 
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 
@@ -116,7 +115,67 @@
             
                 <div class="tab-content">
                     <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
-                        Step 1 Content
+                        <div class="card card-light shadow">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-users mr-2"></i>Header Faktur</h3>
+                            </div>
+                
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label for="name" class="col-md-2 col-form-label col-form-label-sm text-md-right">Name</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="Enter name" required>
+                                    </div>
+                                </div>                  
+            
+                                <div class="form-group row">
+                                    <label for="username" class="col-md-2 col-form-label col-form-label-sm text-md-right">Username</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="Enter Username" required>
+                                    </div>
+                                </div>
+                        
+                                <div class="form-group row">
+                                    <label for="email" class="col-md-2 col-form-label col-form-label-sm text-md-right">Email</label>
+                                    <div class="col-md-8">
+                                        <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder="Enter Email">
+                                    </div>
+                                </div>
+                        
+                                <div class="form-group row">
+                                    <label for="hp" class="col-md-2 col-form-label col-form-label-sm text-md-right">Handphone</label>
+                                    <div class="col-md-8">
+                                        <input type="tel" class="form-control form-control-sm" id="hp" name="hp" placeholder="Enter Handphone">
+                                    </div>
+                                </div>
+                        
+                                <div class="form-group row">
+                                    <label for="password" class="col-md-2 col-form-label col-form-label-sm text-md-right">Password</label>
+                                    <div class="col-md-8">
+                                        <input type="password" class="form-control form-control-sm" id="password" placeholder="Enter password" name="password" required autocomplete="new-password">
+                                    </div>
+                                </div>
+                        
+                                <div class="form-group row">
+                                    <label for="password-confirm" class="col-md-2 col-form-label col-form-label-sm text-md-right">Password</label>
+                                    <div class="col-md-8">
+                                        <input type="password" class="form-control form-control-sm" id="password-confirm" placeholder="Enter password" name="password_confirmation" required autocomplete="new-password">
+                                    </div>
+                                </div>
+            
+                                <div class="form-group row hidexxx">
+                                    <label for="aktif" class="col-md-2 col-form-label col-form-label-sm text-md-right">Aktif</label>
+                                    <div class="col-md-8" id="aktif" class="form-control" style="align-self: center;">
+                                        {{-- A checkbox input in not sent in the request when it's unchecked, in that case the hidden input will be sent with the value 0. When the Checkox is checked, it will overwrite the value to 1. --}}
+                                        <input type="hidden" name="active" value="0"/>
+                                        <input id="active" name="active" value="1" class="form-check" type="checkbox" value="true">
+                                    </div>
+                                </div>
+                    
+                
+            
+                            </div>
+                        </div>
                     </div>
                     <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2">
                         Step 2 Content
@@ -210,26 +269,28 @@
     }
 
     $(document).ready(function() {
+        // $('#smartwizard').smartWizard({autoAdjustHeight: false});
 
         $('#smartwizard').smartWizard({
             selected: 0, // Initial selected step, 0 = first step
             theme: 'dots', // theme for the wizard, related css need to include for other than default theme
             justified: true, // Nav menu justification. true/false
             darkMode:false, // Enable/disable Dark Mode if the theme supports. true/false
-            autoAdjustHeight: true, // Automatically adjust content height
+            autoAdjustHeight: false, // Automatically adjust content height
             cycleSteps: false, // Allows to cycle the navigation of steps
             backButtonSupport: true, // Enable the back button support
-            enableURLhash: true, // Enable selection of the step based on url hash
-            transition: {
-                animation: 'slide-horizontal', // Effect on navigation, none/fade/slide-horizontal/slide-vertical/slide-swing
-                speed: '400', // Transion animation speed
-                easing:'' // Transition animation easing. Not supported without a jQuery easing plugin
-            },
+            // enableURLhash: true, // Enable selection of the step based on url hash
+            // transition: {
+            //     animation: 'slide-horizontal', // Effect on navigation, none/fade/slide-horizontal/slide-vertical/slide-swing
+            //     speed: '400', // Transion animation speed
+            //     easing:'' // Transition animation easing. Not supported without a jQuery easing plugin
+            // },
             toolbarSettings: {
                 toolbarPosition: 'bottom', // none, top, bottom, both
                 toolbarButtonPosition: 'center', // left, right, center
                 showNextButton: true, // show/hide a Next button
                 showPreviousButton: true, // show/hide a Previous button
+                showFinishButton: true, // show/hide a Previous button
                 toolbarExtraButtons: [] // Extra buttons to show on toolbar, array of jQuery input/buttons elements
             },
             anchorSettings: {
@@ -247,7 +308,8 @@
             },
             lang: { // Language variables for button
                 next: 'Selanjutnya',
-                previous: 'Sebelumnya'
+                previous: 'Sebelumnya',
+                finish: 'selesai'
             },
             disabledSteps: [], // Array Steps disabled
             errorSteps: [], // Highlight step with errors
