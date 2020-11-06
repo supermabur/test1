@@ -257,14 +257,28 @@
             toolbarSettings: {
                 toolbarPosition: 'bottom', // none, top, bottom, both
                 toolbarButtonPosition: 'center', // left, right, center
-                showNextButton: true, // show/hide a Next button
-                showPreviousButton: true, // show/hide a Previous button
-                toolbarExtraButtons: [$('<button type="button"></button>').text('Finish')
-                                        .addClass('btn btn-finish btn-info')
-                                        .on('click', function(){ 
-                                                alert('Finsih button click');                            
-                                        })
-                          ] // Extra buttons to show on toolbar, array of jQuery input/buttons elements
+                showNextButton: false, // show/hide a Next button
+                showPreviousButton: false, // show/hide a Previous button
+                toolbarExtraButtons: [
+                    $('<button type="button"><i class="fas fa-backward mr-2"></i></button>')
+                        .text('Previous')
+                        .addClass('btn btn-sm sw-btn-prev')
+                        .on('click', function(){ 
+                        // alert('Hmmm button click');                            
+                    }),                     
+                    $('<button type="button"></button>')
+                        .text('Next')
+                        .addClass('btn btn-sm sw-btn-next')
+                        .on('click', function(){ 
+                        // alert('Hmmm button click');                            
+                    }),                     
+                    $('<button type="button"></button>')
+                        .text('Finish')
+                        .addClass('btn btn-sm btn-finish btn-info')
+                        .on('click', function(){ 
+                        alert('Finsih button click');                            
+                    })
+                          ] // Extra buttons to show on toolbar, array of jQuery input/buttons elements  backward
             },
             anchorSettings: {
                 anchorClickable: true, // Enable/Disable anchor navigation
