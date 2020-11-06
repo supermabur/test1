@@ -115,6 +115,7 @@
             
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -149,23 +150,8 @@
     
 
     <div class="row justify-content-md-center">
-        <div class="col-sm-9 mb-4" style="text-align-last: justify;">
-            <div class="card-footer shadow">
-                <span id="form_result"></span>
-
-                <input type="hidden" name="hidden_id" id="hidden_id" />
-                <input type="hidden" name="actionx" id="actionx" />
-                <input type="hidden" name="imageold" id="imageold" />
-                <button type="submit" class="btn btn-info  btn-sm" id="saveBtn" value="create">
-                    <i class="fa fa-save" style="margin-right: 4px;"></i>
-                    Save Changes
-                </button>
-
-                <button type="button" name="btnback" id="btnback" class="btn-danger btn-sm hidexxx">
-                    <i class="fa fa-arrow-alt-circle-left" style="margin-right: 4px;"></i>
-                    Back 
-                </button>
-            </div>    
+        <div class="col-sm-9">
+            @include('layouts.footersaveback')
         </div>
     </div>
 

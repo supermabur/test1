@@ -106,11 +106,6 @@
                         Step 3
                       </a>
                     </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#step-4">
-                        Step 4
-                      </a>
-                    </li>
                 </ul>
             
                 <div class="tab-content">
@@ -122,7 +117,7 @@
                 
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <label for="name" class="col-md-2 col-form-label col-form-label-sm text-md-right">Name</label>
+                                    <label for="name" class="col-md-2 col-form-label col-form-label-sm text-md-right">Supplier</label>
                                     <div class="col-md-8">
                                         <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="Enter name" required>
                                     </div>
@@ -162,15 +157,6 @@
                                         <input type="password" class="form-control form-control-sm" id="password-confirm" placeholder="Enter password" name="password_confirmation" required autocomplete="new-password">
                                     </div>
                                 </div>
-            
-                                <div class="form-group row hidexxx">
-                                    <label for="aktif" class="col-md-2 col-form-label col-form-label-sm text-md-right">Aktif</label>
-                                    <div class="col-md-8" id="aktif" class="form-control" style="align-self: center;">
-                                        {{-- A checkbox input in not sent in the request when it's unchecked, in that case the hidden input will be sent with the value 0. When the Checkox is checked, it will overwrite the value to 1. --}}
-                                        <input type="hidden" name="active" value="0"/>
-                                        <input id="active" name="active" value="1" class="form-check" type="checkbox" value="true">
-                                    </div>
-                                </div>
                     
                 
             
@@ -183,9 +169,6 @@
                     <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
                         Step 3 Content
                     </div>
-                    <div id="step-4" class="tab-pane" role="tabpanel" aria-labelledby="step-4">
-                        Step 4 Content
-                    </div>
                 </div>
             </div>
 
@@ -194,23 +177,8 @@
     
 
     <div class="row justify-content-md-center">
-        <div class="col-sm-9 mb-4" style="text-align-last: justify;">
-            <div class="card-footer shadow">
-                <span id="form_result"></span>
-
-                <input type="hidden" name="hidden_id" id="hidden_id" />
-                <input type="hidden" name="actionx" id="actionx" />
-                <input type="hidden" name="imageold" id="imageold" />
-                <button type="submit" class="btn btn-info  btn-sm" id="saveBtn" value="create">
-                    <i class="fa fa-save" style="margin-right: 4px;"></i>
-                    Save Changes
-                </button>
-
-                <button type="button" name="btnback" id="btnback" class="btn-danger btn-sm hidexxx">
-                    <i class="fa fa-arrow-alt-circle-left" style="margin-right: 4px;"></i>
-                    Back 
-                </button>
-            </div>    
+        <div class="col-sm-9">
+            @include('layouts.footersaveback')
         </div>
     </div>
 
@@ -229,6 +197,7 @@
         $('#role').val('').trigger('change');
         $('#image_preview_container').attr('src', "{{ URL::to('/') }}/images/users/noimage.jpg");
         $('#smartwizard').smartWizard("reset");
+        $('.btn-finish').hide();   
         
         if (actio == 'edit'){
             $.ajax({
@@ -279,7 +248,7 @@
             autoAdjustHeight: false, // Automatically adjust content height
             cycleSteps: false, // Allows to cycle the navigation of steps
             backButtonSupport: true, // Enable the back button support
-            // enableURLhash: true, // Enable selection of the step based on url hash
+            enableURLhash: true, // Enable selection of the step based on url hash
             // transition: {
             //     animation: 'slide-horizontal', // Effect on navigation, none/fade/slide-horizontal/slide-vertical/slide-swing
             //     speed: '400', // Transion animation speed
@@ -290,8 +259,12 @@
                 toolbarButtonPosition: 'center', // left, right, center
                 showNextButton: true, // show/hide a Next button
                 showPreviousButton: true, // show/hide a Previous button
-                showFinishButton: true, // show/hide a Previous button
-                toolbarExtraButtons: [] // Extra buttons to show on toolbar, array of jQuery input/buttons elements
+                toolbarExtraButtons: [$('<button type="button"></button>').text('Finish')
+                                        .addClass('btn btn-finish btn-info')
+                                        .on('click', function(){ 
+                                                alert('Finsih button click');                            
+                                        })
+                          ] // Extra buttons to show on toolbar, array of jQuery input/buttons elements
             },
             anchorSettings: {
                 anchorClickable: true, // Enable/Disable anchor navigation
@@ -308,12 +281,19 @@
             },
             lang: { // Language variables for button
                 next: 'Selanjutnya',
-                previous: 'Sebelumnya',
-                finish: 'selesai'
+                previous: 'Sebelumnya'
             },
             disabledSteps: [], // Array Steps disabled
             errorSteps: [], // Highlight step with errors
             hiddenSteps: [] // Hidden steps
+            });
+
+        $("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepIndex, nextStepIndex, stepDirection) {
+                if(anchorObject.prevObject.length - 1 == nextStepIndex){
+                    $('.btn-finish').show(); 
+                }else{
+                    $('.btn-finish').hide();                
+                }
             });
 
 
