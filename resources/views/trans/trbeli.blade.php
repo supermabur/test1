@@ -178,7 +178,31 @@
 
     <div class="row justify-content-md-center">
         <div class="col-sm-9">
-            @include('layouts.footersaveback')
+            <div class="card-footer shadow mb-4" style="background-color: white; text-align-last: justify;">
+                <span id="form_result"></span>
+            
+                <input type="hidden" name="hidden_id" id="hidden_id" />
+                <input type="hidden" name="actionx" id="actionx" />
+                <input type="hidden" name="imageold" id="imageold" />
+            
+                <button type="button" name="btnback" id="btnback" class="btn btn-danger btn-sm hidexxx">
+                    <i class="fa fa-arrow-alt-circle-left" style="margin-right: 4px;"></i>
+                    Cancel and Back 
+                </button>
+            
+                <button type="button" class="btn btn-info  btn-sm sw-btn-prev" onclick="$('#smartwizard').smartWizard('prev');" >
+                    <i class="fa fa-save" style="margin-right: 4px;"></i>
+                    Previous
+                </button>
+                <button type="button" class="btn btn-info  btn-sm sw-btn-next" onclick="$('#smartwizard').smartWizard('next');" >
+                    <i class="fa fa-save" style="margin-right: 4px;"></i>
+                    Next
+                </button>
+                <button type="submit" class="btn btn-info  btn-sm btn-finish" id="saveBtn" value="create">
+                    <i class="fa fa-save" style="margin-right: 4px;"></i>
+                    Save Changes
+                </button>
+            </div>   
         </div>
     </div>
 
