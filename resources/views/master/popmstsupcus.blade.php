@@ -6,11 +6,11 @@
 
 
 <div class="modal fade show" id="modalpopsupplier" tabindex="-1" role="dialog" aria-hidden="true" aria-modal="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content" style="height: fit-content;">
 
 
-            <div class="modal-header">
+            <div class="modal-header bg-light">
                 <h3 class="modal-title">Master Supplier</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
@@ -26,7 +26,7 @@
     
                         <div class="col-sm-9">
     
-                                    <h3 class="card-title bg-light w-100 p-2 mb-2"><i class="fas fa-id-card mr-2"></i>Kontak</h3>     <br>               
+                                    <h3 class="card-title w-100 p-2 mb-2"><i class="fas fa-id-card mr-2"></i>Kontak</h3>     <br>               
 
                                     <div class="form-group row">
                                         <label for="jenis" class="col-md-2 col-form-label col-form-label-sm text-md-right">Jenis</label>
@@ -67,7 +67,7 @@
                                     </div>
     
                             
-                                    <h3 class="card-title bg-light w-100 p-2 mb-2"><i class="fas fa-home mr-2"></i>Alamat</h3> <br>
+                                    <h3 class="card-title w-100 p-2 mb-2"><i class="fas fa-home mr-2"></i>Alamat</h3> <br>
                     
                                     <div class="form-group row">
                                         <label for="alamat" class="col-md-2 col-form-label col-form-label-sm text-md-right">Alamat</label>
@@ -88,7 +88,7 @@
                                     </div>
 
                             
-                                    <h3 class="card-title bg-light w-100 p-2 mb-2"><i class="fas fa-taxi mr-2"></i>Status Pajak</h3> <br>
+                                    <h3 class="card-title w-100 p-2 mb-2"><i class="fas fa-taxi mr-2"></i>Status Pajak</h3> <br>
                     
                                     <div class="form-group row">
                                         <label for="ispkp" class="col-md-2 col-form-label col-form-label-sm text-md-right">PKP</label>
@@ -118,7 +118,7 @@
 
             </div>
 
-            <div class="modal-footer justify-content-between">
+            <div class="modal-footer justify-content-between bg-light">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
             </div>
@@ -126,13 +126,12 @@
     </div>
 </div>
 
-{{-- @section('filejs')
-    <script src="{{ url('js/image-uploader.min.js') }}"></script>
-@endsection
 
-@section('script')
 
-@endsection --}}
+
+
+
+
 
 <script>
 

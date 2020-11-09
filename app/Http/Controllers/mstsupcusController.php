@@ -103,7 +103,7 @@ class mstsupcusController extends Controller
         //     'user_id'=>$user->id,
         // ]);
         
-        return response()->json(['success' => $suksesmsg]);
+        return response()->json(['success' => $suksesmsg, 'data' =>$tmp]);
     }
 
     /**
