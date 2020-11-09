@@ -11,8 +11,11 @@ use App\model\strole;
 use App\model\mstmerk;
 use App\model\mstjenis;
 use App\model\mstsatuan;
-use App\model\vwmstoutlet;
+use App\model\mstsupcus;
 use App\mstgudang;
+
+use App\model\vwmstoutlet;
+use App\model\vwusersoutlet;
 
 class ComposerServiceProvider extends ServiceProvider
 {
@@ -47,7 +50,7 @@ class ComposerServiceProvider extends ServiceProvider
             });
 
 
-        View::composer(['master\mstcompany', 'master\mstsupcus', 'master\mstoutlet'], 
+        View::composer(['master\mstcompany', 'master\mstsupcus', 'master\mstoutlet', 'master\popmstsupcus'], 
             function ($view) {
                 $view->with('composer_kota', DB::select(DB::raw("SELECT id, name2 FROM vwmstkota order by `name`")));
             });
@@ -80,6 +83,14 @@ class ComposerServiceProvider extends ServiceProvider
             });
         
             
+
+        // TRANSAKSI
+        View::composer(['trans\trbeli'], 
+            function ($view) {
+                $cur_user = \Auth::user();
+                $view->with('composer_usersoutlet', vwusersoutlet::where('iduser', $cur_user->id)->where('aktif',1)->orderBy('nama')->get());
+                $view->with('composer_supplier', mstsupcus::where('idcompany', $cur_user->idcompany)->where('aktif',1)->where('jenis', '<', 2)->where('id','>', 1)->orderBy('nama')->get());
+            });
             
     }
 

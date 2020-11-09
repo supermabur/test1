@@ -5,86 +5,29 @@
 @section('filecss')
     <!-- CSS -->
     <link href="https://unpkg.com/smartwizard@5/dist/css/smart_wizard_all.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css"/>
 @endsection
 
 
 @section('filejs')
     <!-- JavaScript -->
     <script src="https://unpkg.com/smartwizard@5/dist/js/jquery.smartWizard.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
 @endsection
+
+
+{{-- CSS buat subtext e bootstrapselect --}}
+<style>
+    .bootstrap-select .dropdown-menu li small {
+    padding-left: 0px;
+    display: block;
+    margin-top: -3px;
+    }    
+</style>
 
 
 <form method="post" id="formuser" class="form-vertical" enctype="multipart/form-data" novalidate>
     @csrf
-
-    <div class="row justify-content-md-center">
-
-        <div class="col-sm-9">
-
-            {{-- <div class="card card-light shadow">
-                <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-users mr-2"></i>Data User</h3>
-                </div>
-    
-                <div class="card-body">
-                    <div class="form-group row">
-                        <label for="name" class="col-md-2 col-form-label col-form-label-sm text-md-right">Name</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="Enter name" required>
-                        </div>
-                    </div>                  
-
-                    <div class="form-group row">
-                        <label for="username" class="col-md-2 col-form-label col-form-label-sm text-md-right">Username</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="Enter Username" required>
-                        </div>
-                    </div>
-            
-                    <div class="form-group row">
-                        <label for="email" class="col-md-2 col-form-label col-form-label-sm text-md-right">Email</label>
-                        <div class="col-md-8">
-                            <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder="Enter Email">
-                        </div>
-                    </div>
-            
-                    <div class="form-group row">
-                        <label for="hp" class="col-md-2 col-form-label col-form-label-sm text-md-right">Handphone</label>
-                        <div class="col-md-8">
-                            <input type="tel" class="form-control form-control-sm" id="hp" name="hp" placeholder="Enter Handphone">
-                        </div>
-                    </div>
-            
-                    <div class="form-group row">
-                        <label for="password" class="col-md-2 col-form-label col-form-label-sm text-md-right">Password</label>
-                        <div class="col-md-8">
-                            <input type="password" class="form-control form-control-sm" id="password" placeholder="Enter password" name="password" required autocomplete="new-password">
-                        </div>
-                    </div>
-            
-                    <div class="form-group row">
-                        <label for="password-confirm" class="col-md-2 col-form-label col-form-label-sm text-md-right">Password</label>
-                        <div class="col-md-8">
-                            <input type="password" class="form-control form-control-sm" id="password-confirm" placeholder="Enter password" name="password_confirmation" required autocomplete="new-password">
-                        </div>
-                    </div>
-
-                    <div class="form-group row hidexxx">
-                        <label for="aktif" class="col-md-2 col-form-label col-form-label-sm text-md-right">Aktif</label>
-                        <div class="col-md-8" id="aktif" class="form-control" style="align-self: center;">
-                            <input type="hidden" name="active" value="0"/>
-                            <input id="active" name="active" value="1" class="form-check" type="checkbox" value="true">
-                        </div>
-                    </div>
-        
-    
-
-                </div>
-            </div> --}}
-        </div>
-    </div>
-
-
 
     <div class="row justify-content-md-center">
         <div class="col-sm-9">
@@ -93,17 +36,17 @@
                 <ul class="nav">
                     <li class="nav-item">
                       <a class="nav-link" href="#step-1">
-                        Step 1
+                        <strong>Step 1</strong> <br> Masukan informasi Transaksi 
                       </a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="#step-2">
-                        Step 2
+                        <strong>Step 2</strong> <br> Data Barang  
                       </a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="#step-3">
-                        Step 3
+                        <strong>Step 3</strong> <br> Pembayaran 
                       </a>
                     </li>
                 </ul>
@@ -115,49 +58,40 @@
                                 <h3 class="card-title"><i class="fas fa-users mr-2"></i>Header Faktur</h3>
                             </div>
                 
-                            <div class="card-body">
+                            <div class="card-body">           
+        
                                 <div class="form-group row">
-                                    <label for="name" class="col-md-2 col-form-label col-form-label-sm text-md-right">Supplier</label>
+                                    <label for="idoutlet" class="col-md-2 col-form-label col-form-label-sm text-md-right">Outlet</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="Enter name" required>
+                                        <select class="selectpicker form-control form-control-sm" data-header ="Tambah Baru" data-container="body" data-style="btn-default" data-live-search="true" data-size="5" data-show-subtext ="true" id="idoutlet" name="idoutlet" required>
+                                            @foreach ($composer_usersoutlet as $cp)
+                                                <option value="{{ $cp->idoutlet }}" data-subtext="{{ $cp->alamat . ' ' . $cp->notelp }}">{{ $cp->nama }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                </div>                  
-            
+                                </div>        
+
                                 <div class="form-group row">
-                                    <label for="username" class="col-md-2 col-form-label col-form-label-sm text-md-right">Username</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="Enter Username" required>
-                                    </div>
-                                </div>
-                        
-                                <div class="form-group row">
-                                    <label for="email" class="col-md-2 col-form-label col-form-label-sm text-md-right">Email</label>
-                                    <div class="col-md-8">
-                                        <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder="Enter Email">
-                                    </div>
-                                </div>
-                        
-                                <div class="form-group row">
-                                    <label for="hp" class="col-md-2 col-form-label col-form-label-sm text-md-right">Handphone</label>
-                                    <div class="col-md-8">
-                                        <input type="tel" class="form-control form-control-sm" id="hp" name="hp" placeholder="Enter Handphone">
+                                    <label for="idsupcus" class="col-md-2 col-form-label col-form-label-sm text-md-right">Supplier</label>
+                                    <div class="col-md-8 input-group input-group-sm">
+                                        <select class="selectpicker form-control form-control-sm" data-container="body" data-style="btn-default" data-live-search="true" data-size="5" data-show-subtext ="true" id="idsupcus" name="idsupcus" required>
+                                            @foreach ($composer_supplier as $cp)
+                                                <option value="{{ $cp->id }}" data-subtext="{{ $cp->alamat . ' ' . $cp->notelp }}">{{ $cp->nama }}</option>                        
+                                            @endforeach                                            
+                                        </select>
+                                        <span class="input-group-append">
+                                            <button type="button" onclick="showModalPopSupplier()" class="btn btn-info btn-flat" data-toggle="tooltip" data-placement="top" title="Tambah Supplier Baru"><i class="fa fa-plus"></i></button>
+                                        </span>
                                     </div>
                                 </div>
-                        
+
                                 <div class="form-group row">
-                                    <label for="password" class="col-md-2 col-form-label col-form-label-sm text-md-right">Password</label>
+                                    <label for="fakturreff" class="col-md-2 col-form-label col-form-label-sm text-md-right">Faktur Supplier</label>
                                     <div class="col-md-8">
-                                        <input type="password" class="form-control form-control-sm" id="password" placeholder="Enter password" name="password" required autocomplete="new-password">
+                                        <input type="text" class="form-control form-control-sm" id="fakturreff" name="fakturreff" placeholder="" required>
+                                        <small class="text-muted">Faktur supplier bisa berupa nomer surat jalan, no invoice, dll</small>
                                     </div>
-                                </div>
-                        
-                                <div class="form-group row">
-                                    <label for="password-confirm" class="col-md-2 col-form-label col-form-label-sm text-md-right">Password</label>
-                                    <div class="col-md-8">
-                                        <input type="password" class="form-control form-control-sm" id="password-confirm" placeholder="Enter password" name="password_confirmation" required autocomplete="new-password">
-                                    </div>
-                                </div>
-                    
+                                </div>                    
                 
             
                             </div>
@@ -198,7 +132,7 @@
                             <i class="fa fa-backward" style="margin-right: 4px;"></i>
                             Previous
                         </button>
-                        <button type="button" class="btn btn-success btn-sm" onclick="$('#smartwizard').smartWizard('next');" >
+                        <button type="button" class="btn btn-warning btn-sm" onclick="$('#smartwizard').smartWizard('next');" >
                             <i class="fa fa-forward" style="margin-right: 4px;"></i>
                             Next
                         </button>
@@ -217,6 +151,10 @@
     </div>
 
 </form>
+
+
+
+@include('master\popmstsupcus')
 
 
 
@@ -270,6 +208,7 @@
             loading(0);
         }
     }
+
 
     $(document).ready(function() {
         // $('#smartwizard').smartWizard({autoAdjustHeight: false});
@@ -345,33 +284,9 @@
             });
 
 
-        $('.role').select2();
-
-        // https://www.jqueryscript.net/other/jQuery-Plugin-For-Selecting-Multiple-Areas-of-An-Image-Select-Areas.html
-        // $('img#image_preview_container').selectAreas({
-        //     minSize: [10, 10],
-        //     aspectRatio: 1,
-        //     allowDelete:false,
-        //     onChanged: debugQtyAreas,
-        //     width: 500,
-        //     areas: [
-        //         {
-        //             x: 10,
-        //             y: 20,
-        //             width: 100,
-        //             height: 100,
-        //         }
-        //     ]
-        // });
-
-        // Log the quantity of selections
-        function debugQtyAreas (event, id, areas) {
-            console.log(areas.length + " areas", arguments);
-        };
-
-        // $('#saveBtn').click(function(){    
-        //     alert('asd');        
-        // });
+        $('#btnaddsupplier').click(function(){    
+            alert('asd');        
+        });
 
 
         function RemoveAlert(){
@@ -390,7 +305,7 @@
             var fd =  new FormData(this);
 
             $.ajax({
-                url:"{{ route('users.store') }}",
+                url:"{{ route('trbeli.store') }}",
                 method:"POST",
                 data: fd,
                 contentType: false,
