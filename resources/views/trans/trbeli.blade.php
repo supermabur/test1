@@ -178,30 +178,40 @@
 
     <div class="row justify-content-md-center">
         <div class="col-sm-9">
-            <div class="card-footer shadow mb-4" style="background-color: white; text-align-last: justify;">
+            <div class="card-footer shadow mb-4" style="background-color: white; ">
                 <span id="form_result"></span>
             
                 <input type="hidden" name="hidden_id" id="hidden_id" />
                 <input type="hidden" name="actionx" id="actionx" />
                 <input type="hidden" name="imageold" id="imageold" />
             
-                <button type="button" name="btnback" id="btnback" class="btn btn-danger btn-sm hidexxx">
-                    <i class="fa fa-arrow-alt-circle-left" style="margin-right: 4px;"></i>
-                    Cancel and Back 
-                </button>
-            
-                <button type="button" class="btn btn-info  btn-sm sw-btn-prev" onclick="$('#smartwizard').smartWizard('prev');" >
-                    <i class="fa fa-save" style="margin-right: 4px;"></i>
-                    Previous
-                </button>
-                <button type="button" class="btn btn-info  btn-sm sw-btn-next" onclick="$('#smartwizard').smartWizard('next');" >
-                    <i class="fa fa-save" style="margin-right: 4px;"></i>
-                    Next
-                </button>
-                <button type="submit" class="btn btn-info  btn-sm btn-finish" id="saveBtn" value="create">
-                    <i class="fa fa-save" style="margin-right: 4px;"></i>
-                    Save Changes
-                </button>
+                <div class="row">
+                    <div class="col">
+                        <button type="button" name="btnback" id="btnback" class="btn btn-danger btn-sm hidexxx">
+                            <i class="fa fa-arrow-alt-circle-left" style="margin-right: 4px;"></i>
+                            Cancel and Back 
+                        </button>
+                    </div>
+                    
+                    <div class="col text-center">
+                        <button type="button" class="btn btn-warning btn-sm" onclick="$('#smartwizard').smartWizard('prev');" >
+                            <i class="fa fa-backward" style="margin-right: 4px;"></i>
+                            Previous
+                        </button>
+                        <button type="button" class="btn btn-success btn-sm" onclick="$('#smartwizard').smartWizard('next');" >
+                            <i class="fa fa-forward" style="margin-right: 4px;"></i>
+                            Next
+                        </button>
+                    </div>
+
+                    <div class="col text-right">
+                        <button type="submit" class="btn btn-info btn-sm btn-finish" id="saveBtn" value="create">
+                            <i class="fa fa-save" style="margin-right: 4px;"></i>
+                            Save Changes
+                        </button>     
+                    </div>
+                </div>
+
             </div>   
         </div>
     </div>
@@ -284,24 +294,24 @@
                 showNextButton: false, // show/hide a Next button
                 showPreviousButton: false, // show/hide a Previous button
                 toolbarExtraButtons: [
-                    $('<button type="button"><i class="fas fa-backward mr-2"></i></button>')
-                        .text('Previous')
-                        .addClass('btn btn-sm sw-btn-prev')
-                        .on('click', function(){ 
-                        // alert('Hmmm button click');                            
-                    }),                     
-                    $('<button type="button"></button>')
-                        .text('Next')
-                        .addClass('btn btn-sm sw-btn-next')
-                        .on('click', function(){ 
-                        // alert('Hmmm button click');                            
-                    }),                     
-                    $('<button type="button"></button>')
-                        .text('Finish')
-                        .addClass('btn btn-sm btn-finish btn-info')
-                        .on('click', function(){ 
-                        alert('Finsih button click');                            
-                    })
+                    // $('<button type="button"><i class="fas fa-backward mr-2"></i></button>')
+                    //     .text('Previous')
+                    //     .addClass('btn btn-sm sw-btn-prev')
+                    //     .on('click', function(){ 
+                    //     // alert('Hmmm button click');                            
+                    // }),                     
+                    // $('<button type="button"></button>')
+                    //     .text('Next')
+                    //     .addClass('btn btn-sm sw-btn-next')
+                    //     .on('click', function(){ 
+                    //     // alert('Hmmm button click');                            
+                    // }),                     
+                    // $('<button type="button"></button>')
+                    //     .text('Finish')
+                    //     .addClass('btn btn-sm btn-finish btn-info')
+                    //     .on('click', function(){ 
+                    //     alert('Finsih button click');                            
+                    // })
                           ] // Extra buttons to show on toolbar, array of jQuery input/buttons elements  backward
             },
             anchorSettings: {
