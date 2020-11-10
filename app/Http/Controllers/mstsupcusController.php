@@ -75,6 +75,7 @@ class mstsupcusController extends Controller
             'idkota' => $request->idkota,
             'ispkp' => $request->ispkp+0,
             'npwp' => $request->npwp,
+            'aktif' => $request->active+0,
             'terminbeli' => $request->terminbeli,
             'terminjual' => $request->terminjual,
             'maxhutang' => $request->maxhutang,

@@ -1,7 +1,16 @@
-    
-@section('style')
 
+
+@section('filecss')
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css"/>
 @endsection
+
+@section('filejs')
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
+@endsection
+
+
 
 <form method="post" id="formuser" class="form-vertical" enctype="multipart/form-data" novalidate>
     @csrf
@@ -20,10 +29,15 @@
                     <div class="form-group row">
                         <label for="jenis" class="col-md-2 col-form-label col-form-label-sm text-md-right">Jenis</label>
                         <div class="col-md-8">
-                            <select class="slct2 form-control form-control-sm" id="jenis" name="jenis" placeholder="" required>
+                            {{-- <select class="slct2 form-control form-control-sm" id="jenis" name="jenis" placeholder="" required>
                                 <option value=0>Supplier + Customer</option>                        
                                 <option value=1>Supplier</option>                         
                                 <option value=2>Customer</option>                         
+                            </select> --}}
+                            <select class="selectpicker form-control form-control-sm" data-style="btn-default" id="jenis" name="jenis" placeholder="" required>
+                                <option value=0 data-content="<span class='badge badge-success'>Supplier + Customer</span>">Supplier + Customer</option>                        
+                                <option value=1 data-content="<span class='badge badge-primary'>Supplier</span>">Supplier</option>                        
+                                <option value=2 data-content="<span class='badge badge-info'>Customer</span>">Customer</option>                         
                             </select>
                         </div>
                     </div>
@@ -217,7 +231,9 @@
             success:function(data)
                 {
                     $('#nama').val(data.nama);
-                    $('#jenis').val(data.jenis);
+                    // $('#jenis').val(data.jenis);
+                    $('#jenis').selectpicker('val', data.jenis);
+
                     $('#email').val(data.email);
                     $('#notelp').val(data.notelp);
                     $('#nohp').val(data.nohp);

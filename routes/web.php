@@ -26,7 +26,7 @@ Route::get('/xxx', function () {
     return view('adminlte3/index');
 });
 
-Route::get('/adminbsb', function () {
+Route::get('/bsb', function () {
     return view('adminbsb/welcome_adminbsb');
 });
 

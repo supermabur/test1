@@ -13,6 +13,7 @@
     <!-- JavaScript -->
     <script src="https://unpkg.com/smartwizard@5/dist/js/jquery.smartWizard.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
+    <script src="{{ url('js/me.js') }}"></script>
 @endsection
 
 
@@ -63,7 +64,7 @@
                                 <div class="form-group row">
                                     <label for="idoutlet" class="col-md-2 col-form-label col-form-label-sm text-md-right">Outlet</label>
                                     <div class="col-md-8">
-                                        <select class="selectpicker form-control form-control-sm" data-header ="Tambah Baru" data-container="body" data-style="btn-default" data-live-search="true" data-size="5" data-show-subtext ="true" id="idoutlet" name="idoutlet" required>
+                                        <select class="selectpicker form-control form-control-sm" data-container="body" data-style="btn-default" data-live-search="true" data-size="5" data-show-subtext ="true" id="idoutlet" name="idoutlet" required>
                                             @foreach ($composer_usersoutlet as $cp)
                                                 <option value="{{ $cp->idoutlet }}" data-subtext="{{ $cp->alamat . ' ' . $cp->notelp }}">{{ $cp->nama }}</option>
                                             @endforeach
@@ -74,7 +75,7 @@
                                 <div class="form-group row">
                                     <label for="idsupcus" class="col-md-2 col-form-label col-form-label-sm text-md-right">Supplier</label>
                                     <div class="col-md-8 input-group input-group-sm">
-                                        <select class="selectpicker form-control form-control-sm" data-container="body" data-style="btn-default" data-live-search="true" data-size="5" data-show-subtext ="true" id="idsupcus" name="idsupcus" required>
+                                        <select class="selectpicker form-control form-control-sm" id="idsupcus" name="idsupcus" data-container="body" data-style="btn-default" data-live-search="true" data-size="5" data-show-subtext ="true" required>
                                             @foreach ($composer_supplier as $cp)
                                                 <option value="{{ $cp->id }}" data-subtext="{{ $cp->alamat . ' ' . $cp->notelp }}">{{ $cp->nama }}</option>                        
                                             @endforeach                                            
@@ -97,9 +98,57 @@
                             </div>
                         </div>
                     </div>
+
+                    
                     <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2">
-                        Step 2 Content
+                        <div class="card card-light shadow">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-users mr-2"></i>Daftar Barang</h3>
+                            </div>
+                
+                            <div class="card-body">           
+        
+                                <div class="form-group row">
+                                    <label for="idoutlet" class="col-md-2 col-form-label col-form-label-sm text-md-right">Outlet</label>
+                                    <div class="col-md-8">
+                                        <select class="selectpicker form-control form-control-sm" data-container="body" data-style="btn-default" data-live-search="true" data-size="5" data-show-subtext ="true" id="idoutlet" name="idoutlet" required>
+                                            @foreach ($composer_usersoutlet as $cp)
+                                                <option value="{{ $cp->idoutlet }}" data-subtext="{{ $cp->alamat . ' ' . $cp->notelp }}">{{ $cp->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>        
+
+                                <div class="form-group row">
+                                    <label for="idsupcus" class="col-md-2 col-form-label col-form-label-sm text-md-right">Supplier</label>
+                                    <div class="col-md-8 input-group input-group-sm">
+                                        <select class="selectpicker form-control form-control-sm" id="idsupcus" name="idsupcus" data-container="body" data-style="btn-default" data-live-search="true" data-size="5" data-show-subtext ="true" required>
+                                            @foreach ($composer_supplier as $cp)
+                                                <option value="{{ $cp->id }}" data-subtext="{{ $cp->alamat . ' ' . $cp->notelp }}">{{ $cp->nama }}</option>                        
+                                            @endforeach                                            
+                                        </select>
+                                        <span class="input-group-append">
+                                            <button type="button" onclick="showModalPopSupplier()" class="btn btn-info btn-flat" data-toggle="tooltip" data-placement="top" title="Tambah Supplier Baru"><i class="fa fa-plus"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-md-10">
+                                        <div class="table-responsive" width=100%>
+                                            <table class="table display cell-border" id="tablebeli" width=100%>
+                                                
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>                    
+                
+            
+                            </div>
+                        </div>
                     </div>
+
+
                     <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
                         Step 3 Content
                     </div>
@@ -211,7 +260,9 @@
 
 
     $(document).ready(function() {
-        // $('#smartwizard').smartWizard({autoAdjustHeight: false});
+        fillthedatatable('tablebeli', {});
+
+
 
         $('#smartwizard').smartWizard({
             selected: 0, // Initial selected step, 0 = first step

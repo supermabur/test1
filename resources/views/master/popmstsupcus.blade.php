@@ -6,7 +6,7 @@
 
 
 <div class="modal fade show" id="modalpopsupplier" tabindex="-1" role="dialog" aria-hidden="true" aria-modal="true">
-    <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-dialog" role="document" style="width: 50%;">
         <div class="modal-content" style="height: fit-content;">
 
 
@@ -24,75 +24,70 @@
     
                     <div class="row justify-content-md-center">
     
-                        <div class="col-sm-9">
+                        <div class="col-sm-11">
     
                                     <h3 class="card-title w-100 p-2 mb-2"><i class="fas fa-id-card mr-2"></i>Kontak</h3>     <br>               
 
                                     <div class="form-group row">
                                         <label for="jenis" class="col-md-2 col-form-label col-form-label-sm text-md-right">Jenis</label>
-                                        <div class="col-md-8">
-                                            <select class="slct2 form-control form-control-sm" id="jenis" name="jenis" placeholder="" required>
-                                                <option value=0>Supplier + Customer</option>                        
-                                                <option value=1>Supplier</option>                         
+                                        <div class="col-md-9">
+                                            <select class="selectpicker form-control form-control-sm" data-style="btn-default" id="jenis" name="jenis" placeholder="" required>
+                                                <option value=0 data-content="<span class='badge badge-success'>Supplier + Customer</span>">Supplier + Customer</option>                        
+                                                <option value=1 data-content="<span class='badge badge-primary'>Supplier</span>">Supplier</option>                         
                                             </select>
                                         </div>
                                     </div>
     
                                     <div class="form-group row">
                                         <label for="nama" class="col-md-2 col-form-label col-form-label-sm text-md-right">Nama</label>
-                                        <div class="col-md-8">
+                                        <div class="col-md-9">
                                             <input type="text" id="nama" name="nama" class="form-control form-control-sm" required>
                                         </div>
                                     </div>
     
                                     <div class="form-group row">
                                         <label for="sku" class="col-md-2 col-form-label col-form-label-sm text-md-right">email</label>
-                                        <div class="col-md-8">
+                                        <div class="col-md-9">
                                             <input type="email" id="email" name="email" class="form-control form-control-sm" required>
                                         </div>
                                     </div>
     
                                     <div class="form-group row">
                                         <label for="notelp" class="col-md-2 col-form-label col-form-label-sm text-md-right">Telepon</label>
-                                        <div class="col-md-8">
+                                        <div class="col-md-9">
                                             <input type="tel" id="notelp" name="notelp" class="form-control form-control-sm" required>
                                         </div>
                                     </div>
-    
-                                    <div class="form-group row">
-                                        <label for="aktif" class="col-md-2 col-form-label col-form-label-sm text-md-right">Aktif</label>
-                                        <div class="col-md-8" id="aktif" class="form-control" style="align-self: center;">
-                                            <input id="active" name="active" value="1" class="form-check" type="checkbox" value="true">
-                                        </div>
-                                    </div>
+
     
                             
                                     <h3 class="card-title w-100 p-2 mb-2"><i class="fas fa-home mr-2"></i>Alamat</h3> <br>
                     
                                     <div class="form-group row">
                                         <label for="alamat" class="col-md-2 col-form-label col-form-label-sm text-md-right">Alamat</label>
-                                        <div class="col-md-8">
+                                        <div class="col-md-9">
                                             <input type="text" id="alamat" name="alamat" class="form-control form-control-sm" required>
                                         </div>
                                     </div>
     
                                     <div class="form-group row">
                                         <label for="idkota" class="col-md-2 col-form-label col-form-label-sm text-md-right">Kota</label>
-                                        <div class="col-sm-8">
-                                            <select class="role form-control form-control-sm" id="idkota" name="idkota" required>
+                                        <div class="col-md-9">
+                                            <select class="selectpicker form-control form-control-sm" id="idkota" name="idkota" data-container="body" data-style="btn-default" data-live-search="true" data-size="7" required>
                                                 @foreach ($composer_kota as $cp)
-                                                    <option value="{{ $cp->id }}" >{{ $cp->name2 }}</option>                        
+                                                    <option value="{{ $cp->id }}">{{ $cp->name2 }}</option>                        
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
+
 
                             
                                     <h3 class="card-title w-100 p-2 mb-2"><i class="fas fa-taxi mr-2"></i>Status Pajak</h3> <br>
                     
                                     <div class="form-group row">
                                         <label for="ispkp" class="col-md-2 col-form-label col-form-label-sm text-md-right">PKP</label>
-                                        <div class="col-md-8">
+                                        <div class="col-md-9">
                                             <select class="slct2 form-control form-control-sm" id="ispkp" name="ispkp" placeholder="" required>
                                                 <option value=0>TIDAK</option>                        
                                                 <option value=1>YA</option>                        
@@ -102,7 +97,7 @@
     
                                     <div class="form-group row">
                                         <label for="npwp" class="col-md-2 col-form-label col-form-label-sm text-md-right">NPWP</label>
-                                        <div class="col-md-8">
+                                        <div class="col-md-9">
                                             <input type="text" id="npwp" name="npwp" class="form-control form-control-sm" required>
                                         </div>
                                     </div>
@@ -110,17 +105,16 @@
                         </div>
     
                     </div>
-                    
-    
+                     
                 </form>
 
 
 
             </div>
 
-            <div class="modal-footer justify-content-between bg-light">
+            <div class="footerx modal-footer justify-content-between bg-light">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-primary" form="formpopmstsupcus">Save changes</button>
             </div>
         </div>
     </div>
@@ -136,14 +130,13 @@
 <script>
 
 
-function showModalPopSupplier(){
+    function showModalPopSupplier(){
+            $('#jenis').selectpicker('val', 0);
             $('#modalpopsupplier').modal('show');
         }
 
 
-
     $(document).ready(function() {
-        $('.role').select2();
 
         function RemoveAlert(){
             $("input").removeClass("is-invalid");
@@ -153,14 +146,17 @@ function showModalPopSupplier(){
 
         $('#formpopmstsupcus').on('submit', function(event){
             event.preventDefault();
-            loading(1, 'Saving Data ...');
+            loading2(1, 'footerx', 'Saving Data ...');
             RemoveAlert();
-
-
-            $('#saveBtn').html('Saving...');
 
             // ambil semua inputan di form dan di tambahi array menu----------
             var fd =  new FormData(this);
+            fd.append('actionx', 'new');
+            fd.append('active', '1');
+            fd.append('terminbeli', '0');
+            fd.append('terminjual', '0');
+            fd.append('maxhutang', '0');
+            fd.append('maxpiutang', '0');
 
             $.ajax({
                 url:"{{ route('mstsupcus.store') }}",
@@ -193,15 +189,17 @@ function showModalPopSupplier(){
                     }
                     if(data.success)
                     {
-                        console.log(data.success);
+                        // console.log(data.success);
                         $('#formpopmstsupcus')[0].reset();
-                        $('#user_table').DataTable().ajax.reload();
-                        // alert(data.success);
+
+                        $('#idsupcus').append('<option value="'+data.data.id+'" data-subtext="' + data.data.alamat + ' ' + data.data.notelp +'" selected>'+data.data.nama+'</option>');
+                        $("#idsupcus").selectpicker("refresh");
+                        // $("#idsupcus").val('val', data.data.id);
+
                         showToast(0, data.success);
-                        document.getElementById('btnback').click();
+                        $('#modalpopsupplier').modal('hide');
                     }
-                    $('#saveBtn').html('Save changes');
-                    loading(0);
+                    loading2(0, 'footerx');
                     
                 }
             })
