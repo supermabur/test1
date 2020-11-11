@@ -5,9 +5,16 @@ namespace App\Http\Controllers;
 use App\model\trbelitmp;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use DataTables;
 
 class trbeliController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('cekmenuroles');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -36,7 +43,29 @@ class trbeliController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cur_user = \Auth::user();
+        $data = trbelitmp::where('iduser', $cur_user->id);
+        // $columnsheader  = \DB::getSchemaBuilder()->getColumnListing($data);
+        return Datatables::of($data)->toJson(); 
+
+        // switch ($request->mode){
+        //     case "tmpdatatable" :
+        //         $data = trbelitmp::where('iduser', $cur_user->id);
+        //         // $columnsheader  = \DB::getSchemaBuilder()->getColumnListing($data);
+
+        //         return Datatables::of($data)->toJson(); 
+        //                             // ->addColumn('action', function($row){
+        //                             //     $btn = '<button type="button" name="detail" data-iduser="'.$row->iduser.'" data-idoutlet="'.$row->idoutlet.'" data-idbarang="'.$row->idbarang.'" class="btn btn-danger btn-sm" style="padding-bottom: 0rem; padding-top: 0rem;">delete</button>';
+        //                             //     return $btn;
+        //                             // })
+        //                             // ->rawColumns(['action'])
+        //                             // ->toJson(); 
+        //         break;
+
+        //     case "bayar":
+        //         return response()->json(['success' => $suksesmsg]);
+        //     break;
+        // }
     }
 
     /**
@@ -47,7 +76,11 @@ class trbeliController extends Controller
      */
     public function show(trbelitmp $trbelitmp)
     {
-        //
+        $cur_user = \Auth::user();
+        $data = trbelitmp::where('iduser', $cur_user->id);
+        // $columnsheader  = \DB::getSchemaBuilder()->getColumnListing($data);
+
+        return Datatables::of($data)->toJson(); 
     }
 
     /**

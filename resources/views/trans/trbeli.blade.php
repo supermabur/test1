@@ -26,8 +26,8 @@
     }    
 </style>
 
-
-<form method="post" id="formuser" class="form-vertical" enctype="multipart/form-data" novalidate>
+       
+<form method="post" id="formtmpbeli" name="formtmpbeli" class="form-vertical" enctype="multipart/form-data" novalidate>
     @csrf
 
     <div class="row justify-content-md-center">
@@ -59,42 +59,45 @@
                                 <h3 class="card-title"><i class="fas fa-users mr-2"></i>Header Faktur</h3>
                             </div>
                 
-                            <div class="card-body">           
-        
-                                <div class="form-group row">
-                                    <label for="idoutlet" class="col-md-2 col-form-label col-form-label-sm text-md-right">Outlet</label>
-                                    <div class="col-md-8">
-                                        <select class="selectpicker form-control form-control-sm" data-container="body" data-style="btn-default" data-live-search="true" data-size="5" data-show-subtext ="true" id="idoutlet" name="idoutlet" required>
-                                            @foreach ($composer_usersoutlet as $cp)
-                                                <option value="{{ $cp->idoutlet }}" data-subtext="{{ $cp->alamat . ' ' . $cp->notelp }}">{{ $cp->nama }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>        
+                            <div class="card-body">    
+                                
+                                    <div class="form-group row">
+                                        <label for="idoutlet" class="col-md-2 col-form-label col-form-label-sm text-md-right">Outlet</label>
+                                        <div class="col-md-8">
+                                            <select class="selectpicker form-control form-control-sm" data-container="body" data-style="btn-default" data-live-search="true" data-size="5" data-show-subtext ="true" id="idoutlet" name="idoutlet" required>
+                                                @foreach ($composer_usersoutlet as $cp)
+                                                    <option value="{{ $cp->idoutlet }}" data-subtext="{{ $cp->alamat . ' ' . $cp->notelp }}">{{ $cp->nama }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>        
 
-                                <div class="form-group row">
-                                    <label for="idsupcus" class="col-md-2 col-form-label col-form-label-sm text-md-right">Supplier</label>
-                                    <div class="col-md-8 input-group input-group-sm">
-                                        <select class="selectpicker form-control form-control-sm" id="idsupcus" name="idsupcus" data-container="body" data-style="btn-default" data-live-search="true" data-size="5" data-show-subtext ="true" required>
-                                            @foreach ($composer_supplier as $cp)
-                                                <option value="{{ $cp->id }}" data-subtext="{{ $cp->alamat . ' ' . $cp->notelp }}">{{ $cp->nama }}</option>                        
-                                            @endforeach                                            
-                                        </select>
-                                        <span class="input-group-append">
-                                            <button type="button" onclick="showModalPopSupplier()" class="btn btn-info btn-flat" data-toggle="tooltip" data-placement="top" title="Tambah Supplier Baru"><i class="fa fa-plus"></i></button>
-                                        </span>
+                                    <div class="form-group row">
+                                        <label for="idsupcus" class="col-md-2 col-form-label col-form-label-sm text-md-right">Supplier</label>
+                                        <div class="col-md-8 input-group input-group-sm">
+                                            <select class="selectpicker form-control form-control-sm" id="idsupcus" name="idsupcus" data-container="body" data-style="btn-default" data-live-search="true" data-size="5" data-show-subtext ="true" required>
+                                                @foreach ($composer_supplier as $cp)
+                                                    <option value="{{ $cp->id }}" data-subtext="{{ $cp->alamat . ' ' . $cp->notelp }}">{{ $cp->nama }}</option>                        
+                                                @endforeach                                            
+                                            </select>
+                                            <span class="input-group-append">
+                                                <button type="button" onclick="showModalPopSupplier()" class="btn btn-info btn-flat" data-toggle="tooltip" data-placement="top" title="Tambah Supplier Baru"><i class="fa fa-plus"></i></button>
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="form-group row">
-                                    <label for="fakturreff" class="col-md-2 col-form-label col-form-label-sm text-md-right">Faktur Supplier</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control form-control-sm" id="fakturreff" name="fakturreff" placeholder="" required>
-                                        <small class="text-muted">Faktur supplier bisa berupa nomer surat jalan, no invoice, dll</small>
-                                    </div>
-                                </div>                    
+                                    <div class="form-group row">
+                                        <label for="fakturreff" class="col-md-2 col-form-label col-form-label-sm text-md-right">Faktur Supplier</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control form-control-sm" id="fakturreff" name="fakturreff" placeholder="" required>
+                                            <small class="text-muted">Faktur supplier bisa berupa nomer surat jalan, no invoice, dll</small>
+                                        </div>
+                                    </div>                    
                 
-            
+
+
+
+
                             </div>
                         </div>
                     </div>
@@ -199,6 +202,9 @@
         </div>
     </div>
 
+<button type="button" onclick="tttt()">test</button>
+
+
 </form>
 
 
@@ -209,9 +215,36 @@
 
 <script>
 
+    function tttt(){
+        // document.getElementById("formtmpbeli").submit();
+        // document.formtmpbeli.submit();
+        document.forms["formtmpbeli"].submit();
+    }
+
+
+    $('#formtmpbeli').on('submit', function(event){
+        event.preventDefault();
+        alert('asd');
+        var col = [
+            ['faktur','string'],
+            ['qty','number'],
+            ['info','string'], 
+            ['action', 'action']
+        ];
+        
+        var purl = "{{ route('trbeli.store') }}";
+        console.log(purl);
+        var fd =  new FormData(this);
+        fd.append('mode', 'tmpdatatable');
+        console.log(fd);
+
+        fillthedatatable('tablebeli', purl, col, fd);
+    });
+
+
 
     function initEdit(actio = 'new', id = '1', mode = ''){
-        $('#formuser')[0].reset();
+        $('#formtmpbeli')[0].reset();
         $('#form_result').html('');
         $('#actionx').val(actio);
         $('#hidden_id').val('');
@@ -260,7 +293,7 @@
 
 
     $(document).ready(function() {
-        fillthedatatable('tablebeli', {});
+        // fillthedatatable('tablebeli', {});
 
 
 
@@ -345,7 +378,8 @@
             $("span").remove(".invalid-feedback");
         }
 
-        $('#formuser').on('submit', function(event){
+
+        $('#formtmpbelisave').on('submit', function(event){
             event.preventDefault();
             loading(1, 'Saving Data ...');
             RemoveAlert();
@@ -395,7 +429,7 @@
                     }
                     if(data.success)
                     {
-                        $('#formuser')[0].reset();
+                        $('#formtmpbeli')[0].reset();
                         $('#user_table').DataTable().ajax.reload();
                         // console.log(data.success);
                         showToast(0, data.success);
