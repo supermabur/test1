@@ -50,7 +50,7 @@ class ComposerServiceProvider extends ServiceProvider
             });
 
 
-        View::composer(['master\mstcompany', 'master\mstsupcus', 'master\mstoutlet', 'master\popmstsupcus'], 
+        View::composer(['master.mstcompany', 'master.mstsupcus', 'master.mstoutlet', 'master.popmstsupcus', 'trans.trbeli'], 
             function ($view) {
                 $view->with('composer_kota', DB::select(DB::raw("SELECT id, name2 FROM vwmstkota order by `name`")));
             });
@@ -74,7 +74,7 @@ class ComposerServiceProvider extends ServiceProvider
             });
 
 
-        View::composer(['master\mstbarang'], 
+        View::composer(['master.mstbarang'], 
             function ($view) {
                 $cur_user = \Auth::user();
                 $view->with('composer_mstmerk', mstmerk::where('idcompany', $cur_user->idcompany)->orderBy('nama')->get());
@@ -85,7 +85,7 @@ class ComposerServiceProvider extends ServiceProvider
             
 
         // TRANSAKSI
-        View::composer(['trans\trbeli'], 
+        View::composer(['trans.trbeli'], 
             function ($view) {
                 $cur_user = \Auth::user();
                 $view->with('composer_usersoutlet', vwusersoutlet::where('iduser', $cur_user->id)->where('aktif',1)->orderBy('nama')->get());
