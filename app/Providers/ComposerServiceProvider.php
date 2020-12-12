@@ -51,7 +51,7 @@ class ComposerServiceProvider extends ServiceProvider
             });
 
 
-        View::composer(['master.mstcompany', 'master.mstsupcus', 'master.mstoutlet', 'trans.trbeli'], 
+        View::composer(['master.mstcompany', 'master.mstsupcus', 'master.mstoutlet', 'master.popmstsupcus', 'trans.trbeli'], 
             function ($view) {
                 $view->with('composer_kota', DB::select(DB::raw("SELECT id, name2 FROM vwmstkota order by `name`")));
             });
