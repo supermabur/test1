@@ -2,13 +2,18 @@
   @include('layouts.topbar')
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar elevation-4 sidebar-light-success" style="background-color: oldlace">
       <!-- Brand Logo -->
-      <a href="/" class="brand-link">
-        <img src="{{ url('adminlte3/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-            style="opacity: .8">
-        <span class="brand-text font-weight-light">G</span>
+      <a href="/" class="brand-link navbar-success " style="padding: 1.1rem .5rem;background-color: #017f4e;">
+        <img src="{{ url('images/TLogo.webp') }}" alt="AdminLTE Logo" 
+            class="brand-image img elevation-0"
+            style="opacity: 1"
+            {{-- style="height: 39px;" --}}
+            >
+        <span class="brand-text font-weight-bold text-white">Togamas Admin</span>
       </a>
+
+      
 
       <!-- Sidebar -->
       <div class="sidebar">
@@ -56,17 +61,29 @@
                   </p>
                 </a>
 
+
                 <ul class="nav nav-treeview" style="padding-left: 20px;font-weight: 200;line-height: 1;">
                   @foreach ($composer_stmemenu_d as $d)
                     @if ($h->id == $d->parentid)
+                      
                       <li class="nav-item">
                         @if ($d->useglobreport == 0)
-                          <a href="/{{$d->links}}" class="nav-link">
+              
+                          @if (strpos(url()->current(), $d->links) > 0 )
+                            <a href="/{{$d->links}}" class="nav-link active">
+                          @else
+                            <a href="/{{$d->links}}" class="nav-link">
+                          @endif                        
                             <i class="nav-icon far {{$d->icon}}" style="font-size: 1rem;"></i>
                             <p>{{$d->name}}</p>
                           </a>
                         @else
-                          <a href="{{ route('grctrl.show', $d->id) }}" class="nav-link">
+                          @if (route('grctrl.show', $d->id) == url()->current())
+                            <a href="{{ route('grctrl.show', $d->id) }}" class="nav-link active">
+                          @else
+                            <a href="{{ route('grctrl.show', $d->id) }}" class="nav-link">                              
+                          @endif
+
                             <i class="nav-icon far {{$d->icon}}" style="font-size: 1rem;"></i>
                             <p>{{$d->name}}</p>
                           </a>

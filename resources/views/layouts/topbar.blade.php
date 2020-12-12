@@ -1,9 +1,9 @@
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: cornsilk;">
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: #e5e5e5;">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button" style="background-color: goldenrod;"><i class="fas fa-bars"></i></a>
+      <li class="nav-item" style="align-self: center;">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button" style="background-color: #017f4e; color:white;"><i class="fas fa-bars"></i></a>
       </li>
 
       <li class="nav-item d-none d-sm-inline-block">
@@ -38,12 +38,17 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Messages Dropdown Menu -->
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown" style="    background: #017f4e;border-radius: 30px;padding: 4px;">
         <a class="nav-link" data-toggle="dropdown" href="#" style="    display: inline-flex;align-items: center;">
           <div class="image-cropper mr-2" style="max-height: 40px; max-width: 40px;">
             <img src="{{ url('images/users\\') . $composer_cur_user->imagepath }}" class="profileimg profile-pic">
           </div> 
-          <span class="text-dark" style="font-style: normal;">{{ $composer_cur_user->name }}</span>
+          <span class="text-dark" style="font-style: normal;color: oldlace!important;">
+            @if ($composer_cur_user->owner == 1)
+              <i class="fas fa-crown mr-1" data-toggle="tooltip" title="Owner"></i>                  
+            @endif            
+            {{ $composer_cur_user->name }}
+          </span>
           {{-- <i class="far fa-comments"></i>
           <span class="badge badge-danger navbar-badge">3</span> --}}
         </a>
@@ -59,6 +64,9 @@
               <h3 class="dropdown-item">
                 {{ $composer_cur_user->name }}
               </h3>
+              @if ($composer_cur_user->owner == 1)
+                <p class="text-sm bg-success"><i class="fas fa-crown mr-1"></i>OWNER</p>                  
+              @endif
               <p class="text-sm"><i class="far fa-envelope mr-1"></i>{{ $composer_cur_user->email }}</p>
               <p class="text-sm">{{ $composer_cur_user->username }}</p>
             </form>
@@ -100,7 +108,8 @@
           <div class="dropdown-divider"></div>
           
 
-          <div class="dropdown-item dropdown-footer">       
+          {{-- <div class="dropdown-item dropdown-footer">      --}}
+          <div class="dropdown-footer">       
             @if (!str_contains($title ?? '', 'USER'))       
               <button class="btn btn-primary btn-sm EditProfileBtn" id="EditProfileBtn">
                 <i class="fa fa-user-edit" style="margin-right: 4px;"></i>

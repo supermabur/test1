@@ -3,10 +3,15 @@
 namespace App\model;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\CompositeKey;
 
 class trbelitmp extends Model
 {
+    use CompositeKey;
+    
     public $timestamps = false;
+    protected $primaryKey = ['iduser','faktur','idoutlet','idbarang'];
+    public $incrementing = false;
     protected $table = 'trbelitmp';
 
     protected $fillable = [
@@ -17,6 +22,7 @@ class trbelitmp extends Model
         'fakturreff',
         'pkp',
         'idbarang',
+        'nama',
         'order',
         'qty',
         'idsatuan',

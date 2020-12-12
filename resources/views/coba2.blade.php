@@ -1,21 +1,22 @@
 
+@extends('layouts.dashboard')
 
+
+@section('filejs')
+    <!-- JavaScript -->
+    <script src="{{ url('js/me.additem.js') }}"></script>
+@endsection
+
+
+@section('content')
     <div class="row">
         <div class="col-md-12 outerbox">
             <div class="box" style="border-top: 0px solid #d2d6de;">
             <!-- <div class="container"> -->
-
-                <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
-                    <label for="filter_gudang" class="col-sm-1 col-form-label">Outlet</label>
-                    <div class="col-sm-4">
-                        <select name="filter_gudang" id="filter_gudang" class="form-control " required>
-                            <option value=""></option>
-                            @foreach($composer_mstgudang as $dt)
-                                <option value="{{ $dt->kode }}">{{ $dt->nama }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                <div class="cobaxxx" id="cobaxxx">
+                        asdasdasdaqweqweqwe
                 </div>
+
 
                 <div class="form-group row" style="margin-bottom: 0.2rem;margin-top: 0.2rem;">
                     <label for="show0" class="col-sm-1 col-form-label">Saldo 0</label>
@@ -32,24 +33,6 @@
                     <div class="col-sm-3">
                         <button type="button" name="filter" id="filter" class="btn btn-info">Refresh Data</button>
                     </div>
-                </div>
-
-
-                <div class="row">
-                    <div class = "mstbrg">
-                        asdasd
-                        {{$namex}}
-                        {{$namexx}}
-                        @if (!empty($namexxx))
-                            {{$namexxx}}
-                        @endif
-                    </div>
-        
-                    {{-- <div class='table-responsive' id='mstbarangtable' width=100% style='margin-top: 10px;'>
-                        <table class='table display cell-border' id='user_table' width=100%>
-                        </table>
-                    </div> --}}
-                            
                 </div>
 
                 <div class="card card-primary" style="box-shadow: none;margin-top: 0.8rem;">
@@ -90,15 +73,33 @@
     </div>
 
 
+    <script>
+        let _token   = $('meta[name="csrf-token"]').attr('content');
 
-<script>
-    $(document).ready(function(){   
 
-        $('#filter').click(function(){
-            alert('uyeeeaah');
+        $(document).ready(function(){   
+            var plistcarabayar ={!! json_encode($composer_mstcarabayar) !!};
+            var sss = $(".cobaxxx").setadditem({token:_token, 
+                                                listcarabayar:plistcarabayar, 
+                                                urlajaxdatatable:'{{ route("trbeli.store") }}', 
+                                                idoutlet:8,
+                                                onaddremoveitem: function(data){
+                                                    console.log(data);
+                                                }
+                                            });
+    
+            $('#filter').click(function(){
+                console.log(sss);
+                // alert(sss.total);
+            });
+            
         });
+    
+    </script>
 
-    });
 
-</script>
+
+@endsection
+
+
 

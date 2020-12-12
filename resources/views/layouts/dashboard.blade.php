@@ -8,7 +8,7 @@
   @yield('csrf-token')
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
 
 
 
@@ -111,6 +111,24 @@
     .select2-results__options{
       font-size:0.9rem !important;
     }
+
+    [class*=sidebar-light-] .nav-treeview>.nav-item>.nav-link:hover {
+        background-color: rgb(255 0 0 / 50%);;
+    }
+
+    [class*=sidebar-light-] .nav-treeview>.nav-item>.nav-link {
+        color: #1d1d1d;
+    }
+
+    [class*=sidebar-light-] .nav-treeview>.nav-item>.nav-link.active, [class*=sidebar-light-] .nav-treeview>.nav-item>.nav-link.active:hover {
+      background-color: rgb(1 127 78 / 50%);;
+      color: #ffffff;
+    }
+    .nav-pills .nav-link:not(.active):hover {
+        color: #ffffff;
+    }  
+
+
   </style>
 
   @yield('style')
@@ -184,13 +202,13 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <footer class="main-footer">
+  {{-- <footer class="main-footer">
     <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 3.0.4
     </div>
-  </footer>
+  </footer> --}}
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -275,6 +293,10 @@
     $(document).on('click', '.EditProfileBtn', function(){
       window.location.href = '/editprofile';
     });
+
+    function formatNumber(num) {
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+    }
     
     function loading2(run = 1, xclass = '', xtext = 'Please wait ...'){
         if (run > 0){

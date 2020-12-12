@@ -12,6 +12,7 @@ use App\model\mstmerk;
 use App\model\mstjenis;
 use App\model\mstsatuan;
 use App\model\mstsupcus;
+use App\model\mstcarabayar;
 use App\mstgudang;
 
 use App\model\vwmstoutlet;
@@ -50,10 +51,22 @@ class ComposerServiceProvider extends ServiceProvider
             });
 
 
-        View::composer(['master\mstcompany', 'master\mstsupcus', 'master\mstoutlet', 'master\popmstsupcus'], 
+        View::composer(['master.mstcompany', 'master.mstsupcus', 'master.mstoutlet', 'trans.trbeli'], 
             function ($view) {
                 $view->with('composer_kota', DB::select(DB::raw("SELECT id, name2 FROM vwmstkota order by `name`")));
             });
+            
+        View::composer(['trans.trbeli'], 
+        function ($view) {
+            $cur_user = \Auth::user();
+            $view->with('composer_mstbarang', DB::select(DB::raw("SELECT id, nama, sku, barcode, harga, disc FROM mstbarang where idcompany = '" . Auth::user()->idcompany . "' and aktif = 1")));
+        });
+            
+        View::composer(['coba2', 'trans.trbeli'], 
+        function ($view) {
+            $cur_user = \Auth::user();
+            $view->with('composer_mstcarabayar', mstcarabayar::where('idcompany', $cur_user->idcompany)->where('aktif',1)->orderBy('nama')->get());
+        });
 
         View::composer(['users'], 
             function ($view) {
@@ -74,7 +87,7 @@ class ComposerServiceProvider extends ServiceProvider
             });
 
 
-        View::composer(['master\mstbarang'], 
+        View::composer(['master.mstbarang'], 
             function ($view) {
                 $cur_user = \Auth::user();
                 $view->with('composer_mstmerk', mstmerk::where('idcompany', $cur_user->idcompany)->orderBy('nama')->get());
@@ -85,7 +98,7 @@ class ComposerServiceProvider extends ServiceProvider
             
 
         // TRANSAKSI
-        View::composer(['trans\trbeli'], 
+        View::composer(['trans.trbeli'], 
             function ($view) {
                 $cur_user = \Auth::user();
                 $view->with('composer_usersoutlet', vwusersoutlet::where('iduser', $cur_user->id)->where('aktif',1)->orderBy('nama')->get());
