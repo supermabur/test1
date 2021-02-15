@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" 
-    style="background: oldlace;">
+    style="background-image: url('images/bglogin.png');
+    background-repeat: no-repeat;
+    background-size: cover;">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,7 +10,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Backoffice') }}</title>
+    <title>{{ str_replace('_', ' ', config('app.name', 'Backoffice')) }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -19,6 +21,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url('css/eki.css') }}">
 
 
     {!! ReCaptcha::htmlScriptTagJsApi() !!}
@@ -26,10 +29,13 @@
 </head>
 <body style="    background-color: transparent;">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" style="background-color: #017f4e !important;">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" >
             <div class="col text-center">
                 <span>
-                    <img src="{{ url('images/logo.png') }}" >
+                    <h1 style="color: #003167 !important" ><strong>{{ str_replace('_', ' ', config('app.name', 'Backoffice')) }}</strong></h1>
+                    <h3 style="color: #003167 !important" >Login Page</h3>
+
+                    {{-- <img src="{{ url('images/logo.png') }}" > --}}
                 </span>
                 {{-- <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Backoffice') }}

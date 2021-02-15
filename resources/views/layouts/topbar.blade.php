@@ -3,7 +3,7 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item" style="align-self: center;">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button" style="background-color: #017f4e; color:white;"><i class="fas fa-bars"></i></a>
+        <a class="nav-link bg-color1" data-widget="pushmenu" href="#" role="button" style="color:white;"><i class="fas fa-bars"></i></a>
       </li>
 
       <li class="nav-item d-none d-sm-inline-block">
@@ -38,7 +38,7 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Messages Dropdown Menu -->
-      <li class="nav-item dropdown" style="    background: #017f4e;border-radius: 30px;padding: 4px;">
+      <li class="nav-item dropdown bg-color1" style="border-radius: 30px;padding: 1px;">
         <a class="nav-link" data-toggle="dropdown" href="#" style="    display: inline-flex;align-items: center;">
           <div class="image-cropper mr-2" style="max-height: 40px; max-width: 40px;">
             <img src="{{ url('images/users\\') . $composer_cur_user->imagepath }}" class="profileimg profile-pic">

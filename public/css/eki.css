@@ -145,8 +145,38 @@ table.dataTable tbody th, table.dataTable tbody td {
 }
 
 
+/* -----------------------MyCOLOR------------------------------------------------------------------------------------- */
+.bg-color1 {
+    /* background-color: #003167!important; */
+    background: linear-gradient(90deg, rgba(0,49,103,1) 0%, rgba(0,82,173,1) 100%);
+}
 
+.bg-color2 {
+    background-color: #7ba8d8!important;
+}
 
+.bg-color3 {
+    background-color: #fff5e7!important;
+}
+
+.nav-treeview>.nav-item>.nav-link:hover {
+    background-color: #fcc47f !important;
+}
+
+.nav-treeview>.nav-item>.nav-link.active {
+    background-color: #0031677a !important;
+    color: #ffffff;
+}
+
+/* -----------------------card------------------------------------------------------------------------------------- */
+.card-title {
+    color: white;
+}
+
+.card-header {
+    /* background-color: #003167d4!important; */
+    background: linear-gradient(90deg, rgba(0,49,103,0.8) 0%, rgba(0,78,164,0.7) 100%);
+}
 
 /* -----------------------form modal------------------------------------------------------------------------------------- */
 .modal{
