@@ -56,3 +56,5 @@ Route::get('coba', function(){return view('coba');});
 Route::resource('editprofile', 'userseditprofileController');
 Route::resource('mstmerk', 'mstmerkController');
 Route::resource('mstjenis', 'mstjenisController');
+
+Route::resource('estkirimmemo', 'rptpesanestkirimmemoController');
