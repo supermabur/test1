@@ -12,7 +12,7 @@
     </head>
     <body>
         <div class="container">
-            <h5 class="m-0 mt-5 p-2 bg-primary text-white">Daftar Surat pesan 3 Hari sebelum estimasi kirim</h5>
+            <h5 class="m-0 mt-5 p-2 bg-primary text-white">Surat pesan 3 Hari sebelum estimasi kirim</h5>
             <div class="row mx-0" style="background-color: #007bff03;">
                 <table class="table table-sm mx-2">
                     {{-- <thead class="">
@@ -51,7 +51,7 @@
 
 
 
-            <h5 class="m-0 mt-5 p-2 bg-danger text-white">Daftar Surat pesan yang sudah melewati estimasi kirim</h5>
+            <h5 class="m-0 mt-5 p-2 bg-danger text-white">Surat pesan 2021 yang sudah melewati estimasi kirim</h5>
             <div class="row mx-0" style="background-color: #ff000003;">
                 <table class="table table-sm mx-2">
                     {{-- <thead class="">
@@ -90,7 +90,7 @@
 
 
 
-            <h5 class="m-0 mt-5 p-2 bg-warning">Daftar Surat pesan 2021 yang belum ada MEMO (Non Leasing)</h5>
+            <h5 class="m-0 mt-5 p-2 bg-warning">Surat pesan 2021 yang belum ada MEMO (Non Leasing)</h5>
             <div class="row mx-0" style="background-color: #ffae0003;">
                 <table class="table table-sm mx-2">
                     {{-- <thead class="">
