@@ -110,7 +110,7 @@
                                         <div class="col-sm-8">
                                             <h6 class="m-0 mt-1"><small>{{ $i->namacustomer . ' (' . $i->nohpcustomer . ')' }}</small></h6>
                                             <h6 class="m-0"><small>{{ $i->alamatcustomer }}</small></h6>
-                                            <h6 class="m-0 mt-1"><small class="font-weight-bold">Keterangan </small> <small class="text-primary">{{ $i->keterangan }}</small></h6>
+                                            <h6 class="m-0 mt-1"><small class="font-weight-bold"> {{ !empty($i->keterangan) ? "Keterangan" : "" }} </small> <small class="text-primary">{{ $i->keterangan }}</small></h6>
                                         </div>
                                     </div>
                                 </td>
