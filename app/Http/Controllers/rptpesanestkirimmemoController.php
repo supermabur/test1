@@ -20,7 +20,7 @@ class rptpesanestkirimmemoController extends Controller
                 order by tanggal DESC";
         $gaadamemo = DB::select($que);
 
-        $que = "SELECT dateukehosting as lastupdate FROM rkppesanheadx limit 1";
+        $que = "SELECT max(dateukehosting) as lastupdate FROM rkppesanheadx limit 1";
         $lastupdate = DB::select($que);
 
 
