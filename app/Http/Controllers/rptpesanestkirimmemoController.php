@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\model\log_akses;
+use Jenssegers\Agent\Agent;
 
 class rptpesanestkirimmemoController extends Controller
 {
@@ -22,6 +24,22 @@ class rptpesanestkirimmemoController extends Controller
 
         $que = "SELECT max(dateukehosting) as lastupdate FROM rkppesanheadx limit 1";
         $lastupdate = DB::select($que);
+
+
+        // dd($user);
+        $agent = new Agent();
+        $browser = $agent->browser();
+        $browser .= ' ' . $agent->version($browser);
+
+        $platform = $agent->platform();
+        $device = $agent->device();
+        $version = $agent->version($platform);
+
+        $aksesby = $browser . ' ' . $platform . ' ' . $version . ' ' . $device;
+
+        DB::table('log_akses')->insert([
+            ['aksesmodul' => 'rptpesanestimasikirimmemo', 'aksesby' => $aksesby]
+        ]);
 
 
         return view('rptpesanestkirimmemo',compact('mendekatiestkirim', 'gaadamemo', 'lastupdate'));
