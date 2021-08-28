@@ -19,8 +19,12 @@ class rptpesanestkirimmemoController extends Controller
                         and flagvoid = 0 and kdleasing = ''
                 order by tanggal DESC";
         $gaadamemo = DB::select($que);
-        
-        return view('rptpesanestkirimmemo',compact('mendekatiestkirim', 'gaadamemo'));
+
+        $que = "SELECT dateukehosting as lastupdate FROM rkppesanheadx limit 1";
+        $lastupdate = DB::select($que);
+
+
+        return view('rptpesanestkirimmemo',compact('mendekatiestkirim', 'gaadamemo', 'lastupdate'));
     }
 
 }

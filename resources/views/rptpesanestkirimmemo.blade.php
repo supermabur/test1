@@ -11,6 +11,14 @@
         <title>Surat Pesan Estimasi Kirim dan Status Memo</title>
     </head>
     <body>
+        <div class="bg-dark">
+            <div class="container py-2 text-white">
+                <p class="m-0 small">Data di update setiap 30 menit sekali</p>
+                <p class="m-0 small">Terakhir update pada {{ $lastupdate[0]->lastupdate }}</p>        
+            </div>
+        </div>
+
+
         <div class="container">
             <h5 class="m-0 mt-5 p-2 bg-primary text-white">Surat pesan 3 Hari sebelum estimasi kirim</h5>
             <div class="row mx-0" style="background-color: #007bff03;">
@@ -27,17 +35,17 @@
                                     <td>
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <h5 class="m-0">{{ $i->faktur }}</h5>
+                                                <h6 class="m-0">{{ $i->faktur }}</h6>
                                                 <p class="small m-0">Tanggal Pesan {{ $i->tanggal }}</p>
                                                 <p class="small m-0">
-                                                    Est Kirim 
+                                                    Estimasi Kirim 
                                                     <span class="badge badge-{{ $i->kirimjatuhtempo == 0 ? 'danger' : 'warning' }}" style="white-space: normal!important;">{{ $i->kirimjatuhtempo == 0 ? 'Harusnya kirim hari ini' : $i->kirimjatuhtempo . ' hari lagi' }}</span> 
                                                 </p>
                                             </div>
                                             <div class="col-sm-8">
-                                                <h6 class="m-0 mt-1"><small>{{ $i->namacustomer . ' (' . $i->nohpcustomer . ')' }}</small></h6>
-                                                <h6 class="m-0"><small>{{ $i->alamatcustomer }}</small></h6>
-                                                <h6 class="m-0 mt-1"><small class="font-weight-bold">Memo </small> <small class="text-primary">{{ $i->memo }}</small></h6>
+                                                <h6 class="m-0 mt-1 font-weight-bold"><small>{{ $i->namacustomer . ' (' . $i->nohpcustomer . ')' }}</small></h6>
+                                                <h6 class="m-0"><small style="font-size: 67%">{{ $i->alamatcustomer }}</small></h6>
+                                                <h6 class="m-0 mt-1" ><small class="font-weight-bold">Memo </small> <small class="text-primary" style="font-size: 67%">{{ $i->memo }}</small></h6>
                                             </div>
                                         </div>
                                     </td>
@@ -66,17 +74,17 @@
                                     <td>
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <h5 class="m-0">{{ $i->faktur }}</h5>
+                                                <h6 class="m-0">{{ $i->faktur }}</h6>
                                                 <p class="small m-0">Tanggal Pesan {{ $i->tanggal }}</p>
                                                 <p class="small m-0">
-                                                    Est Kirim 
+                                                    Estimasi Kirim 
                                                     <span class="badge badge-danger" style="white-space: normal!important;">Harusnya dikirim {{ abs($i->kirimjatuhtempo) }} hari yg lalu</span> 
                                                 </p>
                                             </div>
                                             <div class="col-sm-8">
                                                 <h6 class="m-0 mt-1"><small>{{ $i->namacustomer . ' (' . $i->nohpcustomer . ')' }}</small></h6>
-                                                <h6 class="m-0"><small>{{ $i->alamatcustomer }}</small></h6>
-                                                <h6 class="m-0 mt-1"><small class="font-weight-bold">Memo </small> <small class="text-primary">{{ $i->memo }}</small></h6>
+                                                <h6 class="m-0"><small class="small" style="font-size: 67%">{{ $i->alamatcustomer }}</small></h6>
+                                                <h6 class="m-0 mt-1"><small class="font-weight-bold">Memo </small> <small class="text-primary" style="font-size: 67%">{{ $i->memo }}</small></h6>
                                             </div>
                                         </div>
                                     </td>
@@ -104,13 +112,13 @@
                                 <td>
                                     <div class="row">
                                         <div class="col-sm-4">
-                                            <h5 class="m-0">{{ $i->faktur }}</h5>
+                                            <h6 class="m-0">{{ $i->faktur }}</h6>
                                             <p class="small m-0">Tanggal Pesan {{ $i->tanggal }}</p>
                                         </div>
                                         <div class="col-sm-8">
                                             <h6 class="m-0 mt-1"><small>{{ $i->namacustomer . ' (' . $i->nohpcustomer . ')' }}</small></h6>
-                                            <h6 class="m-0"><small>{{ $i->alamatcustomer }}</small></h6>
-                                            <h6 class="m-0 mt-1"><small class="font-weight-bold"> {{ !empty($i->keterangan) ? "Keterangan" : "" }} </small> <small class="text-primary">{{ $i->keterangan }}</small></h6>
+                                            <h6 class="m-0"><small class="small" style="font-size: 67%">{{ $i->alamatcustomer }}</small></h6>
+                                            <h6 class="m-0 mt-1"><small class="font-weight-bold"> {{ !empty($i->keterangan) ? "Keterangan" : "" }} </small> <small class="text-primary" style="font-size: 67%">{{ $i->keterangan }}</small></h6>
                                         </div>
                                     </div>
                                 </td>
