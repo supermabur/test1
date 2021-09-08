@@ -34,7 +34,7 @@ class rptpesanestkirimmemoController extends Controller
         $platform = $agent->platform();
         $device = $agent->device();
         $version = $agent->version($platform);
-        $ip = $request->ip() . '-' . $this->getClientIPaddress($request);;
+        $ip = $request->ip();
 
         $aksesby = $browser . ' ' . $platform . ' ' . $version . ' ' . $device . ' ' . $ip;
 
