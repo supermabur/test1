@@ -229,7 +229,7 @@
 <!-- Bootstrap 4 -->
 {{-- <script src="{{ url('adminlte3/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script> --}}
 <!-- ChartJS -->
-<script src="{{ url('adminlte3/plugins/chart.js/Chart.min.js') }}"></script>
+{{-- <script src="{{ url('adminlte3/plugins/chart.js/Chart.min.js') }}"></script> --}}
 <!-- Sparkline -->
 <script src="{{ url('adminlte3/plugins/sparklines/sparkline.js') }}"></script>
 <!-- JQVMap -->
