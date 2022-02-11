@@ -5,17 +5,83 @@
 @section('content')
 
     <div class="container my-4">
+        <p class="mb-5 px-0">* Data ini di update setiap 30 menit sekali. Terakhir update data pada <span class="font-weight-bold" id="lastupdate">xxx</span></p>
 
-        {{-- 2 MINGGU --}}
+        {{-- SURAT PESAN BULAN INI --}}
         <div>
-            <div class="row mt-4 px-4">
+            <div class="row mt-4 px-0">
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header text-white">
                             <div class="w-100"><h6>SURAT PESAN BULAN INI</h6></div>
                         </div>
                         <div class="card-body py-1">
-                            <canvas id="graphpesanbulanini"></canvas>
+                            <div class="row">
+                                <div class="col col-sm-4" id="tablebulanini">
+
+                                </div>
+                                <div class="col col-sm-8">
+                                    <canvas id="graphpesanbulanini"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- SURAT PESAN BULAN INI PERGUDANG --}}
+        <div>
+            <div class="row mt-4 px-0">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-header text-white">
+                            <div class="w-100"><h6>SURAT PESAN BULAN INI PER GUDANG</h6></div>
+                        </div>
+                        <div class="card-body py-1">
+                            <div id="divbulaninigudang">
+                                <ul class="nav nav-pills">
+                                    @foreach ($bulaninigudang as $d)
+                                        <li class="nav-item">
+                                            {{-- <a class="nav-link btn btn-sm btn-light p-1 m-1 {{ $loop->iteration == 1 ? 'active' : '' }}" href="#">{{ $d->kdgudang }}</a> --}}
+                                            <button class="nav-link btn btn-sm btn-light p-0 px-1 m-1 bulaninigudangtombol" id="bulanini{{ $loop->iteration }}" href="#" onclick="showbulaninigudang('{{ $loop->iteration }}')">{{ $d->kdgudang }}</button>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                                <hr class="mt-1">
+                                <span id="bulanininamagudang" class="font-weight-bold">SEMUA GUDANG</span>
+                                <div class="row">
+                                    <div class="col col-sm-4" id="tablebulaninigudang">
+    
+                                    </div>
+                                    <div class="col col-sm-8">
+                                        <canvas id="graphpesanbulaninigudang"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- SURAT PESAN SETAHUN KEBELAKANG --}}
+        <div>
+            <div class="row mt-4 px-0">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-header text-white">
+                            <div class="w-100"><h6>SURAT PESAN SATU TAHUN KEBELAKANG</h6></div>
+                        </div>
+                        <div class="card-body py-1">
+                            <div class="row">
+                                <div class="col col-sm-4" id="tablesetahun">
+
+                                </div>
+                                <div class="col col-sm-8">
+                                    <canvas id="graphpesansetahun"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -25,9 +91,9 @@
 
         {{-- OVERDUE --}}
         <div class="mt-5">
-            <h4 class="m-2">
+            {{-- <h4 class="m-2">
                 <i class="far fa-dot-circle mr-2"></i>Pesanan yang sudah melewati batas estimasi kirim
-            </h4>
+            </h4> --}}
 
             {{-- <div class="row mt-4 px-4">
                 <div class="col-sm-6">
@@ -143,14 +209,14 @@
         getbulanini();
     });
 
-    function getbulanini(){
-        loading2(1, 'body', 'Opening ...');
 
-        var ket = $('#tketerangan').val();
-        var pdata = {mode:'getbulanini',
+    function showbulaninigudang(elem){
+        loading2(1, '#divbulaninigudang', 'Opening ...');
+
+        var pkdgudang = $('#bulanini' + elem).text();
+        var pdata = {mode:'showbulaninigudang',
+                    kdgudang: pkdgudang,
                     _token: _token};
-
-             
 
         $.ajax({
                 url: '{{ route("dashb.store") }}',
@@ -166,12 +232,49 @@
                         alert('ERROR!!!  ' + data.error);
                     }
                     else{
+                        $('.bulaninigudangtombol').removeClass('active');
+                        creategraph('graphpesanbulaninigudang', data.x, data.y);
+                        $('#tablebulaninigudang').html(data.data);
+                        $('#bulanini' + elem).addClass('active');
+                        $('#bulanininamagudang').text(data.namagudang);
+                    }
+                    loading2(0, '#divbulaninigudang');
+                }
+
+        });           
+    }
+
+
+    function getbulanini(){
+        loading2(1, 'body', 'Opening ...');
+
+        var ket = $('#tketerangan').val();
+        var pdata = {mode:'getdasboard',
+                    _token: _token};
+
+        $.ajax({
+                url: '{{ route("dashb.store") }}',
+                type:"POST",
+                data:pdata,
+                async: true,
+                dataFilter: function(response){
+                        return response;
+                    },
+                success:function(data){
+                    console.log(data);
+                    if(data.error){
+                        alert('ERROR!!!  ' + data.error);
+                    }
+                    else{
+                        $('#lastupdate').text(data.lastupdate);
+
                         creategraph('graphpesanbulanini', data.bulaninix, data.bulaniniy);
+                        $('#tablebulanini').html(data.bulanini);
 
+                        creategraph('graphpesansetahun', data.setahunx, data.setahuny);
+                        $('#tablesetahun').html(data.setahun);
 
-                        
-                        
-
+                        showbulaninigudang(1);
                     }
                     loading2(0, 'body');
                 }
@@ -200,7 +303,7 @@
                             {
                                 ticks: {
                                     callback: function(label, index, labels) {
-                                        return label/1000000+'M';
+                                        return parseInt(label/1000000).toLocaleString() +'M';
                                     }
                                 },
                                 scaleLabel: {

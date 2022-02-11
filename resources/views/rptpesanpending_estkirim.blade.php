@@ -231,7 +231,7 @@
                     }
                     else{
                         console.log(data.html);
-                        $('#divcont').html(data.html);   
+                        $('#divcont').html(data.html);
                         $('#modaldetail').modal('show');
                         // alert(data.success[0].info);    
                         // $('#divcont').html(data.html);     
