@@ -13,10 +13,12 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header text-white">
-                            <div class="w-100"><h6>SURAT PESAN BULAN INI</h6></div>
+                            <div class="w-100 d-inline-flex">
+                                <span style="align-self: center;" class="mr-3">SURAT PESAN BULAN INI</span> 
+                            </div>
                         </div>
                         <div class="card-body py-1">
-                            <div class="row">
+                            <div class="row" id="sp_bulanini">
                                 <div class="col col-sm-4" id="tablebulanini">
 
                                 </div>
@@ -24,7 +26,25 @@
                                     <canvas id="graphpesanbulanini"></canvas>
                                 </div>
                             </div>
+
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="cbspbulanlalu">
+                                <label class="form-check-label" for="cbspbulanlalu">Tampilkan bulan lalu</label>
+                            </div>
+
+                            <div class="row" id="sp_bulanlalu" style="display: none">
+                                <hr class="w-100">
+                                <h6 class="w-100 font-weight-bold">SURAT PESAN BULAN LALU</h6>
+                                <div class="col col-sm-4" id="tablebulanlalu">
+
+                                </div>
+                                <div class="col col-sm-8">
+                                    <canvas id="graphpesanbulanlalu"></canvas>
+                                </div>
+                            </div>
                         </div>
+
+
                     </div>
                 </div>
             </div>
@@ -36,7 +56,9 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header text-white">
-                            <div class="w-100"><h6>SURAT PESAN BULAN INI PER GUDANG</h6></div>
+                            <div class="w-100 d-inline-flex">
+                                <span style="align-self: center;" class="mr-3">SURAT PESAN BULAN INI PER GUDANG</span> 
+                            </div>
                         </div>
                         <div class="card-body py-1">
                             <div id="divbulaninigudang">
@@ -210,6 +232,17 @@
     });
 
 
+    $('#cbspbulanlalu').on('change', function() { 
+        // From the other examples
+        if (this.checked) {
+            $("#sp_bulanlalu").show(300);
+        }
+        else{
+            $("#sp_bulanlalu").hide(300);
+        }
+    });
+
+
     function showbulaninigudang(elem){
         loading2(1, '#divbulaninigudang', 'Opening ...');
 
@@ -270,6 +303,10 @@
 
                         creategraph('graphpesanbulanini', data.bulaninix, data.bulaniniy);
                         $('#tablebulanini').html(data.bulanini);
+
+                        creategraph('graphpesanbulanlalu', data.bulanlalux, data.bulanlaluy);
+                        $('#tablebulanlalu').html(data.bulanlalu);
+
 
                         creategraph('graphpesansetahun', data.setahunx, data.setahuny);
                         $('#tablesetahun').html(data.setahun);

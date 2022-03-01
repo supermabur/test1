@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\model\vwgraphpesanbulanini;
+use App\model\vwgraphpesanbulanlalu;
 use App\model\vwgraphpesanbulaninipergudang;
 use App\model\vwgraphpesansetahunkebelakang;
 use App\model\rkppesanheadx;
@@ -71,6 +72,42 @@ class dashboardController extends Controller
                             EOD;             
                             
 
+                    $bulanlalux = vwgraphpesanbulanlalu::select('x')->wherenotnull('y')->pluck('x');
+                    $bulanlaluy = vwgraphpesanbulanlalu::selectraw('y as y')->wherenotnull('y')->get();
+                    $bulanlalu = vwgraphpesanbulanlalu::wherenotnull('y')->get();
+
+                    $hbl = '';
+                    $jumlah = 0;
+                    foreach ($bulanlalu as $d) {
+                        $yy = number_format($d->y, 0);
+                        $jumlah += $d->y;
+                        $hbl .= <<<EOD
+                                    <tr>
+                                        <td class="py-0">$d->x</th>
+                                        <td class="py-0 text-right">$yy</td>
+                                    </tr>
+                                EOD;
+                    }
+
+                    $jumlah = number_format($jumlah,0);
+                    $hbl = <<<EOD
+                                <table class="table table-sm small">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" class="border-0">Tanggal</th>
+                                        <th scope="col" class="text-right border-0">Total</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        $hbl
+                                        <tr>
+                                            <th class="py-0">TOTAL</th>
+                                            <th class="py-0 text-right">$jumlah</td>
+                                        </tr>   
+                                    </tbody>
+                                </table>
+                            EOD;             
+
 
                     $setahunx = vwgraphpesansetahunkebelakang::select('x')->wherenotnull('y')->pluck('x');
                     $setahuny = vwgraphpesansetahunkebelakang::selectraw('y as y')->wherenotnull('y')->get();
@@ -112,6 +149,7 @@ class dashboardController extends Controller
                     $lastupdate = rkppesanheadx::selectraw("DATE_FORMAT(max(dateukehosting), '%d-%m-%Y %H:%i') as tanggal")->first();
                     return response()->json(['success' => 'Berhasil', 'lastupdate' => $lastupdate->tanggal,
                                             'bulaninix' => $bulaninix, 'bulaniniy' => $bulaniniy, 'bulanini' => $hbi, 
+                                            'bulanlalux' => $bulanlalux, 'bulanlaluy' => $bulanlaluy, 'bulanlalu' => $hbl, 
                                             'setahunx' => $setahunx, 'setahuny' => $setahuny, 'setahun' => $hsthn ]);    
                     break;
 
