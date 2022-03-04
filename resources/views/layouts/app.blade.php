@@ -1,8 +1,10 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" 
-    style="background-image: url('images/bglogin.png');
+    style="background-image: url('images/bglogin.webp');
     background-repeat: no-repeat;
-    background-size: cover;">
+    background-position: center;
+    background-size: cover;
+    height: 100%;">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,12 +33,10 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" >
             <div class="col text-center">
-                <span>
+                {{-- <span>
                     <h1 style="color: #003167 !important" ><strong>{{ str_replace('_', ' ', config('app.name', 'Backoffice')) }}</strong></h1>
                     <h3 style="color: #003167 !important" >Login Page</h3>
-
-                    {{-- <img src="{{ url('images/logo.png') }}" > --}}
-                </span>
+                </span> --}}
                 {{-- <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Backoffice') }}
                 </a> --}}
