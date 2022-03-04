@@ -22,7 +22,7 @@
                                 <div class="col col-sm-4" id="tablebulanini">
 
                                 </div>
-                                <div class="col col-sm-8">
+                                <div class="col col-sm-8" id="graphpesanbulaninidasar">
                                     <canvas id="graphpesanbulanini"></canvas>
                                 </div>
                             </div>
@@ -38,7 +38,7 @@
                                 <div class="col col-sm-4" id="tablebulanlalu">
 
                                 </div>
-                                <div class="col col-sm-8">
+                                <div class="col col-sm-8" id="graphpesanbulanlaludasar">
                                     <canvas id="graphpesanbulanlalu"></canvas>
                                 </div>
                             </div>
@@ -60,13 +60,15 @@
                                 <span style="align-self: center;" class="mr-3">SURAT PESAN BULAN INI PER GUDANG</span> 
                             </div>
                         </div>
-                        <div class="card-body py-1">
-                            <div id="divbulaninigudang">
+                        <div id="divbulaninigudang" class="card-body py-1">
+                            <div>
                                 <ul class="nav nav-pills">
                                     @foreach ($bulaninigudang as $d)
                                         <li class="nav-item">
-                                            {{-- <a class="nav-link btn btn-sm btn-light p-1 m-1 {{ $loop->iteration == 1 ? 'active' : '' }}" href="#">{{ $d->kdgudang }}</a> --}}
-                                            <button class="nav-link btn btn-sm btn-light p-0 px-1 m-1 bulaninigudangtombol" id="bulanini{{ $loop->iteration }}" href="#" onclick="showbulaninigudang('{{ $loop->iteration }}')">{{ $d->kdgudang }}</button>
+                                            <button class="nav-link btn btn-sm btn-light p-0 px-1 m-1 bulaninigudangtombol" id="bulanini{{ $loop->iteration }}" href="#" onclick="showbulaninigudang('{{ $loop->iteration }}')">
+                                                <p class="m-0 font-weight-bold">{{ $d->kdgudang }}</p> 
+                                                <small class="">{{ number_format($d->jumlah) }}</small>
+                                            </button>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -76,9 +78,81 @@
                                     <div class="col col-sm-4" id="tablebulaninigudang">
     
                                     </div>
-                                    <div class="col col-sm-8">
+                                    <div class="col col-sm-8" id="graphpesanbulaninigudangdasar">
                                         <canvas id="graphpesanbulaninigudang"></canvas>
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="cbspgudangbulanlalu">
+                                <label class="form-check-label" for="cbspgudangbulanlalu">Tampilkan bulan lalu</label>
+                            </div>
+
+                            <div class="row" id="spgudang_bulanlalu" style="display: none">
+                                <hr class="w-100">
+                                <h6 class="w-100 font-weight-bold">SURAT PESAN BULAN LALU</h6>
+                                <div class="col col-sm-4" id="tablegudangbulanlalu">
+
+                                </div>
+                                <div class="col col-sm-8" id="graphpesangudangbulanlaludasar">
+                                    <canvas id="graphpesangudangbulanlalu"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- SURAT PESAN BULAN INI PERSALESMAN --}}
+        <div>
+            <div class="row mt-4 px-0">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-header text-white">
+                            <div class="w-100 d-inline-flex">
+                                <span style="align-self: center;" class="mr-3">SURAT PESAN BULAN INI PER SALESMAN</span> 
+                            </div>
+                        </div>
+                        <div class="card-body py-1" id="divbulaninisalesman">
+                            <div >
+                                <ul class="nav nav-pills">
+                                    @foreach ($bulaninisalesman as $d)
+                                        <li class="nav-item">
+                                            <button class="nav-link btn btn-sm btn-light p-0 px-1 m-1 bulaninisalesmantombol" id="bulaninisalesman{{ $loop->iteration }}" href="#" onclick="showbulaninisalesman('{{ $loop->iteration }}')">
+                                                <p class="m-0 font-weight-bold">{{ $d->namasalesman }}</p> 
+                                                <p class="m-0 d-none kdsalesman">{{ $d->kdsalesman }}</p> 
+                                                <small class="">{{ number_format($d->jumlah) }}</small>
+                                            </button>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                                <hr class="mt-1">
+                                <span id="bulanininamasalesman" class="font-weight-bold">SEMUA SALESMAN</span>
+                                <div class="row">
+                                    <div class="col col-sm-4" id="tablebulaninisalesman">
+    
+                                    </div>
+                                    <div class="col col-sm-8" id="graphpesanbulaninisalesmandasar">
+                                        <canvas id="graphpesanbulaninisalesman"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="cbspsalesmanbulanlalu">
+                                <label class="form-check-label" for="cbspsalesmanbulanlalu">Tampilkan bulan lalu</label>
+                            </div>
+
+                            <div class="row" id="spsalesman_bulanlalu" style="display: none">
+                                <hr class="w-100">
+                                <h6 class="w-100 font-weight-bold">SURAT PESAN BULAN LALU</h6>
+                                <div class="col col-sm-4" id="tablesalesmanbulanlalu">
+
+                                </div>
+                                <div class="col col-sm-8" id="graphpesansalesmanbulanlaludasar">
+                                    <canvas id="graphpesansalesmanbulanlalu"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -100,7 +174,7 @@
                                 <div class="col col-sm-4" id="tablesetahun">
 
                                 </div>
-                                <div class="col col-sm-8">
+                                <div class="col col-sm-8" id="graphpesansetahundasar">
                                     <canvas id="graphpesansetahun"></canvas>
                                 </div>
                             </div>
@@ -243,11 +317,33 @@
     });
 
 
+    $('#cbspgudangbulanlalu').on('change', function() { 
+        // From the other examples
+        if (this.checked) {
+            $("#spgudang_bulanlalu").show(300);
+        }
+        else{
+            $("#spgudang_bulanlalu").hide(300);
+        }
+    });
+
+
+    $('#cbspsalesmanbulanlalu').on('change', function() { 
+        // From the other examples
+        if (this.checked) {
+            $("#spsalesman_bulanlalu").show(300);
+        }
+        else{
+            $("#spsalesman_bulanlalu").hide(300);
+        }
+    });
+
+
     function showbulaninigudang(elem){
         loading2(1, '#divbulaninigudang', 'Opening ...');
 
-        var pkdgudang = $('#bulanini' + elem).text();
-        var pdata = {mode:'showbulaninigudang',
+        var pkdgudang = $('#bulanini' + elem).find('p').text();
+        var pdata = {mode:'showbulaninigudang', 
                     kdgudang: pkdgudang,
                     _token: _token};
 
@@ -266,12 +362,59 @@
                     }
                     else{
                         $('.bulaninigudangtombol').removeClass('active');
+                        
                         creategraph('graphpesanbulaninigudang', data.x, data.y);
                         $('#tablebulaninigudang').html(data.data);
+
+                        creategraph('graphpesangudangbulanlalu', data.lalux, data.laluy);
+                        $('#tablegudangbulanlalu').html(data.datalalu);
+
                         $('#bulanini' + elem).addClass('active');
                         $('#bulanininamagudang').text(data.namagudang);
                     }
                     loading2(0, '#divbulaninigudang');
+                }
+
+        });           
+    }
+
+
+    function showbulaninisalesman(elem){
+        loading2(1, '#divbulaninisalesman', 'Opening ...');
+
+        var pkdsalesman = $('#bulaninisalesman' + elem).find('.kdsalesman').text();
+        var pdata = {mode:'showbulaninisalesman', 
+                    kdsalesman: pkdsalesman,
+                    _token: _token};
+
+        $.ajax({
+                url: '{{ route("dashb.store") }}',
+                type:"POST",
+                data:pdata,
+                async: true,
+                dataFilter: function(response){
+                        return response;
+                    },
+                success:function(data){
+                    console.log(data);
+                    if(data.error){
+                        alert('ERROR!!!  ' + data.error);
+                    }
+                    else{
+                        $('.bulaninisalesmantombol').removeClass('active');
+
+                        creategraph('graphpesanbulaninisalesman', data.x, data.y);
+                        $('#tablebulaninisalesman').html(data.data);
+
+                        creategraph('graphpesansalesmanbulanlalu', data.lalux, data.laluy);
+                        $('#tablesalesmanbulanlalu').html(data.datalalu);
+
+
+                        $('#bulaninisalesman' + elem).addClass('active');
+
+                        $('#bulanininamasalesman').text(data.namasalesman);
+                    }
+                    loading2(0, '#divbulaninisalesman');
                 }
 
         });           
@@ -312,6 +455,7 @@
                         $('#tablesetahun').html(data.setahun);
 
                         showbulaninigudang(1);
+                        showbulaninisalesman(1);
                     }
                     loading2(0, 'body');
                 }
@@ -321,6 +465,8 @@
 
 
     function creategraph(pidelement, xValues, yValues){
+        document.querySelector("#" + pidelement + 'dasar').innerHTML = '<canvas id="' + pidelement + '"></canvas>';
+
         new Chart(pidelement, {
             type: "line",
             data: {

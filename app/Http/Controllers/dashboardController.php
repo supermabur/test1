@@ -4,8 +4,15 @@ namespace App\Http\Controllers;
 
 use App\model\vwgraphpesanbulanini;
 use App\model\vwgraphpesanbulanlalu;
+
 use App\model\vwgraphpesanbulaninipergudang;
+use App\model\vwgraphpesanbulanlalupergudang;
+
+use App\model\vwgraphpesanbulaninipersalesman;
+use App\model\vwgraphpesanbulanlalupersalesman;
+
 use App\model\vwgraphpesansetahunkebelakang;
+
 use App\model\rkppesanheadx;
 
 use App\Http\Controllers\Controller;
@@ -23,8 +30,11 @@ class dashboardController extends Controller
 
     public function index()
     {
-        $bulaninigudang = vwgraphpesanbulaninipergudang::selectraw("distinct kdgudang, namagudang")->wherenotnull('kdgudang')->orderby('kdgudang')->get();
-        return view('dashboard', compact('bulaninigudang'));
+        $bulaninigudang = vwgraphpesanbulaninipergudang::selectraw("kdgudang, namagudang, sum(y) as jumlah")
+                            ->wherenotnull('kdgudang')->groupby('kdgudang')->groupby('namagudang')->orderby('jumlah', 'desc')->get();
+        $bulaninisalesman = vwgraphpesanbulaninipersalesman::selectraw("kdsalesman, namasalesman, sum(y) as jumlah")
+                            ->wherenotnull('kdsalesman')->groupby('kdsalesman')->groupby('namasalesman')->orderby('jumlah', 'desc')->get();
+        return view('dashboard', compact('bulaninigudang', 'bulaninisalesman'));
     }
     
 
@@ -154,6 +164,7 @@ class dashboardController extends Controller
                     break;
 
 
+
                 case 'showbulaninigudang':
                     $spgudangx = vwgraphpesanbulaninipergudang::select('x')->where('kdgudang', $request->kdgudang)->pluck('x');
                     $spgudangy = vwgraphpesanbulaninipergudang::selectraw('y as y')->where('kdgudang', $request->kdgudang)->get();
@@ -191,11 +202,133 @@ class dashboardController extends Controller
                                         </tr>                                        
                                     </tbody>
                                 </table>
-                            EOD;                               
+                            EOD;      
+                            
+                            
+                    $spgudanglalux = vwgraphpesanbulanlalupergudang::select('x')->where('kdgudang', $request->kdgudang)->pluck('x');
+                    $spgudanglaluy = vwgraphpesanbulanlalupergudang::selectraw('y as y')->where('kdgudang', $request->kdgudang)->get();
+                    $spgudanglalu = vwgraphpesanbulanlalupergudang::where('kdgudang', $request->kdgudang)->get();
+
+                    $hsthnlalu = '';
+                    $jumlah = 0;
+                    foreach ($spgudanglalu as $d) {
+                        $yy = number_format($d->y, 0);
+                        $jumlah += $d->y;
+                        $hsthnlalu .= <<<EOD
+                                    <tr>
+                                        <td class="py-0">$d->x</th>
+                                        <td class="py-0 text-right">$yy</td>
+                                    </tr>
+                                EOD;
+                    }
+
+                    $jumlah = number_format($jumlah,0);
+                    $hsthnlalu = <<<EOD
+                                <table class="table table-sm small">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" class="border-0">Tanggal</th>
+                                        <th scope="col" class="text-right border-0">Total</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        $hsthnlalu
+                                        <tr>
+                                            <th class="py-0">TOTAL</th>
+                                            <th class="py-0 text-right">$jumlah</td>
+                                        </tr>                                        
+                                    </tbody>
+                                </table>
+                            EOD;  
 
                     return response()->json(['success' => 'Berhasil', 
-                                            'x' => $spgudangx, 'y' => $spgudangy, 'data' => $hsthn, 'namagudang' => $namagudang ]);    
-                    
+                                            'x' => $spgudangx, 'y' => $spgudangy, 'data' => $hsthn, 
+                                            'lalux' => $spgudanglalux, 'laluy' => $spgudanglaluy, 'datalalu' => $hsthnlalu, 
+                                            'namagudang' => $namagudang ]);    
+                    break;
+
+
+
+                case 'showbulaninisalesman':
+                    $spsalesmanx = vwgraphpesanbulaninipersalesman::select('x')->where('kdsalesman', $request->kdsalesman)->pluck('x');
+                    $spsalesmany = vwgraphpesanbulaninipersalesman::selectraw('y as y')->where('kdsalesman', $request->kdsalesman)->get();
+                    $spsalesman = vwgraphpesanbulaninipersalesman::where('kdsalesman', $request->kdsalesman)->get();
+
+                    $hsthn = '';
+                    $jumlah = 0;
+                    $namasalesman = '';
+                    foreach ($spsalesman as $d) {
+                        $namasalesman = $d->namasalesman;
+                        $yy = number_format($d->y, 0);
+                        $jumlah += $d->y;
+                        $hsthn .= <<<EOD
+                                    <tr>
+                                        <td class="py-0">$d->x</th>
+                                        <td class="py-0 text-right">$yy</td>
+                                    </tr>
+                                EOD;
+                    }
+
+                    $jumlah = number_format($jumlah,0);
+                    $hsthn = <<<EOD
+                                <table class="table table-sm small">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" class="border-0">Tanggal</th>
+                                        <th scope="col" class="text-right border-0">Total</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        $hsthn
+                                        <tr>
+                                            <th class="py-0">TOTAL</th>
+                                            <th class="py-0 text-right">$jumlah</td>
+                                        </tr>                                        
+                                    </tbody>
+                                </table>
+                            EOD;      
+                            
+                            
+                    $spsalesmanlalux = vwgraphpesanbulanlalupersalesman::select('x')->where('kdsalesman', $request->kdsalesman)->pluck('x');
+                    $spsalesmanlaluy = vwgraphpesanbulanlalupersalesman::selectraw('y as y')->where('kdsalesman', $request->kdsalesman)->get();
+                    $spsalesmanlalu = vwgraphpesanbulanlalupersalesman::where('kdsalesman', $request->kdsalesman)->get();
+
+                    $hsthnlalu = '';
+                    $jumlah = 0;
+                    foreach ($spsalesmanlalu as $d) {
+                        $yy = number_format($d->y, 0);
+                        $jumlah += $d->y;
+                        $hsthnlalu .= <<<EOD
+                                    <tr>
+                                        <td class="py-0">$d->x</th>
+                                        <td class="py-0 text-right">$yy</td>
+                                    </tr>
+                                EOD;
+                    }
+
+                    $jumlah = number_format($jumlah,0);
+                    $hsthnlalu = <<<EOD
+                                <table class="table table-sm small">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" class="border-0">Tanggal</th>
+                                        <th scope="col" class="text-right border-0">Total</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        $hsthnlalu
+                                        <tr>
+                                            <th class="py-0">TOTAL</th>
+                                            <th class="py-0 text-right">$jumlah</td>
+                                        </tr>                                        
+                                    </tbody>
+                                </table>
+                            EOD;   
+
+                    return response()->json(['success' => 'Berhasil', 
+                                            'x' => $spsalesmanx, 'y' => $spsalesmany, 'data' => $hsthn, 
+                                            'lalux' => $spsalesmanlalux, 'laluy' => $spsalesmanlaluy, 'datalalu' => $hsthnlalu, 
+                                            'namasalesman' => $namasalesman ]);    
                     break;
         }
 
