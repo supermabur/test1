@@ -43,18 +43,20 @@ class trpesanController extends Controller
 
         switch ($request->mode) {
             case 'saveqty':
+                $jml = $request->qty * $request->harga;
+
                 $form_data = array(
                     'qty' => $request->qty,
                     'harga' => $request->harga,
                     'disc' => 0,
-                    'jumlah' => $request->qty * $request->harga,  
-                    'keterangan' => $request->note
+                    'jumlah' => $jml ,  
+                    'keterangan' => $request->keterangan
                 );
         
                 DB::table('trpesantmpd')->updateOrInsert(['userid' => $cur_user->id, 'kode' => $request->kode], 
                                                     $form_data);   
-        
-                return response()->json(['success' => 'oke']);
+                
+                return response()->json(['success' => 'oke', 'kode' => $request->kode, 'qty' => 'Qty : ' . number_format($request->qty), 'jumlah' => 'Jml : ' . number_format($jml), 'keterangan' => $request->keterangan]);
                 break;
             
             default:

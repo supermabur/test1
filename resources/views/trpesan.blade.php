@@ -1,25 +1,90 @@
 
-@extends('layouts.dashboard')
+@extends('layouts.bs5')
 
 
 @section('content')
+
+
+
     <div class="container my-4">
-        <table class="table">
-            <thead>
+        <nav class="navbar navbar-expand-sm fixed-top navbar-light bg-light">
+            <div class="container">
+                <h4>
+                    <img src="{{ url('images/logokecil.png') }}" style="max-width: 50px; max-height: 50px;"/>
+                    ORDER BARANG
+                </h4>
+                {{-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button> --}}
+                {{-- <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-sm btn-primary" href="#"><i class="fas fa-home"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Features</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Pricing</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown link
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div> --}}
+                <form class="d-flex">
+                    <div class="input-group me-2">
+                        <span class="input-group-text" id="basic-addon1" style="width: auto"><i class="fas fa-search"></i></span>
+                        <input id="data-filter" type="text" class="form-control" placeholder="Pencarian">
+                    </div>
+                    <div style="position: relative">
+                        <button class="btn btn-outline-secondary mx-2" type="submit"><i class="fas fa-shopping-cart"></i></button>
+                        <span id="cartcount" class="badge bg-warning" style="position: absolute; right: 4px; top: -10px; border-radius: 10px;">1</span>
+                    </div>
+                    <a class="btn btn-outline-secondary" href="{{ url('/') }}"><i class="fas fa-home"></i></a>
+                </form>
+            </div>
+          </nav>
+
+
+        {{-- <nav class="navbar fixed-top navbar-light bg-secondary">
+            <div class="container">
+                <div class="input-group">
+                    <span class="input-group-text" id="basic-addon1" style="width: auto"><i class="fas fa-search"></i></span>
+                    <input id="data-filter" type="text" class="form-control" placeholder="Pencarian">
+                </div>
+            </div>
+        </nav> --}}
+
+        <div style="height: 70px">
+
+        </div>
+
+        <table id="data-table" class="table">
+            {{-- <thead>
               <tr>
                 <th scope="col">First</th>
                 <th scope="col">Last</th>
                 <th scope="col">Handle</th>
               </tr>
-            </thead>
+            </thead> --}}
             <tbody>
                 @foreach ($mstbarang as $d)
                     <tr>
                         <td>
                             @if ($d->img)
-                                <img src="data:image/png;base64, {{ base64_encode($d->img) }}" style="max-width: 105px; max-height: 75px;"/>
-                            @else                                
-                                <img src="{{ url('images/logokecil.png') }}" style="max-width: 105px; max-height: 75px;"/>
+                                <img src="data:image/png;base64, {{ base64_encode($d->img) }}" class="border rounded" style="max-width: 105px; max-height: 75px;"/>
+                            @else
+                                <div class="border rounded" style="width: 100px; height: 75px; background-image: url('{{ url('images/noimage2.webp') }}'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                                </div>
+                                {{-- <img src="{{ url('images/noimage2.webp') }}" style="max-width: 105px; max-height: 75px;"/> --}}
                             @endif
                         </td>
                         <td>
@@ -42,12 +107,12 @@
                                     <p class="m-0">{{ number_format($d->hargajual) }}</p>
                                 </div>
                             </div>
-                            <div class="">
-                                <p id="pnote{{ $d->kode }}" class="text-info m-0 small">{{ $d->keterangan }}</p>
+                            <div class="my-1">
+                                <p id="keterangan{{ $d->kode }}" class="text-info m-0 small">{{ $d->keterangan != '' ? 'Ket : ' . $d->keterangan : '' }}</p>
                             </div>
                         
                         </td>
-                        <td id="col{{ $d->kode }}" style="width: 130px"> 
+                        <td id="col{{ $d->kode }}" style="width: 130px" class="text-end"> 
                             {{-- <div class="input-group input-group-sm mb-2">
                                 <div class="input-group-prepend">
                                     <button class="btn btn-outline-danger btn-qty" type="button" data-type="min" data-kode="{{ $d->kode }}" {{ $d->qty >0 ? '' : 'disabled' }}><i class="fas fa-minus-circle"></i></button>
@@ -60,8 +125,13 @@
                             <div class="text-right">
                                 <button id="note{{ $d->kode }}" type="button" class="btn btn-sm btn-outline-info" disabled><i class="far fa-clipboard mr-1"></i>Note</button>
                             </div> --}}
+                            <p id="qty{{ $d->kode }}" class="badge bg-info mb-1">{{ $d->qty == 0 ? '' : 'Qty : ' . number_format($d->qty) }}</p>
+                            <br>
+                            <p id="jumlah{{ $d->kode }}" class="badge bg-info mb-1">{{ $d->jumlah == 0 ? '' : 'Jml : ' . number_format($d->jumlah) }}</p>
+                            <br>
+
                             <div class="text-right">
-                                <button type="button" data-kode="{{ $d->kode }}" class="btn btn-sm btn-outline-info btn-cart"><i class="fas fa-cart-plus mr-1"></i>Keranjang</button>
+                                <button type="button" data-kode="{{ $d->kode }}" data-qty="{{ $d->qty }}" data-harga="{{ $d->harga }}" data-keterangan="{{ $d->keterangan }}" class="btn btn-sm btn-outline-primary btn-cart"><i class="fas fa-cart-plus me-1"></i>Keranjang</button>
                             </div>
                         </td>
                     </tr>                        
@@ -71,55 +141,62 @@
     </div>
 
 
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 45% !important; height: auto">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="modaltitle">Modal title</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <table class="table">
-                        <tbody>
-                          <tr>
-                            <td>Qty</td>
-                            <td>
-                                <input id="qqty" type="number" class="form-control" min="0" value="0">
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Harga</td>
-                            <td>
-                                <input id="qharga" type="number" class="form-control" min="0" value="0">
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Keterangan</td>
-                            <td>
-                                <textarea id="qketerangan" cols="30" rows="3" class="form-control"></textarea>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+    <div class="modal fade" id="exampleModalCenter" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog h-auto" style="max-width: 500px !important">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modaltitle">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <form id="form-modal" action="" method="post" enctype="multipart/form-data" >
+                    @csrf
+                    <div class="modal-body">
+                        <div class="container">
+
+                            <div class="mb-3 row">
+                                <label class="col-lg-3 col-form-label">Qty</label>
+                                <div class="col-lg-5">
+                                    <input id="qqty" type="number" class="form-control" name="qty" min="0" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label class="col-lg-3 col-form-label">Harga</label>
+                                <div class="col-lg-5">
+                                    <input id="qharga" type="number" class="form-control" name="harga" min="0" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label class="col-lg-3 col-form-label">Keterangan</label>
+                                <div class="col-lg-9">
+                                    <textarea id="qketerangan" name="keterangan" cols="30" rows="4" class="form-control"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input id="modalkode" name="kode" type="text">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" form="form-modal" id="btn-simpan" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
 
 @endsection
 
 
 @section('scripts')
+    <script src="{{ url('js/filter-table.min.js') }}"></script>
 
     <script>
+        $(function(){
+            $('#data-table').filterTable('#data-filter');
+        });
+
         function saveqty(kode){
             loading2(1, '#col' + kode, 'Saving ...');
 
@@ -160,13 +237,54 @@
 
         $('.btn-cart').click(function(e){
             e.preventDefault();
-            
-            kode = $(this).attr('data-kode');
+            $('#form-modal')[0].reset();
+
+            var kode = $(this).attr('data-kode');
+            var qty = $(this).attr('data-qty');
+            var harga = $(this).attr('data-harga');
+            var keterangan = $(this).attr('data-keterangan');
             $('#modaltitle').text( $('#nama' + kode).text() );
+            $('#modalkode').val(kode);
+            $('#qqty').val(qty);
+            $('#qharga').val(harga);
+            $('#qketerangan').val(keterangan);
             $('#exampleModalCenter').modal('show');
         });
 
 
+        $('#form-modal').on('submit', function(event){
+            event.preventDefault();
+
+            var fd =  new FormData(this);
+            fd.append("mode", 'saveqty');
+
+            loading2(1, 'body', 'Menyimpan data ...');
+
+            $.ajax({
+                url:"{{ route('newsp.store') }}",
+                method:"POST",
+                data: fd,
+                contentType: false,
+                cache:false,
+                processData: false,
+                dataType:"json",
+                success:function(data)
+                {
+                    console.log(data);
+                    if(data.error){
+                        alert('ERROR!!!  ' + data.error);
+                    }
+                    else{
+                        $('#qty' + data.kode).text(data.qty);
+                        $('#jumlah' + data.kode).text(data.jumlah);
+                        $('#keterangan' + data.kode).text('Ket : ' + data.keterangan);
+                        $('#exampleModalCenter').modal('hide');
+                    }
+                    loading2(0, 'body');
+                }
+            })
+        });
+        
 
         $('.btn-qty').click(function(e){
             e.preventDefault();
