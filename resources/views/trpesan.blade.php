@@ -7,12 +7,12 @@
 
 
     <div class="container my-4">
-        <nav class="navbar navbar-expand-sm fixed-top navbar-light bg-light">
+        <nav class="navbar navbar-expand-sm fixed-top navbar-light bg-light border">
             <div class="container">
-                <h4>
-                    <img src="{{ url('images/logokecil.png') }}" style="max-width: 50px; max-height: 50px;"/>
-                    ORDER BARANG
-                </h4>
+                <div class="d-flex">
+                    <img src="{{ url('images/logokecil.png') }}" style="max-width: 50px; max-height: 50px;" class="me-2"/>
+                    <h4 class="align-self-center">ORDER BARANG</h4>
+                </div>
                 {{-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button> --}}
@@ -46,7 +46,9 @@
                     </div>
                     <div style="position: relative">
                         <button class="btn btn-outline-secondary mx-2" type="submit"><i class="fas fa-shopping-cart"></i></button>
-                        <span id="cartcount" class="badge bg-warning" style="position: absolute; right: 4px; top: -10px; border-radius: 10px;">1</span>
+                        <span id="cartcount" class="badge bg-warning text-dark" style="position: absolute; right: 4px; top: -10px; border-radius: 10px; {{ $cartcount == 0 ? 'display:none;' : '' }}">
+                            {{ $cartcount }}
+                        </span>
                     </div>
                     <a class="btn btn-outline-secondary" href="{{ url('/') }}"><i class="fas fa-home"></i></a>
                 </form>
@@ -88,7 +90,7 @@
                             @endif
                         </td>
                         <td>
-                            <h5 id="nama{{ $d->kode }}" class="m-0">{{ $d->nama }}</h5>
+                            <h5 class="m-0">{{ $d->nama }}</h5>
                             <div class="row">
                                 <div class="col my-1">
                                     <p class="m-0 font-weight-bold"><small>Jenis</small></p>
@@ -108,11 +110,11 @@
                                 </div>
                             </div>
                             <div class="my-1">
-                                <p id="keterangan{{ $d->kode }}" class="text-info m-0 small">{{ $d->keterangan != '' ? 'Ket : ' . $d->keterangan : '' }}</p>
+                                <p id="keterangan{{ $d->kodex }}" class="text-primary m-0 small">{{ $d->keterangan != '' ? 'Ket : ' . $d->keterangan : '' }}</p>
                             </div>
                         
                         </td>
-                        <td id="col{{ $d->kode }}" style="width: 130px" class="text-end"> 
+                        <td id="col{{ $d->kodex }}" style="width: 130px" class="text-end"> 
                             {{-- <div class="input-group input-group-sm mb-2">
                                 <div class="input-group-prepend">
                                     <button class="btn btn-outline-danger btn-qty" type="button" data-type="min" data-kode="{{ $d->kode }}" {{ $d->qty >0 ? '' : 'disabled' }}><i class="fas fa-minus-circle"></i></button>
@@ -125,13 +127,13 @@
                             <div class="text-right">
                                 <button id="note{{ $d->kode }}" type="button" class="btn btn-sm btn-outline-info" disabled><i class="far fa-clipboard mr-1"></i>Note</button>
                             </div> --}}
-                            <p id="qty{{ $d->kode }}" class="badge bg-info mb-1">{{ $d->qty == 0 ? '' : 'Qty : ' . number_format($d->qty) }}</p>
+                            <p id="qty{{ $d->kodex }}" class="badge bg-info text-dark mb-1">{{ $d->qty == 0 ? '' : 'Qty : ' . number_format($d->qty) }}</p>
                             <br>
-                            <p id="jumlah{{ $d->kode }}" class="badge bg-info mb-1">{{ $d->jumlah == 0 ? '' : 'Jml : ' . number_format($d->jumlah) }}</p>
+                            <p id="jumlah{{ $d->kodex }}" class="badge bg-info text-dark mb-1">{{ $d->qty == 0 ? '' : 'Jml : ' . number_format($d->jumlah) }}</p>
                             <br>
 
                             <div class="text-right">
-                                <button type="button" data-kode="{{ $d->kode }}" data-qty="{{ $d->qty }}" data-harga="{{ $d->harga }}" data-keterangan="{{ $d->keterangan }}" class="btn btn-sm btn-outline-primary btn-cart"><i class="fas fa-cart-plus me-1"></i>Keranjang</button>
+                                <button id="btn-cart{{ $d->kodex }}" type="button" data-kode="{{ $d->kode }}" data-nama="{{ $d->nama }}" data-qty="{{ round($d->qty) }}" data-harga="{{ round($d->harga) }}" data-keterangan="{{ $d->keterangan }}" class="btn btn-sm btn-outline-primary btn-cart"><i class="fas fa-cart-plus me-1"></i>Keranjang</button>
                             </div>
                         </td>
                     </tr>                        
@@ -144,7 +146,7 @@
     <div class="modal fade" id="exampleModalCenter" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog h-auto" style="max-width: 500px !important">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg-light">
                     <h5 class="modal-title" id="modaltitle">Modal title</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -176,10 +178,11 @@
 
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <input id="modalkode" name="kode" type="text">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" form="form-modal" id="btn-simpan" class="btn btn-primary">Simpan</button>
+                    <div class="modal-footer justify-content-between">
+                        <input id="modalkode" name="kode" type="hidden">
+                        <button type="button" class="btn btn-danger" onclick="hapusitem()"><i class="fas fa-trash-alt me-2"></i>Hapus</button>
+                        <button id="btn-simpan" type="submit" form="form-modal" class="btn btn-primary"><i class="far fa-save me-2"></i>Simpan</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times me-2"></i>Close</button>
                     </div>
                 </form>
             </div>
@@ -197,20 +200,105 @@
             $('#data-table').filterTable('#data-filter');
         });
 
+
+
+        $('.btn-cart').click(function(e){
+            e.preventDefault();
+            $('#form-modal')[0].reset();
+
+            var kode = $(this).attr('data-kode');
+            var nama = $(this).attr('data-nama');
+            var qty = $(this).attr('data-qty');
+            var harga = $(this).attr('data-harga');
+            var keterangan = $(this).attr('data-keterangan');
+
+            if (qty == 0) {qty = '';}
+            if (harga == 0) {harga = '';}
+
+            $('#modaltitle').text(nama);
+            $('#modalkode').val(kode);
+            $('#qqty').val(qty);
+            $('#qharga').val(harga);
+            $('#qketerangan').val(keterangan);
+            $('#exampleModalCenter').modal('show');
+        });
+
+
+        // function hapusitem(){
+        //     loading2(1, '.modal-content', 'Menghapus data ...');
+
+        //     var kode = $('#modalkode').val();
+        //     var pdata = {mode:"hapusitem",
+        //                     kode: kode,
+        //                     _token: _token};   
+
+        //     $.ajax({
+        //             url: '{{ route("newsp.store") }}',
+        //             type:"POST",
+        //             data:pdata,
+        //             async: true,
+        //             dataFilter: function(response){
+        //                     return response;
+        //                 },
+        //             success:function(data){
+        //                 $('#qty' + data.kodex).text('Qty : 0');
+        //                 $('#jumlah' + data.kodex).text('Jml : 0');
+        //                 $('#keterangan' + data.kodex).text('');                            
+
+        //                 $('#btn-cart' + data.kodex).attr('data-qty', 0); 
+        //                 $('#btn-cart' + data.kodex).attr('data-harga', 0); 
+        //                 $('#btn-cart' + data.kodex).attr('data-keterangan', ''); 
+
+        //                 showcartcount(data.cartcount);
+        //                 loading2(0, '.modal-content', 'Menghapus data ...');
+        //             },
+        //             error: function(err){
+        //                 loading2(0, '.modal-content', 'Menghapus data ...');
+        //             }
+        //     });
+
+        // }        
+        
+        
+        function hapusitem(){
+            loading2(1, '.modal-content', 'Deleting ...');
+            var kode = $('#modalkode').val();
+            var pdata = {mode:'hapusitem', 
+                        kode: kode,
+                        _token: _token};
+            $.ajax({
+                    url: '{{ route("newsp.store") }}',
+                    type:"POST",
+                    data:pdata,
+                    async: true,
+                    dataFilter: function(response){
+                            return response;
+                        },
+                    success:function(data){
+                        console.log(data);
+                        if(data.error){
+                            alert('ERROR!!!  ' + data.error);
+                        }
+                        else{
+                            // console.log(data);
+                        }
+                        loading2(0, '.modal-content');
+                    }
+            });  
+        };
+
+
         function saveqty(kode){
             loading2(1, '#col' + kode, 'Saving ...');
-
             var note = $('#pnote' + kode).text();
             var qty = $('#qty' + kode).val();
             var harga = 1000;
-
             var pdata = {mode:'saveqty', 
                         kode: kode,
                         note: note,
                         qty: qty,
                         harga: harga,
                         _token: _token};
-
             $.ajax({
                     url: '{{ route("newsp.store") }}',
                     type:"POST",
@@ -229,34 +317,22 @@
                         }
                         loading2(0, '#col' + kode);
                     }
-
             });  
         };
-
-
-
-        $('.btn-cart').click(function(e){
-            e.preventDefault();
-            $('#form-modal')[0].reset();
-
-            var kode = $(this).attr('data-kode');
-            var qty = $(this).attr('data-qty');
-            var harga = $(this).attr('data-harga');
-            var keterangan = $(this).attr('data-keterangan');
-            $('#modaltitle').text( $('#nama' + kode).text() );
-            $('#modalkode').val(kode);
-            $('#qqty').val(qty);
-            $('#qharga').val(harga);
-            $('#qketerangan').val(keterangan);
-            $('#exampleModalCenter').modal('show');
-        });
 
 
         $('#form-modal').on('submit', function(event){
             event.preventDefault();
 
+            var q = $('#qqty').val();
+            if (q < 1) {
+                alert('Qty tidak boleh kurang atau sama dengan 0');
+                return;
+            }
+
             var fd =  new FormData(this);
             fd.append("mode", 'saveqty');
+            console.log(fd);
 
             loading2(1, 'body', 'Menyimpan data ...');
 
@@ -275,9 +351,19 @@
                         alert('ERROR!!!  ' + data.error);
                     }
                     else{
-                        $('#qty' + data.kode).text(data.qty);
-                        $('#jumlah' + data.kode).text(data.jumlah);
-                        $('#keterangan' + data.kode).text('Ket : ' + data.keterangan);
+                        $q = parseFloat(data.qty).toLocaleString(window.document.documentElement.lang);
+                        $j = parseFloat(data.jumlah).toLocaleString(window.document.documentElement.lang);
+                        $('#qty' + data.kodex).text('Qty : ' + $q);
+                        $('#jumlah' + data.kodex).text('Jml : ' + $j);
+                        if (data.keterangan) {
+                            $('#keterangan' + data.kodex).text('Ket : ' + data.keterangan);                            
+                        }
+
+                        $('#btn-cart' + data.kodex).attr('data-qty', data.qty); 
+                        $('#btn-cart' + data.kodex).attr('data-harga', data.harga); 
+                        $('#btn-cart' + data.kodex).attr('data-keterangan', data.keterangan); 
+
+                        showcartcount(data.cartcount);
                         $('#exampleModalCenter').modal('hide');
                     }
                     loading2(0, 'body');
@@ -285,6 +371,16 @@
             })
         });
         
+
+        function showcartcount(qty){
+            $('#cartcount').text(qty);
+            if (qty == 0) {
+                $('#cartcount').hide();
+            } else {
+                $('#cartcount').show();
+            } 
+        }
+
 
         $('.btn-qty').click(function(e){
             e.preventDefault();

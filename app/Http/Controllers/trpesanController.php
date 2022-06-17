@@ -25,13 +25,23 @@ class trpesanController extends Controller
         $cur_user = \Auth::user();
         // $mstbarang = posframe_mstbarang::orderby('nama')->get();
 
-        $que = "select a.*, ifnull(b.qty, 0) as qty, ifnull(b.harga, 0) as harga, ifnull(b.disc, 0) as disc, ifnull(b.jumlah, 0) as jumlah, ifnull(b.keterangan, '') as keterangan
+        $que = "select a.*, ifnull(b.qty, 0) as qty, ifnull(b.harga, 0) as harga, ifnull(b.disc, 0) as disc, ifnull(b.jumlah, 0) as jumlah, ifnull(b.keterangan, '') as keterangan,
+                    REPLACE(a.kode, '.', '') as kodex
                 FROM posframe_mstbarang a
                 left join trpesantmpd b on a.kode = b.kode and b.userid = $cur_user->id 
                 order by a.nama";
         $mstbarang = DB::select(DB::raw($que));
-                
-        return view('trpesan',compact('mstbarang'));
+        
+        $cartcount = $this->cartcount();
+
+        return view('trpesan',compact('mstbarang', 'cartcount'));
+    }
+
+
+    function cartcount(){
+        $cur_user = \Auth::user();
+        $tmp = trpesantmpd::where('userid', $cur_user->id)->where('qty', '>' ,  0)->count();
+        return $tmp;
     }
 
     
@@ -56,7 +66,27 @@ class trpesanController extends Controller
                 DB::table('trpesantmpd')->updateOrInsert(['userid' => $cur_user->id, 'kode' => $request->kode], 
                                                     $form_data);   
                 
-                return response()->json(['success' => 'oke', 'kode' => $request->kode, 'qty' => 'Qty : ' . number_format($request->qty), 'jumlah' => 'Jml : ' . number_format($jml), 'keterangan' => $request->keterangan]);
+                $cartcount = $this->cartcount();
+
+                return response()->json(['success' => 'oke', 
+                                        'cartcount' => $cartcount, 
+                                        'kode' => $request->kode, 
+                                        'kodex' => str_replace('.', '', $request->kode), 
+                                        'qty' => $request->qty, 
+                                        'harga' => $request->harga, 
+                                        'jumlah' => $jml, 
+                                        'keterangan' => $request->keterangan]);
+                break;
+
+                
+            case 'hapusitem':
+                trpesantmpd::where('userid', $cur_user->id)->where('kode', $request->kode)->delete();
+                
+                $cartcount = $this->cartcount();
+
+                return response()->json(['success' => 'oke', 
+                                        'cartcount' => $cartcount, 
+                                        'kodex' => str_replace('.', '', $request->kode)]);
                 break;
             
             default:
