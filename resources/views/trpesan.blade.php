@@ -9,7 +9,7 @@
     <div class="container my-4">
         <nav class="navbar navbar-expand-sm fixed-top navbar-light bg-light border">
             <div class="container">
-                <div class="d-flex">
+                <div class="d-flex my-1">
                     <img src="{{ url('images/logokecil.png') }}" style="max-width: 50px; max-height: 50px;" class="me-2"/>
                     <h4 class="align-self-center">ORDER BARANG</h4>
                 </div>
@@ -39,7 +39,7 @@
                         </li>
                     </ul>
                 </div> --}}
-                <form class="d-flex">
+                <form class="d-flex my-1">
                     <div class="input-group me-2">
                         <span class="input-group-text" id="basic-addon1" style="width: auto"><i class="fas fa-search"></i></span>
                         <input id="data-filter" type="text" class="form-control" placeholder="Pencarian">
@@ -65,8 +65,15 @@
             </div>
         </nav> --}}
 
-        <div style="height: 70px">
-
+        <div >
+            <div class="row">
+                <div class="col-md-6 my-3 text-white">
+                    <h4>alskdjalskdjaslkdjalsdjalsdalksdjalksdjalsjdalksdj</h4>
+                </div>
+                <div class="col-md-6 my-2 text-white">
+                    <h4>alskdjalskdjaslkdjalsdjalsdalksdjalksdjalsjdalksdj</h4>
+                </div>
+            </div>
         </div>
 
         <table id="data-table" class="table">
@@ -104,10 +111,10 @@
                                     <p class="m-0"><small>Saldo</small></p>
                                     <p class="m-0">{{ number_format($d->saldoglobal) }}</p>
                                 </div>
-                                <div class="col my-1">
+                                {{-- <div class="col my-1">
                                     <p class="m-0"><small>Harga</small></p>
                                     <p class="m-0">{{ number_format($d->hargajual) }}</p>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="my-1">
                                 <p id="keterangan{{ $d->kodex }}" class="text-primary m-0 small">{{ $d->keterangan != '' ? 'Ket : ' . $d->keterangan : '' }}</p>
@@ -180,8 +187,8 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <input id="modalkode" name="kode" type="hidden">
-                        <button type="button" class="btn btn-danger" onclick="hapusitem()"><i class="fas fa-trash-alt me-2"></i>Hapus</button>
-                        <button id="btn-simpan" type="submit" form="form-modal" class="btn btn-primary"><i class="far fa-save me-2"></i>Simpan</button>
+                        <button id="btn-hapus" type="submit" form="form-modal" class="btn btn-danger" value="hapusitem"><i class="fas fa-trash-alt me-2"></i>Hapus</button>
+                        <button id="btn-simpan" type="submit" form="form-modal" class="btn btn-primary" value="saveqty"><i class="far fa-save me-2"></i>Simpan</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times me-2"></i>Close</button>
                     </div>
                 </form>
@@ -224,70 +231,6 @@
         });
 
 
-        // function hapusitem(){
-        //     loading2(1, '.modal-content', 'Menghapus data ...');
-
-        //     var kode = $('#modalkode').val();
-        //     var pdata = {mode:"hapusitem",
-        //                     kode: kode,
-        //                     _token: _token};   
-
-        //     $.ajax({
-        //             url: '{{ route("newsp.store") }}',
-        //             type:"POST",
-        //             data:pdata,
-        //             async: true,
-        //             dataFilter: function(response){
-        //                     return response;
-        //                 },
-        //             success:function(data){
-        //                 $('#qty' + data.kodex).text('Qty : 0');
-        //                 $('#jumlah' + data.kodex).text('Jml : 0');
-        //                 $('#keterangan' + data.kodex).text('');                            
-
-        //                 $('#btn-cart' + data.kodex).attr('data-qty', 0); 
-        //                 $('#btn-cart' + data.kodex).attr('data-harga', 0); 
-        //                 $('#btn-cart' + data.kodex).attr('data-keterangan', ''); 
-
-        //                 showcartcount(data.cartcount);
-        //                 loading2(0, '.modal-content', 'Menghapus data ...');
-        //             },
-        //             error: function(err){
-        //                 loading2(0, '.modal-content', 'Menghapus data ...');
-        //             }
-        //     });
-
-        // }        
-        
-        
-        function hapusitem(){
-            loading2(1, '.modal-content', 'Deleting ...');
-            var kode = $('#modalkode').val();
-            var pdata = {mode:'hapusitem', 
-                        kode: kode,
-                        _token: _token};
-            $.ajax({
-                    url: '{{ route("newsp.store") }}',
-                    type:"POST",
-                    data:pdata,
-                    async: true,
-                    dataFilter: function(response){
-                            return response;
-                        },
-                    success:function(data){
-                        console.log(data);
-                        if(data.error){
-                            alert('ERROR!!!  ' + data.error);
-                        }
-                        else{
-                            // console.log(data);
-                        }
-                        loading2(0, '.modal-content');
-                    }
-            });  
-        };
-
-
         function saveqty(kode){
             loading2(1, '#col' + kode, 'Saving ...');
             var note = $('#pnote' + kode).text();
@@ -324,6 +267,14 @@
         $('#form-modal').on('submit', function(event){
             event.preventDefault();
 
+            var mod = $(document.activeElement).val();
+
+            if (mod != 'saveqty') {
+                if (confirm('Yakin akan menghapus item ini ? ') != true) {
+                    return;
+                }
+            }
+
             var q = $('#qqty').val();
             if (q < 1) {
                 alert('Qty tidak boleh kurang atau sama dengan 0');
@@ -331,10 +282,13 @@
             }
 
             var fd =  new FormData(this);
-            fd.append("mode", 'saveqty');
-            console.log(fd);
+            fd.append("mode", mod);
 
-            loading2(1, 'body', 'Menyimpan data ...');
+            var prosmsg = 'Menyimpan';
+            if (mod != 'saveqty') {
+                prosmsg = 'Menghapus'
+            }
+            loading2(1, '.modal-content', prosmsg + ' data ...');
 
             $.ajax({
                 url:"{{ route('newsp.store') }}",
@@ -351,22 +305,31 @@
                         alert('ERROR!!!  ' + data.error);
                     }
                     else{
-                        $q = parseFloat(data.qty).toLocaleString(window.document.documentElement.lang);
-                        $j = parseFloat(data.jumlah).toLocaleString(window.document.documentElement.lang);
-                        $('#qty' + data.kodex).text('Qty : ' + $q);
-                        $('#jumlah' + data.kodex).text('Jml : ' + $j);
-                        if (data.keterangan) {
-                            $('#keterangan' + data.kodex).text('Ket : ' + data.keterangan);                            
-                        }
+                        if (mod == 'saveqty') {
+                            $q = parseFloat(data.qty).toLocaleString(window.document.documentElement.lang);
+                            $j = parseFloat(data.jumlah).toLocaleString(window.document.documentElement.lang);
+                            $('#qty' + data.kodex).text('Qty : ' + $q);
+                            $('#jumlah' + data.kodex).text('Jml : ' + $j);
+                            if (data.keterangan) {$('#keterangan' + data.kodex).text('Ket : ' + data.keterangan);}
 
-                        $('#btn-cart' + data.kodex).attr('data-qty', data.qty); 
-                        $('#btn-cart' + data.kodex).attr('data-harga', data.harga); 
-                        $('#btn-cart' + data.kodex).attr('data-keterangan', data.keterangan); 
+                            $('#btn-cart' + data.kodex).attr('data-qty', data.qty); 
+                            $('#btn-cart' + data.kodex).attr('data-harga', data.harga); 
+                            $('#btn-cart' + data.kodex).attr('data-keterangan', data.keterangan);                             
+                        }
+                        else{
+                            $('#qty' + data.kodex).text('');
+                            $('#jumlah' + data.kodex).text('');
+                            $('#keterangan' + data.kodex).text('');                            
+
+                            $('#btn-cart' + data.kodex).attr('data-qty', 0); 
+                            $('#btn-cart' + data.kodex).attr('data-harga', 0); 
+                            $('#btn-cart' + data.kodex).attr('data-keterangan', ''); 
+                        }
 
                         showcartcount(data.cartcount);
                         $('#exampleModalCenter').modal('hide');
                     }
-                    loading2(0, 'body');
+                    loading2(0, '.modal-content');
                 }
             })
         });
