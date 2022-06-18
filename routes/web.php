@@ -58,3 +58,5 @@ Route::resource('mstmerk', 'mstmerkController');
 Route::resource('mstjenis', 'mstjenisController');
 
 Route::resource('estkirimmemo', 'rptpesanestkirimmemoController');
+
+Route::resource('cartsp', 'trpesancartController');

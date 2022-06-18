@@ -11,7 +11,7 @@
             <div class="container">
                 <div class="d-flex my-1">
                     <img src="{{ url('images/logokecil.png') }}" style="max-width: 50px; max-height: 50px;" class="me-2"/>
-                    <h4 class="align-self-center">ORDER BARANG</h4>
+                    <h4 class="align-self-center">SURAT PESAN</h4>
                 </div>
                 {{-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -45,7 +45,7 @@
                         <input id="data-filter" type="text" class="form-control" placeholder="Pencarian">
                     </div>
                     <div style="position: relative">
-                        <button class="btn btn-outline-secondary mx-2" type="submit"><i class="fas fa-shopping-cart"></i></button>
+                        <a class="btn btn-outline-secondary mx-2" href="{{ url('cartsp') }}"><i class="fas fa-shopping-cart"></i></a>
                         <span id="cartcount" class="badge bg-warning text-dark" style="position: absolute; right: 4px; top: -10px; border-radius: 10px; {{ $cartcount == 0 ? 'display:none;' : '' }}">
                             {{ $cartcount }}
                         </span>
@@ -310,7 +310,7 @@
                             $j = parseFloat(data.jumlah).toLocaleString(window.document.documentElement.lang);
                             $('#qty' + data.kodex).text('Qty : ' + $q);
                             $('#jumlah' + data.kodex).text('Jml : ' + $j);
-                            if (data.keterangan) {$('#keterangan' + data.kodex).text('Ket : ' + data.keterangan);}
+                            if (data.keterangan) {$('#keterangan' + data.kodex).text('Ket : ' + data.keterangan);}else{$('#keterangan' + data.kodex).text('');}
 
                             $('#btn-cart' + data.kodex).attr('data-qty', data.qty); 
                             $('#btn-cart' + data.kodex).attr('data-harga', data.harga); 
