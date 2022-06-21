@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\model\trpesantmpd;
+use App\model\mstongkir;
+use App\model\mstgudang;
+
 
 use DB;
 use Carbon\Carbon;
@@ -37,10 +40,13 @@ class trpesancartController extends Controller
                 inner join trpesantmpd b on a.kode = b.kode and b.qty > 0 and b.userid = $cur_user->id 
                 order by a.nama";
         $mstbarang = DB::select(DB::raw($que));
+
+        $mstongkir = mstongkir::orderby('kota')->get();
+        $mstgudang = mstgudang::where('kode','<>', '')->orderby('nama')->get();
         
         $cartcount = $this->cartcount();
 
-        return view('trpesancart',compact('mstbarang', 'cartcount'));
+        return view('trpesancart',compact('mstbarang', 'mstgudang', 'mstongkir', 'cartcount'));
     }
 
 

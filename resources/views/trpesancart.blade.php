@@ -2,6 +2,10 @@
 @extends('layouts.bs5')
 
 
+@section('filecss')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endsection
+
 @section('content')
 
     <div class="container my-4">
@@ -36,7 +40,7 @@
 
 
         <div class="card my-4">
-            <h5 class="card-header text-white"><i class="far fa-list-alt me-2"></i>DAFTAR BARANG</h5>
+            <h5 class="card-header bg-secondary text-white"><i class="far fa-list-alt me-2"></i>DAFTAR BARANG</h5>
             <div class="card-body">
                 <div id="kosong" class="text-center {{ $cartcount == 0 ? '' : 'd-none' }}">
                     <h6 class="my-2">Belum ada barang yang diorder</h6>
@@ -83,29 +87,56 @@
         
 
         <div class="card my-4">
-            <h5 class="card-header text-white"><i class="far fa-user me-2"></i>DATA CUSTOMER</h5>
+            <h5 class="card-header bg-secondary text-white"><i class="far fa-user me-2"></i>DATA CUSTOMER</h5>
             <div class="card-body">
-                <div class="mb-3 row">
+                <div class="mb-2 row">
                     <label class="col-sm-2 col-form-label">Nama</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="nama">
+                        <input type="text" class="form-control form-control-sm" id="nama">
                     </div>
                 </div>
-                <div class="mb-3 row">
+                <div class="mb-2 row">
                     <label class="col-sm-2 col-form-label">Alamat</label>
                     <div class="col-sm-10">
                         <textarea name="alamat" class="form-control" cols="30" rows="4"></textarea>
                     </div>
                 </div>
-                <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label">No HP</label>
-                    <div class="col-sm-10">
-                        <input type="tel" class="form-control" id="nohp">
+                <div class="mb-2 row">
+                    <label class="col-sm-2 col-form-label">Kota</label>
+                    <div class="col-sm-5">
+                        <select id="kota" class="sel2 form-control form-control-sm">
+                            @foreach ($mstongkir as $d)
+                                <option value="{{ $d->id }}" data-biayax="{{ number_format($d->biaya) }}" data-biaya="{{ $d->biaya }}">{{ $d->kota }}</option>                                
+                            @endforeach
+                        </select>
                     </div>
                 </div>
+                <div class="mb-2 row">
+                    <label class="col-sm-2 col-form-label">Ongkir</label>
+                    <div class="col-sm-5">
+                        <input id="ongkir" type="text" class="form-control form-control-sm" readonly>
+                    </div>
+                </div>
+                <div class="mb-2 row">
+                    <label class="col-sm-2 col-form-label">No HP</label>
+                    <div class="col-sm-5">
+                        <input type="tel" class="form-control form-control-sm" id="nohp">
+                    </div>
+                </div>
+                <hr>
+                <div class="mb-2 row">
+                    <label class="col-sm-2 col-form-label">Outlet</label>
+                    <div class="col-sm-5">
+                        <select id="gudang" class="form-control form-control-sm">
+                            @foreach ($mstgudang as $d)
+                                <option value="{{ $d->id }}">{{ $d->nama . '  (' . $d->kode . ')' }}</option>                                
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
             </div>
         </div>
-
 
 
     </div>
@@ -162,8 +193,26 @@
 
 
 @section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
+
+        $('#gudang').select2({
+            placeholder: "Pilih Gudang",
+            allowClear: true
+        });
+
+        $('#kota').select2({
+            placeholder: "Pilih Kota",
+            allowClear: true
+        });
+
+        $('#kota').on('select2:select', function (e) {
+            var data = e.params.data;
+            var biayax = $("#kota").select2().find(":selected").data("biayax");
+            $('#ongkir').val(biayax);
+        });
+
 
         $('.btn-cart').click(function(e){
             e.preventDefault();

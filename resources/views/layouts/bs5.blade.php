@@ -25,7 +25,7 @@
     @yield('filecss')      
 
     <!-- eki -->
-    <link rel="stylesheet" href="{{ url('css/eki.css') }}">
+    {{-- <link rel="stylesheet" href="{{ url('css/eki.css') }}"> --}}
 
 
   </head>
