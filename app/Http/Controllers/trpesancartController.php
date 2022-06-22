@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\model\trpesantmpd;
 use App\model\mstongkir;
 use App\model\mstgudang;
-
+use App\model\posframe_mstleasing;
 
 use DB;
 use Carbon\Carbon;
@@ -42,9 +42,10 @@ class trpesancartController extends Controller
         $mstbarang = DB::select(DB::raw($que));
 
         $mstongkir = mstongkir::orderby('kota')->get();
-        $mstgudang = mstgudang::where('kode','<>', '')->orderby('nama')->get();
+        $mstgudang = mstgudang::where('kode','<>', '')->where('nama','<>', '-')->orderby('nama')->get();
+        $mstleasing = posframe_mstleasing::orderby('nama')->get();
         
-        $cartcount = $this->cartcount();
+        $cartcount = $this->cartcount();  
 
         return view('trpesancart',compact('mstbarang', 'mstgudang', 'mstongkir', 'cartcount'));
     }

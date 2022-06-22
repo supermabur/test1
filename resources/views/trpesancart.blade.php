@@ -10,7 +10,6 @@
 
     <div class="container my-4">
 
-
         <nav class="navbar navbar-expand-sm fixed-top navbar-light bg-light border">
             <div class="container">
                 <div class="d-flex my-1">
@@ -104,7 +103,8 @@
                 <div class="mb-2 row">
                     <label class="col-sm-2 col-form-label">Kota</label>
                     <div class="col-sm-5">
-                        <select id="kota" class="sel2 form-control form-control-sm">
+                        <select id="selectkota" class="sel2 form-control form-control-sm sel2">
+                            <option value=""></option>      
                             @foreach ($mstongkir as $d)
                                 <option value="{{ $d->id }}" data-biayax="{{ number_format($d->biaya) }}" data-biaya="{{ $d->biaya }}">{{ $d->kota }}</option>                                
                             @endforeach
@@ -126,8 +126,9 @@
                 <hr>
                 <div class="mb-2 row">
                     <label class="col-sm-2 col-form-label">Outlet</label>
-                    <div class="col-sm-5">
-                        <select id="gudang" class="form-control form-control-sm">
+                    <div class="col-sm-10">
+                        <select id="selectgudang" class="form-control form-control-sm sel2">
+                            <option value=""></option>      
                             @foreach ($mstgudang as $d)
                                 <option value="{{ $d->id }}">{{ $d->nama . '  (' . $d->kode . ')' }}</option>                                
                             @endforeach
@@ -135,6 +136,33 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+        
+
+        <div class="card my-4">
+            <h5 class="card-header bg-secondary text-white"><i class="far fa-user me-2"></i>PEMBAYARAN</h5>
+            <div class="card-body">
+                <div class="mb-2 row">
+                    <label class="col-sm-2 col-form-label">DP</label>
+                    <div class="col-sm-5">
+                        <input id="dp" type="number" class="form-control form-control-sm">
+                    </div>
+                </div>
+                <div class="mb-2 row">
+                    <label class="col-sm-2 col-form-label">Kota</label>
+                    <div class="col-sm-5">
+                        <select id="selectkota" class="sel2 form-control form-control-sm sel2">
+                            <option value=""></option>      
+                            @foreach ($mstleasing as $d)
+                                <option value="{{ $d->kode }}">{{ $d->nama }}</option>                                
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-sm-5">
+                        <small>Kosongi jika tidak menggunakan leasing</small>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -196,22 +224,27 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
+        $(document).ready(function() {
+            $('.sel2').select2(
+                {
+                // placeholder: "Pilih"
+                // allowClear: true
+                }
+            );
 
-        $('#gudang').select2({
-            placeholder: "Pilih Gudang",
-            allowClear: true
+            // $('#selectgudang').select2({
+            //     placeholder: "Pilih Gudang",
+            //     allowClear: true
+            // });
+
+            $('#selectkota').on('select2:select', function (e) {
+                var data = e.params.data;
+                var biayax = $("#selectkota").select2().find(":selected").data("biayax");
+                $('#ongkir').val(biayax);
+            });
         });
 
-        $('#kota').select2({
-            placeholder: "Pilih Kota",
-            allowClear: true
-        });
 
-        $('#kota').on('select2:select', function (e) {
-            var data = e.params.data;
-            var biayax = $("#kota").select2().find(":selected").data("biayax");
-            $('#ongkir').val(biayax);
-        });
 
 
         $('.btn-cart').click(function(e){
