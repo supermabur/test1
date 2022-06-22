@@ -8,6 +8,18 @@
 
 @section('content')
 
+    <style>
+        .select2-container {
+            box-sizing: border-box;
+            display: inline-block;
+            margin: 0;
+            position: relative;
+            vertical-align: middle;
+            width: 100% !important;
+        }
+    </style>
+
+
     <div class="container my-4">
 
         <nav class="navbar navbar-expand-sm fixed-top navbar-light bg-light border">
@@ -126,7 +138,7 @@
                 <hr>
                 <div class="mb-2 row">
                     <label class="col-sm-2 col-form-label">Outlet</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-5">
                         <select id="selectgudang" class="form-control form-control-sm sel2">
                             <option value=""></option>      
                             @foreach ($mstgudang as $d)
@@ -141,7 +153,7 @@
         
 
         <div class="card my-4">
-            <h5 class="card-header bg-secondary text-white"><i class="far fa-user me-2"></i>PEMBAYARAN</h5>
+            <h5 class="card-header bg-secondary text-white"><i class="fas fa-money-check-alt me-2"></i>PEMBAYARAN</h5>
             <div class="card-body">
                 <div class="mb-2 row">
                     <label class="col-sm-2 col-form-label">DP</label>
@@ -150,9 +162,9 @@
                     </div>
                 </div>
                 <div class="mb-2 row">
-                    <label class="col-sm-2 col-form-label">Kota</label>
+                    <label class="col-sm-2 col-form-label">Leasing</label>
                     <div class="col-sm-5">
-                        <select id="selectkota" class="sel2 form-control form-control-sm sel2">
+                        <select id="selectleasing" class="sel2 form-control form-control-sm sel2">
                             <option value=""></option>      
                             @foreach ($mstleasing as $d)
                                 <option value="{{ $d->kode }}">{{ $d->nama }}</option>                                
@@ -227,8 +239,8 @@
         $(document).ready(function() {
             $('.sel2').select2(
                 {
-                // placeholder: "Pilih"
-                // allowClear: true
+                placeholder: "Pilih",
+                allowClear: true
                 }
             );
 

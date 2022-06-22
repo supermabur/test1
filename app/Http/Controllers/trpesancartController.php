@@ -47,7 +47,7 @@ class trpesancartController extends Controller
         
         $cartcount = $this->cartcount();  
 
-        return view('trpesancart',compact('mstbarang', 'mstgudang', 'mstongkir', 'cartcount'));
+        return view('trpesancart',compact('mstbarang', 'mstgudang', 'mstongkir', 'mstleasing', 'cartcount'));
     }
 
 
