@@ -134,9 +134,9 @@
                             <div class="text-right">
                                 <button id="note{{ $d->kode }}" type="button" class="btn btn-sm btn-outline-info" disabled><i class="far fa-clipboard mr-1"></i>Note</button>
                             </div> --}}
-                            <p id="qty{{ $d->kodex }}" class="badge bg-info text-dark mb-1">{{ $d->qty == 0 ? '' : 'Qty : ' . number_format($d->qty) }}</p>
+                            <p id="qty{{ $d->kodex }}" class="badge bg-secondary text-white mb-1">{{ $d->qty == 0 ? '' : 'Qty : ' . number_format($d->qty) }}</p>
                             <br>
-                            <p id="jumlah{{ $d->kodex }}" class="badge bg-info text-dark mb-1">{{ $d->qty == 0 ? '' : 'Jml : ' . number_format($d->jumlah) }}</p>
+                            <p id="jumlah{{ $d->kodex }}" class="badge bg-secondary text-white mb-1">{{ $d->qty == 0 ? '' : 'Jml : ' . number_format($d->jumlah) }}</p>
                             <br>
 
                             <div class="text-right">
