@@ -239,8 +239,8 @@
         $(document).ready(function() {
             $('.sel2').select2(
                 {
-                placeholder: "Pilih",
-                allowClear: true
+                // placeholder: "Pilih",
+                // allowClear: true
                 }
             );
 
