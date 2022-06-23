@@ -65,7 +65,7 @@ class dashboardjualController extends Controller
                     return response()->json(['success' => 'Berhasil', 'mode' => 1, 'lastupdate' => $lastupdate->tanggal, 'data' => $data,
                                             'graphx' => $graphx, 'graphy' => $graphy, 'html' => $htm, 
                                             'gudang' => $gudang, 'htmlgudang' => $htmlgudang, 
-                                            'salesman' => $salesman, 'htmlsalesman' => $htmlsalesman ]);   
+                                            'salesman' => $salesman, 'htmlsalesman' => $htmlsalesman ]);    
 
                 }
                 else{
