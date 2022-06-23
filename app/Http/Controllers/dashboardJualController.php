@@ -24,7 +24,7 @@ class dashboardjualController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('cekmenuroles');
+        $this->middleware('cekmenuroles');  
     }
 
 
