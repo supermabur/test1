@@ -17,10 +17,35 @@
             vertical-align: middle;
             width: 100% !important;
         }
+
+        .loader {
+            border: 4px solid #6c757d;
+            border-radius: 50%;
+            border-top: 8px solid #3498db;
+            width: 24px;
+            height: 24px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+        }
+
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 
 
     <div class="container my-4">
+        <div id="loader" class="bg-white rounded border p-2" style="position: fixed; top: 90px; right: 12px; z-index: 99999; display: none;">
+            <div class="loader"></div>
+            <span>Saving ...</span>
+        </div>
 
         <nav class="navbar navbar-expand-sm fixed-top navbar-light bg-light border">
             <div class="container">
@@ -103,22 +128,25 @@
                 <div class="mb-2 row">
                     <label class="col-sm-2 col-form-label">Nama</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control form-control-sm" id="nama">
+                        <input type="text" class="sv form-control form-control-sm" id="csnama" value="{{ $pesanhead->csnama ?? '' }}">
                     </div>
                 </div>
                 <div class="mb-2 row">
                     <label class="col-sm-2 col-form-label">Alamat</label>
                     <div class="col-sm-10">
-                        <textarea name="alamat" class="form-control" cols="30" rows="4"></textarea>
+                        <textarea id="csalamat" name="alamat" class="sv form-control" cols="30" rows="2">{{ $pesanhead->csalamat ?? '' }}</textarea>
                     </div>
                 </div>
                 <div class="mb-2 row">
                     <label class="col-sm-2 col-form-label">Kota</label>
                     <div class="col-sm-5">
-                        <select id="selectkota" class="sel2 form-control form-control-sm sel2">
+                        <select id="cskota" class="sv sel2 form-control form-control-sm">
                             <option value=""></option>      
                             @foreach ($mstongkir as $d)
-                                <option value="{{ $d->id }}" data-biayax="{{ number_format($d->biaya) }}" data-biaya="{{ $d->biaya }}">{{ $d->kota }}</option>                                
+                                <option value="{{ $d->id }}" data-biayax="{{ number_format($d->biaya) }}" data-biaya="{{ round($d->biaya) }}"
+                                    {{ $pesanhead->cskota == $d->id ? 'selected' : '' }}>
+                                    {{ $d->kota }}
+                                </option>                                
                             @endforeach
                         </select>
                     </div>
@@ -126,25 +154,31 @@
                 <div class="mb-2 row">
                     <label class="col-sm-2 col-form-label">Ongkir</label>
                     <div class="col-sm-5">
-                        <input id="ongkir" type="text" class="form-control form-control-sm" readonly>
+                        <input id="ongkir" type="number" class="sv form-control form-control-sm" value="{{ round($pesanhead->ongkir) ?? '' }}">
                     </div>
                 </div>
                 <div class="mb-2 row">
                     <label class="col-sm-2 col-form-label">No HP</label>
                     <div class="col-sm-5">
-                        <input type="tel" class="form-control form-control-sm" id="nohp">
+                        <input id="csnohp" type="tel" class="sv form-control form-control-sm" value="{{ $pesanhead->csnohp ?? '' }}">
                     </div>
                 </div>
                 <hr>
                 <div class="mb-2 row">
                     <label class="col-sm-2 col-form-label">Outlet</label>
                     <div class="col-sm-5">
-                        <select id="selectgudang" class="form-control form-control-sm sel2">
+                        <select id="kdgudang" class="sv form-control form-control-sm sel2">
                             <option value=""></option>      
                             @foreach ($mstgudang as $d)
-                                <option value="{{ $d->id }}">{{ $d->nama . '  (' . $d->kode . ')' }}</option>                                
+                                <option value="{{ $d->kode }}" {{ $pesanhead->kdgudang == $d->kode ? 'selected' : '' }}>{{ $d->nama . '  (' . $d->kode . ')' }}</option>                                
                             @endforeach
                         </select>
+                    </div>
+                </div>
+                <div class="mb-2 row">
+                    <label class="col-sm-2 col-form-label">Keterangan</label>
+                    <div class="col-sm-10">
+                        <textarea id="keterangan" class="sv form-control" cols="30" rows="2">{{ $pesanhead->keterangan ?? '' }}</textarea>
                     </div>
                 </div>
 
@@ -158,16 +192,16 @@
                 <div class="mb-2 row">
                     <label class="col-sm-2 col-form-label">DP</label>
                     <div class="col-sm-5">
-                        <input id="dp" type="number" class="form-control form-control-sm">
+                        <input id="dp" type="number" class="sv form-control form-control-sm" value="{{ round($pesanhead->dp) ?? '' }}">
                     </div>
                 </div>
                 <div class="mb-2 row">
                     <label class="col-sm-2 col-form-label">Leasing</label>
                     <div class="col-sm-5">
-                        <select id="selectleasing" class="sel2 form-control form-control-sm sel2">
+                        <select id="kdleasing" class="sv sel2 form-control form-control-sm sel2">
                             <option value=""></option>      
                             @foreach ($mstleasing as $d)
-                                <option value="{{ $d->kode }}">{{ $d->nama }}</option>                                
+                                <option value="{{ $d->kode }}" {{ $pesanhead->kdleasing == $d->kode ? 'selected' : '' }}>{{ $d->nama }}</option>                                
                             @endforeach
                         </select>
                     </div>
@@ -249,14 +283,69 @@
             //     allowClear: true
             // });
 
-            $('#selectkota').on('select2:select', function (e) {
+            $('#cskota').on('select2:select', function (e) {
                 var data = e.params.data;
-                var biayax = $("#selectkota").select2().find(":selected").data("biayax");
+                var biayax = $("#cskota").select2().find(":selected").data("biaya");
                 $('#ongkir').val(biayax);
+            });
+
+            $('.sel2').on('select2:select', function (e) {
+                savehead();
+            });
+
+            
+            $(".sv").focusout(function(){
+                savehead();
             });
         });
 
 
+        function savehead(){
+            var kdgudang = $('#kdgudang').val();
+            var csnama = $('#csnama').val()
+            var csalamat = $('#csalamat').val()
+            var csnohp = $('#csnohp').val()
+            var cskota = $('#cskota').val()
+            var ongkir = $('#ongkir').val()
+            var dp = $('#dp').val()
+            var kdleasing = $('#kdleasing').val()
+            var keterangan = $('#keterangan').val()
+
+            $('#loader').show();
+
+            // loading2(1, '#col' + kode, 'Saving ...');
+            var pdata = {mode:'savehead', 
+                        kdgudang: kdgudang,
+                        csnama: csnama,
+                        csalamat: csalamat,
+                        csnohp: csnohp,
+                        cskota: cskota,
+                        ongkir: ongkir,
+                        dp: dp,
+                        kdleasing: kdleasing,
+                        keterangan: keterangan,
+                        _token: _token};
+            $.ajax({
+                    url: '{{ route("cartsp.store") }}',
+                    type:"POST",
+                    data:pdata,
+                    async: true,
+                    dataFilter: function(response){
+                            return response;
+                        },
+                    success:function(data){
+                        console.log(data);
+                        if(data.error){
+                            alert('ERROR!!!  ' + data.error);
+                        }
+                        else{
+                            // console.log(data);
+                        }
+                        // loading2(0, '#col' + kode);
+                        $('#loader').hide();
+                    }
+            });  
+        };
 
 
         $('.btn-cart').click(function(e){

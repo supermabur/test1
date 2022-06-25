@@ -44,10 +44,48 @@ class trpesancartController extends Controller
         $mstongkir = mstongkir::orderby('kota')->get();
         $mstgudang = mstgudang::where('kode','<>', '')->where('nama','<>', '-')->orderby('nama')->get();
         $mstleasing = posframe_mstleasing::orderby('nama')->get();
-        
+        $pesanhead = DB::table('trpesantmph')->where('userid', $cur_user->id)->first();
+
         $cartcount = $this->cartcount();  
 
-        return view('trpesancart',compact('mstbarang', 'mstgudang', 'mstongkir', 'mstleasing', 'cartcount'));
+        return view('trpesancart',compact('mstbarang', 'mstgudang', 'mstongkir', 'mstleasing', 'cartcount', 'pesanhead'));
+    }
+
+    
+    public function store(Request $request)
+    {        
+        $cur_user = \Auth::user();
+
+        switch ($request->mode) {
+            case 'savehead':
+                $ongkir = $request->ongkir ? $request->ongkir : 0;
+                $dp = $request->dp ? $request->dp : 0;
+                $form_data = array(
+                    'kdgudang' => $request->kdgudang,
+                    'csnama' => $request->csnama,
+                    'csalamat' => $request->csalamat,
+                    'csnohp' => $request->csnohp,
+                    'cskota' => $request->cskota,
+                    'ongkir' => $ongkir,
+                    'dp' => $dp,
+                    'kdleasing' => $request->kdleasing,
+                    'ls_cicilan1' => $request->ls_cicilan1 ? $request->ls_cicilan1 : 0,
+                    'ls_admin' => $request->ls_admin ? $request->ls_admin : 0,
+                    'keterangan' => $request->keterangan
+                );
+        
+                DB::table('trpesantmph')->updateOrInsert(['userid' => $cur_user->id], 
+                                                    $form_data);   
+                
+
+                return response()->json(['success' => 'oke']);
+                break;
+            
+            default:
+                # code...
+                break;
+        }        
+
     }
 
 
