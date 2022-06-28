@@ -187,6 +187,7 @@
         
 
         <div class="card my-4">
+
             <h5 class="card-header bg-secondary text-white"><i class="fas fa-money-check-alt me-2"></i>PEMBAYARAN</h5>
             <div class="card-body">
                 <div class="mb-2 row">
@@ -207,6 +208,13 @@
                     </div>
                     <div class="col-sm-5">
                         <small>Kosongi jika tidak menggunakan leasing</small>
+                    </div>
+                </div>
+                
+                <div class="mb-2 row">
+                    <label class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-5">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalbayar">Tambah Pembayaran</button>
                     </div>
                 </div>
             </div>
@@ -263,6 +271,56 @@
     </div>
 
 
+    <div class="modal fade" id="modalbayar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog h-auto" style="max-width: 500px !important">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title" id="modaltitle">PEMBAYARAN</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="form-modal-bayar" action="" method="post" enctype="multipart/form-data" >
+                    @csrf
+                    <div class="modal-body">
+                        <div class="container">
+
+                            <div class="mb-3 row">
+                                <label class="col-lg-3 col-form-label">Jenis</label>
+                                <div class="col-lg-9">
+                                    <select id="kodebayar" class="sel2x form-control form-control-sm">
+                                        <option value=""></option>      
+                                        @foreach ($mstbayar as $d)
+                                            <option value="{{ $d->kode }}">{{ $d->nama }}</option>                                
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label class="col-lg-3 col-form-label">No Bukti</label>
+                                <div class="col-lg-9">
+                                    <input id="nobuktibayar" type="text" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label class="col-lg-3 col-form-label">Nominal</label>
+                                <div class="col-lg-5">
+                                    <input id="jumlahbayar" type="number" class="form-control" min="0" required>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button id="btn-simpan-bayar" type="submit" form="form-modal-bayar" class="btn btn-primary"><i class="far fa-save me-2"></i>Simpan</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times me-2"></i>Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 @endsection
 
 
@@ -277,11 +335,17 @@
                 // allowClear: true
                 }
             );
+            
+            $('.sel2x').select2(
+                {
+                // placeholder: "Pilih",
+                // allowClear: true
+                }
+            );
 
-            // $('#selectgudang').select2({
-            //     placeholder: "Pilih Gudang",
-            //     allowClear: true
-            // });
+            $('#kodebayar').select2({
+                dropdownParent: $('#modalbayar')
+            });
 
             $('#cskota').on('select2:select', function (e) {
                 var data = e.params.data;
@@ -429,6 +493,47 @@
                         $('#exampleModalCenter').modal('hide');
                     }
                     loading2(0, '.modal-content');
+                }
+            })
+        });
+
+
+        $('#form-modal-bayar').on('submit', function(event){
+            event.preventDefault();
+
+            var q = $('#jumlahbayar').val();
+            if (q < 1) {
+                alert('Jumlah tidak boleh kurang atau sama dengan 0');
+                return;
+            }
+
+            var fd =  new FormData(this);
+            fd.append("mode", "tambahbayar");
+
+            console.log(q);
+            return;
+            
+            loading2(1, '#modalbayar', 'Simpan data ...');
+
+            $.ajax({
+                url:"{{ route('newsp.store') }}",
+                method:"POST",
+                data: fd,
+                contentType: false,
+                cache:false,
+                processData: false,
+                dataType:"json",
+                success:function(data)
+                {
+                    console.log(data);
+                    if(data.error){
+                        alert('ERROR!!!  ' + data.error);
+                    }
+                    else{
+
+                        $('#modalbayar').modal('hide');
+                    }
+                    loading2(0, '#modalbayar');
                 }
             })
         });

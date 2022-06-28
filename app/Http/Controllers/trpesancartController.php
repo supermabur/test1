@@ -45,10 +45,11 @@ class trpesancartController extends Controller
         $mstgudang = mstgudang::where('kode','<>', '')->where('nama','<>', '-')->orderby('nama')->get();
         $mstleasing = posframe_mstleasing::orderby('nama')->get();
         $pesanhead = DB::table('trpesantmph')->where('userid', $cur_user->id)->first();
+        $mstbayar = DB::table('posframe_stdefaultbayar')->get();
 
         $cartcount = $this->cartcount();  
 
-        return view('trpesancart',compact('mstbarang', 'mstgudang', 'mstongkir', 'mstleasing', 'cartcount', 'pesanhead'));
+        return view('trpesancart',compact('mstbarang', 'mstgudang', 'mstongkir', 'mstleasing', 'mstbayar', 'cartcount', 'pesanhead'));
     }
 
     
@@ -80,6 +81,24 @@ class trpesancartController extends Controller
 
                 return response()->json(['success' => 'oke']);
                 break;
+
+            
+            case 'tambahbayar':
+                $pk = array(
+                    'userid' => $cur_user->id,
+                    'kodebayar' => $request->kode,
+                    'nobuktibayar' => $request->kode
+                );
+
+                $val = array(
+                    'jumlah' => $request->jumlahbayar
+                );
+        
+                DB::table('trpesantmpbayar')->updateOrInsert($pk, $val);   
+                
+                return response()->json(['success' => 'oke']);
+                break;
+
             
             default:
                 # code...
