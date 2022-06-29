@@ -186,9 +186,35 @@
         </div>
         
 
-        <div class="card my-4">
 
-            <h5 class="card-header bg-secondary text-white"><i class="fas fa-money-check-alt me-2"></i>PEMBAYARAN</h5>
+        <div class="card my-4">
+            <h5 class="card-header bg-secondary text-white"><i class="fas fa-receipt me-2"></i>REKAP TRANSAKSI</h5>
+            <div class="card-body">
+                <div class="mb-2 row">
+                    <label class="col-sm-6 col-form-label">Total Barang</label>
+                    <div class="col-sm-6 text-end">
+                        <h5 id="totalbarang">{{ $total["totalbarang"] }}</h5>
+                    </div>
+                </div>
+                <div class="mb-2 row">
+                    <label class="col-sm-6 col-form-label">Ongkir</label>
+                    <div class="col-sm-6 text-end">
+                        <h5 id="ongkirtotal">{{ $total["ongkir"] }}</h5>
+                    </div>
+                </div>
+                <hr>
+                <div class="mb-2 row">
+                    <label class="col-sm-6 col-form-label">Total</label>
+                    <div class="col-sm-6 text-end">
+                        <h4 id="total">{{ $total["total"] }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div id="cardbayar" class="card my-4">
+            <h5 class="card-header bg-secondary text-white"><i class="fas fa-cash-register me-2"></i>PEMBAYARAN</h5>
             <div class="card-body">
                 <div class="mb-2 row">
                     <label class="col-sm-2 col-form-label">DP</label>
@@ -211,12 +237,55 @@
                     </div>
                 </div>
                 
-                <div class="mb-2 row">
+                
+                {{-- <div class="mb-2 row">
                     <label class="col-sm-2 col-form-label"></label>
                     <div class="col-sm-5">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalbayar">Tambah Pembayaran</button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalbayar"><i class="fas fa-money-check-alt me-2"></i>Tambah Pembayaran</button>
+                    </div>
+                </div> --}}
+
+                <div class="mb-2 row">
+                    <label class="col-sm-2 col-form-label">Daftar Pembayaran</label>
+                    <div class="col-sm-10 p-2 border rounded">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalbayar"><i class="fas fa-money-check-alt me-2"></i>Tambah Pembayaran</button>
+                            </div>
+                            <div class="col-sm-6 text-end">
+                                <h5>Total Bayar : <span class="sumbayar">{{ $sumbayar }}</span></h5>
+                            </div>
+                        </div>
+
+                        <hr class="mb-1">
+
+                        <table class="table table-sm">
+                            <thead>
+                              <tr class="small">
+                                <th scope="col">Jenis</th>
+                                <th scope="col">NoBukti</th>
+                                <th scope="col" class="text-end">Jumlah</th>
+                                <th scope="col" class="text-end">Del</th>
+                              </tr>
+                            </thead>
+                            <tbody id="bodybayar">
+                                {!! $pesanbayar !!}
+                                {{-- @foreach ($pesanbayar as $d)
+                                    <tr class="small">
+                                        <td>{{ $d->nama }}</td>
+                                        <td>{{ $d->nobukti }}</td>
+                                        <td class="text-end">{{ $d->jumlahx }}</td>
+                                        <td class="text-end">
+                                            <button type="button" class="btn btn-sm btn-outline-danger p-0 px-1" onclick="delbayar('{{ $d->kode }}')"><i class="fas fa-trash-alt"></i></button>
+                                        </td>
+                                    </tr>                                    
+                                @endforeach --}}
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
+
             </div>
         </div>
 
@@ -286,7 +355,7 @@
                             <div class="mb-3 row">
                                 <label class="col-lg-3 col-form-label">Jenis</label>
                                 <div class="col-lg-9">
-                                    <select id="kodebayar" class="sel2x form-control form-control-sm">
+                                    <select id="kodebayar" name="kodebayar" class="sel2x form-control form-control-sm">
                                         <option value=""></option>      
                                         @foreach ($mstbayar as $d)
                                             <option value="{{ $d->kode }}">{{ $d->nama }}</option>                                
@@ -298,14 +367,14 @@
                             <div class="mb-3 row">
                                 <label class="col-lg-3 col-form-label">No Bukti</label>
                                 <div class="col-lg-9">
-                                    <input id="nobuktibayar" type="text" class="form-control" required>
+                                    <input id="nobuktibayar" name="nobuktibayar" type="text" class="form-control" required>
                                 </div>
                             </div>
 
                             <div class="mb-3 row">
                                 <label class="col-lg-3 col-form-label">Nominal</label>
                                 <div class="col-lg-5">
-                                    <input id="jumlahbayar" type="number" class="form-control" min="0" required>
+                                    <input id="jumlahbayar" name="jumlahbayar" type="number" class="form-control" min="0" required>
                                 </div>
                             </div>
 
@@ -404,6 +473,10 @@
                         }
                         else{
                             // console.log(data);
+                            $('#totalbarang').text(data.total['totalbarang']);
+                            $('#ongkirtotal').text(data.total['ongkir']);
+                            $('#total').text(data.total['total']);
+
                         }
                         // loading2(0, '#col' + kode);
                         $('#loader').hide();
@@ -490,6 +563,10 @@
                             $('#row' + data.kodex).remove();
                         }
 
+                        $('#totalbarang').text(data.total['totalbarang']);
+                        $('#ongkirtotal').text(data.total['ongkir']);
+                        $('#total').text(data.total['total']);
+
                         $('#exampleModalCenter').modal('hide');
                     }
                     loading2(0, '.modal-content');
@@ -509,14 +586,11 @@
 
             var fd =  new FormData(this);
             fd.append("mode", "tambahbayar");
-
-            console.log(q);
-            return;
             
             loading2(1, '#modalbayar', 'Simpan data ...');
 
             $.ajax({
-                url:"{{ route('newsp.store') }}",
+                url:"{{ route('cartsp.store') }}",
                 method:"POST",
                 data: fd,
                 contentType: false,
@@ -530,13 +604,43 @@
                         alert('ERROR!!!  ' + data.error);
                     }
                     else{
-
+                        $('#bodybayar').html(data.bodybayar);
                         $('#modalbayar').modal('hide');
+                        $('#form-modal-bayar')[0].reset();
                     }
                     loading2(0, '#modalbayar');
                 }
             })
         });
+
+
+        function delbayar(kode){
+            loading2(1, '#cardbayar', 'Deleting bayar ...');
+            var pdata = {mode:'delbayar', 
+                        kode: kode,
+                        _token: _token};
+            $.ajax({
+                    url: '{{ route("cartsp.store") }}',
+                    type:"POST",
+                    data:pdata,
+                    async: true,
+                    dataFilter: function(response){
+                            return response;
+                        },
+                    success:function(data){
+                        console.log(data);
+                        if(data.error){
+                            alert('ERROR!!!  ' + data.error);
+                        }
+                        else{
+                            $('#bodybayar').html(data.bodybayar);
+                            // alert('Hapus bayar berhasil')
+                            // console.log(data);
+                        }
+                        loading2(0, '#cardbayar');
+                    }
+            });  
+        }
 
     </script>
 @endsection

@@ -44,6 +44,15 @@ class trpesanController extends Controller
         return $tmp;
     }
 
+
+    function gettotaltransaksi(){
+        $cur_user = \Auth::user();
+        $totalbarang = DB::table('trpesantmpd')->where('userid', $cur_user->id)->sum('jumlah');
+        $ongkir = DB::table('trpesantmph')->where('userid', $cur_user->id)->sum('ongkir');
+        $total = $totalbarang + $ongkir;
+        return ['totalbarang' => number_format($totalbarang), 'ongkir' => number_format($ongkir), 'total' => number_format($total)] ;
+    }
+
     
     public function store(Request $request)
     {
@@ -67,6 +76,7 @@ class trpesanController extends Controller
                                                     $form_data);   
                 
                 $cartcount = $this->cartcount();
+                $total = $this->gettotaltransaksi();
 
                 return response()->json(['success' => 'oke', 
                                         'cartcount' => $cartcount, 
@@ -75,7 +85,8 @@ class trpesanController extends Controller
                                         'qty' => $request->qty, 
                                         'harga' => $request->harga, 
                                         'jumlah' => $jml, 
-                                        'keterangan' => $request->keterangan]);
+                                        'keterangan' => $request->keterangan, 
+                                        'total' => $total]);
                 break;
 
                 
@@ -83,10 +94,12 @@ class trpesanController extends Controller
                 trpesantmpd::where('userid', $cur_user->id)->where('kode', $request->kode)->delete();
                 
                 $cartcount = $this->cartcount();
+                $total = $this->gettotaltransaksi();
 
                 return response()->json(['success' => 'oke', 
                                         'cartcount' => $cartcount, 
-                                        'kodex' => str_replace('.', '', $request->kode)]);
+                                        'kodex' => str_replace('.', '', $request->kode), 
+                                        'total' => $total]);
                 break;
             
             default:
