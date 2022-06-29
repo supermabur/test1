@@ -109,7 +109,7 @@ class trpesancartController extends Controller
 
         
             case 'delbayar':                
-                DB::table('trpesantmpbayar')->where('userid', $cur_user->id)->where('kode', $request->kode)->delete();
+                DB::table('trpesantmpbayar')->where('userid', $cur_user->id)->where('kode', $request->kode)->where('nobukti', $request->nobukti)->delete();
                 $bodybayar = $this->gettablebodyhtmlbayar();
                 $sumbayar = $this->gettotalbayar();
                 $total = $this->gettotaltransaksi();
@@ -153,7 +153,7 @@ class trpesancartController extends Controller
                             <td>$d->nobukti</td>
                             <td class="text-end">$d->jumlahx</td>
                             <td class="text-end">
-                                <button type="button" class="btn btn-sm btn-outline-danger p-0 px-1" onclick="delbayar('$d->kode')"><i class="fas fa-trash-alt"></i></button>
+                                <button type="button" class="btn btn-sm btn-outline-danger p-0 px-1" onclick="delbayar('$d->kode', '$d->nobukti')"><i class="fas fa-trash-alt"></i></button>
                             </td>
                         </tr>
                     EOD;                            

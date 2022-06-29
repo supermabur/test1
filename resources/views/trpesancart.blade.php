@@ -607,6 +607,8 @@
                         $('#bodybayar').html(data.bodybayar);
                         $('#modalbayar').modal('hide');
                         $('#form-modal-bayar')[0].reset();
+                        $('#kodebayar').select2("val", "");
+                        $('#kodebayar').trigger('change');
                     }
                     loading2(0, '#modalbayar');
                 }
@@ -614,10 +616,11 @@
         });
 
 
-        function delbayar(kode){
+        function delbayar(kode, nobukti){
             loading2(1, '#cardbayar', 'Deleting bayar ...');
             var pdata = {mode:'delbayar', 
                         kode: kode,
+                        nobukti: nobukti,
                         _token: _token};
             $.ajax({
                     url: '{{ route("cartsp.store") }}',
