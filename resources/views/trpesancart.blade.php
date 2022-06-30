@@ -51,7 +51,7 @@
             <div class="container">
                 <div class="d-flex my-1">
                     <img src="{{ url('images/logokecil.png') }}" style="max-width: 50px; max-height: 50px;" class="me-2"/>
-                    <h4 class="align-self-center">REVIEW SURAT PESAN</h4>
+                    <h4 class="align-self-center">{{ $title ?? '' }}</h4>
                 </div>
                 <form class="d-flex my-1">
                     <div style="position: relative">
@@ -121,174 +121,196 @@
             </div>
         </div>
         
-
-        <div class="card my-4">
-            <h5 class="card-header bg-secondary text-white"><i class="far fa-user me-2"></i>DATA CUSTOMER</h5>
-            <div class="card-body">
-                <div class="mb-2 row">
-                    <label class="col-sm-2 col-form-label">Nama</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="sv form-control form-control-sm" id="csnama" value="{{ $pesanhead->csnama ?? '' }}">
-                    </div>
-                </div>
-                <div class="mb-2 row">
-                    <label class="col-sm-2 col-form-label">Alamat</label>
-                    <div class="col-sm-10">
-                        <textarea id="csalamat" name="alamat" class="sv form-control" cols="30" rows="2">{{ $pesanhead->csalamat ?? '' }}</textarea>
-                    </div>
-                </div>
-                <div class="mb-2 row">
-                    <label class="col-sm-2 col-form-label">Kota</label>
-                    <div class="col-sm-5">
-                        <select id="cskota" class="sv sel2 form-control form-control-sm">
-                            <option value=""></option>      
-                            @foreach ($mstongkir as $d)
-                                <option value="{{ $d->id }}" data-biayax="{{ number_format($d->biaya) }}" data-biaya="{{ round($d->biaya) }}"
-                                    {{ $pesanhead->cskota == $d->id ? 'selected' : '' }}>
-                                    {{ $d->kota }}
-                                </option>                                
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="mb-2 row">
-                    <label class="col-sm-2 col-form-label">Ongkir</label>
-                    <div class="col-sm-5">
-                        <input id="ongkir" type="number" class="sv form-control form-control-sm" value="{{ round($pesanhead->ongkir) ?? '' }}">
-                    </div>
-                </div>
-                <div class="mb-2 row">
-                    <label class="col-sm-2 col-form-label">No HP</label>
-                    <div class="col-sm-5">
-                        <input id="csnohp" type="tel" class="sv form-control form-control-sm" value="{{ $pesanhead->csnohp ?? '' }}">
-                    </div>
-                </div>
-                <hr>
-                <div class="mb-2 row">
-                    <label class="col-sm-2 col-form-label">Outlet</label>
-                    <div class="col-sm-5">
-                        <select id="kdgudang" class="sv form-control form-control-sm sel2">
-                            <option value=""></option>      
-                            @foreach ($mstgudang as $d)
-                                <option value="{{ $d->kode }}" {{ $pesanhead->kdgudang == $d->kode ? 'selected' : '' }}>{{ $d->nama . '  (' . $d->kode . ')' }}</option>                                
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="mb-2 row">
-                    <label class="col-sm-2 col-form-label">Keterangan</label>
-                    <div class="col-sm-10">
-                        <textarea id="keterangan" class="sv form-control" cols="30" rows="2">{{ $pesanhead->keterangan ?? '' }}</textarea>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        
-
-
-        <div class="card my-4">
-            <h5 class="card-header bg-secondary text-white"><i class="fas fa-receipt me-2"></i>REKAP TRANSAKSI</h5>
-            <div class="card-body">
-                <div class="mb-2 row">
-                    <label class="col-sm-6 col-form-label">Total Barang</label>
-                    <div class="col-sm-6 text-end">
-                        <h5 id="totalbarang">{{ $total["totalbarang"] }}</h5>
-                    </div>
-                </div>
-                <div class="mb-2 row">
-                    <label class="col-sm-6 col-form-label">Ongkir</label>
-                    <div class="col-sm-6 text-end">
-                        <h5 id="ongkirtotal">{{ $total["ongkir"] }}</h5>
-                    </div>
-                </div>
-                <hr>
-                <div class="mb-2 row">
-                    <label class="col-sm-6 col-form-label">Total</label>
-                    <div class="col-sm-6 text-end">
-                        <h4 id="total">{{ $total["total"] }}</h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-
-        <div id="cardbayar" class="card my-4">
-            <h5 class="card-header bg-secondary text-white"><i class="fas fa-cash-register me-2"></i>PEMBAYARAN</h5>
-            <div class="card-body">
-                <div class="mb-2 row">
-                    <label class="col-sm-2 col-form-label">DP</label>
-                    <div class="col-sm-5">
-                        <input id="dp" type="number" class="sv form-control form-control-sm" value="{{ round($pesanhead->dp) ?? '' }}">
-                    </div>
-                </div>
-                <div class="mb-2 row">
-                    <label class="col-sm-2 col-form-label">Leasing</label>
-                    <div class="col-sm-5">
-                        <select id="kdleasing" class="sv sel2 form-control form-control-sm sel2">
-                            <option value=""></option>      
-                            @foreach ($mstleasing as $d)
-                                <option value="{{ $d->kode }}" {{ $pesanhead->kdleasing == $d->kode ? 'selected' : '' }}>{{ $d->nama }}</option>                                
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-sm-5">
-                        <small>Kosongi jika tidak menggunakan leasing</small>
-                    </div>
-                </div>
-                
-                
-                {{-- <div class="mb-2 row">
-                    <label class="col-sm-2 col-form-label"></label>
-                    <div class="col-sm-5">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalbayar"><i class="fas fa-money-check-alt me-2"></i>Tambah Pembayaran</button>
-                    </div>
-                </div> --}}
-
-                <div class="mb-2 row">
-                    <label class="col-sm-2 col-form-label">Daftar Pembayaran</label>
-                    <div class="col-sm-10 p-2 border rounded">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalbayar"><i class="fas fa-money-check-alt me-2"></i>Tambah Pembayaran</button>
-                            </div>
-                            <div class="col-sm-6 text-end">
-                                <h5>Total Bayar : <span class="sumbayar">{{ $sumbayar }}</span></h5>
-                            </div>
+        @if ($cartcount != 0)
+            
+            <div class="card my-4">
+                <h5 class="card-header bg-secondary text-white"><i class="far fa-user me-2"></i>DATA CUSTOMER</h5>
+                <div class="card-body">
+                    <div class="mb-2 row">
+                        <label class="col-sm-2 col-form-label">Nama</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="sv form-control form-control-sm" id="csnama" value="{{ $pesanhead->csnama ?? '' }}">
                         </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label class="col-sm-2 col-form-label">Alamat</label>
+                        <div class="col-sm-10">
+                            <textarea id="csalamat" name="alamat" class="sv form-control" cols="30" rows="2">{{ $pesanhead->csalamat ?? '' }}</textarea>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label class="col-sm-2 col-form-label">Kota</label>
+                        <div class="col-sm-5">
+                            <select id="cskota" class="sv sel2 form-control form-control-sm">
+                                <option value=""></option>
+                                @foreach ($mstongkir as $d)
+                                    <option value="{{ $d->id }}" data-biayax="{{ number_format($d->biaya) }}" data-biaya="{{ round($d->biaya) }}"
+                                        {{ ($pesanhead->cskota ?? '') == $d->id ? 'selected' : '' }}>
+                                        {{ $d->kota }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label class="col-sm-2 col-form-label">Ongkir</label>
+                        <div class="col-sm-5">
+                            <input id="ongkir" type="number" class="sv form-control form-control-sm" value="{{ round($pesanhead->ongkir ?? '') }}">
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label class="col-sm-2 col-form-label">No HP</label>
+                        <div class="col-sm-5">
+                            <input id="csnohp" type="tel" class="sv form-control form-control-sm" value="{{ $pesanhead->csnohp ?? '' }}">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="mb-2 row">
+                        <label class="col-sm-2 col-form-label">Outlet</label>
+                        <div class="col-sm-5">
+                            <select id="kdgudang" class="sv form-control form-control-sm sel2">
+                                <option value=""></option>
+                                @foreach ($mstgudang as $d)
+                                    <option value="{{ $d->kode }}" {{ ($pesanhead->kdgudang ?? '') == $d->kode ? 'selected' : '' }}>{{ $d->nama . '  (' . $d->kode . ')' }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label class="col-sm-2 col-form-label">Keterangan</label>
+                        <div class="col-sm-10">
+                            <textarea id="keterangan" class="sv form-control" cols="30" rows="2">{{ $pesanhead->keterangan ?? '' }}</textarea>
+                        </div>
+                    </div>
 
-                        <hr class="mb-1">
+                </div>
+            </div>
+            
 
-                        <table class="table table-sm">
-                            <thead>
-                              <tr class="small">
-                                <th scope="col">Jenis</th>
-                                <th scope="col">NoBukti</th>
-                                <th scope="col" class="text-end">Jumlah</th>
-                                <th scope="col" class="text-end">Del</th>
-                              </tr>
-                            </thead>
-                            <tbody id="bodybayar">
-                                {!! $pesanbayar !!}
-                                {{-- @foreach ($pesanbayar as $d)
-                                    <tr class="small">
-                                        <td>{{ $d->nama }}</td>
-                                        <td>{{ $d->nobukti }}</td>
-                                        <td class="text-end">{{ $d->jumlahx }}</td>
-                                        <td class="text-end">
-                                            <button type="button" class="btn btn-sm btn-outline-danger p-0 px-1" onclick="delbayar('{{ $d->kode }}')"><i class="fas fa-trash-alt"></i></button>
-                                        </td>
-                                    </tr>                                    
-                                @endforeach --}}
-                            </tbody>
-                        </table>
 
+            <div class="card my-4">
+                <h5 class="card-header bg-secondary text-white"><i class="fas fa-receipt me-2"></i>REKAP TRANSAKSI</h5>
+                <div class="card-body">
+                    <div class="mb-2 row">
+                        <label class="col-sm-6 col-form-label">Total Barang</label>
+                        <div class="col-sm-6 text-end">
+                            <h5 id="totalbarang">{{ $total["totalbarang"] }}</h5>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label class="col-sm-6 col-form-label">Ongkir</label>
+                        <div class="col-sm-6 text-end">
+                            <h5 id="ongkirtotal">{{ $total["ongkir"] }}</h5>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="mb-2 row">
+                        <label class="col-sm-6 col-form-label">Total</label>
+                        <div class="col-sm-6 text-end">
+                            <h4 id="total">{{ $total["total"] }}</h4>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="mb-2 row">
+                        <label class="col-sm-6 col-form-label">DP</label>
+                        <div class="col-sm-6 text-end">
+                            <h5 id="totaldp" class="totaldp">{{ $total["totaldp"] }}</h5>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label class="col-sm-6 col-form-label text-danger">Kurang Bayar</label>
+                        <div class="col-sm-6 text-end">
+                            <h5 id="kurangbayar" class="text-danger">{{ $total["kurangbayar"] }}</h5>
+                        </div>
                     </div>
                 </div>
-
             </div>
-        </div>
+            
 
+            <div id="cardbayar" class="card my-4">
+                <h5 class="card-header bg-secondary text-white"><i class="fas fa-cash-register me-2"></i>PEMBAYARAN</h5>
+                <div class="card-body">
+                    <div class="mb-2 row">
+                        <label class="col-sm-2 col-form-label">Leasing</label>
+                        <div class="col-sm-5 px-0">
+                            <select id="kdleasing" class="sv sel2 form-control form-control-sm sel2">
+                                <option value=""></option>      
+                                @foreach ($mstleasing as $d)
+                                    <option value="{{ $d->kode }}" {{ ($pesanhead->kdleasing ?? '') == $d->kode ? 'selected' : '' }}>{{ $d->nama }}</option>                                
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-sm-5">
+                            <small>Kosongi jika tidak menggunakan leasing</small>
+                        </div>
+                    </div>
+                    {{-- <div class="mb-2 row">
+                        <label class="col-sm-2 col-form-label">DP</label>
+                        <div class="col-sm-5">
+                            <input id="dp" type="number" class="sv form-control form-control-sm" value="{{ round($pesanhead->dp) ?? '' }}">
+                        </div>
+                    </div> --}}
+                    
+                    
+                    {{-- <div class="mb-2 row">
+                        <label class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-5">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalbayar"><i class="fas fa-money-check-alt me-2"></i>Tambah Pembayaran</button>
+                        </div>
+                    </div> --}}
+
+                    <div class="mb-2 row">
+                        <label class="col-sm-2 col-form-label">DP</label>
+                        <div class="col-sm-10 p-2 border rounded">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalbayar"><i class="fas fa-money-check-alt me-2"></i>Tambah DP</button>
+                                </div>
+                                <div class="col-sm-6 text-end">
+                                    <h5>Total DP : <span class="totaldp">{{ $total["totaldp"] }}</span></h5>
+                                </div>
+                            </div>
+
+                            <hr class="mb-1">
+
+                            <table class="table table-sm">
+                                <thead>
+                                <tr class="small">
+                                    <th scope="col">Jenis</th>
+                                    <th scope="col">NoBukti</th>
+                                    <th scope="col" class="text-end">Jumlah</th>
+                                    <th scope="col" class="text-end">Del</th>
+                                </tr>
+                                </thead>
+                                <tbody id="bodybayar">
+                                    {!! $pesanbayar !!}
+                                    {{-- @foreach ($pesanbayar as $d)
+                                        <tr class="small">
+                                            <td>{{ $d->nama }}</td>
+                                            <td>{{ $d->nobukti }}</td>
+                                            <td class="text-end">{{ $d->jumlahx }}</td>
+                                            <td class="text-end">
+                                                <button type="button" class="btn btn-sm btn-outline-danger p-0 px-1" onclick="delbayar('{{ $d->kode }}')"><i class="fas fa-trash-alt"></i></button>
+                                            </td>
+                                        </tr>                                    
+                                    @endforeach --}}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="row mb-5 text-center">
+                <div>
+                    <button type="button" class="btn btn-primary mb-5" onclick="saveme()"><i class="fas fa-save me-2"></i>SIMPAN TRANSAKSI</button>
+                </div>
+            </div>
+
+        @endif
 
     </div>
 
@@ -473,10 +495,7 @@
                         }
                         else{
                             // console.log(data);
-                            $('#totalbarang').text(data.total['totalbarang']);
-                            $('#ongkirtotal').text(data.total['ongkir']);
-                            $('#total').text(data.total['total']);
-
+                            refreshrekap(data);
                         }
                         // loading2(0, '#col' + kode);
                         $('#loader').hide();
@@ -563,10 +582,7 @@
                             $('#row' + data.kodex).remove();
                         }
 
-                        $('#totalbarang').text(data.total['totalbarang']);
-                        $('#ongkirtotal').text(data.total['ongkir']);
-                        $('#total').text(data.total['total']);
-
+                        refreshrekap(data);
                         $('#exampleModalCenter').modal('hide');
                     }
                     loading2(0, '.modal-content');
@@ -599,7 +615,7 @@
                 dataType:"json",
                 success:function(data)
                 {
-                    console.log(data);
+                    // console.log(data);
                     if(data.error){
                         alert('ERROR!!!  ' + data.error);
                     }
@@ -609,6 +625,7 @@
                         $('#form-modal-bayar')[0].reset();
                         $('#kodebayar').select2("val", "");
                         $('#kodebayar').trigger('change');
+                        refreshrekap(data);
                     }
                     loading2(0, '#modalbayar');
                 }
@@ -637,12 +654,49 @@
                         }
                         else{
                             $('#bodybayar').html(data.bodybayar);
+                            refreshrekap(data);
+
                             // alert('Hapus bayar berhasil')
                             // console.log(data);
                         }
                         loading2(0, '#cardbayar');
                     }
             });  
+        }
+
+
+        function saveme(){
+            loading2(1, 'body', 'Menyimpan transaksi ...');
+            var pdata = {mode:'saveme', 
+                        _token: _token};
+            $.ajax({
+                    url: '{{ route("cartsp.store") }}',
+                    type:"POST",
+                    data:pdata,
+                    async: true,
+                    dataFilter: function(response){
+                            return response;
+                        },
+                    success:function(data){
+                        console.log(data);
+                        if(data.error){
+                            alert('ERROR!!!  ' + data.error);
+                        }
+                        else{
+
+                        }
+                        loading2(0, 'body');
+                    }
+            });  
+        }
+
+
+        function refreshrekap(data){            
+            $('#totalbarang').text(data.total['totalbarang']);
+            $('#ongkirtotal').text(data.total['ongkir']);
+            $('#total').text(data.total['total']);
+            $('.totaldp').text(data.total['totaldp']);
+            $('#kurangbayar').text(data.total['kurangbayar']);
         }
 
     </script>

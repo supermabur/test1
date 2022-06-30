@@ -49,8 +49,11 @@ class trpesanController extends Controller
         $cur_user = \Auth::user();
         $totalbarang = DB::table('trpesantmpd')->where('userid', $cur_user->id)->sum('jumlah');
         $ongkir = DB::table('trpesantmph')->where('userid', $cur_user->id)->sum('ongkir');
+        $totaldp = DB::table('trpesantmpbayar')->where('userid', $cur_user->id)->sum('jumlah');
         $total = $totalbarang + $ongkir;
-        return ['totalbarang' => number_format($totalbarang), 'ongkir' => number_format($ongkir), 'total' => number_format($total)] ;
+        $kurangbayar = $total - $totaldp;
+        return ['totalbarang' => number_format($totalbarang), 'ongkir' => number_format($ongkir), 'total' => number_format($total), 
+                'totaldp' => number_format($totaldp), 'kurangbayar' => number_format($kurangbayar)] ;
     }
 
     
