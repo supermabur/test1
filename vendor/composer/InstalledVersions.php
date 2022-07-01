@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'bd328b963cb5e560d3b197f5793842c63911e1be',
+    'reference' => '78d1fafa8b52eee99b15079b1b8f706b278ebe01',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -51,6 +51,15 @@ private static $installed = array (
       array (
       ),
       'reference' => '814b36a08a60f4159cdcbb1c466a6a0027440b6c',
+    ),
+    'barryvdh/laravel-dompdf' => 
+    array (
+      'pretty_version' => 'v1.0.2',
+      'version' => '1.0.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'de83130d029289e1b59f28b41c314ce1d157b4a0',
     ),
     'biscolab/laravel-recaptcha' => 
     array (
@@ -137,6 +146,15 @@ private static $installed = array (
       array (
       ),
       'reference' => 'c268e882d4dbdd85e36e4ad69e02dc284f89d229',
+    ),
+    'dompdf/dompdf' => 
+    array (
+      'pretty_version' => 'v1.2.2',
+      'version' => '1.2.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '5031045d9640b38cfc14aac9667470df09c9e090',
     ),
     'dragonmantank/cron-expression' => 
     array (
@@ -517,7 +535,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'bd328b963cb5e560d3b197f5793842c63911e1be',
+      'reference' => '78d1fafa8b52eee99b15079b1b8f706b278ebe01',
     ),
     'laravel/tinker' => 
     array (
@@ -725,6 +743,24 @@ private static $installed = array (
       array (
       ),
       'reference' => '4f7fd7836c6f332bb2933569e566a0d6c4cbed74',
+    ),
+    'phenx/php-font-lib' => 
+    array (
+      'pretty_version' => '0.5.4',
+      'version' => '0.5.4.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'dd448ad1ce34c63d09baccd05415e361300c35b4',
+    ),
+    'phenx/php-svg-lib' => 
+    array (
+      'pretty_version' => '0.4.1',
+      'version' => '0.4.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '4498b5df7b08e8469f0f8279651ea5de9626ed02',
     ),
     'phpdocumentor/reflection-common' => 
     array (
@@ -977,6 +1013,15 @@ private static $installed = array (
       array (
         0 => '4.2.3',
       ),
+    ),
+    'sabberworm/php-css-parser' => 
+    array (
+      'pretty_version' => '8.4.0',
+      'version' => '8.4.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'e41d2140031d533348b2192a83f02d8dd8a71d30',
     ),
     'sebastian/code-unit-reverse-lookup' => 
     array (
