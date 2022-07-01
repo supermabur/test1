@@ -14,6 +14,8 @@ use DB;
 use Carbon\Carbon;
 use PDF;
 
+use Spatie\Browsershot\Browsershot;
+
 class trpesancartController extends Controller
 {
     public function __construct()
@@ -158,9 +160,17 @@ class trpesancartController extends Controller
 
 
     function savetopdf($faktur){
-        $data = $this->getfaktur($faktur);
-        $pdf = PDF::loadView('trpesanprint', $data)->setOptions(['defaultFont' => 'sans-serif']);
-        $pdf->save(public_path() . '/faktur/trpesan/' . $faktur . ".pdf");
+        Browsershot::url('www.google.com')->save('example.pdf');
+
+        // Browsershot::url('https://google.com')
+        //     ->setOption('landscape', true)
+        //     ->windowSize(3840, 2160)
+        //     ->waitUntilNetworkIdle()
+        //     ->save(public_path() . '/faktur/trpesan/' . $faktur . ".pdf");
+
+        // $data = $this->getfaktur($faktur);
+        // $pdf = PDF::loadView('trpesanprint', $data);
+        // $pdf->save(public_path() . '/faktur/trpesan/' . $faktur . ".pdf");
         // PDF::loadView('trpesanprint', $data)->save(public_path() . '/faktur/trpesan/' . $faktur . ".pdf");
     }
 

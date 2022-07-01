@@ -185,6 +185,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
         Biscolab\ReCaptcha\ReCaptchaServiceProvider::class,
+
     ],
 
     /*

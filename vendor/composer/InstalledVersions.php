@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '3a587fd849c47dcd647afa8790907a8d6dc9402d',
+    'reference' => 'bd328b963cb5e560d3b197f5793842c63911e1be',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -51,15 +51,6 @@ private static $installed = array (
       array (
       ),
       'reference' => '814b36a08a60f4159cdcbb1c466a6a0027440b6c',
-    ),
-    'barryvdh/laravel-snappy' => 
-    array (
-      'pretty_version' => 'v1.0.0',
-      'version' => '1.0.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '2c18a3602981bc6f25b32908cf8aaa05952ab2f7',
     ),
     'biscolab/laravel-recaptcha' => 
     array (
@@ -503,15 +494,6 @@ private static $installed = array (
       ),
       'reference' => 'daa11c43729510b3700bc34d414664966b03bffe',
     ),
-    'knplabs/knp-snappy' => 
-    array (
-      'pretty_version' => 'v1.4.1',
-      'version' => '1.4.1.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '5126fb5b335ec929a226314d40cd8dad497c3d67',
-    ),
     'kodova/hamcrest-php' => 
     array (
       'replaced' => 
@@ -535,7 +517,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '3a587fd849c47dcd647afa8790907a8d6dc9402d',
+      'reference' => 'bd328b963cb5e560d3b197f5793842c63911e1be',
     ),
     'laravel/tinker' => 
     array (
@@ -940,8 +922,8 @@ private static $installed = array (
     array (
       'provided' => 
       array (
-        0 => '1.0|2.0',
-        1 => '1.0.0 || 2.0.0 || 3.0.0',
+        0 => '1.0.0 || 2.0.0 || 3.0.0',
+        1 => '1.0|2.0',
       ),
     ),
     'psr/simple-cache' => 
