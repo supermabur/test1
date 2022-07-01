@@ -180,14 +180,14 @@ class trpesancartController extends Controller
         $que = "select a.*, ifnull(b.qty, 0) as qty, ifnull(b.harga, 0) as harga, ifnull(b.disc, 0) as disc, ifnull(b.jumlah, 0) as jumlah, ifnull(b.keterangan, '') as keterangan,
                     REPLACE(a.kode, '.', '') as kodex
                 FROM posframe_mstbarang a
-                inner join trpesand b on a.kode = b.kode and b.qty > 0 and b.faktur = '$faktur' 
+                inner join trpesand b on a.kode = b.kode and b.qty > 0 and b.faktur = '$faktur'
                 order by a.nama";
         $mstbarang = DB::select(DB::raw($que));
 
         $mstongkir = mstongkir::orderby('kota')->get();
         $mstgudang = mstgudang::where('kode','<>', '')->where('nama','<>', '-')->orderby('nama')->get();
         $mstleasing = posframe_mstleasing::orderby('nama')->get();
-        $pesanhead = DB::table('trpesanh')->where('faktur', $faktur)->first();
+        $pesanhead = DB::table('vwtrpesanh')->where('faktur', $faktur)->first();
         $pesanbayar = $this->gettablebodyhtmlbayarbyfaktur($faktur);
         $mstbayar = DB::table('posframe_stdefaultbayar')->get();
 

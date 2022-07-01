@@ -654,7 +654,6 @@ class ComposerStaticInit7280fd20e08c234a6f794a0515201dda
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\StmemenuController' => __DIR__ . '/../..' . '/app/Http/Controllers/StmemenuController.php',
         'App\\Http\\Controllers\\dashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/dashboardController.php',
-        'App\\Http\\Controllers\\dashboardjualController' => __DIR__ . '/../..' . '/app/Http/Controllers/dashboardjualController.php',
         'App\\Http\\Controllers\\databrowserController' => __DIR__ . '/../..' . '/app/Http/Controllers/databrowserController.php',
         'App\\Http\\Controllers\\globreportController' => __DIR__ . '/../..' . '/app/Http/Controllers/globreportController.php',
         'App\\Http\\Controllers\\laporanibadahController' => __DIR__ . '/../..' . '/app/Http/Controllers/laporanibadahController.php',

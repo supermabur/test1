@@ -57,36 +57,20 @@
         
         <div class="card my-1 small">
             <div class="card-body small py-1">
-                <table id="data-table" class="table">
+                <table id="data-table" class="table mb-0">
                     <tbody>
                         <tr>
-                            <td class="py-0">
-                                <table id="data-table" class="table">
-                                    <tbody>
-                                        <tr>
-                                            <td class="py-0" style="width: 200px">
-                                                <img src="https://www.giripalma.com/ecom/img/logo.webp" style="max-width: 50px; max-height: 50px;" class="me-2"/>
-                                            </td>
-                                            <td class="py-0 text-end">
-                                                GIRPALMA
-                                            </td>
-                                        </tr>  
-                                    </tbody>
-                                </table>
+                            <td class="py-0 border-bottom-0" style="width: 80px">
+                                <img src="https://www.giripalma.com/ecom/img/logo.webp" style="max-width: 75px; max-height: 75px;" class="me-0"/>
                             </td>
-                            <td class="py-0 text-end">
-                                <table id="data-table" class="table">
-                                    <tbody>
-                                        <tr>
-                                            <td class="py-0">
-                                                FAKTUR
-                                            </td>
-                                            <td class="py-0">
-                                                : GIRPALMA
-                                            </td>
-                                        </tr>  
-                                    </tbody>
-                                </table>
+                            <td class="py-0 border-bottom-0" style="vertical-align: middle;" >
+                                <p class="mb-0 h5 ">GIRIPALMA</p>
+                                <P class="mb-0">FAKTUR : {{ $pesanhead->faktur ?? '' }}</P>
+                                <p class="mb-0">SALESMAN : {{ $pesanhead->username ?? '' }}</p>
+                            </td>
+                            <td class="py-0 border-bottom-0 text-end">
+                                <p class="mb-0 h5">SURAT PESAN</p>
+                                <P class="mb-0">{{ $pesanhead->datee ?? '' }}</P>
                             </td>
                         </tr>  
                     </tbody>
@@ -124,13 +108,7 @@
                         </tr>
                         <tr>
                             <td class="py-0">Outlet</td>
-                            <td class="py-0">
-                                @foreach ($mstgudang as $d)
-                                    @if (($pesanhead->kdgudang ?? '') == $d->kode)
-                                        {{$d->nama}}
-                                    @endif
-                                @endforeach
-                            </td>
+                            <td class="py-0">{{ $pesanhead->namagudang . ' ('. $pesanhead->KdGudang .')' }}</td>
                         </tr>
                         <tr>
                             <td class="py-0">Leasing</td>
