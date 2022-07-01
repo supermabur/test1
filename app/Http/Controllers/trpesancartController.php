@@ -14,7 +14,6 @@ use DB;
 use Carbon\Carbon;
 use PDF;
 
-use Spatie\Browsershot\Browsershot;
 
 class trpesancartController extends Controller
 {
@@ -160,7 +159,7 @@ class trpesancartController extends Controller
 
 
     function savetopdf($faktur){
-        Browsershot::url('www.google.com')->save('example.pdf');
+        // $pdf = PDF::loadView('trpesanprint',compact('faktur'))->save(public_path() . '/faktur/trpesan/' . $faktur . ".pdf");
 
         // Browsershot::url('https://google.com')
         //     ->setOption('landscape', true)
@@ -168,9 +167,9 @@ class trpesancartController extends Controller
         //     ->waitUntilNetworkIdle()
         //     ->save(public_path() . '/faktur/trpesan/' . $faktur . ".pdf");
 
-        // $data = $this->getfaktur($faktur);
-        // $pdf = PDF::loadView('trpesanprint', $data);
-        // $pdf->save(public_path() . '/faktur/trpesan/' . $faktur . ".pdf");
+        $data = $this->getfaktur($faktur);
+        $pdf = PDF::loadView('trpesanprint', $data);
+        $pdf->save(public_path() . '/faktur/trpesan/' . $faktur . ".pdf");
         // PDF::loadView('trpesanprint', $data)->save(public_path() . '/faktur/trpesan/' . $faktur . ".pdf");
     }
 
@@ -247,15 +246,26 @@ class trpesancartController extends Controller
         $pesanbayar = DB::table('vwtrpesanbayar')->where('faktur', $faktur)->get();
 
         $ht = '';
+        $jml = 0;
         foreach ($pesanbayar as $d){
+            $jml = $jml + $d->jumlah;
             $ht .= <<<EOD
                         <tr class="small">
-                            <td>$d->nama</td>
-                            <td>$d->nobukti</td>
+                            <td class="text-start">$d->nama</td>
+                            <td class="text-start">$d->nobukti</td>
                             <td class="text-end">$d->jumlahx</td>
                         </tr>
                     EOD;                            
         }
+        $j = number_format($jml);
+        $ht .= <<<EOD
+                    <tr class="small fw-bold">
+                        <td class="border-bottom-0" >TOTAL DP</td>
+                        <td class="border-bottom-0" ></td>
+                        <td class="text-end border-bottom-0">$j</td>
+                    </tr>
+                EOD;             
+                
         return $ht;
     }
 
