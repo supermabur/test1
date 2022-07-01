@@ -159,7 +159,7 @@ class trpesancartController extends Controller
 
     function savetopdf($faktur){
         $data = $this->getfaktur($faktur);
-        $pdf = PDF::loadView('trpesanprint', $data);
+        $pdf = PDF::loadView('trpesanprint', $data)->setOptions(['defaultFont' => 'sans-serif']);
         $pdf->save(public_path() . '/faktur/trpesan/' . $faktur . ".pdf");
         // PDF::loadView('trpesanprint', $data)->save(public_path() . '/faktur/trpesan/' . $faktur . ".pdf");
     }

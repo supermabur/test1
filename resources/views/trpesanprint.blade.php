@@ -1,74 +1,50 @@
 
-@extends('layouts.bs5')
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-@section('content')
+    <title>{{$title ?? '' ?? ''}}</title>
+    
 
-    <style>
-        .select2-container {
-            box-sizing: border-box;
-            display: inline-block;
-            margin: 0;
-            position: relative;
-            vertical-align: middle;
-            width: 100% !important;
-        }
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href= "{{ url('adminlte3/plugins/fontawesome-free/css/all.min.css') }}">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" integrity="sha512-BnbUDfEUfV0Slx6TunuB042k9tuKe3xrD6q4mg5Ed72LTgzDIcLPxg6yI2gcMFRyomt+yJJxE+zJwNmxki6/RA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-        .loader {
-            border: 4px solid #6c757d;
-            border-radius: 50%;
-            border-top: 8px solid #3498db;
-            width: 24px;
-            height: 24px;
-            -webkit-animation: spin 2s linear infinite;
-            animation: spin 2s linear infinite;
-        }
 
-        /* Safari */
-        @-webkit-keyframes spin {
-            0% { -webkit-transform: rotate(0deg); }
-            100% { -webkit-transform: rotate(360deg); }
-        }
+    <!-- eki -->
+    {{-- <link rel="stylesheet" href="{{ url('css/eki.css') }}"> --}}
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+
+  </head>
+  <body>
+    
 
 
     <div class="container my-4">
-        <div id="loader" class="bg-white rounded border p-2" style="position: fixed; top: 90px; right: 12px; z-index: 99999; display: none;">
-            <div class="loader"></div>
-            <span>Saving ...</span>
-        </div>
 
-        <nav class="navbar navbar-expand-sm fixed-top navbar-light bg-light border">
+        <nav class="navbar navbar-expand-sm navbar-light bg-light border">
             <div class="container">
                 <div class="d-flex my-1">
                     <img src="{{ url('images/logokecil.png') }}" style="max-width: 50px; max-height: 50px;" class="me-2"/>
                     <h4 class="align-self-center">{{ $title ?? '' }}</h4>
                 </div>
-                <form class="d-flex my-1">
+                {{-- <form class="d-flex my-1">
                     <div style="position: relative">
                         <a class="btn btn-outline-secondary mx-2" href="{{ url('newsp') }}"><i class="fas fa-arrow-circle-left me-2"></i><small>Kembali ke Surat Pesan</small></a>
                     </div>
                     <a class="btn btn-outline-secondary" href="{{ url('/') }}"><i class="fas fa-home"></i></a>
-                </form>
+                </form> --}}
             </div>
         </nav>
-
-
-        <div >
-            <div class="row">
-                <div class="col-md-6 my-3 text-white">
-                    <h4>alskdjalskdjaslkdjalsdjalsdalksdjalksdjalsjdalksdj</h4>
-                </div>
-                <div class="col-md-6 my-2 text-white">
-                    <h4>alskdjalskdjaslkdjalsdjalsdalksdjalksdjalsjdalksdj</h4>
-                </div>
-            </div>
-        </div>
 
 
         <div class="card my-4">
@@ -259,6 +235,19 @@
 
 
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>    
+    {{-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+  </body>
+</html>
+
+
+{{-- @section('content')
+
+
+
+
 
 
 @endsection
@@ -269,4 +258,4 @@
     <script>
 
     </script>
-@endsection
+@endsection --}}
