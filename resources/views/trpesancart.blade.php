@@ -666,6 +666,11 @@
 
 
         function saveme(){
+            let text = "Simpan faktur pesan ini ??";
+            if (confirm(text) != true) {
+                return;
+            }
+
             loading2(1, 'body', 'Menyimpan transaksi ...');
             var pdata = {mode:'saveme', 
                         _token: _token};
@@ -683,7 +688,16 @@
                             alert('ERROR!!!  ' + data.error);
                         }
                         else{
+                            var win = window.open(data.goto, '_blank');
+                            if (win) {
+                                //Browser has allowed it to be opened
+                                win.focus();
+                            } else {
+                                //Browser has blocked it
+                                alert('Please allow popups for this website');
+                            }
 
+                            window.location.replace(data.gotonewsp);
                         }
                         loading2(0, 'body');
                     }

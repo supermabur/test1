@@ -138,7 +138,17 @@ class trpesancartController extends Controller
                 if ($tmp == 0) {return response()->json(['error' => 'DP belum diisi sama sekali']);}
 
                 $data = DB::select(DB::raw("CALL spsavetrpesan($cur_user->id)"));
-                return response()->json(['success' => 'oke', 'data' => $data]);
+                $status = $data[0]->status;
+                $info = $data[0]->info;
+                if ($status == '1') {
+                    $this->savetopdf($info);
+                    $goto = url('/cartsp/' . $info);
+                    $gotonewsp = url('/newsp');
+                    return response()->json(['success' => 'oke hmmm', 'data' => $data, 'goto' => $goto, 'gotonewsp' => $gotonewsp]);    
+                }
+                else{
+                    return response()->json(['error' => $info, 'data' => $data]);    
+                }
                 break;
 
             
@@ -153,7 +163,7 @@ class trpesancartController extends Controller
     public function show($faktur)
     {
         $data = $this->getfaktur($faktur);
-        $this->savetopdf($faktur);
+        // $this->savetopdf($faktur);
         return view('trpesanprint',$data);
     }
 
