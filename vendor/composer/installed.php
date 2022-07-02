@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '21e507d01c64dc04720d1d2b73d4009f7ff6edce',
+    'reference' => 'e7ffa963bbd3d0cf5d306d46914d8a612d1ce304',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -512,7 +512,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '21e507d01c64dc04720d1d2b73d4009f7ff6edce',
+      'reference' => 'e7ffa963bbd3d0cf5d306d46914d8a612d1ce304',
     ),
     'laravel/tinker' => 
     array (
@@ -588,12 +588,12 @@
     ),
     'maennchen/zipstream-php' => 
     array (
-      'pretty_version' => '2.2.1',
-      'version' => '2.2.1.0',
+      'pretty_version' => '2.1.0',
+      'version' => '2.1.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '211e9ba1530ea5260b45d90c9ea252f56ec52729',
+      'reference' => 'c4c5803cc1f93df3d2448478ef79394a5981cc58',
     ),
     'markbaker/complex' => 
     array (
@@ -858,12 +858,12 @@
     ),
     'psr/container' => 
     array (
-      'pretty_version' => '1.1.2',
-      'version' => '1.1.2.0',
+      'pretty_version' => '1.1.1',
+      'version' => '1.1.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '513e0666f7216c7459170d56df27dfcefe1689ea',
+      'reference' => '8622567409010282b7aeebe4bb841fe98b58dcaf',
     ),
     'psr/container-implementation' => 
     array (
