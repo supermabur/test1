@@ -18,8 +18,8 @@
     <!-- Google Font: Source Sans Pro -->
     {{-- <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"> --}}
 
-    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
+    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- eki -->
     {{-- <link rel="stylesheet" href="{{ url('css/eki.css') }}"> --}}
@@ -45,6 +45,9 @@
         [ ... ]
         }
 
+        table{ 
+            border-spacing: 0; 
+        }
     </style>
 
   </head>
@@ -68,8 +71,9 @@
                                 <P class="mb-0">FAKTUR : {{ $pesanhead->faktur ?? '' }}</P>
                                 <p class="mb-0">SALESMAN : {{ $pesanhead->username ?? '' }}</p>
                             </td>
-                            <td class="py-0 border-bottom-0 text-end">
+                            <td class="py-0 border-bottom-0 text-end" style="vertical-align: middle;">
                                 <p class="mb-0 h5">SURAT PESAN</p>
+                                <p class="mb-0">{{ $pesanhead->namagudang . ' ('. $pesanhead->KdGudang .')' }}</p>
                                 <P class="mb-0">{{ $pesanhead->datee ?? '' }}</P>
                             </td>
                         </tr>  
@@ -82,7 +86,7 @@
         <div class="card my-1 small">
             <h6 class="card-header bg-secondary text-white small"><i class="far fa-user me-2"></i>DATA CUSTOMER</h6>
             <div class="card-body small py-1">
-                <table id="data-table" class="table">
+                <table id="data-table" class="table mb-0">
                     <tbody>
                         <tr>
                             <td class="py-0" style="width: 200px">Nama</td>
@@ -107,20 +111,6 @@
                             <td class="py-0">{{ $pesanhead->csnohp ?? '' }}</td>
                         </tr>
                         <tr>
-                            <td class="py-0">Outlet</td>
-                            <td class="py-0">{{ $pesanhead->namagudang . ' ('. $pesanhead->KdGudang .')' }}</td>
-                        </tr>
-                        <tr>
-                            <td class="py-0">Leasing</td>
-                            <td class="py-0">
-                                @foreach ($mstleasing as $d)
-                                    @if (($pesanhead->kdleasing ?? '') == $d->kode)
-                                        {{ $d->nama }}
-                                    @endif                               
-                                @endforeach
-                            </td>
-                        </tr>
-                        <tr>
                             <td class="border-bottom-0 py-0">Keterangan</td>
                             <td class="border-bottom-0 py-0">{{ $pesanhead->keterangan ?? '' }}</td>
                         </tr>
@@ -133,7 +123,7 @@
         <div class="card my-1 small">
             <h6 class="card-header bg-secondary text-white small"><i class="far fa-list-alt me-2"></i>DAFTAR BARANG</h6>
             <div class="card-body small py-1">
-                <table id="data-table" class="table">
+                <table id="data-table" class="table mb-0">
                     <thead>
                       <tr>
                         <th scope="col" class="text-start" style="border-bottom-color: #dee2e6;">Nama</th>
@@ -144,11 +134,11 @@
                     </thead>
                     <tbody>
                         @foreach ($mstbarang as $d)
-                            <tr>
-                                <td class="@if ($loop->last) border-bottom-0 @endif">{{ $d->nama }}</td>
-                                <td class="@if ($loop->last) border-bottom-0 @endif">{{ $d->keterangan }}</td>
-                                <td class="text-end @if ($loop->last) border-bottom-0 @endif">{{ number_format($d->qty) }}</td>
-                                <td class="text-end @if ($loop->last) border-bottom-0 @endif">{{ number_format($d->jumlah) }}</td>
+                            <tr class="@if (!($loop->last)) border-bottom @endif">
+                                <td>{{ $d->nama }}</td>
+                                <td>{{ $d->keterangan }}</td>
+                                <td>{{ number_format($d->qty) }}</td>
+                                <td>{{ number_format($d->jumlah) }}</td>
                             </tr>                        
                         @endforeach
                     </tbody>
@@ -160,12 +150,12 @@
         <div id="cardbayar" class="card my-1 small">
             <h6 class="card-header bg-secondary text-white small"><i class="fas fa-cash-register me-2"></i>DETAIL DP</h6>
             <div class="card-body small py-1">
-                <table class="table table">
+                <table class="table mb-0">
                     <thead>
                         <tr>
-                            <th scope="col" class="text-start">Jenis</th>
-                            <th scope="col" class="text-start">NoBukti</th>
-                            <th scope="col" class="text-end">Jumlah</th>
+                            <th scope="col" class="text-start" style="border-bottom-color: #dee2e6;">Jenis</th>
+                            <th scope="col" class="text-start" style="border-bottom-color: #dee2e6;">NoBukti</th>
+                            <th scope="col" class="text-end" style="border-bottom-color: #dee2e6;">Jumlah</th>
                         </tr>
                     </thead>
                     <tbody id="bodybayar">
@@ -179,21 +169,21 @@
         <div class="card my-1 small">
             <h6 class="card-header bg-secondary text-white small"><i class="fas fa-receipt me-2"></i>REKAP TRANSAKSI</h6>
             <div class="card-body small py-1">
-                <table id="data-table" class="table">
+                <table id="data-table" class="table mb-0">
                     <tbody>
-                        <tr>
+                        <tr class="border-bottom">
                             <td class="py-0" style="width: 200px">Total Barang</td>
                             <td class="py-0 text-end">{{ $total["totalbarang"] }}</td>
                         </tr>  
-                        <tr>
+                        <tr class="border-bottom">
                             <td class="py-0">Ongkir</td>
                             <td class="py-0 text-end">{{ $total["ongkir"] }}</td>
                         </tr>  
-                        <tr>
-                            <td class="py-0">Total</td>
-                            <td class="py-0 text-end"><h6 class="fw-bold">{{ $total["total"] }}</h6></td>
+                        <tr class="border-bottom">
+                            <td class="py-0 mb-0">Total</td>
+                            <td class="py-0 mb-0 text-end"><h6 class="fw-bold mb-0">{{ $total["total"] }}</h6></td>
                         </tr>  
-                        <tr>
+                        <tr class="border-bottom">
                             <td class="py-0">DP</td>
                             <td class="py-0 text-end">{{ $total["totaldp"] }}</td>
                         </tr>  
@@ -214,19 +204,10 @@
 </html>
 
 
-{{-- @section('content')
+<script>
+    $(document).ready(function () { 
+        console.log('qweqwe');
+        window.print(); 
+    });
+</script>
 
-
-
-
-
-
-@endsection
-
-
-@section('scripts')
-
-    <script>
-
-    </script>
-@endsection --}}

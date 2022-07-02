@@ -250,7 +250,7 @@ class trpesancartController extends Controller
         foreach ($pesanbayar as $d){
             $jml = $jml + $d->jumlah;
             $ht .= <<<EOD
-                        <tr class="small">
+                        <tr class="small border-bottom">
                             <td class="text-start">$d->nama</td>
                             <td class="text-start">$d->nobukti</td>
                             <td class="text-end">$d->jumlahx</td>
