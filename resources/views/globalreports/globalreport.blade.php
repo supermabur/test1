@@ -4,7 +4,6 @@
 
 @section('content')
 
-
     <div class="row" name="globrep" id="globrep">
         <div class="col-md-12 outerbox">
             <div class="box" style="border-top: 0px solid #d2d6de;">
