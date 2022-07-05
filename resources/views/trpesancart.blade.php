@@ -38,6 +38,18 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+        -moz-appearance: textfield;
+        }
     </style>
 
 
@@ -129,13 +141,13 @@
                     <div class="mb-2 row">
                         <label class="col-sm-2 col-form-label">Nama</label>
                         <div class="col-sm-10">
-                            <input type="text" class="sv form-control form-control-sm" id="csnama" value="{{ $pesanhead->csnama ?? '' }}">
+                            <input type="text" class="sv form-control form-control-sm" autocomplete="off" id="csnama" value="{{ $pesanhead->csnama ?? '' }}">
                         </div>
                     </div>
                     <div class="mb-2 row">
                         <label class="col-sm-2 col-form-label">Alamat</label>
                         <div class="col-sm-10">
-                            <textarea id="csalamat" name="alamat" class="sv form-control" cols="30" rows="2">{{ $pesanhead->csalamat ?? '' }}</textarea>
+                            <textarea id="csalamat" name="alamat" class="sv form-control" autocomplete="off" cols="30" rows="2">{{ $pesanhead->csalamat ?? '' }}</textarea>
                         </div>
                     </div>
                     <div class="mb-2 row">
@@ -161,7 +173,10 @@
                     <div class="mb-2 row">
                         <label class="col-sm-2 col-form-label">No HP</label>
                         <div class="col-sm-5">
-                            <input id="csnohp" type="tel" class="sv form-control form-control-sm" value="{{ $pesanhead->csnohp ?? '' }}">
+                            <input id="csnohp" type="number" class="sv form-control form-control-sm" autocomplete="off" value="{{ $pesanhead->csnohp ?? '' }}">
+                        </div>
+                        <div class="col-sm-5 small">
+                            <small class="text-primary fw-bold">Isi nomer HP tanpa spasi dan tanpa tanda apapun. Cukup nomernya saja langsung. Sebisa mungkin no HP yg ada WA nya.. karena link faktur bisa dikirim lewat WA</small>
                         </div>
                     </div>
                     <hr>
@@ -179,7 +194,7 @@
                     <div class="mb-2 row">
                         <label class="col-sm-2 col-form-label">Keterangan</label>
                         <div class="col-sm-10">
-                            <textarea id="keterangan" class="sv form-control" cols="30" rows="2">{{ $pesanhead->keterangan ?? '' }}</textarea>
+                            <textarea id="keterangan" class="sv form-control" autocomplete="off" cols="30" rows="2">{{ $pesanhead->keterangan ?? '' }}</textarea>
                         </div>
                     </div>
 
@@ -240,8 +255,8 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-sm-5">
-                            <small>Kosongi jika tidak menggunakan leasing</small>
+                        <div class="col-sm-5 small">
+                            <small class="text-primary fw-bold">Kosongi jika tidak menggunakan leasing</small>
                         </div>
                     </div>
                     {{-- <div class="mb-2 row">
@@ -344,7 +359,7 @@
                             <div class="mb-3 row">
                                 <label class="col-lg-3 col-form-label">Keterangan</label>
                                 <div class="col-lg-9">
-                                    <textarea id="qketerangan" name="keterangan" cols="30" rows="4" class="form-control"></textarea>
+                                    <textarea id="qketerangan" name="keterangan" autocomplete="off" cols="30" rows="4" class="form-control"></textarea>
                                 </div>
                             </div>
 
@@ -389,7 +404,7 @@
                             <div class="mb-3 row">
                                 <label class="col-lg-3 col-form-label">No Bukti</label>
                                 <div class="col-lg-9">
-                                    <input id="nobuktibayar" name="nobuktibayar" type="text" class="form-control" required>
+                                    <input id="nobuktibayar" name="nobuktibayar" autocomplete="off" type="text" class="form-control" required>
                                 </div>
                             </div>
 
