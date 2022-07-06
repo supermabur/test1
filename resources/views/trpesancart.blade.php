@@ -67,9 +67,12 @@
                 </div>
                 <form class="d-flex my-1">
                     <div style="position: relative">
+                        <button class="btn btn-outline-danger mx-2" onclick="cancelcart()"><i class="fas fa-exclamation-circle me-2"></i><small>Batalkan</small></button>
+                    </div>
+                    <div style="position: relative">
                         <a class="btn btn-outline-secondary mx-2" href="{{ url('newsp') }}"><i class="fas fa-arrow-circle-left me-2"></i><small>Kembali ke Surat Pesan</small></a>
                     </div>
-                    <a class="btn btn-outline-secondary" href="{{ url('/') }}"><i class="fas fa-home"></i></a>
+                    <a class="btn btn-outline-secondary ms-2" href="{{ url('/') }}"><i class="fas fa-home"></i></a>
                 </form>
             </div>
         </nav>
@@ -176,7 +179,7 @@
                             <input id="csnohp" type="number" class="sv form-control form-control-sm" autocomplete="off" value="{{ $pesanhead->csnohp ?? '' }}">
                         </div>
                         <div class="col-sm-5 small">
-                            <small class="text-primary fw-bold">Isi nomer HP tanpa spasi dan tanpa tanda apapun. Cukup nomernya saja langsung. Sebisa mungkin no HP yg ada WA nya.. karena link faktur bisa dikirim lewat WA</small>
+                            <small class="text-primary fw-bold">Isi nomer HP tanpa spasi dan tanpa tanda apapun. Cukup nomernya saja langsung. Sebisa mungkin no HP yg ada WA nya.. karena link download faktur bisa dikirim lewat WA</small>
                         </div>
                     </div>
                     <hr>
@@ -206,34 +209,34 @@
             <div class="card my-4">
                 <h5 class="card-header bg-secondary text-white"><i class="fas fa-receipt me-2"></i>REKAP TRANSAKSI</h5>
                 <div class="card-body">
-                    <div class="mb-2 row">
-                        <label class="col-sm-6 col-form-label">Total Barang</label>
+                    <div class="row">
+                        <label class="col-sm-6 col-form-label py-0">Total Barang</label>
                         <div class="col-sm-6 text-end">
                             <h5 id="totalbarang">{{ $total["totalbarang"] }}</h5>
                         </div>
                     </div>
-                    <div class="mb-2 row">
-                        <label class="col-sm-6 col-form-label">Ongkir</label>
+                    <div class="row">
+                        <label class="col-sm-6 col-form-label py-0">Ongkir</label>
                         <div class="col-sm-6 text-end">
                             <h5 id="ongkirtotal">{{ $total["ongkir"] }}</h5>
                         </div>
                     </div>
                     <hr>
-                    <div class="mb-2 row">
-                        <label class="col-sm-6 col-form-label">Total</label>
+                    <div class="row">
+                        <label class="col-sm-6 col-form-label py-0 fw-bold">Total</label>
                         <div class="col-sm-6 text-end">
                             <h4 id="total">{{ $total["total"] }}</h4>
                         </div>
                     </div>
                     <hr>
-                    <div class="mb-2 row">
-                        <label class="col-sm-6 col-form-label">DP</label>
+                    <div class="row">
+                        <label class="col-sm-6 col-form-label py-0">DP</label>
                         <div class="col-sm-6 text-end">
                             <h5 id="totaldp" class="totaldp">{{ $total["totaldp"] }}</h5>
                         </div>
                     </div>
-                    <div class="mb-2 row">
-                        <label class="col-sm-6 col-form-label text-danger">Kurang Bayar</label>
+                    <div class="row">
+                        <label class="col-sm-6 col-form-label text-danger py-0">Kurang Bayar</label>
                         <div class="col-sm-6 text-end">
                             <h5 id="kurangbayar" class="text-danger">{{ $total["kurangbayar"] }}</h5>
                         </div>
@@ -715,6 +718,37 @@
                             window.location.replace(data.gotonewsp);
                         }
                         loading2(0, 'body');
+                    }
+            });  
+        }
+
+
+        function cancelcart(){
+            let text = "BATALKAN faktur pesan ini ??";
+            if (confirm(text) != true) {
+                return;
+            }
+
+            loading2(1, 'body', 'Membatalkan transaksi ...');
+            var pdata = {mode:'cancelcart', 
+                        _token: _token};
+            $.ajax({
+                    url: '{{ route("cartsp.store") }}',
+                    type:"POST",
+                    data:pdata,
+                    async: true,
+                    dataFilter: function(response){
+                            return response;
+                        },
+                    success:function(data){
+                        console.log(data);
+                        if(data.error){
+                            alert('ERROR!!!  ' + data.error);
+                            loading2(0, 'body');
+                        }
+                        else{
+                            window.location.replace(data.gotonewsp);
+                        }
                     }
             });  
         }

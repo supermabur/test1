@@ -134,13 +134,15 @@
                             <div class="text-right">
                                 <button id="note{{ $d->kode }}" type="button" class="btn btn-sm btn-outline-info" disabled><i class="far fa-clipboard mr-1"></i>Note</button>
                             </div> --}}
-                            <p id="qty{{ $d->kodex }}" class="badge bg-secondary text-white mb-1">{{ $d->qty == 0 ? '' : 'Qty : ' . number_format($d->qty) }}</p>
-                            <br>
-                            <p id="jumlah{{ $d->kodex }}" class="badge bg-secondary text-white mb-1">{{ $d->qty == 0 ? '' : 'Jml : ' . number_format($d->jumlah) }}</p>
-                            <br>
+                            <div class="text-center">
+                                <p id="qty{{ $d->kodex }}" class="badge bg-success text-white mb-1">{{ $d->qty == 0 ? '' : 'Qty : ' . number_format($d->qty) }}</p>
+                                <br>
+                                <p id="jumlah{{ $d->kodex }}" class="badge bg-success text-white mb-1">{{ $d->qty == 0 ? '' : 'Jml : ' . number_format($d->jumlah) }}</p>
+                                <br>    
+                            </div>
 
                             <div class="text-right">
-                                <button id="btn-cart{{ $d->kodex }}" type="button" data-kode="{{ $d->kode }}" data-nama="{{ $d->nama }}" data-qty="{{ round($d->qty) }}" data-harga="{{ round($d->harga) }}" data-keterangan="{{ $d->keterangan }}" class="btn btn-sm btn-outline-primary btn-cart"><i class="fas fa-cart-plus me-1"></i>Keranjang</button>
+                                <button id="btn-cart{{ $d->kodex }}" type="button" data-kode="{{ $d->kode }}" data-nama="{{ $d->nama }}" data-qty="{{ round($d->qty) }}" data-harga="{{ round($d->harga) }}" data-keterangan="{{ $d->keterangan }}" class="btn btn-sm btn-outline-primary btn-cart w-100"><i class="fas fa-cart-plus me-1"></i>Keranjang</button>
                             </div>
                         </td>
                     </tr>                        

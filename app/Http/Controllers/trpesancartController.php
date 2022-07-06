@@ -151,6 +151,20 @@ class trpesancartController extends Controller
                 }
                 break;
 
+        
+            case 'cancelcart':
+                $data = DB::select(DB::raw("CALL spdeltrpesan($cur_user->id)"));
+                $status = $data[0]->status;
+                $info = $data[0]->info;
+                if ($status == '1') {
+                    $gotonewsp = url('/newsp');
+                    return response()->json(['success' => 'oke hmmm', 'data' => $data, 'gotonewsp' => $gotonewsp]);    
+                }
+                else{
+                    return response()->json(['error' => $info, 'data' => $data]);    
+                }
+                break;
+
             
             default:
                 # code...
