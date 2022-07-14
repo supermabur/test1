@@ -203,8 +203,106 @@
 
                 </div>
             </div>
-            
 
+
+            <div id="cardbayar" class="card my-4">
+                <h5 class="card-header bg-secondary text-white"><i class="fas fa-cash-register me-2"></i>PEMBAYARAN</h5>
+                <div class="card-body">
+                    <div class="mb-2 row">
+                        <label class="col-sm-2 col-form-label">Leasing</label>
+                        <div class="col-sm-5 px-0">
+                            <select id="kdleasing" class="sv sel2 form-control form-control-sm sel2">
+                                <option value=""></option>      
+                                @foreach ($mstleasing as $d)
+                                    <option value="{{ $d->kode }}" {{ ($pesanhead->kdleasing ?? '') == $d->kode ? 'selected' : '' }}>{{ $d->nama }}</option>                                
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-sm-5 small">
+                            <small class="text-primary fw-bold">Kosongi jika tidak menggunakan leasing</small>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label class="col-sm-2 col-form-label"></label>
+                        <div class="ls_ col-sm-5 border rounded p-2">
+                            <div class="row">
+                                <label class="col-sm-4 col-form-label small">DP</label>
+                                <div class="col-sm-8">
+                                    <input id="dp" type="number" class="sv form-control form-control-sm" value="{{ round($pesanhead->dp ?? '') }}">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <label class="col-sm-4 col-form-label small">Cicilan1</label>
+                                <div class="col-sm-8">
+                                    <input id="ls_cicilan1" type="number" class="sv form-control form-control-sm" value="{{ round($pesanhead->ls_cicilan1 ?? '') }}">
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <label class="col-sm-4 col-form-label small">Admin</label>
+                                <div class="col-sm-8">
+                                    <input id="ls_admin" type="number" class="sv form-control form-control-sm" value="{{ round($pesanhead->ls_admin ?? '') }}">
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <label class="col-sm-4 col-form-label small">Asuransi</label>
+                                <div class="col-sm-8">
+                                    <input id="ls_asuransi" type="number" class="sv form-control form-control-sm" value="{{ round($pesanhead->ls_asuransi ?? '') }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- <div class="mb-2 row">
+                        <label class="col-sm-2 col-form-label">DP</label>
+                        <div class="col-sm-5">
+                            <input id="dp" type="number" class="sv form-control form-control-sm" value="{{ round($pesanhead->dp) ?? '' }}">
+                        </div>
+                    </div> --}}
+                    
+                    
+                    {{-- <div class="mb-2 row">
+                        <label class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-5">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalbayar"><i class="fas fa-money-check-alt me-2"></i>Tambah Pembayaran</button>
+                        </div>
+                    </div> --}}
+
+                    <div class="mb-2 row">
+                        <label class="col-sm-2 col-form-label">DP / Pembayaran</label>
+                        <div class="col-sm-10 p-2 border rounded">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalbayar"><i class="fas fa-money-check-alt me-2"></i>Tambah DP</button>
+                                </div>
+                                <div class="col-sm-6 text-end">
+                                    <h5>Total DP / Pembayaran : <span class="totaldp">{{ $total["totaldp"] }}</span></h5>
+                                </div>
+                            </div>
+
+                            <hr class="mb-1">
+
+                            <table class="table table-sm">
+                                <thead>
+                                <tr class="small">
+                                    <th scope="col">Jenis</th>
+                                    <th scope="col">NoBukti</th>
+                                    <th scope="col" class="text-end">Jumlah</th>
+                                    <th scope="col" class="text-end">Del</th>
+                                </tr>
+                                </thead>
+                                <tbody id="bodybayar">
+                                    {!! $pesanbayar !!}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
 
             <div class="card my-4">
                 <h5 class="card-header bg-secondary text-white"><i class="fas fa-receipt me-2"></i>REKAP TRANSAKSI</h5>
@@ -215,15 +313,47 @@
                             <h5 id="totalbarang">{{ $total["totalbarang"] }}</h5>
                         </div>
                     </div>
+                    <hr>
                     <div class="row">
                         <label class="col-sm-6 col-form-label py-0">Ongkir</label>
                         <div class="col-sm-6 text-end">
                             <h5 id="ongkirtotal">{{ $total["ongkir"] }}</h5>
                         </div>
                     </div>
+
+                    <div class="ls_">
+                        <div class="row">
+                            <label class="col-sm-6 col-form-label py-0">DP</label>
+                            <div class="col-sm-6 text-end">
+                                <h5 id="dptotal">{{ $total["dp"] }}</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-6 col-form-label py-0">Cicilan1</label>
+                            <div class="col-sm-6 text-end">
+                                <h5 id="cicilan1total">{{ $total["ls_cicilan1"] }}</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-6 col-form-label py-0">Admin</label>
+                            <div class="col-sm-6 text-end">
+                                <h5 id="admintotal">{{ $total["ls_admin"] }}</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-6 col-form-label py-0">Asuransi</label>
+                            <div class="col-sm-6 text-end">
+                                <h5 id="asuransitotal">{{ $total["ls_asuransi"] }}</h5>
+                            </div>
+                        </div>
+                    </div>
+
                     <hr>
                     <div class="row">
-                        <label class="col-sm-6 col-form-label py-0 fw-bold">Total</label>
+                        <label class="col-sm-6 col-form-label py-0 fw-bold">
+                            Total <br>
+                            <small class="fw-normal">yang harus di bayar ke Giripalma</small>
+                        </label>
                         <div class="col-sm-6 text-end">
                             <h4 id="total">{{ $total["total"] }}</h4>
                         </div>
@@ -244,83 +374,6 @@
                 </div>
             </div>
             
-
-            <div id="cardbayar" class="card my-4">
-                <h5 class="card-header bg-secondary text-white"><i class="fas fa-cash-register me-2"></i>PEMBAYARAN</h5>
-                <div class="card-body">
-                    <div class="mb-2 row">
-                        <label class="col-sm-2 col-form-label">Leasing</label>
-                        <div class="col-sm-5 px-0">
-                            <select id="kdleasing" class="sv sel2 form-control form-control-sm sel2">
-                                <option value=""></option>      
-                                @foreach ($mstleasing as $d)
-                                    <option value="{{ $d->kode }}" {{ ($pesanhead->kdleasing ?? '') == $d->kode ? 'selected' : '' }}>{{ $d->nama }}</option>                                
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-sm-5 small">
-                            <small class="text-primary fw-bold">Kosongi jika tidak menggunakan leasing</small>
-                        </div>
-                    </div>
-                    {{-- <div class="mb-2 row">
-                        <label class="col-sm-2 col-form-label">DP</label>
-                        <div class="col-sm-5">
-                            <input id="dp" type="number" class="sv form-control form-control-sm" value="{{ round($pesanhead->dp) ?? '' }}">
-                        </div>
-                    </div> --}}
-                    
-                    
-                    {{-- <div class="mb-2 row">
-                        <label class="col-sm-2 col-form-label"></label>
-                        <div class="col-sm-5">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalbayar"><i class="fas fa-money-check-alt me-2"></i>Tambah Pembayaran</button>
-                        </div>
-                    </div> --}}
-
-                    <div class="mb-2 row">
-                        <label class="col-sm-2 col-form-label">DP</label>
-                        <div class="col-sm-10 p-2 border rounded">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalbayar"><i class="fas fa-money-check-alt me-2"></i>Tambah DP</button>
-                                </div>
-                                <div class="col-sm-6 text-end">
-                                    <h5>Total DP : <span class="totaldp">{{ $total["totaldp"] }}</span></h5>
-                                </div>
-                            </div>
-
-                            <hr class="mb-1">
-
-                            <table class="table table-sm">
-                                <thead>
-                                <tr class="small">
-                                    <th scope="col">Jenis</th>
-                                    <th scope="col">NoBukti</th>
-                                    <th scope="col" class="text-end">Jumlah</th>
-                                    <th scope="col" class="text-end">Del</th>
-                                </tr>
-                                </thead>
-                                <tbody id="bodybayar">
-                                    {!! $pesanbayar !!}
-                                    {{-- @foreach ($pesanbayar as $d)
-                                        <tr class="small">
-                                            <td>{{ $d->nama }}</td>
-                                            <td>{{ $d->nobukti }}</td>
-                                            <td class="text-end">{{ $d->jumlahx }}</td>
-                                            <td class="text-end">
-                                                <button type="button" class="btn btn-sm btn-outline-danger p-0 px-1" onclick="delbayar('{{ $d->kode }}')"><i class="fas fa-trash-alt"></i></button>
-                                            </td>
-                                        </tr>                                    
-                                    @endforeach --}}
-                                </tbody>
-                            </table>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
 
             <div class="row mb-5 text-center">
                 <div>
@@ -463,6 +516,13 @@
             });
 
             $('.sel2').on('select2:select', function (e) {
+                var data = e.params.data;
+                var selectid = data.element.parentElement.id; 
+
+                if (selectid == 'kdleasing') {
+                    showhidels();
+                }
+
                 savehead();
             });
 
@@ -470,19 +530,39 @@
             $(".sv").focusout(function(){
                 savehead();
             });
+
+
+            showhidels();
         });
+
+
+        function showhidels(){
+            var kdleasing = $('#kdleasing').val()
+            if (kdleasing == '') {
+                $('.ls_').hide(300);       
+                $('#ls_cicilan1').val(0);
+                $('#ls_admin').val(0);
+                $('#ls_asuransi').val(0);                 
+            }
+            else{
+                $('.ls_').show(300);                        
+            }
+        }
 
 
         function savehead(){
             var kdgudang = $('#kdgudang').val();
-            var csnama = $('#csnama').val()
-            var csalamat = $('#csalamat').val()
-            var csnohp = $('#csnohp').val()
-            var cskota = $('#cskota').val()
-            var ongkir = $('#ongkir').val()
-            var dp = $('#dp').val()
-            var kdleasing = $('#kdleasing').val()
-            var keterangan = $('#keterangan').val()
+            var csnama = $('#csnama').val();
+            var csalamat = $('#csalamat').val();
+            var csnohp = $('#csnohp').val();
+            var cskota = $('#cskota').val();
+            var ongkir = $('#ongkir').val();
+            var dp = $('#dp').val();
+            var kdleasing = $('#kdleasing').val();
+            var ls_cicilan1 = $('#ls_cicilan1').val();
+            var ls_admin = $('#ls_admin').val();
+            var ls_asuransi = $('#ls_asuransi').val();
+            var keterangan = $('#keterangan').val();
 
             $('#loader').show();
 
@@ -496,6 +576,9 @@
                         ongkir: ongkir,
                         dp: dp,
                         kdleasing: kdleasing,
+                        ls_cicilan1: ls_cicilan1,
+                        ls_admin: ls_admin,
+                        ls_asuransi: ls_asuransi,
                         keterangan: keterangan,
                         _token: _token};
             $.ajax({
@@ -756,7 +839,11 @@
 
         function refreshrekap(data){            
             $('#totalbarang').text(data.total['totalbarang']);
+            $('#dptotal').text(data.total['dp']);
             $('#ongkirtotal').text(data.total['ongkir']);
+            $('#cicilan1total').text(data.total['ls_cicilan1']);
+            $('#admintotal').text(data.total['ls_admin']);
+            $('#asuransitotal').text(data.total['ls_asuransi']);
             $('#total').text(data.total['total']);
             $('.totaldp').text(data.total['totaldp']);
             $('#kurangbayar').text(data.total['kurangbayar']);

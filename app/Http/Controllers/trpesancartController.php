@@ -78,6 +78,7 @@ class trpesancartController extends Controller
                     'kdleasing' => $request->kdleasing,
                     'ls_cicilan1' => $request->ls_cicilan1 ? $request->ls_cicilan1 : 0,
                     'ls_admin' => $request->ls_admin ? $request->ls_admin : 0,
+                    'ls_asuransi' => $request->ls_asuransi ? $request->ls_asuransi : 0,
                     'keterangan' => $request->keterangan
                 );
         
@@ -224,12 +225,27 @@ class trpesancartController extends Controller
 
     function gettotaltransaksi(){
         $cur_user = \Auth::user();
+        $head = DB::table('trpesantmph')->where('userid', $cur_user->id)->first();
+        $ongkir = $head ? $head->ongkir : 0;
+        $dp = $head ? $head->dp : 0;
+        $ls_cicilan1 = $head ? $head->ls_cicilan1 : 0;
+        $ls_admin = $head ? $head->ls_admin : 0;
+        $ls_asuransi = $head ? $head->ls_asuransi : 0;
+        $kdleasing = $head ? $head->kdleasing : null;
+
         $totalbarang = DB::table('trpesantmpd')->where('userid', $cur_user->id)->sum('jumlah');
-        $ongkir = DB::table('trpesantmph')->where('userid', $cur_user->id)->sum('ongkir');
         $totaldp = DB::table('trpesantmpbayar')->where('userid', $cur_user->id)->sum('jumlah');
-        $total = $totalbarang + $ongkir;
+
+        if ($kdleasing) {
+            $total = $dp + $ls_cicilan1 + $ls_admin + $ls_asuransi + $ongkir;
+        }
+        else{
+            $total = $totalbarang + $ongkir;
+        }
         $kurangbayar = $total - $totaldp;
-        return ['totalbarang' => number_format($totalbarang), 'ongkir' => number_format($ongkir), 'total' => number_format($total), 
+        return ['totalbarang' => number_format($totalbarang), 'ongkir' => number_format($ongkir), 
+                'total' => number_format($total), 'kdleasing' => $kdleasing, 'dp' => $dp, 
+                'ls_cicilan1' => number_format($ls_cicilan1), 'ls_admin' => number_format($ls_admin), 'ls_asuransi' => number_format($ls_asuransi),
                 'totaldp' => number_format($totaldp), 'kurangbayar' => number_format($kurangbayar)] ;
     }
     
