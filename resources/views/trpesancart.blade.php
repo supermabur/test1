@@ -377,6 +377,8 @@
 
             <div class="row mb-5 text-center">
                 <div>
+                    <span id="infolebihbayar" class="badge bg-danger mb-2" style="display: none">Tidak Bisa simpan karena Pembayaran lebih besar dari pada yang harus dibayarkan ke GIRIPALMA</span>
+                    <br>
                     <button id="btnsave" type="button" class="btn btn-primary mb-5" onclick="saveme()"><i class="fas fa-save me-2"></i>SIMPAN TRANSAKSI</button>
                 </div>
             </div>
@@ -591,7 +593,7 @@
                             return response;
                         },
                     success:function(data){
-                        console.log(data);
+                        // console.log(data);
                         if(data.error){
                             alert('ERROR!!!  ' + data.error);
                         }
@@ -601,7 +603,6 @@
                         }
                         // loading2(0, '#col' + kode);
                         $('#loader').hide();
-                        $('#btnsave').removeAttr('disabled');;
                     }
             });  
         };
@@ -849,6 +850,15 @@
             $('#total').text(data.total['total']);
             $('.totaldp').text(data.total['totaldp']);
             $('#kurangbayar').text(data.total['kurangbayar']);
+
+            if (data.total['kurangbayarx'] >= 0) {
+                $('#btnsave').removeAttr('disabled');
+                $('#infolebihbayar').hide();
+            }
+            else{
+                $('#btnsave').prop('disabled', true);
+                $('#infolebihbayar').show();
+            }
         }
 
     </script>

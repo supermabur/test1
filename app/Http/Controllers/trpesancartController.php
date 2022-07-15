@@ -137,6 +137,7 @@ class trpesancartController extends Controller
 
                 $tmp = DB::table('trpesantmpbayar')->where('userid', $cur_user->id)->sum('jumlah');
                 if ($tmp == 0) {return response()->json(['error' => 'DP belum diisi sama sekali']);}
+ 
 
                 $data = DB::select(DB::raw("CALL spsavetrpesan($cur_user->id)"));
                 $status = $data[0]->status;
@@ -254,7 +255,7 @@ class trpesancartController extends Controller
         return ['totalbarang' => number_format($totalbarang), 'ongkir' => number_format($ongkir), 
                 'total' => number_format($total), 'kdleasing' => $kdleasing, 'dp' => number_format($dp), 
                 'ls_cicilan1' => number_format($ls_cicilan1), 'ls_admin' => number_format($ls_admin), 'ls_asuransi' => number_format($ls_asuransi),
-                'totaldp' => number_format($totaldp), 'kurangbayar' => number_format($kurangbayar)] ;
+                'totaldp' => number_format($totaldp), 'kurangbayar' => number_format($kurangbayar), 'kurangbayarx' => $kurangbayar] ;
     }
     
 
