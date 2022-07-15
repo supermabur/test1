@@ -143,7 +143,9 @@ class trpesancartController extends Controller
                 $info = $data[0]->info;
                 if ($status == '1') {
                     $this->savetopdf($info);
-                    $goto = url('/cartsp/' . $info);
+
+                    $d = DB::table('trpesanh')->where('faktur', $info)->first();
+                    $goto = url('/cartsp/' . $d->alias);
                     $gotonewsp = url('/newsp');
                     return response()->json(['success' => 'oke hmmm', 'data' => $data, 'goto' => $goto, 'gotonewsp' => $gotonewsp]);    
                 }
@@ -175,11 +177,17 @@ class trpesancartController extends Controller
     }
 
 
-    public function show($faktur)
+    public function show($alias)
     {
-        $data = $this->getfaktur($faktur);
-        // $this->savetopdf($faktur);
-        return view('trpesanprint',$data);
+        $d = DB::table('trpesanh')->where('alias', $alias)->first();
+        if ($d) {
+            $data = $this->getfaktur($d->faktur);
+            // $this->savetopdf($faktur);
+            return view('trpesanprint',$data);
+        }
+        else{
+            abort(403, 'Unauthorized action.');
+        }
     }
 
 

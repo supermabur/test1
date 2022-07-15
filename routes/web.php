@@ -60,3 +60,4 @@ Route::resource('mstjenis', 'mstjenisController');
 Route::resource('estkirimmemo', 'rptpesanestkirimmemoController');
 
 Route::resource('cartsp', 'trpesancartController');
+Route::get('/downpdf_sp/{file}', 'downloadController@downloadpdf_suratpesan');
