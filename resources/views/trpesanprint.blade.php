@@ -111,8 +111,12 @@
                             <td class="py-0">{{ $pesanhead->csnohp ?? '' }}</td>
                         </tr>
                         <tr>
-                            <td class="border-bottom-0 py-0">Keterangan</td>
-                            <td class="border-bottom-0 py-0">{{ $pesanhead->keterangan ?? '' }}</td>
+                            <td class="py-0">Keterangan</td>
+                            <td class="py-0">{{ $pesanhead->keterangan ?? '' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="border-bottom-0 py-0">Leasing</td>
+                            <td class="border-bottom-0 py-0">{{ ($pesanhead->namaleasing ?? '') . ' - ' . ($pesanhead->kdleasing ?? '') }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -148,14 +152,14 @@
         
 
         <div id="cardbayar" class="card my-1 small">
-            <h6 class="card-header bg-secondary text-white small"><i class="fas fa-cash-register me-2"></i>DETAIL DP</h6>
+            <h6 class="card-header bg-secondary text-white small"><i class="fas fa-cash-register me-2"></i>DETAIL BAYAR</h6>
             <div class="card-body small py-1">
                 <table class="table mb-0">
                     <thead>
                         <tr>
-                            <th scope="col" class="text-start" style="border-bottom-color: #dee2e6;">Jenis</th>
-                            <th scope="col" class="text-start" style="border-bottom-color: #dee2e6;">NoBukti</th>
-                            <th scope="col" class="text-end" style="border-bottom-color: #dee2e6;">Jumlah</th>
+                            <th scope="col" class="text-start py-1" style="border-bottom-color: #dee2e6;">Jenis</th>
+                            <th scope="col" class="text-start py-1" style="border-bottom-color: #dee2e6;">NoBukti</th>
+                            <th scope="col" class="text-end py-1" style="border-bottom-color: #dee2e6;">Jumlah</th>
                         </tr>
                     </thead>
                     <tbody id="bodybayar">
@@ -172,24 +176,48 @@
                 <table id="data-table" class="table mb-0">
                     <tbody>
                         <tr class="border-bottom">
-                            <td class="py-0" style="width: 200px">Total Barang</td>
-                            <td class="py-0 text-end">{{ $total["totalbarang"] }}</td>
+                            <td class="py-1" style="width: 200px">Total Barang</td>
+                            <td class="py-1 text-end">{{ $total["totalbarang"] }}</td>
                         </tr>  
                         <tr class="border-bottom">
-                            <td class="py-0">Ongkir</td>
-                            <td class="py-0 text-end">{{ $total["ongkir"] }}</td>
+                            <td class="py-1">Ongkir</td>
+                            <td class="py-1 text-end">{{ $total["ongkir"] }}</td>
+                        </tr>  
+
+                        @if ($total["kdleasing"])                            
+                            <tr class="border-bottom">
+                                <td class="py-1">DP</td>
+                                <td class="py-1 text-end">{{ $total["dp"] }}</td>
+                            </tr>                         
+                            <tr class="border-bottom">
+                                <td class="py-1">Cicilan1</td>
+                                <td class="py-1 text-end">{{ $total["ls_cicilan1"] }}</td>
+                            </tr>                         
+                            <tr class="border-bottom">
+                                <td class="py-1">Admin</td>
+                                <td class="py-1 text-end">{{ $total["ls_admin"] }}</td>
+                            </tr>                         
+                            <tr class="border-bottom">
+                                <td class="py-1">Asuransi</td>
+                                <td class="py-1 text-end">{{ $total["ls_asuransi"] }}</td>
+                            </tr>
+                        @endif
+
+
+                        <tr class="border-bottom">
+                            <td class="py-1 mb-0">
+                                Total <br>
+                                <small class="fw-normal">yang harus di bayar ke Giripalma</small>
+                            </td>
+                            <td class="py-1 mb-0 text-end align-middle"><h6 class="fw-bold mb-0">{{ $total["total"] }}</h6></td>
                         </tr>  
                         <tr class="border-bottom">
-                            <td class="py-0 mb-0">Total</td>
-                            <td class="py-0 mb-0 text-end"><h6 class="fw-bold mb-0">{{ $total["total"] }}</h6></td>
-                        </tr>  
-                        <tr class="border-bottom">
-                            <td class="py-0">DP</td>
-                            <td class="py-0 text-end">{{ $total["totaldp"] }}</td>
+                            <td class="py-1">Sudah Bayar</td>
+                            <td class="py-1 text-end">{{ $total["totaldp"] }}</td>
                         </tr>  
                         <tr>
-                            <td class="py-0 border-bottom-0">Kurang Bayar</td>
-                            <td class="py-0 border-bottom-0 text-end fw-bold">{{ $total["kurangbayar"] }}</td>
+                            <td class="py-1 border-bottom-0">Kurang Bayar</td>
+                            <td class="py-1 border-bottom-0 text-end fw-bold">{{ $total["kurangbayar"] }}</td>
                         </tr> 
                     </tbody>
                 </table>

@@ -244,19 +244,35 @@ class trpesancartController extends Controller
         }
         $kurangbayar = $total - $totaldp;
         return ['totalbarang' => number_format($totalbarang), 'ongkir' => number_format($ongkir), 
-                'total' => number_format($total), 'kdleasing' => $kdleasing, 'dp' => $dp, 
+                'total' => number_format($total), 'kdleasing' => $kdleasing, 'dp' => number_format($dp), 
                 'ls_cicilan1' => number_format($ls_cicilan1), 'ls_admin' => number_format($ls_admin), 'ls_asuransi' => number_format($ls_asuransi),
                 'totaldp' => number_format($totaldp), 'kurangbayar' => number_format($kurangbayar)] ;
     }
     
 
     function gettotaltransaksibyfaktur($faktur){
+        $head = DB::table('vwtrpesanh')->where('faktur', $faktur)->first();
+        $ongkir = $head ? $head->ongkir : 0;
+        $dp = $head ? $head->dp : 0;
+        $ls_cicilan1 = $head ? $head->ls_cicilan1 : 0;
+        $ls_admin = $head ? $head->ls_admin : 0;
+        $ls_asuransi = $head ? $head->ls_asuransi : 0;
+        $kdleasing = $head ? $head->kdleasing : null;
+        $namaleasing = $head ? $head->namaleasing : null;
+
         $totalbarang = DB::table('trpesand')->where('faktur', $faktur)->sum('jumlah');
-        $ongkir = DB::table('trpesanh')->where('faktur', $faktur)->sum('ongkir');
         $totaldp = DB::table('trpesanbayar')->where('faktur', $faktur)->sum('jumlah');
-        $total = $totalbarang + $ongkir;
+
+        if ($kdleasing) {
+            $total = $dp + $ls_cicilan1 + $ls_admin + $ls_asuransi + $ongkir;
+        }
+        else{
+            $total = $totalbarang + $ongkir;
+        }
         $kurangbayar = $total - $totaldp;
-        return ['totalbarang' => number_format($totalbarang), 'ongkir' => number_format($ongkir), 'total' => number_format($total), 
+        return ['totalbarang' => number_format($totalbarang), 'ongkir' => number_format($ongkir), 
+                'total' => number_format($total), 'kdleasing' => $kdleasing, 'namaleasing' => $namaleasing, 'dp' => number_format($dp), 
+                'ls_cicilan1' => number_format($ls_cicilan1), 'ls_admin' => number_format($ls_admin), 'ls_asuransi' => number_format($ls_asuransi),
                 'totaldp' => number_format($totaldp), 'kurangbayar' => number_format($kurangbayar)] ;
     }
 
@@ -291,9 +307,9 @@ class trpesancartController extends Controller
             $jml = $jml + $d->jumlah;
             $ht .= <<<EOD
                         <tr class="small border-bottom">
-                            <td class="text-start">$d->nama</td>
-                            <td class="text-start">$d->nobukti</td>
-                            <td class="text-end">$d->jumlahx</td>
+                            <td class="text-start py-1">$d->nama</td>
+                            <td class="text-start py-1">$d->nobukti</td>
+                            <td class="text-end py-1">$d->jumlahx</td>
                         </tr>
                     EOD;                            
         }

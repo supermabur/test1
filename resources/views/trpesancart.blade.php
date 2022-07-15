@@ -270,14 +270,14 @@
                     </div> --}}
 
                     <div class="mb-2 row">
-                        <label class="col-sm-2 col-form-label">DP / Pembayaran</label>
+                        <label class="col-sm-2 col-form-label">Pembayaran</label>
                         <div class="col-sm-10 p-2 border rounded">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalbayar"><i class="fas fa-money-check-alt me-2"></i>Tambah DP</button>
+                                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalbayar"><i class="fas fa-money-check-alt me-2"></i>Tambah Bayar</button>
                                 </div>
                                 <div class="col-sm-6 text-end">
-                                    <h5>Total DP / Pembayaran : <span class="totaldp">{{ $total["totaldp"] }}</span></h5>
+                                    <h5>Total Pembayaran : <span class="totaldp">{{ $total["totaldp"] }}</span></h5>
                                 </div>
                             </div>
 
@@ -360,7 +360,7 @@
                     </div>
                     <hr>
                     <div class="row">
-                        <label class="col-sm-6 col-form-label py-0">DP</label>
+                        <label class="col-sm-6 col-form-label py-0">Sudah Dibayar</label>
                         <div class="col-sm-6 text-end">
                             <h5 id="totaldp" class="totaldp">{{ $total["totaldp"] }}</h5>
                         </div>
@@ -377,7 +377,7 @@
 
             <div class="row mb-5 text-center">
                 <div>
-                    <button type="button" class="btn btn-primary mb-5" onclick="saveme()"><i class="fas fa-save me-2"></i>SIMPAN TRANSAKSI</button>
+                    <button id="btnsave" type="button" class="btn btn-primary mb-5" onclick="saveme()"><i class="fas fa-save me-2"></i>SIMPAN TRANSAKSI</button>
                 </div>
             </div>
 
@@ -565,6 +565,7 @@
             var keterangan = $('#keterangan').val();
 
             $('#loader').show();
+            $('#btnsave').prop('disabled', true);
 
             // loading2(1, '#col' + kode, 'Saving ...');
             var pdata = {mode:'savehead', 
@@ -600,6 +601,7 @@
                         }
                         // loading2(0, '#col' + kode);
                         $('#loader').hide();
+                        $('#btnsave').removeAttr('disabled');;
                     }
             });  
         };
