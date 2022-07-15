@@ -212,7 +212,7 @@
                         <label class="col-sm-2 col-form-label">Leasing</label>
                         <div class="col-sm-5 px-0">
                             <select id="kdleasing" class="sv sel2 form-control form-control-sm sel2">
-                                <option value=""></option>      
+                                <option value="">-</option>      
                                 @foreach ($mstleasing as $d)
                                     <option value="{{ $d->kode }}" {{ ($pesanhead->kdleasing ?? '') == $d->kode ? 'selected' : '' }}>{{ $d->nama }}</option>                                
                                 @endforeach
