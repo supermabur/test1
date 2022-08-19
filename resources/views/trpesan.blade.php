@@ -89,16 +89,16 @@
                     <tr>
                         <td>
                             @if ($d->img)
-                                <img src="data:image/png;base64, {{ base64_encode($d->img) }}" class="border rounded" style="max-width: 105px; max-height: 75px;"/>
+                                <img src="data:image/png;base64, {{ base64_encode($d->img) }}" class="border rounded" style="max-width: 80px; max-height: 60px;"/>
                             @else
-                                <div class="border rounded" style="width: 100px; height: 75px; background-image: url('{{ url('images/noimage2.webp') }}'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                                <div class="border rounded" style="width: 80px; height: 60px; background-image: url('{{ url('images/noimage2.webp') }}'); background-size: cover; background-repeat: no-repeat; background-position: center;">
                                 </div>
                                 {{-- <img src="{{ url('images/noimage2.webp') }}" style="max-width: 105px; max-height: 75px;"/> --}}
                             @endif
                         </td>
                         <td>
                             <h5 class="m-0">{{ $d->nama }}</h5>
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col my-1">
                                     <p class="m-0 font-weight-bold"><small>Jenis</small></p>
                                     <p class="m-0">{{ $d->namajenis }}</p>
@@ -111,16 +111,25 @@
                                     <p class="m-0"><small>Saldo</small></p>
                                     <p class="m-0">{{ number_format($d->saldoglobal) }}</p>
                                 </div>
-                                {{-- <div class="col my-1">
+                                <div class="col my-1">
                                     <p class="m-0"><small>Harga</small></p>
                                     <p class="m-0">{{ number_format($d->hargajual) }}</p>
-                                </div> --}}
+                                </div>
+                            </div> --}}
+                            <div class="text-right">
+                                <button id="btn-cart{{ $d->kodex }}" type="button" data-kode="{{ $d->kode }}" data-nama="{{ $d->nama }}" data-qty="{{ round($d->qty) }}" data-harga="{{ round($d->harga) }}" data-keterangan="{{ $d->keterangan }}" class="btn btn-sm btn-outline-primary btn-cart"><i class="fas fa-cart-plus me-1"></i>Keranjang</button>
+                                <span class="text-nowrap">
+                                    <span id="qty{{ $d->kodex }}" class="badge bg-success text-white mb-1">{{ $d->qty == 0 ? '' : 'Qty : ' . number_format($d->qty) }}</span>
+                                    <span id="jumlah{{ $d->kodex }}" class="badge bg-success text-white mb-1">{{ $d->qty == 0 ? '' : 'Jml : ' . number_format($d->jumlah) }}</span>    
+                                </span>
+                                <span id="keterangan{{ $d->kodex }}" class="text-primary m-0 small text-nowrap">{{ $d->keterangan != '' ? 'Ket : ' . $d->keterangan : '' }}</span>
                             </div>
-                            <div class="my-1">
+
+                            {{-- <div class="my-1">
                                 <p id="keterangan{{ $d->kodex }}" class="text-primary m-0 small">{{ $d->keterangan != '' ? 'Ket : ' . $d->keterangan : '' }}</p>
-                            </div>
-                        
+                            </div> --}}
                         </td>
+
                         <td id="col{{ $d->kodex }}" style="width: 130px" class="text-end"> 
                             {{-- <div class="input-group input-group-sm mb-2">
                                 <div class="input-group-prepend">
@@ -134,16 +143,16 @@
                             <div class="text-right">
                                 <button id="note{{ $d->kode }}" type="button" class="btn btn-sm btn-outline-info" disabled><i class="far fa-clipboard mr-1"></i>Note</button>
                             </div> --}}
-                            <div class="text-center">
+                            {{-- <div class="text-center">
                                 <p id="qty{{ $d->kodex }}" class="badge bg-success text-white mb-1">{{ $d->qty == 0 ? '' : 'Qty : ' . number_format($d->qty) }}</p>
                                 <br>
                                 <p id="jumlah{{ $d->kodex }}" class="badge bg-success text-white mb-1">{{ $d->qty == 0 ? '' : 'Jml : ' . number_format($d->jumlah) }}</p>
                                 <br>    
-                            </div>
+                            </div> --}}
 
-                            <div class="text-right">
+                            {{-- <div class="text-right">
                                 <button id="btn-cart{{ $d->kodex }}" type="button" data-kode="{{ $d->kode }}" data-nama="{{ $d->nama }}" data-qty="{{ round($d->qty) }}" data-harga="{{ round($d->harga) }}" data-keterangan="{{ $d->keterangan }}" class="btn btn-sm btn-outline-primary btn-cart w-100"><i class="fas fa-cart-plus me-1"></i>Keranjang</button>
-                            </div>
+                            </div> --}}
                         </td>
                     </tr>                        
                 @endforeach
@@ -164,24 +173,24 @@
                     <div class="modal-body">
                         <div class="container">
 
-                            <div class="mb-3 row">
-                                <label class="col-lg-3 col-form-label">Qty</label>
-                                <div class="col-lg-5">
+                            <div class="mb-1 row">
+                                <label class="col-4 col-form-label">Qty</label>
+                                <div class="col-5">
                                     <input id="qqty" type="number" class="form-control" name="qty" min="0" required>
                                 </div>
                             </div>
 
-                            <div class="mb-3 row">
-                                <label class="col-lg-3 col-form-label">Harga</label>
-                                <div class="col-lg-5">
+                            <div class="mb-1 row">
+                                <label class="col-4 col-form-label">Harga</label>
+                                <div class="col-5">
                                     <input id="qharga" type="number" class="form-control" name="harga" min="0" required>
                                 </div>
                             </div>
 
-                            <div class="mb-3 row">
-                                <label class="col-lg-3 col-form-label">Keterangan</label>
-                                <div class="col-lg-9">
-                                    <textarea id="qketerangan" name="keterangan" cols="30" rows="4" class="form-control"></textarea>
+                            <div class="mb-1 row">
+                                <label class="col-4 col-form-label">Keterangan</label>
+                                <div class="col-8">
+                                    <textarea id="qketerangan" name="keterangan" cols="30" rows="3" class="form-control"></textarea>
                                 </div>
                             </div>
 
