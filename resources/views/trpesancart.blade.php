@@ -53,7 +53,7 @@
     </style>
 
 
-    <div class="container my-4">
+    <div class="container my-4 small">
         <div id="loader" class="bg-white rounded border p-2" style="position: fixed; top: 90px; right: 12px; z-index: 99999; display: none;">
             <div class="loader"></div>
             <span>Saving ...</span>
@@ -62,36 +62,35 @@
         <nav class="navbar navbar-expand-sm fixed-top navbar-light bg-light border">
             <div class="container">
                 <div class="d-flex my-1">
-                    <img src="{{ url('images/logokecil.png') }}" style="max-width: 50px; max-height: 50px;" class="me-2"/>
+                    <img src="{{ url('images/logokecil.png') }}" style="max-width: 40px; max-height: 40px;" class="me-2"/>
                     <h4 class="align-self-center">{{ $title ?? '' }}</h4>
                 </div>
                 <form class="d-flex my-1">
                     <div style="position: relative">
-                        <button class="btn btn-outline-danger mx-2" onclick="cancelcart()"><i class="fas fa-exclamation-circle me-2"></i><small>Batalkan</small></button>
+                        <button class="btn btn-sm btn-outline-danger me-2" onclick="cancelcart()"><i class="fas fa-exclamation-circle me-2"></i><small>Batalkan</small></button>
                     </div>
                     <div style="position: relative">
-                        <a class="btn btn-outline-secondary mx-2" href="{{ url('newsp') }}"><i class="fas fa-arrow-circle-left me-2"></i><small>Kembali ke Surat Pesan</small></a>
+                        <a class="btn btn-sm btn-outline-secondary mx-2" href="{{ url('newsp') }}"><i class="fas fa-arrow-circle-left me-2"></i><small>Kembali ke Surat Pesan</small></a>
                     </div>
-                    <a class="btn btn-outline-secondary ms-2" href="{{ url('/') }}"><i class="fas fa-home"></i></a>
+                    <a class="btn btn-sm btn-outline-secondary ms-2" href="{{ url('/') }}"><i class="fas fa-home"></i></a>
                 </form>
             </div>
         </nav>
 
-
         <div >
             <div class="row">
-                <div class="col-md-6 my-3 text-white">
-                    <h4>alskdjalskdjaslkdjalsdjalsdalksdjalksdjalsjdalksdj</h4>
+                <div class="col-sm-6 my-3 text-white">
+                    <h4>alskdjalskdjaslkdjal</h4>
                 </div>
-                <div class="col-md-6 my-2 text-white">
-                    <h4>alskdjalskdjaslkdjalsdjalsdalksdjalksdjalsjdalksdj</h4>
+                <div class="col-sm-6 my-2 text-white">
+                    <h4>alskdjalskdjaslkdjal</h4>
                 </div>
             </div>
         </div>
 
 
-        <div class="card my-4">
-            <h5 class="card-header bg-secondary text-white"><i class="far fa-list-alt me-2"></i>DAFTAR BARANG</h5>
+        <div class="card my-4 small">
+            <h6 class="card-header bg-secondary text-white"><i class="far fa-list-alt me-2"></i>DAFTAR BARANG</h6>
             <div class="card-body">
                 <div id="kosong" class="text-center {{ $cartcount == 0 ? '' : 'd-none' }}">
                     <h6 class="my-2">Belum ada barang yang diorder</h6>
@@ -99,17 +98,14 @@
                 </div>
 
                 <table id="data-table" class="table {{ $cartcount == 0 ? 'd-none' : '' }}">
-                    <thead>
+                    {{-- <thead>
                       <tr>
                         <th scope="col" style="border-bottom-color: #dee2e6;">Img</th>
-                        <th scope="col" style="border-bottom-color: #dee2e6;">Nama</th>
-                        <th scope="col" style="border-bottom-color: #dee2e6;">Keterangan</th>
-                        <th scope="col" class="text-end" style="border-bottom-color: #dee2e6;">Qty</th>
-                        <th scope="col" class="text-end" style="border-bottom-color: #dee2e6;">Jumlah</th>
+                        <th scope="col" style="border-bottom-color: #dee2e6;">Info</th>
                         <th scope="col" class="text-end" style="border-bottom-color: #dee2e6;">Action</th>
                       </tr>
-                    </thead>
-                    <tbody>
+                    </thead> --}}
+                    <tbody class="">
                         @foreach ($mstbarang as $d)
                             <tr id="row{{ $d->kodex }}">
                                 <td @if ($loop->last) class="border-bottom-0" @endif>
@@ -118,16 +114,25 @@
                                     @else
                                         <div class="border rounded" style="width: 50px; height: 37px; background-image: url('{{ url('images/noimage2.webp') }}'); background-size: cover; background-repeat: no-repeat; background-position: center;">
                                         </div>
-                                        {{-- <img src="{{ url('images/noimage2.webp') }}" style="max-width: 105px; max-height: 75px;"/> --}}
                                     @endif
                                 </td>
-                                <td class="@if ($loop->last) border-bottom-0 @endif">{{ $d->nama }}</td>
-                                <td id="keterangan{{ $d->kodex }}" class="@if ($loop->last) border-bottom-0 @endif">{{ $d->keterangan }}</td>
-                                <td id="qty{{ $d->kodex }}" class="text-end @if ($loop->last) border-bottom-0 @endif">{{ number_format($d->qty) }}</td>
-                                <td id="jumlah{{ $d->kodex }}" class="text-end @if ($loop->last) border-bottom-0 @endif">{{ number_format($d->jumlah) }}</td>
+
+                                <td class="@if ($loop->last) border-bottom-0 @endif">
+                                    <div class="row">
+                                        <div class="col-sm-4 fw-bold">
+                                            {{ $d->nama }}
+                                        </div>
+                                        <div class="col-sm-4 text-primary">
+                                            <span id="keterangan{{ $d->kodex }}">{{ $d->keterangan }}</span>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <span class="badge bg-success text-white">Qty : <span id="qty{{ $d->kodex }}">{{ number_format($d->qty) }}</span></span>
+                                            <span class="badge bg-success text-white">Jml : <span id="jumlah{{ $d->kodex }}">{{ number_format($d->jumlah) }}</span></span>
+                                        </div>
+                                    </div>
+                                </td>
                                 <td class="text-end @if ($loop->last) border-bottom-0 @endif">
                                     <button id="btn-cart{{ $d->kodex }}" type="button" data-kode="{{ $d->kode }}" data-nama="{{ $d->nama }}" data-qty="{{ round($d->qty) }}" data-harga="{{ round($d->harga) }}" data-keterangan="{{ $d->keterangan }}" class="btn btn-sm btn-outline-warning btn-cart my-1" data-bs-toggle="tooltip" title="Edit data"><i class="far fa-edit"></i></button>
-                                    {{-- <button id="btn-delete{{ $d->kodex }}" type="button" data-kode="{{ $d->kode }}" class="btn btn-sm btn-outline-danger btn-delete my-1" data-bs-toggle="tooltip" title="Delete data"><i class="far fa-trash-alt"></i></button> --}}
                                 </td>
                             </tr>                        
                         @endforeach
@@ -138,8 +143,8 @@
         
         @if ($cartcount != 0)
             
-            <div class="card my-4">
-                <h5 class="card-header bg-secondary text-white"><i class="far fa-user me-2"></i>DATA CUSTOMER</h5>
+            <div class="card my-4 small">
+                <h6 class="card-header bg-secondary text-white"><i class="far fa-user me-2"></i>DATA CUSTOMER</h6>
                 <div class="card-body">
                     <div class="mb-2 row">
                         <label class="col-sm-2 col-form-label">Nama</label>
@@ -205,8 +210,8 @@
             </div>
 
 
-            <div id="cardbayar" class="card my-4">
-                <h5 class="card-header bg-secondary text-white"><i class="fas fa-cash-register me-2"></i>PEMBAYARAN</h5>
+            <div id="cardbayar" class="card my-4 small">
+                <h6 class="card-header bg-secondary text-white"><i class="fas fa-cash-register me-2"></i>PEMBAYARAN</h6>
                 <div class="card-body">
                     <div class="mb-2 row">
                         <label class="col-sm-2 col-form-label">Leasing</label>
@@ -304,8 +309,8 @@
             </div>
             
 
-            <div class="card my-4">
-                <h5 class="card-header bg-secondary text-white"><i class="fas fa-receipt me-2"></i>REKAP TRANSAKSI</h5>
+            <div class="card my-4 small">
+                <h6 class="card-header bg-secondary text-white"><i class="fas fa-receipt me-2"></i>REKAP TRANSAKSI</h6>
                 <div class="card-body">
                     <div class="row">
                         <label class="col-sm-6 col-form-label py-0">Total Barang</label>
@@ -375,7 +380,7 @@
             </div>
             
 
-            <div class="row mb-5 text-center">
+            <div class="row mb-5 text-center small">
                 <div>
                     <span id="infolebihbayar" class="badge bg-danger mb-2" style="display: none">Tidak Bisa simpan karena Pembayaran lebih besar dari pada yang harus dibayarkan ke GIRIPALMA</span>
                     <br>
@@ -388,46 +393,46 @@
     </div>
 
 
-    <div class="modal fade" id="exampleModalCenter" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog h-auto" style="max-width: 500px !important">
+    <div class="modal fade small" id="exampleModalCenter" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog small h-auto" style="max-width: 500px !important">
             <div class="modal-content">
-                <div class="modal-header bg-light">
+                <div class="modal-header bg-light py-1">
                     <h5 class="modal-title" id="modaltitle">Modal title</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form id="form-modal" action="" method="post" enctype="multipart/form-data" >
                     @csrf
-                    <div class="modal-body">
+                    <div class="modal-body py-2">
                         <div class="container">
 
-                            <div class="mb-3 row">
-                                <label class="col-lg-3 col-form-label">Qty</label>
-                                <div class="col-lg-5">
-                                    <input id="qqty" type="number" class="form-control" name="qty" min="0" required>
+                            <div class="mb-1 row">
+                                <label class="col-4 col-form-label">Qty</label>
+                                <div class="col-5">
+                                    <input id="qqty" type="number" class="form-control form-control-sm" name="qty" min="0" required>
                                 </div>
                             </div>
 
-                            <div class="mb-3 row">
-                                <label class="col-lg-3 col-form-label">Harga</label>
-                                <div class="col-lg-5">
-                                    <input id="qharga" type="number" class="form-control" name="harga" min="0" required>
+                            <div class="mb-1 row">
+                                <label class="col-4 col-form-label">Harga</label>
+                                <div class="col-5">
+                                    <input id="qharga" type="number" class="form-control form-control-sm" name="harga" min="0" required>
                                 </div>
                             </div>
 
-                            <div class="mb-3 row">
-                                <label class="col-lg-3 col-form-label">Keterangan</label>
-                                <div class="col-lg-9">
-                                    <textarea id="qketerangan" name="keterangan" autocomplete="off" cols="30" rows="4" class="form-control"></textarea>
+                            <div class="mb-1 row">
+                                <label class="col-4 col-form-label">Keterangan</label>
+                                <div class="col-8">
+                                    <textarea id="qketerangan" name="keterangan" cols="30" rows="3" class="form-control form-control-sm"></textarea>
                                 </div>
                             </div>
 
                         </div>
                     </div>
-                    <div class="modal-footer justify-content-between">
+                    <div class="modal-footer justify-content-between py-1">
                         <input id="modalkode" name="kode" type="hidden">
-                        <button id="btn-hapus" type="submit" form="form-modal" class="btn btn-danger" value="hapusitem"><i class="fas fa-trash-alt me-2"></i>Hapus</button>
-                        <button id="btn-simpan" type="submit" form="form-modal" class="btn btn-primary" value="saveqty"><i class="far fa-save me-2"></i>Simpan</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times me-2"></i>Close</button>
+                        <button id="btn-hapus" type="submit" form="form-modal" class="btn btn-sm btn-danger" value="hapusitem"><i class="fas fa-trash-alt me-2"></i>Hapus</button>
+                        <button id="btn-simpan" type="submit" form="form-modal" class="btn btn-sm btn-primary" value="saveqty"><i class="far fa-save me-2"></i>Simpan</button>
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times me-2"></i>Close</button>
                     </div>
                 </form>
             </div>
