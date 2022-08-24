@@ -88,16 +88,33 @@
                 @foreach ($mstbarang as $d)
                     <tr>
                         <td>
-                            @if ($d->img)
-                                <img src="data:image/png;base64, {{ base64_encode($d->img) }}" class="border rounded" style="max-width: 80px; max-height: 60px;"/>
-                            @else
-                                <div class="border rounded" style="width: 80px; height: 60px; background-image: url('{{ url('images/noimage2.webp') }}'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                            <div class="row">
+                                <div class="col-sm-2 col-lg-1">
+                                    @if ($d->img)
+                                        <img src="data:image/png;base64, {{ base64_encode($d->img) }}" class="border rounded" style="max-width: 70px; max-height: 60px;"/>
+                                    @else
+                                        <div class="border rounded" style="width: 70px; height: 60px; background-image: url('{{ url('images/noimage2.webp') }}'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                                        </div>
+                                        {{-- <img src="{{ url('images/noimage2.webp') }}" style="max-width: 105px; max-height: 75px;"/> --}}
+                                    @endif
                                 </div>
-                                {{-- <img src="{{ url('images/noimage2.webp') }}" style="max-width: 105px; max-height: 75px;"/> --}}
-                            @endif
+
+                                <div class="col-sm-10 col-lg-11">
+                                    <h5 class="m-0">{{ $d->nama }}</h5>
+                                
+                                    <div class="text-right">
+                                        <button id="btn-cart{{ $d->kodex }}" type="button" data-kode="{{ $d->kode }}" data-nama="{{ $d->nama }}" data-qty="{{ round($d->qty) }}" data-harga="{{ round($d->harga) }}" data-keterangan="{{ $d->keterangan }}" class="btn btn-sm btn-outline-primary btn-cart"><i class="fas fa-cart-plus me-1"></i>Keranjang</button>
+                                        <span class="text-nowrap">
+                                            <span id="qty{{ $d->kodex }}" class="badge bg-success text-white mb-1">{{ $d->qty == 0 ? '' : 'Qty : ' . number_format($d->qty) }}</span>
+                                            <span id="jumlah{{ $d->kodex }}" class="badge bg-success text-white mb-1">{{ $d->qty == 0 ? '' : 'Jml : ' . number_format($d->jumlah) }}</span>    
+                                        </span>
+                                        <span id="keterangan{{ $d->kodex }}" class="text-primary m-0 small">{{ $d->keterangan != '' ? 'Ket : ' . $d->keterangan : '' }}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
-                        <td>
-                            <h5 class="m-0">{{ $d->nama }}</h5>
+                        {{-- <td>
+                            <h5 class="m-0">{{ $d->nama }}</h5> --}}
                             {{-- <div class="row">
                                 <div class="col my-1">
                                     <p class="m-0 font-weight-bold"><small>Jenis</small></p>
@@ -116,21 +133,21 @@
                                     <p class="m-0">{{ number_format($d->hargajual) }}</p>
                                 </div>
                             </div> --}}
-                            <div class="text-right">
+                            {{-- <div class="text-right">
                                 <button id="btn-cart{{ $d->kodex }}" type="button" data-kode="{{ $d->kode }}" data-nama="{{ $d->nama }}" data-qty="{{ round($d->qty) }}" data-harga="{{ round($d->harga) }}" data-keterangan="{{ $d->keterangan }}" class="btn btn-sm btn-outline-primary btn-cart"><i class="fas fa-cart-plus me-1"></i>Keranjang</button>
                                 <span class="text-nowrap">
                                     <span id="qty{{ $d->kodex }}" class="badge bg-success text-white mb-1">{{ $d->qty == 0 ? '' : 'Qty : ' . number_format($d->qty) }}</span>
                                     <span id="jumlah{{ $d->kodex }}" class="badge bg-success text-white mb-1">{{ $d->qty == 0 ? '' : 'Jml : ' . number_format($d->jumlah) }}</span>    
                                 </span>
                                 <span id="keterangan{{ $d->kodex }}" class="text-primary m-0 small text-nowrap">{{ $d->keterangan != '' ? 'Ket : ' . $d->keterangan : '' }}</span>
-                            </div>
+                            </div> --}}
 
                             {{-- <div class="my-1">
                                 <p id="keterangan{{ $d->kodex }}" class="text-primary m-0 small">{{ $d->keterangan != '' ? 'Ket : ' . $d->keterangan : '' }}</p>
                             </div> --}}
-                        </td>
+                        {{-- </td> --}}
 
-                        <td id="col{{ $d->kodex }}" style="width: 130px" class="text-end"> 
+                        {{-- <td id="col{{ $d->kodex }}" style="width: 130px" class="text-end">  --}}
                             {{-- <div class="input-group input-group-sm mb-2">
                                 <div class="input-group-prepend">
                                     <button class="btn btn-outline-danger btn-qty" type="button" data-type="min" data-kode="{{ $d->kode }}" {{ $d->qty >0 ? '' : 'disabled' }}><i class="fas fa-minus-circle"></i></button>
@@ -153,7 +170,7 @@
                             {{-- <div class="text-right">
                                 <button id="btn-cart{{ $d->kodex }}" type="button" data-kode="{{ $d->kode }}" data-nama="{{ $d->nama }}" data-qty="{{ round($d->qty) }}" data-harga="{{ round($d->harga) }}" data-keterangan="{{ $d->keterangan }}" class="btn btn-sm btn-outline-primary btn-cart w-100"><i class="fas fa-cart-plus me-1"></i>Keranjang</button>
                             </div> --}}
-                        </td>
+                        {{-- </td> --}}
                     </tr>                        
                 @endforeach
             </tbody>
