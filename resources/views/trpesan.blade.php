@@ -9,40 +9,17 @@
     <div class="container my-4">
         <nav class="navbar navbar-expand-sm fixed-top navbar-light bg-light border">
             <div class="container">
+
+
                 <div class="d-flex my-1">
-                    <img src="{{ url('images/logokecil.png') }}" style="max-width: 50px; max-height: 50px;" class="me-2"/>
+                    <img src="{{ url('images/logokecil.png') }}" style="max-width: 40px; max-height: 40px;" class="me-2"/>
                     <h4 class="align-self-center">SURAT PESAN</h4>
                 </div>
-                {{-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button> --}}
-                {{-- <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-sm btn-primary" href="#"><i class="fas fa-home"></i></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Features</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Pricing</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown link
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div> --}}
+
                 <form class="d-flex my-1">
                     <div class="input-group me-2">
                         <span class="input-group-text" id="basic-addon1" style="width: auto"><i class="fas fa-search"></i></span>
-                        <input id="data-filter" type="text" class="form-control" placeholder="Pencarian">
+                        <input id="data-filter" type="text" class="form-control form-control-sm" placeholder="Pencarian">
                     </div>
                     <div style="position: relative">
                         <a class="btn btn-outline-secondary mx-2" href="{{ url('cartsp') }}"><i class="fas fa-shopping-cart"></i></a>
@@ -53,7 +30,7 @@
                     <a class="btn btn-outline-secondary" href="{{ url('/') }}"><i class="fas fa-home"></i></a>
                 </form>
             </div>
-          </nav>
+        </nav>
 
 
         {{-- <nav class="navbar fixed-top navbar-light bg-secondary">
@@ -67,11 +44,11 @@
 
         <div >
             <div class="row">
-                <div class="col-md-6 my-3 text-white">
-                    <h4>alskdjalskdjaslkdjalsdjalsdalksdjalksdjalsjdalksdj</h4>
+                <div class="col-sm-6 my-3 text-white">
+                    <h4>alskdjalskdjaslkdjal</h4>
                 </div>
-                <div class="col-md-6 my-2 text-white">
-                    <h4>alskdjalskdjaslkdjalsdjalsdalksdjalksdjalsjdalksdj</h4>
+                <div class="col-sm-6 my-2 text-white">
+                    <h4>alskdjalskdjaslkdjal</h4>
                 </div>
             </div>
         </div>
@@ -178,46 +155,46 @@
     </div>
 
 
-    <div class="modal fade" id="exampleModalCenter" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog h-auto" style="max-width: 500px !important">
+    <div class="modal fade small" id="exampleModalCenter" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog small h-auto" style="max-width: 500px !important">
             <div class="modal-content">
-                <div class="modal-header bg-light">
+                <div class="modal-header bg-light py-1">
                     <h5 class="modal-title" id="modaltitle">Modal title</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form id="form-modal" action="" method="post" enctype="multipart/form-data" >
                     @csrf
-                    <div class="modal-body">
+                    <div class="modal-body py-2">
                         <div class="container">
 
                             <div class="mb-1 row">
                                 <label class="col-4 col-form-label">Qty</label>
                                 <div class="col-5">
-                                    <input id="qqty" type="number" class="form-control" name="qty" min="0" required>
+                                    <input id="qqty" type="number" class="form-control form-control-sm" name="qty" min="0" required>
                                 </div>
                             </div>
 
                             <div class="mb-1 row">
                                 <label class="col-4 col-form-label">Harga</label>
                                 <div class="col-5">
-                                    <input id="qharga" type="number" class="form-control" name="harga" min="0" required>
+                                    <input id="qharga" type="number" class="form-control form-control-sm" name="harga" min="0" required>
                                 </div>
                             </div>
 
                             <div class="mb-1 row">
                                 <label class="col-4 col-form-label">Keterangan</label>
                                 <div class="col-8">
-                                    <textarea id="qketerangan" name="keterangan" cols="30" rows="3" class="form-control"></textarea>
+                                    <textarea id="qketerangan" name="keterangan" cols="30" rows="3" class="form-control form-control-sm"></textarea>
                                 </div>
                             </div>
 
                         </div>
                     </div>
-                    <div class="modal-footer justify-content-between">
+                    <div class="modal-footer justify-content-between py-1">
                         <input id="modalkode" name="kode" type="hidden">
-                        <button id="btn-hapus" type="submit" form="form-modal" class="btn btn-danger" value="hapusitem"><i class="fas fa-trash-alt me-2"></i>Hapus</button>
-                        <button id="btn-simpan" type="submit" form="form-modal" class="btn btn-primary" value="saveqty"><i class="far fa-save me-2"></i>Simpan</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times me-2"></i>Close</button>
+                        <button id="btn-hapus" type="submit" form="form-modal" class="btn btn-sm btn-danger" value="hapusitem"><i class="fas fa-trash-alt me-2"></i>Hapus</button>
+                        <button id="btn-simpan" type="submit" form="form-modal" class="btn btn-sm btn-primary" value="saveqty"><i class="far fa-save me-2"></i>Simpan</button>
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times me-2"></i>Close</button>
                     </div>
                 </form>
             </div>
