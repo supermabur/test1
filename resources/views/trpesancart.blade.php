@@ -142,25 +142,31 @@
         </div>
         
         @if ($cartcount != 0)
-            
+        
+        <style>
+            .col-lab{
+                width: 100px;
+            }
+        </style>
+
             <div class="card my-4 small">
                 <h6 class="card-header bg-secondary text-white"><i class="far fa-user me-2"></i>DATA CUSTOMER</h6>
                 <div class="card-body">
                     <div class="mb-2 row">
-                        <label class="col-sm-2 col-form-label">Nama</label>
-                        <div class="col-sm-10">
+                        <label class="col-lab col-form-label">Nama</label>
+                        <div class="col">
                             <input type="text" class="sv form-control form-control-sm" autocomplete="off" id="csnama" value="{{ $pesanhead->csnama ?? '' }}">
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <label class="col-sm-2 col-form-label">Alamat</label>
-                        <div class="col-sm-10">
+                        <label class="col-lab col-form-label">Alamat</label>
+                        <div class="col">
                             <textarea id="csalamat" name="alamat" class="sv form-control" autocomplete="off" cols="30" rows="2">{{ $pesanhead->csalamat ?? '' }}</textarea>
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <label class="col-sm-2 col-form-label">Kota</label>
-                        <div class="col-sm-5">
+                        <label class="col-lab col-form-label">Kota</label>
+                        <div class="col">
                             <select id="cskota" class="sv sel2 form-control form-control-sm">
                                 <option value=""></option>
                                 @foreach ($mstongkir as $d)
@@ -173,14 +179,14 @@
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <label class="col-sm-2 col-form-label">Ongkir</label>
-                        <div class="col-sm-5">
+                        <label class="col-lab col-form-label">Ongkir</label>
+                        <div class="col">
                             <input id="ongkir" type="number" class="sv form-control form-control-sm" value="{{ round($pesanhead->ongkir ?? '') }}">
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <label class="col-sm-2 col-form-label">No HP</label>
-                        <div class="col-sm-5">
+                        <label class="col-lab col-form-label">No HP</label>
+                        <div class="col">
                             <input id="csnohp" type="number" class="sv form-control form-control-sm" autocomplete="off" value="{{ $pesanhead->csnohp ?? '' }}">
                         </div>
                         <div class="col-sm-5 small">
@@ -189,8 +195,8 @@
                     </div>
                     <hr>
                     <div class="mb-2 row">
-                        <label class="col-sm-2 col-form-label">Outlet</label>
-                        <div class="col-sm-5">
+                        <label class="col-lab col-form-label">Outlet</label>
+                        <div class="col">
                             <select id="kdgudang" class="sv form-control form-control-sm sel2">
                                 <option value=""></option>
                                 @foreach ($mstgudang as $d)
@@ -200,8 +206,8 @@
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <label class="col-sm-2 col-form-label">Keterangan</label>
-                        <div class="col-sm-10">
+                        <label class="col-lab col-form-label">Keterangan</label>
+                        <div class="col">
                             <textarea id="keterangan" class="sv form-control" autocomplete="off" cols="30" rows="2">{{ $pesanhead->keterangan ?? '' }}</textarea>
                         </div>
                     </div>
@@ -214,8 +220,8 @@
                 <h6 class="card-header bg-secondary text-white"><i class="fas fa-cash-register me-2"></i>PEMBAYARAN</h6>
                 <div class="card-body">
                     <div class="mb-2 row">
-                        <label class="col-sm-2 col-form-label">Leasing</label>
-                        <div class="col-sm-5 px-0">
+                        <label class="col-lab col-form-label">Leasing</label>
+                        <div class="col">
                             <select id="kdleasing" class="sv sel2 form-control form-control-sm sel2">
                                 <option value="">-</option>      
                                 @foreach ($mstleasing as $d)
@@ -228,39 +234,39 @@
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <label class="col-sm-2 col-form-label"></label>
-                        <div class="ls_ col-sm-5 border rounded p-2">
+                        <label class="col-lab col-form-label"></label>
+                        <div class="ls_ col border rounded p-2">
                             <div class="row">
-                                <label class="col-sm-4 col-form-label small">DP</label>
-                                <div class="col-sm-8">
+                                <label class="col-lab col-form-label small">DP</label>
+                                <div class="col">
                                     <input id="dp" type="number" class="sv form-control form-control-sm" value="{{ round($pesanhead->dp ?? '') }}">
                                 </div>
                             </div>
 
                             <div class="row">
-                                <label class="col-sm-4 col-form-label small">Cicilan1</label>
-                                <div class="col-sm-8">
+                                <label class="col-lab col-form-label small">Cicilan1</label>
+                                <div class="col">
                                     <input id="ls_cicilan1" type="number" class="sv form-control form-control-sm" value="{{ round($pesanhead->ls_cicilan1 ?? '') }}">
                                 </div>
                             </div>
                             
                             <div class="row">
-                                <label class="col-sm-4 col-form-label small">Admin</label>
-                                <div class="col-sm-8">
+                                <label class="col-lab col-form-label small">Admin</label>
+                                <div class="col">
                                     <input id="ls_admin" type="number" class="sv form-control form-control-sm" value="{{ round($pesanhead->ls_admin ?? '') }}">
                                 </div>
                             </div>
                             
                             <div class="row">
-                                <label class="col-sm-4 col-form-label small">Asuransi</label>
-                                <div class="col-sm-8">
+                                <label class="col-lab col-form-label small">Asuransi</label>
+                                <div class="col">
                                     <input id="ls_asuransi" type="number" class="sv form-control form-control-sm" value="{{ round($pesanhead->ls_asuransi ?? '') }}">
                                 </div>
                             </div>
                         </div>
                     </div>
                     {{-- <div class="mb-2 row">
-                        <label class="col-sm-2 col-form-label">DP</label>
+                        <label class="col-lab col-form-label">DP</label>
                         <div class="col-sm-5">
                             <input id="dp" type="number" class="sv form-control form-control-sm" value="{{ round($pesanhead->dp) ?? '' }}">
                         </div>
@@ -268,20 +274,20 @@
                     
                     
                     {{-- <div class="mb-2 row">
-                        <label class="col-sm-2 col-form-label"></label>
+                        <label class="col-lab col-form-label"></label>
                         <div class="col-sm-5">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalbayar"><i class="fas fa-money-check-alt me-2"></i>Tambah Pembayaran</button>
                         </div>
                     </div> --}}
 
                     <div class="mb-2 row">
-                        <label class="col-sm-2 col-form-label">Pembayaran</label>
+                        <label class="col-lab col-form-label">Pembayaran</label>
                         <div class="col-sm-10 p-2 border rounded">
                             <div class="row">
-                                <div class="col-sm-6">
+                                <div class="col-lab ">
                                     <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalbayar"><i class="fas fa-money-check-alt me-2"></i>Tambah Bayar</button>
                                 </div>
-                                <div class="col-sm-6 text-end">
+                                <div class="col text-end">
                                     <h5>Total Pembayaran : <span class="totaldp">{{ $total["totaldp"] }}</span></h5>
                                 </div>
                             </div>
@@ -313,41 +319,41 @@
                 <h6 class="card-header bg-secondary text-white"><i class="fas fa-receipt me-2"></i>REKAP TRANSAKSI</h6>
                 <div class="card-body">
                     <div class="row">
-                        <label class="col-sm-6 col-form-label py-0">Total Barang</label>
-                        <div class="col-sm-6 text-end">
+                        <label class="col-lab  col-form-label py-0">Total Barang</label>
+                        <div class="col text-end">
                             <h5 id="totalbarang">{{ $total["totalbarang"] }}</h5>
                         </div>
                     </div>
                     <hr>
                     <div class="row">
-                        <label class="col-sm-6 col-form-label py-0">Ongkir</label>
-                        <div class="col-sm-6 text-end">
+                        <label class="col-lab  col-form-label py-0">Ongkir</label>
+                        <div class="col text-end">
                             <h5 id="ongkirtotal">{{ $total["ongkir"] }}</h5>
                         </div>
                     </div>
 
                     <div class="ls_">
                         <div class="row">
-                            <label class="col-sm-6 col-form-label py-0">DP</label>
-                            <div class="col-sm-6 text-end">
+                            <label class="col-lab  col-form-label py-0">DP</label>
+                            <div class="col text-end">
                                 <h5 id="dptotal">{{ $total["dp"] }}</h5>
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-sm-6 col-form-label py-0">Cicilan1</label>
-                            <div class="col-sm-6 text-end">
+                            <label class="col-lab  col-form-label py-0">Cicilan1</label>
+                            <div class="col text-end">
                                 <h5 id="cicilan1total">{{ $total["ls_cicilan1"] }}</h5>
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-sm-6 col-form-label py-0">Admin</label>
-                            <div class="col-sm-6 text-end">
+                            <label class="col-lab  col-form-label py-0">Admin</label>
+                            <div class="col text-end">
                                 <h5 id="admintotal">{{ $total["ls_admin"] }}</h5>
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-sm-6 col-form-label py-0">Asuransi</label>
-                            <div class="col-sm-6 text-end">
+                            <label class="col-lab  col-form-label py-0">Asuransi</label>
+                            <div class="col text-end">
                                 <h5 id="asuransitotal">{{ $total["ls_asuransi"] }}</h5>
                             </div>
                         </div>
@@ -355,24 +361,24 @@
 
                     <hr>
                     <div class="row">
-                        <label class="col-sm-6 col-form-label py-0 fw-bold">
+                        <label class="col-lab  col-form-label py-0 fw-bold">
                             Total <br>
                             <small class="fw-normal">yang harus di bayar ke Giripalma</small>
                         </label>
-                        <div class="col-sm-6 text-end">
+                        <div class="col text-end">
                             <h4 id="total">{{ $total["total"] }}</h4>
                         </div>
                     </div>
                     <hr>
                     <div class="row">
-                        <label class="col-sm-6 col-form-label py-0">Sudah Dibayar</label>
-                        <div class="col-sm-6 text-end">
+                        <label class="col-lab  col-form-label py-0">Sudah Dibayar</label>
+                        <div class="col text-end">
                             <h5 id="totaldp" class="totaldp">{{ $total["totaldp"] }}</h5>
                         </div>
                     </div>
                     <div class="row">
-                        <label class="col-sm-6 col-form-label text-danger py-0">Kurang Bayar</label>
-                        <div class="col-sm-6 text-end">
+                        <label class="col-lab  col-form-label text-danger py-0">Kurang Bayar</label>
+                        <div class="col text-end">
                             <h5 id="kurangbayar" class="text-danger">{{ $total["kurangbayar"] }}</h5>
                         </div>
                     </div>
@@ -382,7 +388,7 @@
 
             <div class="row mb-5 text-center small">
                 <div>
-                    <span id="infolebihbayar" class="badge bg-danger mb-2" style="display: none">Tidak Bisa simpan karena Pembayaran lebih besar dari pada yang harus dibayarkan ke GIRIPALMA</span>
+                    <span id="infolebihbayar" class="bg-danger text-white rounded px-2 mb-2" style="display: none">Tidak Bisa simpan karena Pembayaran lebih besar dari pada yang harus dibayarkan ke GIRIPALMA</span>
                     <br>
                     <button id="btnsave" type="button" class="btn btn-primary mb-5" onclick="saveme()"><i class="fas fa-save me-2"></i>SIMPAN TRANSAKSI</button>
                 </div>
