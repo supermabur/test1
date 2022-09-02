@@ -282,7 +282,7 @@
 
                     <div class="mb-2 row">
                         <label class="col-lab col-form-label">Pembayaran</label>
-                        <div class="col-sm-10 p-2 border rounded">
+                        <div class="col p-2 border rounded">
                             <div class="row">
                                 <div class="col-lab ">
                                     <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalbayar"><i class="fas fa-money-check-alt me-2"></i>Tambah Bayar</button>
