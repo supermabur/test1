@@ -446,19 +446,33 @@
     </div>
 
 
-    <div class="modal fade" id="modalbayar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade small" id="modalbayar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog h-auto" style="max-width: 500px !important">
             <div class="modal-content">
-                <div class="modal-header bg-light">
+                <div class="modal-header bg-light py-1">
                     <h5 class="modal-title" id="modaltitle">PEMBAYARAN</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form id="form-modal-bayar" action="" method="post" enctype="multipart/form-data" >
                     @csrf
-                    <div class="modal-body">
+                    <div class="modal-body py-2">
                         <div class="container">
 
-                            <div class="mb-3 row">
+                            
+                            <div class="mb-1 row small">
+                                <label class="col-4 col-form-label">Jenis</label>
+                                <div class="col-8">
+                                    <select id="kodebayar" name="kodebayar" class="sel2x form-control form-control-sm small">
+                                        <option value=""></option>      
+                                        @foreach ($mstbayar as $d)
+                                            <option value="{{ $d->kode }}">{{ $d->nama }}</option>                                
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            
+
+                            {{-- <div class="mb-3 row">
                                 <label class="col-lg-3 col-form-label">Jenis</label>
                                 <div class="col-lg-9">
                                     <select id="kodebayar" name="kodebayar" class="sel2x form-control form-control-sm">
@@ -468,27 +482,28 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
 
-                            <div class="mb-3 row">
-                                <label class="col-lg-3 col-form-label">No Bukti</label>
-                                <div class="col-lg-9">
-                                    <input id="nobuktibayar" name="nobuktibayar" autocomplete="off" type="text" class="form-control" required>
+                            
+                            <div class="mb-1 row small">
+                                <label class="col-4 col-form-label">No Bukti</label>
+                                <div class="col-8">
+                                    <input id="nobuktibayar" name="nobuktibayar" autocomplete="off" type="text" class="form-control form-control-sm" required>
                                 </div>
                             </div>
-
-                            <div class="mb-3 row">
-                                <label class="col-lg-3 col-form-label">Nominal</label>
-                                <div class="col-lg-5">
-                                    <input id="jumlahbayar" name="jumlahbayar" type="number" class="form-control" min="0" required>
+                            
+                            <div class="mb-1 row small">
+                                <label class="col-4 col-form-label">Nominal</label>
+                                <div class="col-5">
+                                    <input id="jumlahbayar" name="jumlahbayar" type="number" class="form-control form-control-sm" min="0" required>
                                 </div>
                             </div>
 
                         </div>
                     </div>
-                    <div class="modal-footer justify-content-between">
-                        <button id="btn-simpan-bayar" type="submit" form="form-modal-bayar" class="btn btn-primary"><i class="far fa-save me-2"></i>Simpan</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times me-2"></i>Close</button>
+                    <div class="modal-footer justify-content-between py-1">
+                        <button id="btn-simpan-bayar" type="submit" form="form-modal-bayar" class="btn btn-sm btn-primary"><i class="far fa-save me-2"></i>Simpan</button>
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times me-2"></i>Close</button>
                     </div>
                 </form>
             </div>
