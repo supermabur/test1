@@ -273,7 +273,9 @@
             event.preventDefault();
 
             var mod = $(document.activeElement).val();
-
+            alert(mod);
+            return;
+            
             if (mod != 'saveqty') {
                 if (confirm('Yakin akan menghapus item ini ? ') != true) {
                     return;
