@@ -273,28 +273,23 @@
             event.preventDefault();
 
             var btnClicked = event.originalEvent.submitter;
+            // console.log(btnClicked.id);
+            // alert(btnClicked.id);
+            // return;
 
-            // var mod = $(document.activeElement).val();
-      
-            // if (mod != 'saveqty') {
-            //     if (confirm('Yakin akan menghapus item ini ? ') != true) {
-            //         return;
-            //     }
-            // }
+            var mod = $(document.activeElement).val();
+            
+            mod = 'hapusitem';
+            if (btnClicked.id == 'btn-simpan') {
+                mod = 'saveqty';
+            }
 
-            console.log(btnClicked.value);
-            console.log(btnClicked);
 
-            alert(btnClicked.value);
-            return;
-
-            var mod = btnClicked.value;
             if (mod != 'saveqty') {
                 if (confirm('Yakin akan menghapus item ini ? ') != true) {
                     return;
                 }
             }
-
 
             var q = $('#qqty').val();
             if (q < 1) {
