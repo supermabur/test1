@@ -272,10 +272,14 @@
         $('#form-modal').on('submit', function(event){
             event.preventDefault();
 
-            var mod = $(document.activeElement).val();
-            alert(mod);
+            var btnClicked = event.originalEvent.submitter;
+            console.log(btnClicked.id);
+            alert(btnClicked.id);
             return;
-            
+
+            var mod = $(document.activeElement).val();
+            return;
+
             if (mod != 'saveqty') {
                 if (confirm('Yakin akan menghapus item ini ? ') != true) {
                     return;
