@@ -61,3 +61,4 @@ Route::resource('estkirimmemo', 'rptpesanestkirimmemoController');
 
 Route::resource('cartsp', 'trpesancartController');
 Route::get('/downpdf_sp/{file}', 'downloadController@downloadpdf_suratpesan');
+Route::get('/recreatepdfpesan/{faktur}', 'trpesancartController@savetopdf');
