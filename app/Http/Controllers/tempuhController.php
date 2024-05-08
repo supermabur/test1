@@ -70,6 +70,13 @@ class tempuhController extends Controller
                 break;
             
 
+            case 'hapus':
+                tempuh::where('id', $request->id)->delete() ;
+                return response()->json(['success' => '$suksesmsg']);
+
+                break;
+            
+
             case 'getjmltrans':
                 $jml = tempuh::where('nama', $request->nama)->count() ;
                 return response()->json(['success' => '$suksesmsg', 'data' => $jml]);

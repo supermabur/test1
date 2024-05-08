@@ -199,6 +199,13 @@
             }
         });
 
+        $(document).on('click', '.btndelete', function(){
+            if($("#editview").is(":hidden")){
+                var id = $(this).attr('data-id');
+                initEdit('delete', id);
+            }
+        });
+
         $(function(){
             $(".datepicker").datepicker({
                 format: 'dd-mm-yyyy',

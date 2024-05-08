@@ -128,6 +128,8 @@
 
         $('#actionx').val(actio);
         
+        console.log(actio);
+
         if (actio == 'edit'){
             $.ajax({
             url:"/tempuh/"+id+"/edit",
@@ -150,6 +152,36 @@
                     loading(0);
                 }
             })     
+        }
+        if (actio == 'delete') {
+            let text;
+            if (confirm("Hapus Transaksi ini!") == true) {
+                $.ajax({
+                    url: '{{ route("tempuh.store") }}',
+                                type:"POST",
+                                data:{mode:'hapus',
+                                        id:id,
+                                        _token: _token},
+                                async: false,
+                                dataFilter: function(response){
+                                        // console.log(response);
+                                        return response;
+                                    },
+                                success: function(response){
+                                        console.log(response);
+                                        alert('hapus data berhasil');
+                                        $('#user_table').DataTable().ajax.reload();
+                                        return response;
+                                    },
+                                error: function(err){
+                                        console.log(err);
+                                    }
+                });
+
+            } 
+
+
+            console.log('delete');
         }
         else{
             $("#globrep").hide(200);
