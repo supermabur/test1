@@ -14,6 +14,7 @@ class tempuh extends Model
         'notelp',
         'jarak',
         'potongan',
-        'harga'
+        'harga',
+        'pajak'
     ];
 }

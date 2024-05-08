@@ -25,59 +25,62 @@ class tempuhController extends Controller
     public function store(Request $request)
     {
         
-        // ----------------------------------VALIDATION
-        // untuk kolom nama, unique nya pake nama dan idcompany.. makanya jadi kayak gitu rulesnya
-        $rules = array(            
-            'nama' => 'required',
-            'notelp' => 'required',
-            'jarak' => 'required',
-            'potongan' => 'required',
-            'harga' => 'required'
-        );
+        switch ($request->mode) {
+            case 'simpan':
+                // ----------------------------------VALIDATION
+                // untuk kolom nama, unique nya pake nama dan idcompany.. makanya jadi kayak gitu rulesnya
+                $rules = array(            
+                    'nama' => 'required',
+                    'notelp' => 'required',
+                    'jarak' => 'required'
+                );
 
-        
-        $suksesmsg = 'Penambahan data berhasil';
-        if ($request->actionx == 'edit')
-        {
-            $suksesmsg = 'Edit data berhasil';
+                
+                $suksesmsg = 'Penambahan data berhasil';
+                if ($request->actionx == 'edit')
+                {
+                    $suksesmsg = 'Edit data berhasil';
+                }
+
+                $errmsg = array(
+                    'nama.required' => 'Kotak Nama belum diisi'
+                );
+
+                $result = Validator::make($request->all(), $rules, $errmsg);
+                
+                if($result->fails())
+                {
+                    return response()->json(['errors' => ['keys' => $result->errors()->keys(), 'message' => $result->errors()->all() ]]);
+                }
+                
+                // ----------------------------------CRUD
+                
+                $form_data = [
+                    'nama' => $request->nama,
+                    'notelp' => $request->notelp,
+                    'jarak' => $request->jarak,
+                    'potongan' => $request->potongan,
+                    'harga' => $request->harga,
+                    'pajak' => $request->pajak
+                ];
+
+                $tmp = tempuh::updateOrCreate(['id' => $request->id], $form_data);   
+                
+                return response()->json(['success' => $suksesmsg, 'data' =>$tmp]);
+                break;
+            
+
+            case 'getjmltrans':
+                $jml = tempuh::where('nama', $request->nama)->count() ;
+                return response()->json(['success' => '$suksesmsg', 'data' => $jml]);
+
+                break;
+
+            default:
+                # code...
+                break;
         }
 
-        $errmsg = array(
-            'nama.required' => 'Kotak Nama belum diisi'
-        );
-
-        $result = Validator::make($request->all(), $rules, $errmsg);
-        
-        if($result->fails())
-        {
-            return response()->json(['errors' => ['keys' => $result->errors()->keys(), 'message' => $result->errors()->all() ]]);
-        }
-        
-        // ----------------------------------CRUD
-        
-        $form_data = [
-            'nama' => $request->nama,
-            'notelp' => $request->notelp,
-            'jarak' => $request->jarak,
-            'potongan' => $request->potongan,
-            'harga' => $request->harga
-        ];
-
-        $tmp = tempuh::updateOrCreate(['id' => $request->id], $form_data);   
-
-        // // Catat Log trans
-        // $crud = $request->actionx == 'edit'?'u':'i';
-        // $user = auth()->user();
-        // DB::table('log_trans')->insert([
-        //     'table_name'=>'Mstjenis',
-        //     'faktur'=>$tmp->id,
-        //     'crud'=>$crud,
-        //     'info'=>'',
-        //     'ip_user'=>$request->ip(),
-        //     'user_id'=>$user->id,
-        // ]);
-        
-        return response()->json(['success' => $suksesmsg, 'data' =>$tmp]);
     }
 
 
@@ -90,7 +93,8 @@ class tempuhController extends Controller
     public function edit($id)
     {
         $data = tempuh::find($id);
-        return response()->json($data);
+        $jml = tempuh::where('nama', $data->nama)->count() ;
+        return response()->json(['success' => '$suksesmsg', 'data' => $data, 'order' => $jml]);
     }
 
 

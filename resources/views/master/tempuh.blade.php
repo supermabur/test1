@@ -21,7 +21,7 @@
 
             <div class="card card-light shadow">
                 <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-id-card mr-2"></i>Kontak</h3>
+                    <h3 class="card-title"><i class="fas fa-id-card mr-2"></i>INPUT TEMPUH</h3>
                 </div>
     
                 <div class="card-body">
@@ -75,6 +75,13 @@
                             <input type="number" id="harga" name="harga" class="form-control form-control-sm" min="0" required readonly>
                         </div>
                     </div>
+                    
+                    <div class="form-group row">
+                        <label class="col-md-2 col-form-label col-form-label-sm text-md-right">Jml Order untuk Customer ini</label>
+                        <div class="col-md-8">
+                            <input type="number" id="order" name="order" class="form-control form-control-sm" min="0" required readonly>
+                        </div>
+                    </div>
 
                 </div>
             </div>
@@ -104,6 +111,7 @@
 @endsection --}}
 
 <script>
+    // let _token   = $('meta[name="csrf-token"]').attr('content');
 
     function initEdit(actio = 'new', id = '1', mode = ''){
         $('#formuser')[0].reset();
@@ -115,6 +123,8 @@
         $('#jarak').val(0);
         $('#potongan').val(0);
         $('#harga').val(0);
+        $('#pajak').val(0);
+        $('#order').val(0);
 
         $('#actionx').val(actio);
         
@@ -124,13 +134,15 @@
             dataType:"json",
             success:function(data)
                 {
-                    $('#id').val(data.id);
-                    $('#nama').val(data.nama);
-                    $('#notelp').val(data.notelp);
+                    $('#id').val(data.data.id);
+                    $('#nama').val(data.data.nama);
+                    $('#notelp').val(data.data.notelp);
 
-                    $('#jarak').val(data.jarak);
-                    $('#potongan').val(data.potongan);
-                    $('#harga').val(data.harga);
+                    $('#jarak').val(data.data.jarak);
+                    $('#potongan').val(data.data.potongan);
+                    $('#harga').val(data.data.harga);
+                    $('#pajak').val(data.data.pajak);
+                    $('#order').val(data.order);
 
                     $("#globrep").hide(200);
                     $("#editview").show(200);
@@ -152,18 +164,59 @@
             var jarak = $("#jarak").val(); 
             var harga = jarak * 10000;
             var potongan = 0;
+            var order = $("#order").val();
+            var pajak = 0;
+
             if (jarak >= 50) {
                 potongan = harga * 0.05;
                 if (jarak >= 100) {
                     potongan = harga * 0.10;
                 }
-                harga = harga - potongan;
-            } else {
-                
+            } 
+            
+            if (order >= 2) {
+                potongan = harga * 0.20;
+
+                if (order >= 5) {
+                    potongan = harga * 0.30;
+                    pajak = harga * 0.10; 
+                }
             }
+
+            harga = (harga - potongan) + pajak ;
             $("#potongan").val(potongan);
             $("#harga").val(harga);
+            $("#pajak").val(pajak);
         });
+
+
+        $("#nama").focusout(function(){
+            loading(1, 'Hitung jumlah Order untuk customer ini ...');
+            var nama = $('#nama').val();
+            $.ajax({
+                url: '{{ route("tempuh.store") }}',
+                            type:"POST",
+                            data:{mode:'getjmltrans',
+                                    nama:nama,
+                                    _token: _token},
+                            async: false,
+                            dataFilter: function(response){
+                                    // console.log(response);
+                                    return response;
+                                },
+                            success: function(response){
+                                    console.log(response);
+                                    $('#order').val(response.data);
+                                    loading(0, 'Hitung jumlah Order untuk customer ini ...');
+                                    return response;
+                                },
+                            error: function(err){
+                                    console.log(err);
+                                    loading(0, 'Hitung jumlah Order untuk customer ini ...');
+                                }
+            });
+        });
+
 
 
         function RemoveAlert(){
@@ -182,6 +235,7 @@
 
             // ambil semua inputan di form dan di tambahi array menu----------
             var fd =  new FormData(this);
+            fd.append('mode', 'simpan');
 
             $.ajax({
                 url:"{{ route('tempuh.store') }}",
