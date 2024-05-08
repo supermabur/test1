@@ -1,10 +1,11 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" 
-    style="background-image: url('images/bglogin.webp');
+    {{-- style="background-image: url('images/bglogin.webp');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    height: 100%;">
+    height: 100%;" --}}
+    >
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
